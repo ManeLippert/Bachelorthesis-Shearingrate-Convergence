@@ -1,0 +1,3 @@
+[submodule "gkw"]
+	path = gkw
+	url = https://ManeLippert@bitbucket.org/gkw/gkw.git
