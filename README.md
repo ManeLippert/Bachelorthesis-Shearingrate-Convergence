@@ -1,4 +1,4 @@
-# Bachelorthesis about ZonalFlows
+# Bachelorthesis about Zonal Flows
 ![alt text](pictures/zonal_flow.jpg)
 
 GKW-Code on [BitBucket](https://bitbucket.org/gkw/gkw/wiki/Home)
