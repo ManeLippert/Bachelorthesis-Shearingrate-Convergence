@@ -1,4 +1,3 @@
-# Bachelorthesis-ZonalFlows
-Bachelorthesis about the Topic of Zonal Flows (WIP)
+# Bachelorthesis about ZonalFlows
 
-GKW-Code auf [BitBucket](https://bitbucket.org/gkw/gkw/wiki/Home)
+GKW-Code on [BitBucket](https://bitbucket.org/gkw/gkw/wiki/Home)
