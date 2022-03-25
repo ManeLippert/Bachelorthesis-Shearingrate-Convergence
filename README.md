@@ -1,5 +1,5 @@
 # Bachelor Thesis about Zonal Flows
-![alt text](pictures/zonal_flow.jpg)
+![alt text](/bachelorthesis/Pictures/Zonal_Flow.PNG)
 
 # Content
 
@@ -11,6 +11,6 @@ This repository is focused on my work for my Bachelor Thesis in Zonal Flows and 
 ## In this Repository:
 * gkw-Code from [Bitbucket](https://bitbucket.org/gkw/gkw/wiki/Home)
 * Journal about my progress and my thoughts 
-* LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) 
+* LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf)
 
 # [Journal](journal/JOURNAL.md) 

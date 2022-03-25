@@ -3,14 +3,6 @@
 \newgeometry{top=30mm, bottom=20mm, inner=20mm, outer=20mm}
 \thispagestyle{empty}
 
-% Colors (Notability Colors)
-\definecolor{Notablue}{HTML}{3498DB}		
-\definecolor{Notared}{HTML}{CF366C}			
-\definecolor{Notagreen}{HTML}{19B092}		
-\definecolor{Notaorange}{HTML}{FA9D00}		
-\definecolor{Notagrey}{HTML}{969696}		
-\definecolor{Notalavendel}{HTML}{9DBBD8}	
-
 % Boolean by default false. For new line in title
 \newboolean{twoRows}
 \newboolean{symbol}
@@ -22,28 +14,21 @@
 \newcommand*\ruleline[1]{\par\noindent\raisebox{.8ex}{\makebox[\linewidth]{\vhrulefill{\linethickness}\hspace{1ex}\raisebox{-.8ex}{#1}\hspace{1ex}\vhrulefill{\linethickness}}}}
 
 % Variables
-\def\schriftgrosse{40}
+\def\schriftgrosse{30}
 \def\linethickness{1,5pt}
 
 \def\farbe{black}
-\def\fach{Subject}
-\def\name{Max Mustermann}
-\def\titel{Title} % Absatz mit \\[0,5cm]
-\def\bottom{Semester}
-\def\datum{Date}
-\def\platz{Place}
-\def\betreuer{Supervisor}
+\def\fach{Bachelor Thesis}
+\def\name{Manuel Lippert}
+\def\titel{Zonal Flows and \\[0.5cm] the convergence of the wavelength \\[0.5cm] with the Box Size} % Absatz mit \\[0,5cm]
+\def\bottom{Theoretical Plasmaphysics}
+\def\datum{\today}
+\def\platz{Universität Bayreuth}
+\def\betreuer{Professor Arthur Peeters, Florian Rath}
+\def\logo{UniBT}
 
-\def\teilnehmerm{Max1}
-\def\emailm{Mail1}
-\def\teilnehmerp{Max2}
-\def\emailp{Mail2}
-
-%\def\auswertp{}
-%\def\messp{}
-%\def\protop{}
-
-\def\groupnr{Number}
+\def\teilnehmerm{Manuel Lippert}
+\def\emailm{Manuel.Lippert@uni-bayreuth.de}
 
 \begin{titlepage}
 			
@@ -53,56 +38,27 @@
     {\fontsize{30}{0}\sffamily\ruleline{\textcolor{\farbe}{\textbf{\fach}}}\par}
     \vspace{6cm}
 	{\Large\sffamily \ruleline{\name}\par}
-		
-	\IfSubStr {\titel} {\\[0,5cm]} {\setboolean{twoRows}{true}} {\setboolean{twoRows}{false}}
 	
-	\ifthenelse{\boolean{twoRows}}
-		{
-			\begin{textblock*}{21cm}(0cm,7,8cm) % {block width} (coords), centered		
-				{\fontsize{\schriftgrosse}{0}\sffamily\textcolor{\farbe}{\textbf{\titel}}\par}
-			\end{textblock*}
-		}
-		{
-			\begin{textblock*}{21cm}(0cm,9cm) % {block width} (coords), centered		
-				{\fontsize{\schriftgrosse}{0}\sffamily\textcolor{\farbe}{\textbf{\titel}}\par}
-			\end{textblock*} 
-		}
-	
-	% Choose Logo
-	\ifthenelse {\equal{\farbe}{Notared}} {\def\logo{Pictures/Logo/UniBTNotared}}
-		{\ifthenelse {\equal{\farbe}{Notagreen}} {\def\logo{Pictures/Logo/UniBTNotagreen}}
-			{\ifthenelse {\equal{\farbe}{Notablue}} {\def\logo{Pictures/Logo/UniBTNotablue}}
-				{\ifthenelse {\equal{\farbe}{Notaorange}} {\def\logo{Pictures/Logo/UniBTNotaorange}}
-					{\ifthenelse {\equal{\farbe}{Notagrey}} {\def\logo{Pictures/Logo/UniBTNotagrey}}
-						{\ifthenelse {\equal{\farbe}{Notalavendel}} {\def\logo{Pictures/Logo/UniBTNotalavendel}}	
-							{\ifthenelse {\equal{\farbe}{black}} {\def\logo{Pictures/Logo/UniBT}}	
-								{\def\logo{noLogo}}
-							}
-						}
-					}
-				}
-			}
-		}	
 
-	\IfSubStr{\logo}{noLogo}{\setboolean{symbol}{false}}{\setboolean{symbol}{true}}
+	\begin{textblock*}{21cm}(0cm,8cm) % {block width} (coords), centered		
+		{\fontsize{\schriftgrosse}{0}\sffamily\textcolor{\farbe}{\textbf{\titel}}\par}
+	\end{textblock*}
 	
 	% Group
 	\vspace{10cm}
-	{\large\sffamily{Group \groupnr}}
+	%{\large\sffamily{Group \groupnr}}
 	
 	%Logo
 	\vfill
 
-	\ifthenelse{\boolean{symbol}}
-		{
-			\begin{figure}[h]
-			\begin{center}
-				
-				\includegraphics[width=2cm]{\logo}
-				
-			\end{center}
-			\end{figure}
-		}
+	\begin{figure}[h]
+		\begin{center}
+		
+			\includegraphics[width=2cm]{\logo}
+		
+		\end{center}
+	\end{figure}
+
 	
 \end{titlepage}
 
@@ -117,8 +73,6 @@
 	{\textbf{Day}} \hspace{1cm} & \hspace{1cm} {\datum}\\[0,2cm]
 	{\textbf{Place}} \hspace{1cm} & \hspace{1cm} {\platz}\\[0,2cm]
 	{\textbf{Supervisor}} \hspace{1cm} & \hspace{1cm} {\betreuer}\\[1,2cm]
-	{\textbf{Group Nr.}} \hspace{1cm} & \hspace{1cm} {\groupnr}\\[0.2cm]
-	{\textbf{Participant}} \hspace{1cm} & \hspace{1cm} {\teilnehmerm~(\emailm)}\\[0.2cm]
-						  \hspace{1cm} & \hspace{1cm} {\teilnehmerp~(\emailp)}\\[0.2cm]
+	{\textbf{Author}} \hspace{1cm} & \hspace{1cm} {\teilnehmerm~(\emailm)}\\
 
 \end{tabular}
