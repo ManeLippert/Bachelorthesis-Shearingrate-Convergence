@@ -11,6 +11,6 @@ This repository is focused on my work for my Bachelor Thesis in Zonal Flows and 
 ## In this Repository:
 * gkw-Code from [Bitbucket](https://bitbucket.org/gkw/gkw/wiki/Home)
 * Journal about my progress and my thoughts 
-* LaTeX-Code of my Bachelor Thesis
+* LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) 
 
 # [Journal](journal/JOURNAL.md) 

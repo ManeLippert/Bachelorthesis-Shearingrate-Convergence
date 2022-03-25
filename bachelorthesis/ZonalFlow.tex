@@ -1,0 +1,102 @@
+% Autor: Manuel Lippert
+% Topic: Bachelor Thesis
+
+% Main-File
+
+
+% Packages
+\documentclass[paper=a4,bibliography=totoc,BCOR=10mm,twoside,numbers=noenddot,fontsize=11pt]{scrreprt}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[latin1, utf8]{inputenc}        %ä, ö, ü included
+\usepackage[babel,german=quotes]{csquotes} %Quotes
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{nicefrac}
+\usepackage{fancyvrb}
+\usepackage{amsmath,amssymb,amstext}
+\usepackage{siunitx}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{microtype}
+\usepackage[format=plain]{caption}
+\usepackage{physics}
+\usepackage{titleref} 
+
+% Additional Packages
+\usepackage{geometry}                      % Geometry
+\usepackage{anyfontsize}                   % All font sizes
+\usepackage[table]{xcolor}                 % Colors in tables
+\usepackage{ifthen}                        % If then statements
+\usepackage[absolute,overlay]{textpos}     % Text boxes
+\usepackage{amsfonts}                      % Fonts
+\usepackage{xstring}                       % String operations
+\usepackage{tikz}                          % Drawings
+\usepackage{pdfpages}                      % Import of pdfs
+\usepackage{hyperref}                      % Links in document
+\usepackage{makecell}                      % New line in tables
+
+% Paragraph changes
+\parindent 0.0cm
+\parskip 0.8ex plus 0.5ex minus 0.5ex
+
+% Count and size of float objects
+% maximal 2 in top and bottom big pictures also possible
+\setcounter{bottomnumber}{2}
+\setcounter{topnumber}{2}
+\renewcommand{\bottomfraction}{1.}
+\renewcommand{\topfraction}{1.}
+\renewcommand{\textfraction}{0.}
+
+%\sc und \bc outdated
+\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
+\DeclareOldFontCommand{\bf}{\normalfont\scshape}{\textbf}
+
+% Various
+\pagestyle{headings}            
+\graphicspath{{./Pictures/}}    % Path for pictures
+\VerbatimFootnotes              % \verb etc. in \footnotes
+
+% Functions
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\newcommand{\vect}[1]{\boldsymbol{\mathbf{#1}}}
+\newcolumntype{g}{>{\columncolor[rgb]{ .741,  .843,  .933}}l}
+% Index not kursive
+\catcode`_=\active
+\newcommand_[1]{\ensuremath{\sb{\mathrm{#1}}}}
+
+\begin{document}
+
+    \nonfrenchspacing
+
+    % 0.Chapter Cover
+    \input{00-Cover/Cover.tex}
+
+    \thispagestyle{empty}
+    \cleardoublepage
+    \tableofcontents
+    \cleardoublepage
+
+    % 1.Chapter Instructions
+    \input{01-Introduction/Introduction.tex}
+
+    % 2.Chapter Theorie
+    \input{02-Theorie/Theorie.tex}
+
+    % 3.Kapitel Protocol
+    \input{03-Protocol/Protocol.tex}
+
+    % 4.Kapitel Evaluation
+    \input{04-Evaluation/Evaluation.tex}
+
+    % 5.Chapter Closure
+    \input{05-Closure/Closure.tex}
+
+    % Appendix
+    %\input{06-Appendix/Appendix.tex}
+
+    % Literatur
+    \bibliographystyle{Bibliography.bst}
+    \bibliography{Bibliography.bib}
+    
+\end{document}
