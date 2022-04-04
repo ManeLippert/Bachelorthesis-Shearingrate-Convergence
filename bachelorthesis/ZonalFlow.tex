@@ -66,38 +66,36 @@
 \newcommand_[1]{\ensuremath{\sb{\mathrm{#1}}}}
 
 \begin{document}
-
     \nonfrenchspacing
-
+    %
     % 0.Chapter Cover
     \input{00-Cover/Cover.tex}
-
+    %
     \thispagestyle{empty}
     \cleardoublepage
     \tableofcontents
     \cleardoublepage
-
+    %
     % 1.Chapter Instructions
     \input{01-Introduction/Introduction.tex}
-
+    %
     % 2.Chapter Theorie
     \input{02-Theorie/Theorie.tex}
-
+    %
     % 3.Kapitel Protocol
     \input{03-Protocol/Protocol.tex}
-
+    %
     % 4.Kapitel Evaluation
     \input{04-Evaluation/Evaluation.tex}
-
+    %
     % 5.Chapter Closure
     \input{05-Closure/Closure.tex}
-
+    %
     % Appendix
     %\input{06-Appendix/Appendix.tex}
-
+    %
     % Literatur
     \nocite{*}
     \bibliographystyle{Bibliography.bst}
     \bibliography{Bibliography.bib}
-    
 \end{document}
