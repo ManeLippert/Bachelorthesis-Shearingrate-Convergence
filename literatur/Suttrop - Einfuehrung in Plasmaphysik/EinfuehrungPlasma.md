@@ -8,7 +8,7 @@
 1.  [Einleitung](#1-einleitung)
 2.  [Gasentladung](#2-gasentladung)
 3.  [Ionisationsgrad des Plasmas](#3-ionisationsgrad-des-plasmas)
-4.  [Coulomb-Stöße](#4-coulomb-stöße)
+4.  [Coulomb-Stöße](#4-coulomb-st%C3%B6%C3%9Fe)
 5.  [Einzelteilchen-Bewegung](#5-einzelteilchen-bewegung)
 6.  [Hochfrequenz-Plasmaentladungen](#6-hochfrequenz-plasmaentladungen)
 7.  [ Kinetische Beschreibung von Plasmen](#7-kinetische-beschreibung-von-plasmen)
