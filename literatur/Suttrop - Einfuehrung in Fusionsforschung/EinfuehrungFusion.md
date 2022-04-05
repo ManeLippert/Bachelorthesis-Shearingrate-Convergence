@@ -89,11 +89,11 @@ Im brennenden Fusionsplasma wird die durch die erzeugten energetischen Alpha-Tei
 
 [Vorlesung (1)](/literatur/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/09-Plasmarandschicht/09-Randschicht1.pdf), [Vorlesung (2)](/literatur/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/09-Plasmarandschicht/09-Randschicht2.pdf)
 
-###Simulation
+### Simulation
 
 [randschicht.py](/literatur/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/09-Plasmarandschicht/randschicht.py)
 
-[xpdp1 (qmach2.inp)](/literatur/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/02-Gasentladungen/xpdp1/)
+[xpdp1](/literatur/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/02-Gasentladungen/xpdp1/) ([qmach2.inp](/literatur/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/02-Gasentladungen/xpdp1/inp/qmach2.inp))
 
 ## 10. Leistungsabfuhr
 
