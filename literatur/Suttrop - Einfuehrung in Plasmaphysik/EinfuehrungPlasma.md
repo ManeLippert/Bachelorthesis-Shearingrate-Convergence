@@ -2,6 +2,19 @@
 
 #### Vorlesung von [Dr. Wolfgang Suttrop](https://www.ipp.mpg.de/4123258/suttrop) im Master Physik an der Universität Bayreuth
 
+## Inhaltsangabe
+1.  [Einleitung](#1-einleitung)
+2.  [Gasentladung](#2-gasentladung)
+3.  [Ionisationsgrad des Plasmas](#3-ionisationsgrad-des-plasmas)
+4.  [Coulomb-Stöße](#4-coulomb-stöße)
+5.  [Einzelteilchen-Bewegung](#5-einzelteilchen-bewegung)
+6.  [Hochfrequenz-Plasmaentladungen](#6-hochfrequenz-plasmaentladungen)
+7.  [ Kinetische Beschreibung von Plasmen](#7-kinetische-beschreibung-von-plasmen)
+8.  [Landau Dämpfung](#8-landau-dämpfung)
+9.  [Flüssigkeitsbeschreibung von Plasma](#9-flüssigkeitsbeschreibung-von-plasma)
+10. [Wellen im kalten Plasma](#10-wellen-im-kalten-plasma)
+11. [Magnetohydrodynmaik](#11-magnetohydrodynamik)
+
 ## 1. Einleitung
 
 Plasmen, ionisiertes Gas, unterscheiden sich in ihren Eigenschaften wesentlich von einem neutralen Gas und werden daher auch der "vierte Aggregatszustand" genannt. Der überwiegende Anteil der sichtbaren Materie ist im Plasmazustand: Alle Sterne, interstellares Gas, u.v.m. Die langreichweitigen elektromagnetischen Kräfte zwischen den geladenen Plasmateilchen verursachen eine Vielzahl von kollektiven Effekten in einem Plasma.
