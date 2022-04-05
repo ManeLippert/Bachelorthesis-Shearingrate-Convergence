@@ -1,5 +1,4 @@
-##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/journal/JOURNAL.md)
-
+##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/journal/JOURNAL.md) &nbsp; &nbsp; &nbsp; &nbsp; Literatur &nbsp; [[1]](/literatur/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) [[2]](/literatur/Peeters%2C%20Rath%2C%20Buchholz%20-%20Comparison%20of%20gradient%20and%20flux%20driven%20gyro-%0Akinetic%20turbulent%20transport%20(Paper%2C%202016).pdf) [[3]](/literatur/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/EinfuehrungPlasma.md) [[4]](/literatur/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/EinfuehrungFusion.md)
 # Title
 
 ## Day Date Duration Participants
