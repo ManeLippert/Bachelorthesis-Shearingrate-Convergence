@@ -1,0 +1,73 @@
+vrfda.inp
+Voltage-driven RF discharge with electron and ion-neutral collisions (Argon mass).
+
+-nsp---nc---nc2p---dt[s]---length[m]--area[m^2]--epsilonr---B[Tesla]---PSI[D]--
+  2   300   3e8    2e-10     0.05       0.01        1.0       0.0       0.0
+
+-rhoback[C/m^3]---backj[Amp/m^2]---dde--extR[Ohm]---extL[H]---extC[F]---q0[C]-
+     0.0               0.0         0.0    0.0         0.0      1.0       0.0 
+
+-dcramped--source--dc[V|Amp]--ramp[(V|Amp)/s]---ac[V|Amp]---f0[Hz]--theta0[D]-
+   0         v        0.0          0.0            300      13.56e6     0.0     
+
+--secondary--e_collisional--i_collisional---reflux--nfft--n_ave--nsmoothing--ntimestep--
+      0           1               2           0      0     1       5          100
+
+--seec(electrons)--seec(ions)--ion species---Gpressure[Torr]---GTemp[eV]---imp--
+       0.0           0.2           2            5e-2            0.026       0
+
+---GAS----psource--nstrt--vol_source--begin_pt--end_pt--ionization_energy
+    2      0        0       0          0        0.03        0
+
+
+SPECIES 1
+
+----q[C]-------m[Kg]---j0L[Amp/m^2]---j0R[Amp/m^2]----initn[m^-3]----k---
+ -1.602e-19   9.11e-31     0.              0.            5e14        1
+
+--vx0L[m/s]---vxtL[m/s]--vxcL[m/s]---vxLloader(0=RNDM,1=QS)--
+     0.0       5.9e5        0.0          1             
+
+--vx0R[m/s]---vxtR[m/s]--vxcR[m/s]---vxRloader
+     0.0      5.9e5        0          1
+
+--v0y[m/s]---vty[m/s]---vyloader---v0z[m/s]---vtz[m/s]--vzloader--
+     0.0      5.9e5       1          0.0       5.9e5       1
+
+--nbin----Emin[eV]----Emax[ev]---max-np--
+   150       0.0         50.0      50000
+
+-For-Mid-Diagnostic---nbin----Emin[eV]---Emax[eV]----XStart--XFinish--
+                      100       0.0       15.0        .010    .040
+
+ -For-vel_dist---vx_lower--vx_upper--nxbin--vy_lower--vy_upper--nybin--vz_lower--vz_upper--nzbin-
+                   -1.5e6   1.5e6      0      -1.5e6     1.5e6     0      -1.5e6   1.5e6      0
+
+SPECIES 2
+
+----q[C] ------m[Kg]---j0L[Amp/m^2]---j0R[Amp/m^2]----initn[m^-3]----k---
+  1.602e-19   6.68e-26     0.              0.            5e14       10
+
+--vx0L[m/s]---vx0R[m/s]---vxtL[m/s]---vxtR[m/s]--vxcL[m/s]--vxcR[m/s]---
+    0.         0.          2.19e3      2.19e3       0.         0.
+
+--v0y[m/s]---vty[m/s]---v0z[m/s]---vtz[m/s]--
+     0.0        0.0       0.0        0.0
+
+--vx0L[m/s]---vxtL[m/s]--vxcL[m/s]---vxLloader(0=RNDM,1=QS)--
+     0.0       2.19e3        0.          0             
+
+--vx0R[m/s]---vxtR[m/s]--vxcR[m/s]---vxRloader
+     0.0      2.19e3        0          0
+
+--v0y[m/s]---vty[m/s]---vyloader---v0z[m/s]---vtz[m/s]--vzloader--
+     0.0        2.19e3      0           0.0        2.19e3         0
+
+--nbin----Emin[eV]----Emax[ev]---max-np--
+    50       0.0        200.0      50000
+
+-For-Mid-Diagnostic---nbin----Emin[eV]---Emax[eV]----XStart--XFinish--
+                      100       0.0       15.0        .010    .040
+
+ -For-vel_dist---vx_lower--vx_upper--nxbin--vy_lower--vy_upper--nybin--vz_lower--vz_upper--nzbin-
+                   -1.5e6   1.5e6      0      -1.5e6     1.5e6     0      -1.5e6   1.5e6      0

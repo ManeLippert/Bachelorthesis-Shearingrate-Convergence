@@ -1,0 +1,2340 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 72 72 540 730
+%%Creator: XGrafix 2.40 Copyright 1991-93 The Regents of the University of California
+%%Title: bmaxwell4nx.eps
+%%Pages: 1 1
+%%EndComments
+%%Begin XGrafix PS Macros
+
+/prtstrfrommidlow {dup stringwidth pop
+ 2 div currentpoint pop exch sub currentpoint
+ exch pop moveto show} def
+
+/prtstrfrommidup {dup stringwidth currentpoint
+ 3 -1 roll sub exch 3 -1 roll 2 div sub exch
+ moveto show} def
+
+/prtstrfromritlow {dup stringwidth pop
+ currentpoint pop exch sub currentpoint
+ exch pop moveto show} def
+
+/prtstrfromritup {dup stringwidth currentpoint
+ 3 -1 roll sub exch 3 -1 roll sub exch
+ moveto show} def
+
+/prtstrfromlftup {dup stringwidth exch pop
+ currentpoint 3 -1 roll sub moveto show} def
+
+/rectangle {4 -1 roll 4 -1 roll
+ dup 5 1 roll exch dup 6 1 roll exch
+ moveto 3 1 roll dup 5 1 roll exch lineto dup
+ 4 -1 roll exch lineto lineto closepath stroke} def
+
+/poly {newpath moveto lineto
+ lineto lineto closepath stroke} def
+
+/bbwfpoly {newpath moveto lineto
+ lineto lineto closepath gsave 1 setgray
+ fill grestore 0 setgray stroke} def
+
+/bbcfpoly {newpath moveto lineto
+ lineto lineto closepath gsave fill
+ grestore 0 setgray stroke} def
+
+/nbcfpoly {newpath moveto lineto
+ lineto lineto closepath fill} def
+
+/cbwfpoly {newpath moveto lineto
+ lineto lineto closepath gsave 1
+ setgray fill grestore stroke} def
+
+/sp0 {(.) prtstrfrommidlow} def
+/sp1 {(o) prtstrfrommidlow} def
+/sp2 {(*) prtstrfrommidlow} def
+/sp3 {(x) prtstrfrommidlow} def
+/sp4 {(+) prtstrfrommidlow} def
+/sp5 {(#) prtstrfrommidlow} def
+/sp6 {(@) prtstrfrommidlow} def
+
+%Dash line type definitions
+/Dash0 {[] 0 setdash} def
+/Dash1 {[0 2] 2 setdash} def
+/Dash2 {[4 1 3] 5 setdash} def
+/Dash3 {[2 6] 2 setdash} def
+/Dash4 {[1 2] 4 setdash} def
+/Dash5 {[3 1] 7 setdash} def
+
+%Define how to draw an arrow
+/arw
+{
+gsave
+/y1 exch def
+/x1 exch def
+/y0 exch def
+/x0 exch def
+/dx x1 x0 sub def
+/dy y1 y0 sub def
+0 dx ne 0 dy ne or {
+/angle dy dx atan def
+/length dx dx mul dy dy mul add sqrt .35 mul def
+x0 y0 moveto
+x1 y1 lineto
+stroke
+x1 y1 translate
+angle 70 add rotate
+newpath
+0 0 moveto
+0 length rmoveto
+0 length neg rlineto
+40 rotate
+0 length rlineto
+closepath fill
+stroke
+} {x0 y0 moveto sp0} ifelse grestore
+} def
+
+%Scratch string space
+/str 20 string def
+
+%Define macro for linear tick marks alog x
+/doxlintickmarks {
+ xps2 xps2 xps1 sub xmax xmin sub div xmax mul sub yps1 moveto
+ xps2 xps2 xps1 sub xmax xmin sub div xmax mul sub yps1 4 add lineto
+ xps2 xps2 xps1 sub xmax xmin sub div xmax mul sub yps2 4 sub moveto
+ xps2 xps2 xps1 sub xmax xmin sub div xmax mul sub yps2 lineto
+ stroke} def
+
+%Define macro for log tick marks alog x
+/doxlogtickmarks {
+ dup xps2 xps1 sub mul dtklog div xps1 add yps1 moveto
+ dup xps2 xps1 sub mul dtklog div xps1 add yps1 4 add lineto
+ dup xps2 xps1 sub mul dtklog div xps1 add yps2 4 sub moveto
+ xps2 xps1 sub mul dtklog div xps1 add yps2 lineto
+ stroke} def
+
+%Define macro for linear tick marks alog y
+/doylintickmarks {
+ xps1 yps2 yps2 yps1 sub ymax ymin sub div ymax mul sub moveto
+ xps1 4 add yps2 yps2 yps1 sub ymax ymin sub div ymax mul sub lineto
+ xps2 4 sub yps2 yps2 yps1 sub ymax ymin sub div ymax mul sub moveto
+ xps2 yps2 yps2 yps1 sub ymax ymin sub div ymax mul sub lineto
+ stroke} def
+
+%Define macro for log tick marks alog y
+/doylogtickmarks {
+ dup yps2 yps1 sub mul dtklog div yps1 add xps1 exch moveto
+ dup yps2 yps1 sub mul dtklog div yps1 add xps1 4 add exch lineto
+ dup yps2 yps1 sub mul dtklog div yps1 add xps2 4 sub exch moveto
+ yps2 yps1 sub mul dtklog div yps1 add xps2 exch lineto
+ stroke} def
+
+%Print the XGrafix logo
+90 rotate
+/Times-BoldItalic findfont 6 scalefont setfont
+770 -590 moveto (XGrafix 2.40) prtstrfromritlow
+-90 rotate
+
+%%End XGrafix PS Macros
+
+%Translate and rotate
+.38194 .38194 scale
+70 1150 translate
+
+%Limits of the bounding box (PS and physical)
+/xps1 108 def
+/yps1 108 def
+/xps2 684 def
+/yps2 504 def
+/xmin 0 def
+/xmax 0.05 def
+/xscale 0.000195313 def
+/ymin 0 def
+/ymax 1.11853E+13 def
+/yscale 6.656E+11 def
+
+%Draw boundary, and Draw X and Y limits
+1 setlinewidth
+0 setgray
+108 108 684 504 rectangle
+
+/Times-Bold findfont 18 scalefont setfont
+xps1 yps1 16 sub moveto
+xmin str cvs prtstrfromlftup
+xps2 yps1 16 sub moveto
+xmax str cvs prtstrfromritup
+xps1 8 sub yps2 9 sub moveto
+ymax str cvs prtstrfromritup
+xps1 8 sub yps1 moveto
+ymin str cvs prtstrfromritlow
+
+%Printing the labels
+90 rotate
+/Times-BoldItalic findfont 18 scalefont setfont
+yps1 yps2 add 2 div 8 xps1 sub moveto
+(Time Ave n(x)) prtstrfrommidlow
+-90 rotate
+xps1 xps2 add 2 div yps1 16 sub moveto
+(X) prtstrfrommidup
+%Setting up the clipping region
+/boundary {newpath xps1 yps1 moveto xps2 yps1 lineto
+ xps2 yps2 lineto xps1 yps2 lineto closepath} def
+gsave boundary clip
+
+%Drawing the tick marks
+.8 setlinewidth
+doxlintickmarks
+doylintickmarks
+
+%Determining scaling coefficients
+/my {yps2 yps1 sub ymax ymin sub div yscale mul} def
+/by {yps1 ymax mul yps2 ymin mul sub ymax ymin sub div 0.5 add} def
+/mx {xps2 xps1 sub xmax xmin sub div xscale mul} def
+/bx {xps1 xmax mul xps2 xmin mul sub xmax xmin sub div 0.5 add} def
+
+/mv {exch mx mul bx add exch my mul by add moveto} def
+/ln {exch mx mul bx add exch my mul by add lineto} def
+
+%Printing the actual plots
+1.5 setlinewidth
+0 setgray
+Dash0
+newpath 0 0 mv
+1 0 ln
+2 0.0054533 ln
+3 0.104945 ln
+4 0.43476 ln
+5 0.941978 ln
+6 1.46398 ln
+7 1.86079 ln
+8 1.99267 ln
+9 2.02936 ln
+10 2.29885 ln
+11 2.74452 ln
+12 3.09869 ln
+13 3.32839 ln
+14 3.6371 ln
+15 4.05749 ln
+16 4.44653 ln
+17 4.76827 ln
+18 4.85107 ln
+19 4.5576 ln
+20 4.24642 ln
+21 4.35842 ln
+22 4.86732 ln
+23 5.39823 ln
+24 5.72422 ln
+25 5.96068 ln
+26 6.29644 ln
+27 6.90058 ln
+28 7.7143 ln
+29 8.09693 ln
+30 7.66335 ln
+31 6.99734 ln
+32 6.84095 ln
+33 7.48705 ln
+34 8.61889 ln
+35 9.55061 ln
+36 10.0908 ln
+37 10.4857 ln
+38 10.8808 ln
+39 11.3272 ln
+40 11.4469 ln
+41 10.8147 ln
+42 10.0733 ln
+43 10.0224 ln
+44 10.4044 ln
+45 10.8575 ln
+46 11.307 ln
+47 11.2748 ln
+48 10.6637 ln
+49 10.2117 ln
+50 10.0763 ln
+51 9.6877 ln
+52 9.18441 ln
+53 9.18729 ln
+54 9.43201 ln
+55 9.27943 ln
+56 8.89783 ln
+57 8.76366 ln
+58 8.89655 ln
+59 9.00079 ln
+60 9.01304 ln
+61 9.35338 ln
+62 10.2601 ln
+63 11.5317 ln
+64 12.8479 ln
+65 13.4019 ln
+66 12.6394 ln
+67 11.5626 ln
+68 11.6133 ln
+69 12.675 ln
+70 13.3187 ln
+71 13.129 ln
+72 13.0586 ln
+73 13.1471 ln
+74 12.6315 ln
+75 11.7981 ln
+76 11.338 ln
+77 11.1913 ln
+78 11.1738 ln
+79 11.3354 ln
+80 11.4882 ln
+81 11.4209 ln
+82 11.3017 ln
+83 11.2982 ln
+84 11.3562 ln
+85 11.4469 ln
+86 11.7527 ln
+87 12.4593 ln
+88 13.043 ln
+89 12.9155 ln
+90 12.622 ln
+91 12.8011 ln
+92 13.3421 ln
+93 14.0059 ln
+94 14.4823 ln
+95 14.7863 ln
+96 15.5649 ln
+97 16.6757 ln
+98 16.8048 ln
+99 15.3217 ln
+100 13.28 ln
+101 12.2236 ln
+102 12.3619 ln
+103 12.7649 ln
+104 13.2454 ln
+105 14.1774 ln
+106 14.9738 ln
+107 15.0676 ln
+108 15.0684 ln
+109 15.3227 ln
+110 15.3756 ln
+111 15.225 ln
+112 15.2564 ln
+113 15.3296 ln
+114 15.0626 ln
+115 14.6855 ln
+116 14.9729 ln
+117 15.9603 ln
+118 16.4746 ln
+119 15.7307 ln
+120 14.3644 ln
+121 13.4239 ln
+122 13.1231 ln
+123 12.7869 ln
+124 12.0026 ln
+125 11.3326 ln
+126 11.2869 ln
+127 11.6064 ln
+128 12.1715 ln
+129 13.2125 ln
+130 14.309 ln
+131 14.6864 ln
+132 14.4166 ln
+133 14.0296 ln
+134 13.4949 ln
+135 12.7971 ln
+136 12.6232 ln
+137 13.4066 ln
+138 14.5033 ln
+139 14.9375 ln
+140 14.5419 ln
+141 13.6858 ln
+142 12.7974 ln
+143 12.6783 ln
+144 13.6051 ln
+145 14.8187 ln
+146 15.711 ln
+147 16.0376 ln
+148 15.6273 ln
+149 14.8541 ln
+150 14.2821 ln
+151 14.1068 ln
+152 14.5689 ln
+153 15.5549 ln
+154 16.171 ln
+155 15.9718 ln
+156 15.4756 ln
+157 15.0735 ln
+158 14.5244 ln
+159 13.7776 ln
+160 13.6156 ln
+161 14.5425 ln
+162 15.6189 ln
+163 15.617 ln
+164 14.5868 ln
+165 13.6544 ln
+166 13.3906 ln
+167 13.0078 ln
+168 12.1082 ln
+169 11.4495 ln
+170 11.3214 ln
+171 11.4173 ln
+172 11.7228 ln
+173 11.976 ln
+174 11.5155 ln
+175 10.4075 ln
+176 9.50481 ln
+177 9.49908 ln
+178 10.483 ln
+179 11.682 ln
+180 11.8954 ln
+181 10.8935 ln
+182 9.73408 ln
+183 9.49424 ln
+184 10.2183 ln
+185 11.1026 ln
+186 11.739 ln
+187 12.6089 ln
+188 13.743 ln
+189 14.2391 ln
+190 13.7874 ln
+191 13.303 ln
+192 13.3966 ln
+193 13.3369 ln
+194 12.5139 ln
+195 11.7574 ln
+196 11.8537 ln
+197 12.2711 ln
+198 12.4746 ln
+199 12.5887 ln
+200 12.5293 ln
+201 12.114 ln
+202 11.3963 ln
+203 10.5259 ln
+204 9.97336 ln
+205 10.039 ln
+206 10.3705 ln
+207 10.7202 ln
+208 11.0106 ln
+209 10.9471 ln
+210 10.5365 ln
+211 10.0686 ln
+212 9.52236 ln
+213 8.91329 ln
+214 8.58633 ln
+215 8.67252 ln
+216 9.07127 ln
+217 9.54448 ln
+218 9.53871 ln
+219 9.17494 ln
+220 9.31195 ln
+221 9.50955 ln
+222 8.77785 ln
+223 7.74253 ln
+224 7.17749 ln
+225 7.08847 ln
+226 7.69647 ln
+227 8.52406 ln
+228 8.41555 ln
+229 7.36715 ln
+230 6.26384 ln
+231 5.57449 ln
+232 5.3312 ln
+233 5.33389 ln
+234 5.15762 ln
+235 4.62188 ln
+236 3.87727 ln
+237 3.00882 ln
+238 2.21015 ln
+239 1.79539 ln
+240 1.78404 ln
+241 1.94664 ln
+242 2.1228 ln
+243 2.32014 ln
+244 2.49729 ln
+245 2.43499 ln
+246 2.01323 ln
+247 1.46327 ln
+248 1.14582 ln
+249 1.07329 ln
+250 0.951829 ln
+251 0.673312 ln
+252 0.364998 ln
+253 0.136599 ln
+254 0.0251124 ln
+255 0 ln
+256 0 ln
+stroke
+
+Dash1
+newpath 0 0 mv
+1 0 ln
+2 0 ln
+3 0 ln
+4 0 ln
+5 0 ln
+6 0 ln
+7 0 ln
+8 0.000298327 ln
+9 0.0120734 ln
+10 0.0645644 ln
+11 0.16288 ln
+12 0.262217 ln
+13 0.353108 ln
+14 0.534233 ln
+15 0.908559 ln
+16 1.41002 ln
+17 1.84165 ln
+18 2.08876 ln
+19 2.17138 ln
+20 2.16001 ln
+21 2.2154 ln
+22 2.54406 ln
+23 3.17521 ln
+24 3.98629 ln
+25 4.83897 ln
+26 5.63607 ln
+27 6.34122 ln
+28 6.76573 ln
+29 6.84901 ln
+30 6.98879 ln
+31 7.17083 ln
+32 7.01669 ln
+33 7.00524 ln
+34 7.71834 ln
+35 8.56302 ln
+36 8.8027 ln
+37 8.81562 ln
+38 9.15793 ln
+39 9.40125 ln
+40 9.13911 ln
+41 8.92772 ln
+42 9.10401 ln
+43 9.31518 ln
+44 9.79842 ln
+45 10.8509 ln
+46 11.3755 ln
+47 10.5383 ln
+48 9.36778 ln
+49 8.95701 ln
+50 9.18989 ln
+51 9.62835 ln
+52 10.0592 ln
+53 10.3008 ln
+54 10.3046 ln
+55 10.3101 ln
+56 10.4576 ln
+57 10.7258 ln
+58 11.2241 ln
+59 11.9212 ln
+60 12.3972 ln
+61 12.3129 ln
+62 11.7935 ln
+63 11.1445 ln
+64 10.8237 ln
+65 11.2982 ln
+66 12.1611 ln
+67 12.4679 ln
+68 12.172 ln
+69 12.0216 ln
+70 12.3043 ln
+71 12.5055 ln
+72 12.2006 ln
+73 11.5985 ln
+74 11.0247 ln
+75 10.8313 ln
+76 11.3175 ln
+77 12.103 ln
+78 12.4684 ln
+79 12.0619 ln
+80 11.1067 ln
+81 10.351 ln
+82 10.4162 ln
+83 11.2347 ln
+84 12.1516 ln
+85 12.4946 ln
+86 12.2345 ln
+87 11.9701 ln
+88 12.1808 ln
+89 12.4966 ln
+90 12.2871 ln
+91 11.7192 ln
+92 11.1863 ln
+93 10.7649 ln
+94 10.7624 ln
+95 11.4962 ln
+96 12.7314 ln
+97 13.9036 ln
+98 14.6081 ln
+99 14.8687 ln
+100 14.9354 ln
+101 14.8568 ln
+102 14.3921 ln
+103 13.4626 ln
+104 12.6582 ln
+105 12.6698 ln
+106 13.3061 ln
+107 13.999 ln
+108 14.5445 ln
+109 14.6517 ln
+110 14.0415 ln
+111 13.0662 ln
+112 12.3222 ln
+113 11.9728 ln
+114 11.9596 ln
+115 12.4669 ln
+116 13.3695 ln
+117 13.9241 ln
+118 13.7634 ln
+119 13.1364 ln
+120 12.3541 ln
+121 11.7167 ln
+122 11.4088 ln
+123 11.5527 ln
+124 12.1528 ln
+125 12.6559 ln
+126 12.4936 ln
+127 12.0438 ln
+128 12.0739 ln
+129 12.4747 ln
+130 12.3344 ln
+131 11.3091 ln
+132 10.349 ln
+133 10.3919 ln
+134 11.1359 ln
+135 11.9747 ln
+136 12.8508 ln
+137 13.7738 ln
+138 14.3317 ln
+139 13.9087 ln
+140 12.766 ln
+141 12.1406 ln
+142 12.5062 ln
+143 13.0866 ln
+144 13.2763 ln
+145 13.3668 ln
+146 13.9714 ln
+147 15.1009 ln
+148 16.0808 ln
+149 16.4819 ln
+150 16.4304 ln
+151 16.0221 ln
+152 15.1418 ln
+153 13.8254 ln
+154 12.5802 ln
+155 12.1042 ln
+156 12.516 ln
+157 13.2131 ln
+158 13.4264 ln
+159 12.9582 ln
+160 12.5399 ln
+161 12.6945 ln
+162 12.8523 ln
+163 12.5395 ln
+164 12.0077 ln
+165 11.525 ln
+166 11.4088 ln
+167 11.9808 ln
+168 12.8891 ln
+169 13.404 ln
+170 13.2326 ln
+171 12.7883 ln
+172 12.6971 ln
+173 12.9362 ln
+174 13.002 ln
+175 12.6889 ln
+176 12.3578 ln
+177 12.4521 ln
+178 12.749 ln
+179 12.8728 ln
+180 12.9981 ln
+181 13.2072 ln
+182 13.0499 ln
+183 12.0784 ln
+184 10.6528 ln
+185 9.75423 ln
+186 9.70378 ln
+187 9.90979 ln
+188 9.85498 ln
+189 9.77943 ln
+190 10.1917 ln
+191 10.8906 ln
+192 11.3267 ln
+193 11.4463 ln
+194 11.4157 ln
+195 11.3348 ln
+196 11.3362 ln
+197 11.3747 ln
+198 11.0749 ln
+199 10.1042 ln
+200 8.84255 ln
+201 8.26784 ln
+202 8.81317 ln
+203 9.70006 ln
+204 9.80411 ln
+205 9.02738 ln
+206 8.16461 ln
+207 7.67348 ln
+208 7.5185 ln
+209 7.77763 ln
+210 8.43271 ln
+211 9.04151 ln
+212 9.35105 ln
+213 9.5086 ln
+214 9.6342 ln
+215 10.0228 ln
+216 10.7243 ln
+217 10.8658 ln
+218 9.90356 ln
+219 8.7134 ln
+220 8.30873 ln
+221 8.48866 ln
+222 8.51072 ln
+223 8.14273 ln
+224 7.57844 ln
+225 7.21172 ln
+226 7.44917 ln
+227 8.15325 ln
+228 8.63312 ln
+229 8.33895 ln
+230 7.36883 ln
+231 6.32976 ln
+232 5.5737 ln
+233 4.85626 ln
+234 4.06091 ln
+235 3.37475 ln
+236 2.7287 ln
+237 2.04425 ln
+238 1.49996 ln
+239 1.2001 ln
+240 1.07791 ln
+241 1.01899 ln
+242 0.984198 ln
+243 0.976317 ln
+244 0.900715 ln
+245 0.688121 ln
+246 0.423944 ln
+247 0.210006 ln
+248 0.0755632 ln
+249 0.0153661 ln
+250 0.00098108 ln
+251 0 ln
+252 0 ln
+253 0 ln
+254 0 ln
+255 0 ln
+256 0 ln
+stroke
+
+grestore
+680 0 translate
+
+%Limits of the bounding box (PS and physical)
+/xps1 108 def
+/yps1 108 def
+/xps2 684 def
+/yps2 504 def
+/xmin 0 def
+/xmax 5.8368E-06 def
+/xscale 1 def
+/ymin 2383 def
+/ymax 3846 def
+/yscale 1 def
+
+%Draw boundary, and Draw X and Y limits
+1 setlinewidth
+0 setgray
+108 108 684 504 rectangle
+
+/Times-Bold findfont 18 scalefont setfont
+xps1 yps1 16 sub moveto
+xmin str cvs prtstrfromlftup
+xps2 yps1 16 sub moveto
+xmax str cvs prtstrfromritup
+xps1 8 sub yps2 9 sub moveto
+ymax str cvs prtstrfromritup
+xps1 8 sub yps1 moveto
+ymin str cvs prtstrfromritlow
+
+%Printing the labels
+90 rotate
+/Times-BoldItalic findfont 18 scalefont setfont
+yps1 yps2 add 2 div 8 xps1 sub moveto
+(Number(t)) prtstrfrommidlow
+-90 rotate
+xps1 xps2 add 2 div yps1 16 sub moveto
+(Time) prtstrfrommidup
+%Setting up the clipping region
+/boundary {newpath xps1 yps1 moveto xps2 yps1 lineto
+ xps2 yps2 lineto xps1 yps2 lineto closepath} def
+gsave boundary clip
+
+%Drawing the tick marks
+.8 setlinewidth
+doxlintickmarks
+doylintickmarks
+
+%Determining scaling coefficients
+/my {yps2 yps1 sub ymax ymin sub div yscale mul} def
+/by {yps1 ymax mul yps2 ymin mul sub ymax ymin sub div 0.5 add} def
+/mx {xps2 xps1 sub xmax xmin sub div xscale mul} def
+/bx {xps1 xmax mul xps2 xmin mul sub xmax xmin sub div 0.5 add} def
+
+/mv {exch mx mul bx add exch my mul by add moveto} def
+/ln {exch mx mul bx add exch my mul by add lineto} def
+
+%Printing the actual plots
+1.5 setlinewidth
+0 setgray
+Dash0
+newpath 0 3846 mv
+2.56E-08 3817 ln
+5.12E-08 3789 ln
+7.68E-08 3760 ln
+1.024E-07 3729 ln
+1.28E-07 3704 ln
+1.536E-07 3677 ln
+1.792E-07 3650 ln
+2.048E-07 3626 ln
+2.304E-07 3597 ln
+2.56E-07 3568 ln
+2.816E-07 3541 ln
+3.072E-07 3521 ln
+3.328E-07 3496 ln
+3.584E-07 3470 ln
+3.84E-07 3449 ln
+4.096E-07 3421 ln
+4.352E-07 3392 ln
+4.608E-07 3362 ln
+4.864E-07 3337 ln
+5.12E-07 3315 ln
+5.376E-07 3292 ln
+5.632E-07 3271 ln
+5.888E-07 3253 ln
+6.144E-07 3234 ln
+6.4E-07 3215 ln
+6.656E-07 3194 ln
+6.912E-07 3174 ln
+7.168E-07 3157 ln
+7.424E-07 3136 ln
+7.68E-07 3119 ln
+7.936E-07 3106 ln
+8.192E-07 3089 ln
+8.448E-07 3071 ln
+8.704E-07 3060 ln
+8.96E-07 3045 ln
+9.216E-07 3041 ln
+9.472E-07 3024 ln
+9.728E-07 3011 ln
+9.984E-07 3003 ln
+1.024E-06 2995 ln
+1.0496E-06 2981 ln
+1.0752E-06 2975 ln
+1.1008E-06 2965 ln
+1.1264E-06 2951 ln
+1.152E-06 2939 ln
+1.1776E-06 2930 ln
+1.2032E-06 2919 ln
+1.2288E-06 2911 ln
+1.2544E-06 2902 ln
+1.28E-06 2892 ln
+1.3056E-06 2886 ln
+1.3312E-06 2878 ln
+1.3568E-06 2868 ln
+1.3824E-06 2858 ln
+1.408E-06 2851 ln
+1.4336E-06 2843 ln
+1.4592E-06 2834 ln
+1.4848E-06 2822 ln
+1.5104E-06 2815 ln
+1.536E-06 2806 ln
+1.5616E-06 2800 ln
+1.5872E-06 2797 ln
+1.6128E-06 2790 ln
+1.6384E-06 2782 ln
+1.664E-06 2777 ln
+1.6896E-06 2772 ln
+1.7152E-06 2761 ln
+1.7408E-06 2752 ln
+1.7664E-06 2749 ln
+1.792E-06 2744 ln
+1.8176E-06 2741 ln
+1.8432E-06 2736 ln
+1.8688E-06 2732 ln
+1.8944E-06 2727 ln
+1.92E-06 2720 ln
+1.9456E-06 2716 ln
+1.9712E-06 2709 ln
+1.9968E-06 2708 ln
+2.0224E-06 2706 ln
+2.048E-06 2703 ln
+2.0736E-06 2700 ln
+2.0992E-06 2695 ln
+2.1248E-06 2692 ln
+2.1504E-06 2688 ln
+2.176E-06 2685 ln
+2.2016E-06 2679 ln
+2.2272E-06 2678 ln
+2.2528E-06 2675 ln
+2.2784E-06 2674 ln
+2.304E-06 2673 ln
+2.3296E-06 2672 ln
+2.3552E-06 2669 ln
+2.3808E-06 2665 ln
+2.4064E-06 2664 ln
+2.432E-06 2663 ln
+2.4576E-06 2661 ln
+2.4832E-06 2660 ln
+2.5088E-06 2660 ln
+2.5344E-06 2658 ln
+2.56E-06 2656 ln
+2.5856E-06 2654 ln
+2.6112E-06 2653 ln
+2.6368E-06 2651 ln
+2.6624E-06 2649 ln
+2.688E-06 2649 ln
+2.7136E-06 2647 ln
+2.7392E-06 2646 ln
+2.7648E-06 2643 ln
+2.7904E-06 2642 ln
+2.816E-06 2639 ln
+2.8416E-06 2639 ln
+2.8672E-06 2638 ln
+2.8928E-06 2637 ln
+2.9184E-06 2637 ln
+2.944E-06 2637 ln
+2.9696E-06 2637 ln
+2.9952E-06 2635 ln
+3.0208E-06 2635 ln
+3.0464E-06 2635 ln
+3.072E-06 2633 ln
+3.0976E-06 2633 ln
+3.1232E-06 2633 ln
+3.1488E-06 2633 ln
+3.1744E-06 2633 ln
+3.2E-06 2633 ln
+3.2256E-06 2633 ln
+3.2512E-06 2633 ln
+3.2768E-06 2633 ln
+3.3024E-06 2633 ln
+3.328E-06 2633 ln
+3.3536E-06 2633 ln
+3.3792E-06 2633 ln
+3.4048E-06 2633 ln
+3.4304E-06 2633 ln
+3.456E-06 2633 ln
+3.4816E-06 2633 ln
+3.5072E-06 2633 ln
+3.5328E-06 2633 ln
+3.5584E-06 2633 ln
+3.584E-06 2633 ln
+3.6096E-06 2633 ln
+3.6352E-06 2633 ln
+3.6608E-06 2633 ln
+3.6864E-06 2633 ln
+3.712E-06 2633 ln
+3.7376E-06 2633 ln
+3.7632E-06 2633 ln
+3.7888E-06 2633 ln
+3.8144E-06 2633 ln
+3.84E-06 2633 ln
+3.8656E-06 2633 ln
+3.8912E-06 2632 ln
+3.9168E-06 2632 ln
+3.9424E-06 2632 ln
+3.968E-06 2631 ln
+3.9936E-06 2631 ln
+4.0192E-06 2631 ln
+4.0448E-06 2631 ln
+4.0704E-06 2629 ln
+4.096E-06 2626 ln
+4.1216E-06 2625 ln
+4.1472E-06 2625 ln
+4.1728E-06 2625 ln
+4.1984E-06 2624 ln
+4.224E-06 2621 ln
+4.2496E-06 2620 ln
+4.2752E-06 2620 ln
+4.3008E-06 2618 ln
+4.3264E-06 2616 ln
+4.352E-06 2616 ln
+4.3776E-06 2614 ln
+4.4032E-06 2613 ln
+4.4288E-06 2612 ln
+4.4544E-06 2611 ln
+4.48E-06 2609 ln
+4.5056E-06 2609 ln
+4.5312E-06 2609 ln
+4.5568E-06 2608 ln
+4.5824E-06 2606 ln
+4.608E-06 2604 ln
+4.6336E-06 2604 ln
+4.6592E-06 2603 ln
+4.6848E-06 2602 ln
+4.7104E-06 2602 ln
+4.736E-06 2600 ln
+4.7616E-06 2598 ln
+4.7872E-06 2597 ln
+4.8128E-06 2596 ln
+4.8384E-06 2596 ln
+4.864E-06 2594 ln
+4.8896E-06 2593 ln
+4.9152E-06 2592 ln
+4.9408E-06 2591 ln
+4.9664E-06 2591 ln
+4.992E-06 2591 ln
+5.0176E-06 2591 ln
+5.0432E-06 2590 ln
+5.0688E-06 2589 ln
+5.0944E-06 2589 ln
+5.12E-06 2589 ln
+5.1456E-06 2589 ln
+5.1712E-06 2589 ln
+5.1968E-06 2589 ln
+5.2224E-06 2589 ln
+5.248E-06 2589 ln
+5.2736E-06 2587 ln
+5.2992E-06 2585 ln
+5.3248E-06 2585 ln
+5.3504E-06 2585 ln
+5.376E-06 2585 ln
+5.4016E-06 2585 ln
+5.4272E-06 2585 ln
+5.4528E-06 2585 ln
+5.4784E-06 2585 ln
+5.504E-06 2585 ln
+5.5296E-06 2585 ln
+5.5552E-06 2585 ln
+5.5808E-06 2585 ln
+5.6064E-06 2585 ln
+5.632E-06 2585 ln
+5.6576E-06 2585 ln
+5.6832E-06 2585 ln
+5.7088E-06 2585 ln
+5.7344E-06 2585 ln
+5.76E-06 2585 ln
+5.7856E-06 2585 ln
+5.8112E-06 2585 ln
+5.8368E-06 2585 ln
+stroke
+
+Dash1
+newpath 0 3846 mv
+2.56E-08 3805 ln
+5.12E-08 3779 ln
+7.68E-08 3760 ln
+1.024E-07 3727 ln
+1.28E-07 3705 ln
+1.536E-07 3687 ln
+1.792E-07 3668 ln
+2.048E-07 3642 ln
+2.304E-07 3623 ln
+2.56E-07 3606 ln
+2.816E-07 3587 ln
+3.072E-07 3561 ln
+3.328E-07 3541 ln
+3.584E-07 3519 ln
+3.84E-07 3502 ln
+4.096E-07 3482 ln
+4.352E-07 3460 ln
+4.608E-07 3433 ln
+4.864E-07 3410 ln
+5.12E-07 3381 ln
+5.376E-07 3350 ln
+5.632E-07 3326 ln
+5.888E-07 3294 ln
+6.144E-07 3280 ln
+6.4E-07 3256 ln
+6.656E-07 3240 ln
+6.912E-07 3219 ln
+7.168E-07 3202 ln
+7.424E-07 3180 ln
+7.68E-07 3159 ln
+7.936E-07 3128 ln
+8.192E-07 3098 ln
+8.448E-07 3067 ln
+8.704E-07 3050 ln
+8.96E-07 3037 ln
+9.216E-07 3017 ln
+9.472E-07 2992 ln
+9.728E-07 2974 ln
+9.984E-07 2953 ln
+1.024E-06 2927 ln
+1.0496E-06 2904 ln
+1.0752E-06 2889 ln
+1.1008E-06 2868 ln
+1.1264E-06 2853 ln
+1.152E-06 2830 ln
+1.1776E-06 2805 ln
+1.2032E-06 2786 ln
+1.2288E-06 2756 ln
+1.2544E-06 2731 ln
+1.28E-06 2720 ln
+1.3056E-06 2703 ln
+1.3312E-06 2689 ln
+1.3568E-06 2680 ln
+1.3824E-06 2670 ln
+1.408E-06 2658 ln
+1.4336E-06 2651 ln
+1.4592E-06 2643 ln
+1.4848E-06 2626 ln
+1.5104E-06 2618 ln
+1.536E-06 2602 ln
+1.5616E-06 2590 ln
+1.5872E-06 2583 ln
+1.6128E-06 2573 ln
+1.6384E-06 2569 ln
+1.664E-06 2563 ln
+1.6896E-06 2560 ln
+1.7152E-06 2549 ln
+1.7408E-06 2538 ln
+1.7664E-06 2531 ln
+1.792E-06 2524 ln
+1.8176E-06 2518 ln
+1.8432E-06 2516 ln
+1.8688E-06 2513 ln
+1.8944E-06 2507 ln
+1.92E-06 2502 ln
+1.9456E-06 2492 ln
+1.9712E-06 2488 ln
+1.9968E-06 2481 ln
+2.0224E-06 2476 ln
+2.048E-06 2472 ln
+2.0736E-06 2466 ln
+2.0992E-06 2461 ln
+2.1248E-06 2460 ln
+2.1504E-06 2454 ln
+2.176E-06 2452 ln
+2.2016E-06 2450 ln
+2.2272E-06 2448 ln
+2.2528E-06 2445 ln
+2.2784E-06 2442 ln
+2.304E-06 2439 ln
+2.3296E-06 2435 ln
+2.3552E-06 2431 ln
+2.3808E-06 2429 ln
+2.4064E-06 2428 ln
+2.432E-06 2426 ln
+2.4576E-06 2425 ln
+2.4832E-06 2423 ln
+2.5088E-06 2422 ln
+2.5344E-06 2419 ln
+2.56E-06 2416 ln
+2.5856E-06 2414 ln
+2.6112E-06 2413 ln
+2.6368E-06 2412 ln
+2.6624E-06 2410 ln
+2.688E-06 2409 ln
+2.7136E-06 2409 ln
+2.7392E-06 2409 ln
+2.7648E-06 2407 ln
+2.7904E-06 2406 ln
+2.816E-06 2406 ln
+2.8416E-06 2406 ln
+2.8672E-06 2406 ln
+2.8928E-06 2405 ln
+2.9184E-06 2405 ln
+2.944E-06 2404 ln
+2.9696E-06 2404 ln
+2.9952E-06 2403 ln
+3.0208E-06 2403 ln
+3.0464E-06 2403 ln
+3.072E-06 2403 ln
+3.0976E-06 2401 ln
+3.1232E-06 2401 ln
+3.1488E-06 2401 ln
+3.1744E-06 2401 ln
+3.2E-06 2401 ln
+3.2256E-06 2401 ln
+3.2512E-06 2401 ln
+3.2768E-06 2401 ln
+3.3024E-06 2401 ln
+3.328E-06 2401 ln
+3.3536E-06 2401 ln
+3.3792E-06 2401 ln
+3.4048E-06 2401 ln
+3.4304E-06 2401 ln
+3.456E-06 2401 ln
+3.4816E-06 2401 ln
+3.5072E-06 2401 ln
+3.5328E-06 2401 ln
+3.5584E-06 2401 ln
+3.584E-06 2401 ln
+3.6096E-06 2401 ln
+3.6352E-06 2401 ln
+3.6608E-06 2401 ln
+3.6864E-06 2401 ln
+3.712E-06 2401 ln
+3.7376E-06 2401 ln
+3.7632E-06 2401 ln
+3.7888E-06 2401 ln
+3.8144E-06 2401 ln
+3.84E-06 2401 ln
+3.8656E-06 2401 ln
+3.8912E-06 2401 ln
+3.9168E-06 2401 ln
+3.9424E-06 2401 ln
+3.968E-06 2401 ln
+3.9936E-06 2399 ln
+4.0192E-06 2399 ln
+4.0448E-06 2399 ln
+4.0704E-06 2399 ln
+4.096E-06 2399 ln
+4.1216E-06 2398 ln
+4.1472E-06 2397 ln
+4.1728E-06 2397 ln
+4.1984E-06 2397 ln
+4.224E-06 2396 ln
+4.2496E-06 2395 ln
+4.2752E-06 2394 ln
+4.3008E-06 2394 ln
+4.3264E-06 2393 ln
+4.352E-06 2393 ln
+4.3776E-06 2392 ln
+4.4032E-06 2390 ln
+4.4288E-06 2389 ln
+4.4544E-06 2389 ln
+4.48E-06 2389 ln
+4.5056E-06 2388 ln
+4.5312E-06 2388 ln
+4.5568E-06 2387 ln
+4.5824E-06 2387 ln
+4.608E-06 2387 ln
+4.6336E-06 2386 ln
+4.6592E-06 2385 ln
+4.6848E-06 2385 ln
+4.7104E-06 2385 ln
+4.736E-06 2385 ln
+4.7616E-06 2385 ln
+4.7872E-06 2385 ln
+4.8128E-06 2385 ln
+4.8384E-06 2385 ln
+4.864E-06 2385 ln
+4.8896E-06 2385 ln
+4.9152E-06 2385 ln
+4.9408E-06 2385 ln
+4.9664E-06 2385 ln
+4.992E-06 2385 ln
+5.0176E-06 2384 ln
+5.0432E-06 2384 ln
+5.0688E-06 2384 ln
+5.0944E-06 2384 ln
+5.12E-06 2383 ln
+5.1456E-06 2383 ln
+5.1712E-06 2383 ln
+5.1968E-06 2383 ln
+5.2224E-06 2383 ln
+5.248E-06 2383 ln
+5.2736E-06 2383 ln
+5.2992E-06 2383 ln
+5.3248E-06 2383 ln
+5.3504E-06 2383 ln
+5.376E-06 2383 ln
+5.4016E-06 2383 ln
+5.4272E-06 2383 ln
+5.4528E-06 2383 ln
+5.4784E-06 2383 ln
+5.504E-06 2383 ln
+5.5296E-06 2383 ln
+5.5552E-06 2383 ln
+5.5808E-06 2383 ln
+5.6064E-06 2383 ln
+5.632E-06 2383 ln
+5.6576E-06 2383 ln
+5.6832E-06 2383 ln
+5.7088E-06 2383 ln
+5.7344E-06 2383 ln
+5.76E-06 2383 ln
+5.7856E-06 2383 ln
+5.8112E-06 2383 ln
+5.8368E-06 2383 ln
+stroke
+
+grestore
+-680 -500 translate
+
+%Limits of the bounding box (PS and physical)
+/xps1 108 def
+/yps1 108 def
+/xps2 684 def
+/yps2 504 def
+/xmin 0 def
+/xmax 0.05 def
+/xscale 0.000195313 def
+/ymin -259.456 def
+/ymax 216.132 def
+/yscale 1 def
+
+%Draw boundary, and Draw X and Y limits
+1 setlinewidth
+0 setgray
+108 108 684 504 rectangle
+
+/Times-Bold findfont 18 scalefont setfont
+xps1 yps1 16 sub moveto
+xmin str cvs prtstrfromlftup
+xps2 yps1 16 sub moveto
+xmax str cvs prtstrfromritup
+xps1 8 sub yps2 9 sub moveto
+ymax str cvs prtstrfromritup
+xps1 8 sub yps1 moveto
+ymin str cvs prtstrfromritlow
+
+%Printing the labels
+90 rotate
+/Times-BoldItalic findfont 18 scalefont setfont
+yps1 yps2 add 2 div 8 xps1 sub moveto
+(Time Ave E field(x)) prtstrfrommidlow
+-90 rotate
+xps1 xps2 add 2 div yps1 16 sub moveto
+(X) prtstrfrommidup
+%Setting up the clipping region
+/boundary {newpath xps1 yps1 moveto xps2 yps1 lineto
+ xps2 yps2 lineto xps1 yps2 lineto closepath} def
+gsave boundary clip
+
+%Drawing the tick marks
+.8 setlinewidth
+doxlintickmarks
+doylintickmarks
+
+%Determining scaling coefficients
+/my {yps2 yps1 sub ymax ymin sub div yscale mul} def
+/by {yps1 ymax mul yps2 ymin mul sub ymax ymin sub div 0.5 add} def
+/mx {xps2 xps1 sub xmax xmin sub div xscale mul} def
+/bx {xps1 xmax mul xps2 xmin mul sub xmax xmin sub div 0.5 add} def
+
+/mv {exch mx mul bx add exch my mul by add moveto} def
+/ln {exch mx mul bx add exch my mul by add lineto} def
+
+%Printing the actual plots
+1.5 setlinewidth
+0 setgray
+Dash0
+newpath 0 -259.456 mv
+1 -259.456 ln
+2 -259.45 ln
+3 -259.32 ln
+4 -258.685 ln
+5 -257.066 ln
+6 -254.237 ln
+7 -250.327 ln
+8 -245.795 ln
+9 -241.08 ln
+10 -236.08 ln
+11 -230.416 ln
+12 -224.044 ln
+13 -217.209 ln
+14 -210.061 ln
+15 -202.708 ln
+16 -195.433 ln
+17 -188.421 ln
+18 -181.731 ln
+19 -175.676 ln
+20 -170.415 ln
+21 -165.441 ln
+22 -160.189 ln
+23 -154.842 ln
+24 -150.184 ln
+25 -146.821 ln
+26 -144.726 ln
+27 -143.291 ln
+28 -141.518 ln
+29 -138.934 ln
+30 -136.674 ln
+31 -136.084 ln
+32 -136.495 ln
+33 -136.134 ln
+34 -134.509 ln
+35 -132.288 ln
+36 -129.612 ln
+37 -126.132 ln
+38 -122.142 ln
+39 -117.85 ln
+40 -112.871 ln
+41 -107.937 ln
+42 -104.578 ln
+43 -102.607 ln
+44 -101.063 ln
+45 -100.343 ln
+46 -100.416 ln
+47 -99.6309 ln
+48 -97.241 ln
+49 -94.2418 ln
+50 -91.7241 ln
+51 -90.6118 ln
+52 -91.5707 ln
+53 -93.909 ln
+54 -96.2447 ln
+55 -98.4834 ln
+56 -101.53 ln
+57 -105.671 ln
+58 -110.716 ln
+59 -116.887 ln
+60 -124.301 ln
+61 -131.762 ln
+62 -137.045 ln
+63 -138.393 ln
+64 -135.557 ln
+65 -130.703 ln
+66 -127.667 ln
+67 -128.169 ln
+68 -129.891 ln
+69 -129.779 ln
+70 -127.817 ln
+71 -125.891 ln
+72 -124.149 ln
+73 -121.318 ln
+74 -117.607 ln
+75 -114.581 ln
+76 -113.42 ln
+77 -114.467 ln
+78 -117.062 ln
+79 -119.439 ln
+80 -119.844 ln
+81 -118.137 ln
+82 -115.838 ln
+83 -114.721 ln
+84 -115.582 ln
+85 -117.749 ln
+86 -119.548 ln
+87 -119.539 ln
+88 -117.95 ln
+89 -116.444 ln
+90 -115.558 ln
+91 -113.892 ln
+92 -110.084 ln
+93 -103.737 ln
+94 -95.5509 ln
+95 -87.3056 ln
+96 -80.1033 ln
+97 -73.5107 ln
+98 -67.6667 ln
+99 -64.5503 ln
+100 -65.9642 ln
+101 -71.008 ln
+102 -76.4931 ln
+103 -79.7016 ln
+104 -79.8322 ln
+105 -77.3689 ln
+106 -73.6352 ln
+107 -70.4172 ln
+108 -68.5438 ln
+109 -67.1391 ln
+110 -64.7811 ln
+111 -60.6728 ln
+112 -54.6829 ln
+113 -47.2845 ln
+114 -39.6875 ln
+115 -33.4289 ln
+116 -28.9341 ln
+117 -24.6538 ln
+118 -19.071 ln
+119 -12.8314 ln
+120 -7.41553 ln
+121 -3.04321 ln
+122 0.980785 ln
+123 4.44844 ln
+124 5.72319 ln
+125 3.98993 ln
+126 1.0137 ln
+127 -0.920518 ln
+128 -1.32024 ln
+129 -0.338033 ln
+130 2.85159 ln
+131 9.14508 ln
+132 17.9004 ln
+133 26.9622 ln
+134 34.0147 ln
+135 37.7568 ln
+136 38.4566 ln
+137 37.7566 ln
+138 37.5261 ln
+139 38.938 ln
+140 42.2369 ln
+141 46.1427 ln
+142 48.3024 ln
+143 48.1646 ln
+144 48.0718 ln
+145 50.1665 ln
+146 53.9198 ln
+147 57.0672 ln
+148 57.6352 ln
+149 55.1867 ln
+150 50.7461 ln
+151 45.9672 ln
+152 43.0408 ln
+153 44.4009 ln
+154 50.6575 ln
+155 59.4297 ln
+156 67.4593 ln
+157 73.1281 ln
+158 76.6077 ln
+159 78.8626 ln
+160 81.0915 ln
+161 84.5305 ln
+162 89.9582 ln
+163 96.8321 ln
+164 103.485 ln
+165 109.022 ln
+166 113.857 ln
+167 117.395 ln
+168 117.684 ln
+169 114.467 ln
+170 109.92 ln
+171 106.06 ln
+172 103.301 ln
+173 101.026 ln
+174 98.1484 ln
+175 93.7178 ln
+176 87.6797 ln
+177 80.8514 ln
+178 74.714 ln
+179 70.6493 ln
+180 67.9522 ln
+181 63.9344 ln
+182 57.3138 ln
+183 50.3747 ln
+184 46.8245 ln
+185 47.8998 ln
+186 51.8794 ln
+187 57.447 ln
+188 65.194 ln
+189 75.0116 ln
+190 84.4855 ln
+191 91.5514 ln
+192 96.8231 ln
+193 101.481 ln
+194 104.996 ln
+195 106.785 ln
+196 107.891 ln
+197 109.554 ln
+198 112.254 ln
+199 116.822 ln
+200 124.079 ln
+201 132.938 ln
+202 140.499 ln
+203 144.507 ln
+204 145.677 ln
+205 147.065 ln
+206 150.848 ln
+207 157.025 ln
+208 164.715 ln
+209 172.549 ln
+210 178.751 ln
+211 182.433 ln
+212 183.842 ln
+213 183.344 ln
+214 181.411 ln
+215 178.591 ln
+216 175.059 ln
+217 171.56 ln
+218 169.577 ln
+219 169.69 ln
+220 171.413 ln
+221 173.794 ln
+222 175.308 ln
+223 175.151 ln
+224 174.209 ln
+225 173.592 ln
+226 173.738 ln
+227 174.465 ln
+228 174.645 ln
+229 173.246 ln
+230 170.804 ln
+231 168.616 ln
+232 167.442 ln
+233 167.719 ln
+234 169.57 ln
+235 172.327 ln
+236 175.145 ln
+237 177.63 ln
+238 179.599 ln
+239 181.135 ln
+240 182.665 ln
+241 184.587 ln
+242 187.017 ln
+243 189.936 ln
+244 193.394 ln
+245 197.327 ln
+246 201.25 ln
+247 204.593 ln
+248 207.325 ln
+249 209.828 ln
+250 212.19 ln
+251 214.101 ln
+252 215.322 ln
+253 215.912 ln
+254 216.102 ln
+255 216.132 ln
+256 216.132 ln
+stroke
+
+grestore
+680 0 translate
+
+%Limits of the bounding box (PS and physical)
+/xps1 108 def
+/yps1 108 def
+/xps2 684 def
+/yps2 504 def
+/xmin 5.8368E-06 def
+/xmax 5.846E-06 def
+/xscale 1 def
+/ymin 2.87028 def
+/ymax 2.89679 def
+/yscale 1 def
+
+%Draw boundary, and Draw X and Y limits
+1 setlinewidth
+0 setgray
+108 108 684 504 rectangle
+
+/Times-Bold findfont 18 scalefont setfont
+xps1 yps1 16 sub moveto
+xmin str cvs prtstrfromlftup
+xps2 yps1 16 sub moveto
+xmax str cvs prtstrfromritup
+xps1 8 sub yps2 9 sub moveto
+ymax str cvs prtstrfromritup
+xps1 8 sub yps1 moveto
+ymin str cvs prtstrfromritlow
+
+%Printing the labels
+90 rotate
+/Times-BoldItalic findfont 18 scalefont setfont
+yps1 yps2 add 2 div 8 xps1 sub moveto
+(Local Mid Potential(t)) prtstrfrommidlow
+-90 rotate
+xps1 xps2 add 2 div yps1 16 sub moveto
+(Time) prtstrfrommidup
+%Setting up the clipping region
+/boundary {newpath xps1 yps1 moveto xps2 yps1 lineto
+ xps2 yps2 lineto xps1 yps2 lineto closepath} def
+gsave boundary clip
+
+%Drawing the tick marks
+.8 setlinewidth
+doxlintickmarks
+doylintickmarks
+
+%Determining scaling coefficients
+/my {yps2 yps1 sub ymax ymin sub div yscale mul} def
+/by {yps1 ymax mul yps2 ymin mul sub ymax ymin sub div 0.5 add} def
+/mx {xps2 xps1 sub xmax xmin sub div xscale mul} def
+/bx {xps1 xmax mul xps2 xmin mul sub xmax xmin sub div 0.5 add} def
+
+/mv {exch mx mul bx add exch my mul by add moveto} def
+/ln {exch mx mul bx add exch my mul by add lineto} def
+
+%Printing the actual plots
+1.5 setlinewidth
+0 setgray
+Dash0
+newpath 5.8368E-06 2.89679 mv
+5.8369E-06 2.89418 ln
+5.837E-06 2.88968 ln
+5.8371E-06 2.88535 ln
+5.8372E-06 2.88311 ln
+5.8373E-06 2.88389 ln
+5.8374E-06 2.8874 ln
+5.8375E-06 2.89205 ln
+5.8376E-06 2.89527 ln
+5.8377E-06 2.89545 ln
+5.8378E-06 2.89263 ln
+5.8379E-06 2.88809 ln
+5.838E-06 2.88382 ln
+5.8381E-06 2.88176 ln
+5.8382E-06 2.88276 ln
+5.8383E-06 2.88641 ln
+5.8384E-06 2.89104 ln
+5.8385E-06 2.89408 ln
+5.8386E-06 2.89408 ln
+5.8387E-06 2.89106 ln
+5.8388E-06 2.88648 ln
+5.8389E-06 2.88227 ln
+5.839E-06 2.88037 ln
+5.8391E-06 2.8816 ln
+5.8392E-06 2.88537 ln
+5.8393E-06 2.88996 ln
+5.8394E-06 2.89283 ln
+5.8395E-06 2.89262 ln
+5.8396E-06 2.88944 ln
+5.8397E-06 2.88479 ln
+5.8398E-06 2.88068 ln
+5.8399E-06 2.87892 ln
+5.84E-06 2.88039 ln
+5.8401E-06 2.88428 ln
+5.8402E-06 2.88882 ln
+5.8403E-06 2.89151 ln
+5.8404E-06 2.8911 ln
+5.8405E-06 2.88778 ln
+5.8406E-06 2.88308 ln
+5.8407E-06 2.8791 ln
+5.8408E-06 2.87749 ln
+5.8409E-06 2.87919 ln
+5.841E-06 2.8832 ln
+5.8411E-06 2.88768 ln
+5.8412E-06 2.89019 ln
+5.8413E-06 2.88956 ln
+5.8414E-06 2.8861 ln
+5.8415E-06 2.88138 ln
+5.8416E-06 2.87751 ln
+5.8417E-06 2.87608 ln
+5.8418E-06 2.878 ln
+5.8419E-06 2.88213 ln
+5.842E-06 2.88653 ln
+5.8421E-06 2.88887 ln
+5.8422E-06 2.88801 ln
+5.8423E-06 2.88439 ln
+5.8424E-06 2.87967 ln
+5.8425E-06 2.8759 ln
+5.8426E-06 2.87465 ln
+5.8427E-06 2.87679 ln
+5.8428E-06 2.88101 ln
+5.8429E-06 2.88533 ln
+5.843E-06 2.88749 ln
+5.8431E-06 2.88639 ln
+5.8432E-06 2.88266 ln
+5.8433E-06 2.87793 ln
+5.8434E-06 2.87427 ln
+5.8435E-06 2.87323 ln
+5.8436E-06 2.87559 ln
+5.8437E-06 2.87988 ln
+5.8438E-06 2.88411 ln
+5.8439E-06 2.88609 ln
+5.844E-06 2.88476 ln
+5.8441E-06 2.88091 ln
+5.8442E-06 2.87617 ln
+5.8443E-06 2.87263 ln
+5.8444E-06 2.87179 ln
+5.8445E-06 2.87433 ln
+5.8446E-06 2.87872 ln
+5.8447E-06 2.88285 ln
+5.8448E-06 2.88463 ln
+5.8449E-06 2.88305 ln
+5.845E-06 2.87907 ln
+5.8451E-06 2.87432 ln
+5.8452E-06 2.87092 ln
+5.8453E-06 2.87028 ln
+5.8454E-06 2.873 ln
+5.8455E-06 2.87746 ln
+5.8456E-06 2.88149 ln
+5.8457E-06 2.88308 ln
+5.8458E-06 2.88126 ln
+5.8459E-06 2.87717 ln
+5.846E-06 2.87245 ln
+stroke
+
+grestore
+-680 -500 translate
+
+%Limits of the bounding box (PS and physical)
+/xps1 108 def
+/yps1 108 def
+/xps2 684 def
+/yps2 504 def
+/xmin 0 def
+/xmax 0.05 def
+/xscale 0.000195313 def
+/ymin 0 def
+/ymax 2.93807 def
+/yscale 1 def
+
+%Draw boundary, and Draw X and Y limits
+1 setlinewidth
+0 setgray
+108 108 684 504 rectangle
+
+/Times-Bold findfont 18 scalefont setfont
+xps1 yps1 16 sub moveto
+xmin str cvs prtstrfromlftup
+xps2 yps1 16 sub moveto
+xmax str cvs prtstrfromritup
+xps1 8 sub yps2 9 sub moveto
+ymax str cvs prtstrfromritup
+xps1 8 sub yps1 moveto
+ymin str cvs prtstrfromritlow
+
+%Printing the labels
+90 rotate
+/Times-BoldItalic findfont 18 scalefont setfont
+yps1 yps2 add 2 div 8 xps1 sub moveto
+(Time Ave Potential(x)) prtstrfrommidlow
+-90 rotate
+xps1 xps2 add 2 div yps1 16 sub moveto
+(X) prtstrfrommidup
+%Setting up the clipping region
+/boundary {newpath xps1 yps1 moveto xps2 yps1 lineto
+ xps2 yps2 lineto xps1 yps2 lineto closepath} def
+gsave boundary clip
+
+%Drawing the tick marks
+.8 setlinewidth
+doxlintickmarks
+doylintickmarks
+
+%Determining scaling coefficients
+/my {yps2 yps1 sub ymax ymin sub div yscale mul} def
+/by {yps1 ymax mul yps2 ymin mul sub ymax ymin sub div 0.5 add} def
+/mx {xps2 xps1 sub xmax xmin sub div xscale mul} def
+/bx {xps1 xmax mul xps2 xmin mul sub xmax xmin sub div 0.5 add} def
+
+/mv {exch mx mul bx add exch my mul by add moveto} def
+/ln {exch mx mul bx add exch my mul by add lineto} def
+
+%Printing the actual plots
+1.5 setlinewidth
+0 setgray
+Dash0
+newpath 0 0 mv
+1 0.0506751 ln
+2 0.10135 ln
+3 0.152023 ln
+4 0.202647 ln
+5 0.253072 ln
+6 0.303064 ln
+7 0.352383 ln
+8 0.400848 ln
+9 0.448396 ln
+10 0.49502 ln
+11 0.540615 ln
+12 0.585026 ln
+13 0.628132 ln
+14 0.669873 ln
+15 0.710187 ln
+16 0.749056 ln
+17 0.786529 ln
+18 0.822657 ln
+19 0.857517 ln
+20 0.89128 ln
+21 0.924085 ln
+22 0.955906 ln
+23 0.986659 ln
+24 1.01639 ln
+25 1.04533 ln
+26 1.07374 ln
+27 1.10186 ln
+28 1.12972 ln
+29 1.15714 ln
+30 1.18399 ln
+31 1.21053 ln
+32 1.23715 ln
+33 1.26385 ln
+34 1.29032 ln
+35 1.31639 ln
+36 1.342 ln
+37 1.36702 ln
+38 1.39127 ln
+39 1.41473 ln
+40 1.4373 ln
+41 1.45882 ln
+42 1.47947 ln
+43 1.49967 ln
+44 1.51955 ln
+45 1.53915 ln
+46 1.55874 ln
+47 1.57837 ln
+48 1.59766 ln
+49 1.61636 ln
+50 1.63448 ln
+51 1.65219 ln
+52 1.66987 ln
+53 1.68796 ln
+54 1.70655 ln
+55 1.72555 ln
+56 1.74503 ln
+57 1.76521 ln
+58 1.7863 ln
+59 1.80846 ln
+60 1.83196 ln
+61 1.85702 ln
+62 1.88343 ln
+63 1.91055 ln
+64 1.93749 ln
+65 1.9635 ln
+66 1.98855 ln
+67 2.01337 ln
+68 2.03861 ln
+69 2.06411 ln
+70 2.08931 ln
+71 2.11404 ln
+72 2.13848 ln
+73 2.16253 ln
+74 2.18587 ln
+75 2.20847 ln
+76 2.23063 ln
+77 2.25278 ln
+78 2.27535 ln
+79 2.29851 ln
+80 2.322 ln
+81 2.34532 ln
+82 2.36815 ln
+83 2.39057 ln
+84 2.41296 ln
+85 2.43572 ln
+86 2.45896 ln
+87 2.48242 ln
+88 2.50565 ln
+89 2.52849 ln
+90 2.55114 ln
+91 2.57363 ln
+92 2.59563 ln
+93 2.61663 ln
+94 2.63615 ln
+95 2.65396 ln
+96 2.67025 ln
+97 2.68525 ln
+98 2.69897 ln
+99 2.71168 ln
+100 2.72418 ln
+101 2.73745 ln
+102 2.75192 ln
+103 2.76732 ln
+104 2.78305 ln
+105 2.79851 ln
+106 2.81327 ln
+107 2.82728 ln
+108 2.84078 ln
+109 2.85405 ln
+110 2.86701 ln
+111 2.87936 ln
+112 2.89071 ln
+113 2.90072 ln
+114 2.90918 ln
+115 2.91622 ln
+116 2.92224 ln
+117 2.92752 ln
+118 2.93187 ln
+119 2.93497 ln
+120 2.93688 ln
+121 2.93787 ln
+122 2.93807 ln
+123 2.93748 ln
+124 2.93633 ln
+125 2.93525 ln
+126 2.93477 ln
+127 2.93485 ln
+128 2.93513 ln
+129 2.93537 ln
+130 2.93527 ln
+131 2.93426 ln
+132 2.93169 ln
+133 2.92726 ln
+134 2.92116 ln
+135 2.91398 ln
+136 2.90641 ln
+137 2.89895 ln
+138 2.89166 ln
+139 2.88429 ln
+140 2.87645 ln
+141 2.86779 ln
+142 2.85843 ln
+143 2.84893 ln
+144 2.83961 ln
+145 2.83015 ln
+146 2.82002 ln
+147 2.80909 ln
+148 2.79773 ln
+149 2.78657 ln
+150 2.77617 ln
+151 2.76675 ln
+152 2.75821 ln
+153 2.74994 ln
+154 2.74087 ln
+155 2.73015 ln
+156 2.71765 ln
+157 2.7038 ln
+158 2.68909 ln
+159 2.67387 ln
+160 2.65828 ln
+161 2.6422 ln
+162 2.62527 ln
+163 2.60706 ln
+164 2.58744 ln
+165 2.56663 ln
+166 2.54485 ln
+167 2.52216 ln
+168 2.49899 ln
+169 2.47619 ln
+170 2.45428 ln
+171 2.43325 ln
+172 2.41285 ln
+173 2.3929 ln
+174 2.37339 ln
+175 2.35456 ln
+176 2.33678 ln
+177 2.32031 ln
+178 2.3052 ln
+179 2.29112 ln
+180 2.2776 ln
+181 2.26458 ln
+182 2.25262 ln
+183 2.24219 ln
+184 2.23295 ln
+185 2.2239 ln
+186 2.21423 ln
+187 2.20363 ln
+188 2.1918 ln
+189 2.17817 ln
+190 2.16249 ln
+191 2.14517 ln
+192 2.12673 ln
+193 2.10735 ln
+194 2.08709 ln
+195 2.06633 ln
+196 2.04538 ln
+197 2.02419 ln
+198 2.00258 ln
+199 1.98034 ln
+200 1.95695 ln
+201 1.93187 ln
+202 1.90502 ln
+203 1.87698 ln
+204 1.84857 ln
+205 1.82008 ln
+206 1.79113 ln
+207 1.76116 ln
+208 1.72979 ln
+209 1.69681 ln
+210 1.66238 ln
+211 1.62699 ln
+212 1.59112 ln
+213 1.55518 ln
+214 1.51951 ln
+215 1.48431 ln
+216 1.44974 ln
+217 1.41593 ln
+218 1.38273 ln
+219 1.34969 ln
+220 1.31644 ln
+221 1.28273 ln
+222 1.24855 ln
+223 1.21425 ln
+224 1.18013 ln
+225 1.1462 ln
+226 1.11233 ln
+227 1.07833 ln
+228 1.04417 ln
+229 1.01011 ln
+230 0.9765 ln
+231 0.943393 ln
+232 0.910635 ln
+233 0.877986 ln
+234 0.845119 ln
+235 0.811748 ln
+236 0.777804 ln
+237 0.743332 ln
+238 0.708418 ln
+239 0.673176 ln
+240 0.637661 ln
+241 0.601823 ln
+242 0.565557 ln
+243 0.528769 ln
+244 0.491364 ln
+245 0.453224 ln
+246 0.414283 ln
+247 0.374611 ln
+248 0.334364 ln
+249 0.293625 ln
+250 0.2524 ln
+251 0.210738 ln
+252 0.168767 ln
+253 0.126628 ln
+254 0.0844262 ln
+255 0.0422131 ln
+256 0 ln
+stroke
+
+grestore
+680 0 translate
+
+%Limits of the bounding box (PS and physical)
+/xps1 108 def
+/yps1 108 def
+/xps2 684 def
+/yps2 504 def
+/xmin 0 def
+/xmax 5.8368E-06 def
+/xscale 1 def
+/ymin -0.401386 def
+/ymax 4.41908 def
+/yscale 1 def
+
+%Draw boundary, and Draw X and Y limits
+1 setlinewidth
+0 setgray
+108 108 684 504 rectangle
+
+/Times-Bold findfont 18 scalefont setfont
+xps1 yps1 16 sub moveto
+xmin str cvs prtstrfromlftup
+xps2 yps1 16 sub moveto
+xmax str cvs prtstrfromritup
+xps1 8 sub yps2 9 sub moveto
+ymax str cvs prtstrfromritup
+xps1 8 sub yps1 moveto
+ymin str cvs prtstrfromritlow
+
+%Printing the labels
+90 rotate
+/Times-BoldItalic findfont 18 scalefont setfont
+yps1 yps2 add 2 div 8 xps1 sub moveto
+(Mid Potential(t)) prtstrfrommidlow
+-90 rotate
+xps1 xps2 add 2 div yps1 16 sub moveto
+(Time) prtstrfrommidup
+%Setting up the clipping region
+/boundary {newpath xps1 yps1 moveto xps2 yps1 lineto
+ xps2 yps2 lineto xps1 yps2 lineto closepath} def
+gsave boundary clip
+
+%Drawing the tick marks
+.8 setlinewidth
+doxlintickmarks
+doylintickmarks
+
+%Determining scaling coefficients
+/my {yps2 yps1 sub ymax ymin sub div yscale mul} def
+/by {yps1 ymax mul yps2 ymin mul sub ymax ymin sub div 0.5 add} def
+/mx {xps2 xps1 sub xmax xmin sub div xscale mul} def
+/bx {xps1 xmax mul xps2 xmin mul sub xmax xmin sub div 0.5 add} def
+
+/mv {exch mx mul bx add exch my mul by add moveto} def
+/ln {exch mx mul bx add exch my mul by add lineto} def
+
+%Printing the actual plots
+1.5 setlinewidth
+0 setgray
+Dash0
+newpath 0 1.33998E-06 mv
+2.56E-08 0.0128034 ln
+5.12E-08 0.00656991 ln
+7.68E-08 0.00828865 ln
+1.024E-07 -0.00805184 ln
+1.28E-07 -0.0411433 ln
+1.536E-07 -0.0727878 ln
+1.792E-07 -0.116137 ln
+2.048E-07 -0.163953 ln
+2.304E-07 -0.190025 ln
+2.56E-07 -0.223003 ln
+2.816E-07 -0.264169 ln
+3.072E-07 -0.290146 ln
+3.328E-07 -0.322746 ln
+3.584E-07 -0.357731 ln
+3.84E-07 -0.380094 ln
+4.096E-07 -0.391085 ln
+4.352E-07 -0.401031 ln
+4.608E-07 -0.401386 ln
+4.864E-07 -0.390032 ln
+5.12E-07 -0.372123 ln
+5.376E-07 -0.32865 ln
+5.632E-07 -0.26243 ln
+5.888E-07 -0.194342 ln
+6.144E-07 -0.109624 ln
+6.4E-07 -0.0119967 ln
+6.656E-07 0.0848351 ln
+6.912E-07 0.208325 ln
+7.168E-07 0.343851 ln
+7.424E-07 0.483838 ln
+7.68E-07 0.640528 ln
+7.936E-07 0.814036 ln
+8.192E-07 0.983927 ln
+8.448E-07 1.14514 ln
+8.704E-07 1.30753 ln
+8.96E-07 1.47267 ln
+9.216E-07 1.62788 ln
+9.472E-07 1.79052 ln
+9.728E-07 1.94382 ln
+9.984E-07 2.10166 ln
+1.024E-06 2.26807 ln
+1.0496E-06 2.42767 ln
+1.0752E-06 2.56878 ln
+1.1008E-06 2.70073 ln
+1.1264E-06 2.82064 ln
+1.152E-06 2.92162 ln
+1.1776E-06 3.01338 ln
+1.2032E-06 3.09171 ln
+1.2288E-06 3.16077 ln
+1.2544E-06 3.22084 ln
+1.28E-06 3.26373 ln
+1.3056E-06 3.29125 ln
+1.3312E-06 3.30712 ln
+1.3568E-06 3.31192 ln
+1.3824E-06 3.326 ln
+1.408E-06 3.34298 ln
+1.4336E-06 3.36119 ln
+1.4592E-06 3.38027 ln
+1.4848E-06 3.39367 ln
+1.5104E-06 3.41516 ln
+1.536E-06 3.43411 ln
+1.5616E-06 3.45526 ln
+1.5872E-06 3.47307 ln
+1.6128E-06 3.48898 ln
+1.6384E-06 3.50627 ln
+1.664E-06 3.528 ln
+1.6896E-06 3.55146 ln
+1.7152E-06 3.58111 ln
+1.7408E-06 3.60363 ln
+1.7664E-06 3.62824 ln
+1.792E-06 3.65545 ln
+1.8176E-06 3.68932 ln
+1.8432E-06 3.72807 ln
+1.8688E-06 3.77976 ln
+1.8944E-06 3.8313 ln
+1.92E-06 3.88609 ln
+1.9456E-06 3.94169 ln
+1.9712E-06 3.984 ln
+1.9968E-06 4.03948 ln
+2.0224E-06 4.08165 ln
+2.048E-06 4.11146 ln
+2.0736E-06 4.1492 ln
+2.0992E-06 4.17209 ln
+2.1248E-06 4.18142 ln
+2.1504E-06 4.19704 ln
+2.176E-06 4.18864 ln
+2.2016E-06 4.16412 ln
+2.2272E-06 4.14407 ln
+2.2528E-06 4.11859 ln
+2.2784E-06 4.08011 ln
+2.304E-06 4.03521 ln
+2.3296E-06 3.97582 ln
+2.3552E-06 3.89983 ln
+2.3808E-06 3.81254 ln
+2.4064E-06 3.72511 ln
+2.432E-06 3.62208 ln
+2.4576E-06 3.50935 ln
+2.4832E-06 3.40434 ln
+2.5088E-06 3.28199 ln
+2.5344E-06 3.14021 ln
+2.56E-06 3.00283 ln
+2.5856E-06 2.87813 ln
+2.6112E-06 2.74469 ln
+2.6368E-06 2.62602 ln
+2.6624E-06 2.51498 ln
+2.688E-06 2.40233 ln
+2.7136E-06 2.32755 ln
+2.7392E-06 2.26373 ln
+2.7648E-06 2.19675 ln
+2.7904E-06 2.14762 ln
+2.816E-06 2.1088 ln
+2.8416E-06 2.06312 ln
+2.8672E-06 2.02586 ln
+2.8928E-06 2.00931 ln
+2.9184E-06 2.0015 ln
+2.944E-06 2.00569 ln
+2.9696E-06 2.02605 ln
+2.9952E-06 2.03559 ln
+3.0208E-06 2.04799 ln
+3.0464E-06 2.07796 ln
+3.072E-06 2.10198 ln
+3.0976E-06 2.13044 ln
+3.1232E-06 2.17759 ln
+3.1488E-06 2.22819 ln
+3.1744E-06 2.26055 ln
+3.2E-06 2.31416 ln
+3.2256E-06 2.3832 ln
+3.2512E-06 2.42629 ln
+3.2768E-06 2.47296 ln
+3.3024E-06 2.52364 ln
+3.328E-06 2.56511 ln
+3.3536E-06 2.62006 ln
+3.3792E-06 2.68037 ln
+3.4048E-06 2.70874 ln
+3.4304E-06 2.7505 ln
+3.456E-06 2.78225 ln
+3.4816E-06 2.79581 ln
+3.5072E-06 2.83302 ln
+3.5328E-06 2.87499 ln
+3.5584E-06 2.89052 ln
+3.584E-06 2.93012 ln
+3.6096E-06 2.95992 ln
+3.6352E-06 2.96337 ln
+3.6608E-06 2.99485 ln
+3.6864E-06 3.00804 ln
+3.712E-06 2.99905 ln
+3.7376E-06 3.02877 ln
+3.7632E-06 3.04881 ln
+3.7888E-06 3.04542 ln
+3.8144E-06 3.07647 ln
+3.84E-06 3.09339 ln
+3.8656E-06 3.07879 ln
+3.8912E-06 3.09745 ln
+3.9168E-06 3.11806 ln
+3.9424E-06 3.1209 ln
+3.968E-06 3.16093 ln
+3.9936E-06 3.20432 ln
+4.0192E-06 3.22591 ln
+4.0448E-06 3.26639 ln
+4.0704E-06 3.31265 ln
+4.096E-06 3.34738 ln
+4.1216E-06 3.39701 ln
+4.1472E-06 3.44414 ln
+4.1728E-06 3.47118 ln
+4.1984E-06 3.5117 ln
+4.224E-06 3.55067 ln
+4.2496E-06 3.58259 ln
+4.2752E-06 3.64075 ln
+4.3008E-06 3.70219 ln
+4.3264E-06 3.75092 ln
+4.352E-06 3.82001 ln
+4.3776E-06 3.89509 ln
+4.4032E-06 3.96117 ln
+4.4288E-06 4.04271 ln
+4.4544E-06 4.12693 ln
+4.48E-06 4.19205 ln
+4.5056E-06 4.26188 ln
+4.5312E-06 4.32267 ln
+4.5568E-06 4.3486 ln
+4.5824E-06 4.38581 ln
+4.608E-06 4.40984 ln
+4.6336E-06 4.40512 ln
+4.6592E-06 4.41908 ln
+4.6848E-06 4.41902 ln
+4.7104E-06 4.37658 ln
+4.736E-06 4.35217 ln
+4.7616E-06 4.3149 ln
+4.7872E-06 4.23883 ln
+4.8128E-06 4.17973 ln
+4.8384E-06 4.12583 ln
+4.864E-06 4.03846 ln
+4.8896E-06 3.97569 ln
+4.9152E-06 3.91842 ln
+4.9408E-06 3.82307 ln
+4.9664E-06 3.737 ln
+4.992E-06 3.64854 ln
+5.0176E-06 3.53234 ln
+5.0432E-06 3.43972 ln
+5.0688E-06 3.355 ln
+5.0944E-06 3.24234 ln
+5.12E-06 3.14885 ln
+5.1456E-06 3.07202 ln
+5.1712E-06 2.96414 ln
+5.1968E-06 2.88513 ln
+5.2224E-06 2.83092 ln
+5.248E-06 2.76116 ln
+5.2736E-06 2.71908 ln
+5.2992E-06 2.7013 ln
+5.3248E-06 2.66546 ln
+5.3504E-06 2.65593 ln
+5.376E-06 2.66884 ln
+5.4016E-06 2.6688 ln
+5.4272E-06 2.67826 ln
+5.4528E-06 2.71585 ln
+5.4784E-06 2.73853 ln
+5.504E-06 2.76961 ln
+5.5296E-06 2.8217 ln
+5.5552E-06 2.85358 ln
+5.5808E-06 2.8784 ln
+5.6064E-06 2.91541 ln
+5.632E-06 2.93505 ln
+5.6576E-06 2.94258 ln
+5.6832E-06 2.97027 ln
+5.7088E-06 2.97497 ln
+5.7344E-06 2.9607 ln
+5.76E-06 2.96117 ln
+5.7856E-06 2.93942 ln
+5.8112E-06 2.91565 ln
+5.8368E-06 2.89679 ln
+stroke
+
+grestore
+-750 -150 translate
+2.618 2.618 scale
+/Times-Bold findfont 16 scalefont setfont
+306 720 moveto
+(Magnetized Discharge with psi=89 degrees) prtstrfrommidup
+306 700 moveto
+(L=10*ai=5cm, Te=Ti=3.5eV, wci=wpi=4e6) prtstrfrommidup
+showpage

@@ -1,0 +1,21 @@
+
+Bugfixes:
+
+  Buffers not copied for string names in xpdp1.  Fixed 2-5-99 KC
+
+Known Bugs:
+
+	Not all input files are changed to work with current versions.
+	implicit push will push particle out of bounds in pre-push.
+	Incorrect injection from RHS.
+	Incorrect thermal load in x with a drift.
+	will not run correctly if build with double precision
+	
+Wish List:
+	
+	Kevin will optimize pdp1.
+	set v to time center particles at t=0.
+	rescale velocities so that k is not needed in the push (easy 5 minutes).
+	A more flexible input file format.
+
+ 	
