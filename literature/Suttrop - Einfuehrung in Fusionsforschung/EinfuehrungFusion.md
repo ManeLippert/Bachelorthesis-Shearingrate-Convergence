@@ -70,7 +70,7 @@ Wir betrachten grundsätzlich den Transport senkrecht zum Magnetfeld - im Teilch
 
 ## 7. Neoklassische Effekte
 
-Wir behandeln weitere neoklassische Effekte: Den "Ripple"-Transport durch nicht-axisymmetrisches Magnetfeld, den "Bootstrap"-Strom durch gefangene Teilchen bei Anwesenheit eines radialen Druckgradienten, und die <img src="https://render.githubusercontent.com/render/math?math={\color{white}\vec{E}\times\vec{b}}"> sowie den "Ware-pinch" bei Anwesenheit eines toroidalen elektrischen Feldes (wie jenes das im Tokamak den toroidalen Plasmastrom antreibt).
+Wir behandeln weitere neoklassische Effekte: Den "Ripple"-Transport durch nicht-axisymmetrisches Magnetfeld, den "Bootstrap"-Strom durch gefangene Teilchen bei Anwesenheit eines radialen Druckgradienten, und die <img src="https://render.githubusercontent.com/render/math?math={\color{white}\vec{E}\times\vec{B}}"> sowie den "Ware-pinch" bei Anwesenheit eines toroidalen elektrischen Feldes (wie jenes das im Tokamak den toroidalen Plasmastrom antreibt).
 
 [Vorlesung](/literature/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/07-NeoklassischeEffekte/07-NeoklassischeEffekte.pdf)
 
