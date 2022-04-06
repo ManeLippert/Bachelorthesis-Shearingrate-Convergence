@@ -5,7 +5,7 @@
 
 1. [Introduction](#introduction)
 2. [Journal](journal/JOURNAL.md)
-3. [Literatur](#litarture)
+3. [Literature](#litarture)
 
 # Introduction 
 This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D ([[1]](https://doi.org/10.1063/1.4952621), [[2]](https://doi.org/10.1063/1.4961231)).
