@@ -29,7 +29,7 @@ Das Lawson-Kriterium beschreibt, unter welchen Voraussetzungen sich ein Fusionsp
 
 Zusammenfassung der wichtigsten Resultate der Vorlesung "Einführung in die Plasmaphysik" mit Betonung der für die Fusionsforschung wichtigen Grundlagen. Dieses ist keine eigene Vorlesung, die Folien sollen als Kurzreferenz auf die benötigten Grundlagen der Vorlesung "Einführung in die Plasmaphysik" dienen.
 
-[Vorlesung](/literature/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/02-Plasma/02-Plasma.pdf)
+[Vorlesung](/literature/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/02-Plasmaphysik/02-Plasma.pdf)
 
 [Komplette Vorlesung](/literature/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/EinfuehrungPlasma.md)
 
