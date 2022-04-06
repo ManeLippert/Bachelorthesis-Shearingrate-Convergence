@@ -8,7 +8,7 @@
 1.  [Einleitung](#1-einleitung)
 2.  [Gasentladung](#2-gasentladung)
 3.  [Ionisationsgrad des Plasmas](#3-ionisationsgrad-des-plasmas)
-4.  [Coulomb-Stöße](#4-coulomb-stöße)
+4.  [Coulomb-Stoesse](#4-coulomb-stoesse)
 5.  [Einzelteilchen-Bewegung](#5-einzelteilchen-bewegung)
 6.  [Hochfrequenz-Plasmaentladungen](#6-hochfrequenz-plasmaentladungen)
 7.  [ Kinetische Beschreibung von Plasmen](#7-kinetische-beschreibung-von-plasmen)
@@ -56,7 +56,7 @@ Wie stark ist das Plasma ionisiert? Wir kennen schwach ionisierte Plasmen (z.B. 
 
 [Vorlesung](/literature/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/03-Ionisationsgrad/03-Ionisationsgrad.pdf)
 
-## 4. Coulomb-Stöße
+## 4. Coulomb-Stoesse
 
 In vielen Plasmen dominiert die Wechselwirkung durch die langreichweitige Coulomb-Wechselwirkung über (kurzreichweitige) atomare Anregungs- oder Ionisationsstöße. Coulomb-Stöße sind elastisch, d.h. erhalten Gesamtenergie und Gesamtimpuls der Stoßpartner, da keine inneren atomaren Anregungen erfolgen. Die Abbremsung von Ladungsträgern, Ursache für den elektrischen Widerstand des Plasmas,  erfolgt durch Ablenkung der Bewegungsrichtung. Aufgrund der langen Reichweite des elektrostatischen Potenzials dominieren Stöße mit kleinen Ablenkwinkeln. Für ein reines Coulomb-Potenzial divergiert der totale Wirkungsquerschnitt (wie aus der klassischen Mechanik bekannt) und die Abbremskraft. Für ein abgeschirmtes Potenzial wie es im quasineutralen Plasma durchweg vorliegt, können wir in üblicher Näherung die Kraftwirkung außerhalb einer Abschirmlänge (Debye-Länge) vernachlässigen und so eine effektive Stossfrequenz und damit den elektrischen Widerstand des Plasmas berechnen.
 
