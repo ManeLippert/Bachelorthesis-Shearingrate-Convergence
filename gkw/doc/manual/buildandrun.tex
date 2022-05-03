@@ -1,0 +1,900 @@
+\chapter{Obtaining, building and running the code} \label{usage}
+
+\section{Getting the code}
+
+To obtain the latest version of the code (which should approximately
+correspond to the latest version of this documentation), you should use the
+git revision control system (\href{http://git-scm.com/.}
+{http://git-scm.com/.}). The git program is installed on many
+systems as the \name{git} command. Assuming you are using \name{git}, you can
+check out the code with the command
+%git clone http://gkw@bitbucket.org/gkw/gkw.git gkw-read-only
+\begin{verbatim}
+  git clone git@bitbucket.org:gkw/gkw.git gkw
+\end{verbatim}
+To push changes, you will need a bitbucket account to be given write permissions.
+
+% Not yet sure how this will be relvant to bitbucket:
+%[Some advice on which tagged versions to use, or how to download without git.]%
+
+% This clone does not allow changes to be written back to the repository.
+% Instructions for developers with commit permissions 
+% can be found at \href{http://code.google.com/p/gkw/source/checkout}{
+% http://code.google.com/p/gkw/source/checkout}.
+
+% Alternatively, a reasonably stable version of the code can be obtained as a
+% tarball from the downloads section
+% (\href{http://code.google.com/p/gkw/downloads/list}
+% {http://code.google.com/p/gkw/downloads/list}).
+% At present, the version of the code found there is based on the CPC release
+% (associated with the CPC paper \cite{CPC-paper}). The tarball is not often
+% updated and will not have the latest code features. 
+
+\section{Building the source code}
+
+% If using a version obtained in a tarball, it is suggested to look at the
+% \File{README} file found within for specific compiling instructions. The
+% guidance of the following sections pertains primarily to the latest version of
+% the code obtained via Subversion.
+
+There are two methods provided to build the code, involving various
+makefiles. The use of the `simple' makefile, \File{src/makefile}, is intended
+only as a fallback if the standard makefiles, requiring \name{GNU make},
+cannot be used.  The standard GNU makefiles
+allow one to create build settings on a per user/machine/compiler basis,
+without having to make any modifications to the original makefiles\footnote{
+The standard makefiles also result in executables which can
+provide information about themselves and how they were produced. For example,
+the executable will be able to report its revision number in various ways,
+which can be quite useful to know.}.
+Both methods are outlined below.
+
+With the latest version of the source code, it will often be possible to
+build the code by doing very little other than running \name{make} in
+the top-level directory containing the \File{GNUmakefile} file.
+Although this may appear successful, one should be aware that the resulting
+executable may not contain all the desired functionality.
+
+
+\subsection{Prerequisites and suggestions}
+
+A Fortran 95 compiler is essential for building the code. Most Fortran
+compilers are able to pre-process the source files containing C
+pre-processor directives\footnote{In the unlikely event that this is not the case,
+and an appropriate pre-processor is not available, some editing of the
+source files may be necessary before compilation.}.
+
+A minimum of a Unix-like system, together with the POSIX shell and standard
+\name{make} utility is suggested.\footnote{Without these basics, the various source files will have to be
+compiled in the correct order (or concatenated into a single file in the the
+correct compilation order beforehand).}
+%We are typically developing the code under
+%GNU/Linux, which meets this minimum requirement -- as do many other operating
+%systems. 
+
+For building the latest version of the code from the git repository,
+\href{http://www.gnu.org./software/make/}{\name{GNU make}} is recommended.
+This should be the default
+\name{make} program installed on GNU operating systems, such as GNU/Linux.
+On some systems, the command may be \name{gmake}, in order to distinguish it
+from the system default \name{make}.
+
+To enable parallelisation, you will require an MPI implementation and/or a
+Fortran compiler which supports OpenMP directives.  To allow nonlinear runs, 
+the FFTW3 library is required (more details in \Sec{thecode}).
+
+A C compiler is {\it not} required to compile the code, but will be required
+to compile the optional libraries includes with GKW.
+
+More information on linking optional libraries is given in 
+section \ref{sec:additional-libraries}.
+
+\subsection{Using the GNU makefile}
+
+Instructions within the top-level makefile, \File{GNUmakefile}, should be the
+first point of reference for this method. Ultimately, you should just need to
+run \name{make} (GNU make) in this directory and you will end up with an
+executable in the \File{run/} directory. However, when building for the first
+time on a given machine, it is suggested to create at least one new makefile
+which contains settings specific to the local machine and user (and perhaps
+compiler if there are multiple possibilities). Whenever the code is then built
+again on this machine, those specific makefiles will be used
+automatically when running make.
+
+All host-specific makefiles are located in the \File{config/} directory and
+subdirectories. The variables contained in \File{global_defaults.mk} will
+always be used, unless host-specific variables override them. You can use
+\File{template.mk}, which documents almost all the variables one may wish
+to change. If you are creating a new file for machine \name{hostname}, it
+should usually be saved to \File{defaults.mk} within the \File{hostname/}
+subdirectory of \File{config/}. You will likely want to set at least the
+Fortran compiler, external libraries, and the required precision. One may
+wish to look at existing files for examples; template files for Intel, GNU
+and IBM compilers are also provided in \File{config/templates}.
+
+The code object files are built in different subdirectories of \File{/obj}, 
+depending on hostname, compiler and precision, among other things. The
+resulting executable name will represent which git
+version of the code was used, which compiler was used, and if the
+executable is single (SP) or double precision (DP)\footnote{Beyond these 
+distinctions, it is possible to clobber an
+existing executable with one of the same name that does something different.
+%(this shortcoming may change in the future).
+}. 
+If you run \texttt{make clean}, ALL object files will removed.
+\texttt{make cleanloc} will remove only object files for the compiler and
+ precision subfolder\footnote{Note that if you pass variables to
+the make program by specifying them after the command (rather than
+changing them in the appropriate file), you should be aware that existing
+objects might be re-used to complete the build, such that the desired
+properties of the program are only partly present. For example, say you
+compile the code without OpenMP, then edit some files, then type
+\texttt{make SMP=OPENMP}, then it might be the case that only some of the
+code has OpenMP enabled in it. To avoid such problems, use the configuration
+files, or type \texttt{make clean}, before
+ (re)building to make sure you get what you expect.}. 
+If your make program supports it, there should be no problem in
+building the code in parallel (GNU make does this via the `-j' flag).
+
+If everything completes correctly, the compiled executable will appear in the 
+\File{/run} directory.
+
+%\pagebreak
+
+\subsection{Using the `simple' makefile}
+
+If using the GNU makefiles is problematic, one may wish to build the code
+using the simple makefile, \File{src/makefile}. You will need to run
+\name{make} from within the \File{src/} directory, but there is a good chance
+you will have to edit the makefile beforehand -- instructions for doing this
+can be found in the file itself. Any files created during compilation will be
+in this directory, together with the source files, apart from the resulting
+executable, which by default, will be found in the top-level
+directory.
+
+\subsection{Some important makefiles}
+
+There are two files common to both methods which are found in the \File{src/}
+directory. The \File{objfiles.mk} file contains the list of object files to be
+created before linking to produce the executable. It should only be necessary
+to modify this file when adding new source files to the code.
+The file \File{deps.mk}
+lists the dependencies for the objects found in \File{objfiles.mk}, so that
+the objects/modules may be built in the correct order. This should be updated
+automatically with the standard makefiles, but may need to be modified manually
+when using the `simple' makefile. It {\it may} be possible to update it via
+
+\begin{verbatim}
+  ./scripts/mkdeps > deps.mk
+\end{verbatim}
+
+from within the source directory.
+
+The file \File{src/gkw.mk} is the main GNU makefile which should not
+need to be modified in general, unless new variables are being introduced
+to the code. Otherwise, all settings should be made via the files in
+\File{config/}.
+
+\subsection{Potential compilation issues}
+
+Most compilers tested to date have no problems compiling the code.
+Occasionally, some non-standard features or bugs get into the trunk version, creating
+problems. However, these tend to get removed rapidly after they are discovered.
+The Intel and GNU compilers are in most frequent use and are least likely to find unexpected new
+issues when compiling and running.   On Hector, the PGI compiler has historically caused less problems than the Cray compiler.
+
+Some compilers, such as those found on Fujitsu machines, may not like very
+large source files; if such a compiler is used, it may be necessary to edit
+the problematic source file and remove code which is not needed for the
+particular run. %It is hoped that certain large source code files will be
+%significantly broken up in the near future, thus preventing this issue.
+
+Some compilers (e.g. Intel) do not by default include the present working directory
+in the include path.  If \code{make} gives an error that \File{gkw_info.h} cannot be found,
+when it already exists in the \File{/obj} directory, you should first try adding \code{I./} to 
+\code{FFLAGS_INC} to your \File{config} file.
+
+% ----------------------------------------------------------------------------
+% ----------------------------------------------------------------------------
+
+\subsection{\label{sec:additional-libraries}Additional libraries}
+
+Here we list some third party libraries that can be used to extend the
+functionality of the code.
+
+\subsubsection{MPI-2}
+
+An MPI-2 implementation is required for any distributed memory
+parallel run.\footnote{The code might compile and run (with
+  limited MPI-I/O and nonspectral functionality) with MPI-1 but this
+  has not been attempted for a long time, and it is likely that some
+  MPI-2 function calls would need to be commented to make this
+  possible.}  MPI is enabled through preprocessing by setting
+\code{MPI=mpi2} in the \File{config} file.  For most MPI
+implementations, the include files and linking are automatically
+handled by a compiler wrapper script such as \code{mpif90} or
+\code{mpiifort}.
+
+% ----------------------------------------------------------------------------
+
+\subsubsection{FFTW3}
+
+For nonlinear runs a Fourier transform library is
+needed. At the moment only the FFTW3 library is supported.
+If this library is installed it can be linked against by setting
+\code{FFTLIB = FFT_FFTW3} in the corresponding \File{config} file of gkw.
+Depending on the system you may also need to set \code{FFLAGS_INC} and \code{LDFLAGS}
+to link to \code{-lfftw3 (-lfftw3f)} for double (single) precision.
+
+% ----------------------------------------------------------------------------
+
+\subsubsection{AMD and UMFPACK}
+The two libraries \File{amd} and \File{umfpack} are needed for the (experimental) 
+implicit time integration scheme and the nonspectral and global cases.
+They are provided with the GKW trunk and must be compiled before GKW.
+
+At present these libraries can only be compiled in double precision. 
+If GKW is compiled in single precision, then type conversions are made 
+wherever these libraries are used in the code.  
+To compile and link these libraries to GKW one must add to the GKW config file
+\begin{verbatim}
+IMPLICIT = umfpack      # Compile GKW with umfpack (64 bit) or umfpack32 (32 bit)
+\end{verbatim}
+In most cases this should be sufficient; the libraries should then be built and linked automatically.   
+One can also explicitly require compilation and linking of umfpack by setting
+\begin{verbatim}
+UMFPACK = compile       # Compile the UMFpack provided with GKW
+LD_UMFPACK = -lumfpack  # link GKW with UMFpack
+\end{verbatim}
+
+
+% ----------------------------------------------------------------------------
+
+\subsubsection{\label{subsubsec:slepc}SLEPc and PETSc}
+
+For the eigenvalue solver the two libraries {\sc slep}c and {\sc pets}c are required
+(where the former depends on the latter).
+Note that these two libraries have to be compiled for using complex numbers
+to work. This can be achieved with the option
+\code{--with-scalar-type=complex} for the configure script of {\sc pets}c. {\sc slep}c
+inherits these settings automatically from {\sc pets}c (if configured afterwards).
+To link these libraries, one must add the paths for the libraries to the \code{LDFLAGS} together
+with some subset of these (-lslepc -lpetsc -llapack -lblas -lX11 -lmkl) and
+you must set \code{SLEPC = HAVE_SLEPC} in your \File{config} file for GKW.  
+If the headers are not installed in a standard location for Fortran
+you may also have to add the library include paths to \code{FFLAGS_INC}.  
+It might also be necessary to add the path to petscconf.h to \code{FFLAGS_INC} 
+(probably under an \File{include} subdirectory for each architecture).
+
+% ----------------------------------------------------------------------------
+
+\subsubsection{HDF5}\label{sec:hdf5}
+
+The HDF5 library is needed to write output in the HDF5 data format.
+Note that at the moment GKW expects the HDF5 library to be compiled in
+its \emph{serial} version.\\
+To link this library, one must add the paths ot the \code{LDFLAGS} and
+\code{FFLAGS_INC} variables. It is a good idea to make use of the
+\code{h5fc} wrapper which is provided by the HDF5 library to make
+compilation easier (e.g. see the helios config).  Furthermore,
+set \code{IO_LIB = HAVE_HDF5} in your \File{config} file for GKW, this
+will then enable GKW's HDF5 support.
+
+Note that the default output format of GKW depends on the availability
+of HDF5. If GKW was compiled without HDF5 it then \code{io_format='mixed'} is the default, but if
+compiled with HDF5 the default becomes \code{io_format = 'hdf5+ascii'},
+see also section \ref{sec.diagnos-data-format}.
+
+Note also that some datasets, in particular higher-dimensional (3D+)
+diagnostic data (using MPI-IO) is not output in HDF5 format at the
+moment, because parallel HDF5 is not yet supported by GKW.  If such
+data is requested, it will be output in fortran binary output instead of HDF5.
+
+% ----------------------------------------------------------------------------
+% ----------------------------------------------------------------------------
+
+\section{Running GKW}
+
+Before you do any run it is important to realize that it is not all that hard to produce nonsense. 
+The code is not under all conditions stable, and it is not always immediately obvious if a 
+result is wrong. It is therefore important to diagnose your runs to make sure they are O.K.. 
+It is your responsibility as a user to produce physically meaningful results.
+
+Here it is assumed you have the necessary MPI environment set up and
+running on the machine (consult your MPI library documentation) and that any run time
+dependencies can be satisfied.
+
+In order to run GKW, the code requires a single input file \File{input.dat} to be present
+in the run directory. Optionally, a file containing equilibrium geometry information from
+the CHEASE code can be provided as input.
+To get started, there are a few example input files found in the \doc{input} directory,
+together with corresponding \File{README} files. The file \doc{input.dat.sample} lists every input switch
+together with a description of its purpose. \doc{input.dat.minimum} is a bare minimum input file containing
+the essential inputs required for the code to run.
+
+To run the code in parallel, you will probably need to use the program provided by the
+MPI implementation; this is usually called \name{mpirun} or \name{mpiexec}.
+
+GKW will try to select an appropriate parallelisation given the gridsize input but this can be overridden 
+(by setting \name{N_procs_[sp|mu|vpar|s]} in the gridsize namelist).  Nevertheless it is
+sensible to have in mind a parallelisation setup when you set the gridsize, as the user controls the number of 
+processors the code will be run on and should choose a number that fits with the
+gridsize.  For the largest parallel runs, the user is recommended to manually choose the parallel setup.
+
+The rest of this section describes a basic input file.
+Many of the input switches are optional and default values will be used if they are not provided.
+The input variables are provided in Fortran namelists, for example the namelist `control' contains
+the main switches for the code. The namelist examples presented here provide you with a basic set 
+needed to run the code.  The namelists are sensitive to bad formatting, in which case the code should 
+inform you which namelist has the problem.  
+
+GKW tries to catch as many invalid input combinations as possible. Most of the time if you input a set of 
+incompatible switches the code will tell you and abort if necessary. For more minor errors the code will generate 
+a warning that it is ignoring an input parameter and continue.  The actual input parameters the code runs with are 
+written to \File{input.out}.  By renaming \File{input.out} to \File{input.dat} the code should re-run without the warnings
+(if the compiler correctly formats namelist outputs).
+
+\subsection{Modes}
+
+The spacing and location of the wavevectors is determined by the `mode' namelist.
+For \name{mode_box=.false.} there is only one radial wavevector considered, but the field line can be extended to 
+take more than one poloidal turn by setting \name{nperiod}. The total number of full poloidal turns is then 2 \name{nperiod} - 1. 
+The bi-normal modes are determined by the input \name{kthrho} which specifies the value(s) of
+$k_\theta\rho_{\rm ref}=\sqrt{g^{\zeta\zeta}(s=0)}k_\zeta$, see Eq.~(\ref{kperp}). For {mode_box=.false.} the bi-normal modes are given as a list i.e.
+ \name{kthrho=0.1,0.2,0.3} (the variable \name{krhomax} is ignored).
+The radial mode is determined by the input \name{krrho} which specifies the value of $k_r\rho_\textrm{ref}=\sqrt{g^{\psi\psi}(s=0)}k_\psi$.
+Alternatively, a poloidal shift of the balooning angle can be specified using the input \name{CHIN}. A finite value of $k_\psi$ will then be
+calculated to minimise $k_\perp\rho_{\rm ref}$ at the poloidal angle $\theta = \name{CHIN}$. The value of $k_\psi$ is given by
+$$k_\psi = - k_\zeta g^{\psi\zeta}/g^{\psi\psi}$$
+where the metric elements are evaluated at the poloidal location specified by CHIN (poloidal angle, from the magnetic axis, positive counterclockwise, in radian and
+zero at the low field side midplane) and $k_\zeta=k_\theta\rho_{\rm ref} / \sqrt{g^{\zeta\zeta}(s=0)}$, as usual.
+
+For \name{mode_box=.true.}, the field line must have one poloidal turn, i.e. one must set \name{nperiod=1}. In this case 
+the radial modes are coupled at the end of the field line according to the ballooning shift connected with the
+magnetic shear.  
+The bi-normal modes will be equally spaced from $k_\theta\rho_{\rm ref} =0$ to \name{krhomax} (the \name{kthrho} input is ignored).  
+The integer $i_k$ in Eq.~(\ref{ikxspace}) is input into the code as \name{ikxspace} and determines the balance between radial 
+resolution and radial box size.  \name{ikspace} should be adjusted to give an approximately square box (the code will output LX and LY).
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{c|c|c|c|c}
+ NS & ikxspace & NX & NPERIOD & mode_box \\
+\hline
+ 80      &    N/A   &  1  &    3    & false    \\
+ 16      &     1    &  5  &    1    & true     \\ 
+\hline
+ $n_s.(2n_p-1)$ &    N/A   &  1  &    $n_p$    & false    \\
+ $n_s$    &     1    & $2n_p-1$ &  1   & true   \\
+
+\end{tabular}
+\caption{Equivalent formulations example with \name{mode_box} true and false}
+\end{center}
+\end{table}\\
+
+
+\subsection{Dissipation \label{sec.dissip}}
+
+The parameter \name{disp_vp} sets the dissipation on the trapping term. 
+It acts a bit like a collisionality but the normalization is different: The dissipation decreases at fixed \name{disp_vp}
+when \name{N_vpar_grid} is increased, so that convergence should always be reached.  For all collisionless problems
+that depend critically on the trapping (TEM modes, particle fluxes) one should not set the dissipation in velocity space too high.
+For these cases a lower \name{disp_vp} (say 0.01) will allow a lower resolution convergence of the particle fluxes.  
+When collisions are included, \name{disp_vp} can and should be small (0.2).
+
+The parameter \name{disp_par} sets the dissipation on the streaming term, and 0.2 is a reasonable value for most linear runs.
+For nonlinear runs, values in the range 0.5 - 2.0 are typically required for numerical stability, 
+although stable results can be achieved with lower dissipation by using the Arakawa scheme.
+If parallel dynamics must be finely resolved, higher \name{N_s_grid} bay also allow lower \name{disp_par}.
+The default form of the parallel dissipation uses \name{idisp = 2}, which does not vary over the velocity grid
+and is usually more stable for electromagnetic runs .  However, 
+in some physical cases with a sharp parallel structure (usually at low $k_y$),
+excessive dissipation appears to drive a linear numerical instability;
+in these cases the stability may be improved by using  \name{idisp = 1}. (See \issue{201}).
+
+The circular geometry tends to be more stable than the $s-\alpha$ geometry if numerical problems arise in the zonal mode \cite{CAS10}.
+For runs with strong $E \times B$ shear, \name{disp_par} should be minimised, and some radial dissipation (\name{disp_x}=1.0) should 
+be used (see Ref. \cite{Casson-Thesis} or \cite{exb-dissip}).  \name{disp_x > 0.0} is also required for the finite differences of the
+nonspectral version.  \name{disp_y > 0.0} can be useful in some nonlinear runs to cut out high k physical instabilities (e.g ETG modes) and 
+supress high-k spectral pileup.
+
+\subsection{Gridsizes}
+
+A detailed GKW linear convergence study including many figures is available in Ref. \cite{VET10}, of which the numbers below are a summary.
+The gridsizes required for a converged result will vary for each problem, but here we give some guidance assuming \name{disp_vp}=0.01 and circular geometry.  For adiabatic runs, $[N_s,N_\mu,N_{v_\parallel}]=[16,8,16]$ is often sufficient (Here, $N_s$ is points \textbf{per poloidal turn}, but \name{N_s_grid} in the input file is the total number.). 
+Collisionless ITG modes with kinetic electrons will give growth rate and frequency converged to within 5\% for $[N_s,N_\mu,N_{v_\parallel}]=[16,8,32]$, 
+but if the particle fluxes are to be examined, gridsizes of $[N_s,N_\mu,N_{v_\parallel}]=[40+,8,48]$ 
+may be required (this is because the trapped passing boundary must be accurately resolved).  
+ 
+In general, trapped electron modes require more resolution to get accurate growth rate and frequencies, 
+but once these are resolved, the particle fluxes should be also.  A TEM mode is converged to with 5\%
+for $[N_s,N_\mu,N_{v_\parallel}]=[30,8,64]$  Including collisions can reduce the values of $N_{v_\parallel}$ required 
+substantially ($N_{v_\parallel} = 16-32$), with the lower figures for greater collisionality. 
+
+For a linear run, \name{Nperiod} will depend on the type of mode you are looking at.  For some ITG cases with high magnetic shear, 
+3 would be sufficient, but for some TEM cases or cases with lower magnetic shear, as many as 10 may be required.  Remember to adjust 
+\name{N_s_grid} accordingly.  
+
+For a nonlinear run, \name{Nmod} should be at least 16.  In the past a
+value of \name{nmod}=21 (or 43, 86,...) was used for particularly
+efficient FFT computations, but this is no longer significant.  For
+kinetic runs \name{NX}=167 is a sensible size.  For adiabatic runs
+\name{NX}=83 may be sufficient.  For cases with very low magnetic
+shear or high E x B shear, \name{NX}=339 is sometimes used for
+convergence tests.
+
+For $N_s$, more points are required if using complex general geometry.  
+The boundaries of the velocity space do not usually need to be increased from the defaults. 
+
+\subsection{Species}
+There is no default species data, hence the user must provide some. The species input must satisfy quasi-neutrality. This requires the user to set ratios of densities and charge to satisfy
+\begin{equation}
+ \sum_s Z_s n_s =0, \qquad \sum_s Z_s n_s {1 \over L_{n_s}} = 0
+\end{equation}
+Multiple ion species can be input but only one negatively charged species is allowed.  The number of species read in is controlled by the number of species parameter in the `gridsize' namelist and
+hence it is possible that later species data you specify will not be read in if this is set incorrectly.  The \name{number_of_species} input variable does not include adiabatic electrons (the
+species data for the negative charge species will still be read).  
+
+Note that for a trace species, $n_s=0$ is acceptable. The density only appears in the field equations and for scattering species in collisions.  A trace particle does not contribute to the fields and does not act as a scattering species, so setting $n_s=0$ will give the desired result.
+
+\subsection{Stability}
+The timestep required for numerical stability can vary greatly depending on input parameters, and for kinetic electrons will need to be much smaller.
+For a linear run, there is a time step estimate made at the start of the run and the code will post a warning if
+the chosen timestep is larger than this. For a non linear run, the minimum time step is estimated based on the
+non linear terms, then the time step is adapted as necessary. A minimum time step size can be set in the code (\name{dt_min}) so
+that the run stops when the time step becomes too small. The parallel structure of the solution is a good
+indicator of a the stability of a solution. 
+
+For linear runs a stable solution will converge to a constant growth rate. A tolerance for the growth rate can be
+specified in the code input (parameter \name{gamatol}), so that the run ends when the standard deviation of the growth rate computed over the last six big time steps is less than \name{gamatol}. When the tolerance on the growth rate is used to end the run, it is advised to keep the big time steps long enough to have a meaningful standard deviation. Typically, if the big time step length is such that $\name{DTIM}\times\name{NAVERAGE}>0.2$, setting $\name{gamatol}=10^{-6}$ will usually ensure convergence.  
+
+
+GKW outputs the global growth rate
+in \File{time.dat} so a growth rate spectrum can be generated from a batch of linear runs with 
+\name{NMOD=1} and \name{mode_box=.false.}.  Typical grid sizes can be seen in the example input files.
+
+\subsection{\texorpdfstring{$\beta$ and $\beta'$}{beta and beta prime}}
+\label{Sec:betabetapr}
+The plasma $\beta$ enters the field equations (parallel and perpendicular components of the Ampere's law, Eq.~\ref{eq:AmpPar} and
+\ref{eq:AmpPerp}) through the parameter $\beta_{ref}$ defined in Eq.~\ref{eq:betaref} and recalled here:
+\begin{equation}
+ \beta_{ref} =  \frac{n\ind{ref}T\ind{ref}}{B^2\ind{ref}/2\mu_0}.
+\end{equation}
+The parameter $\beta_{ref}$ is linked to the total plasma $\beta$ at the reference magnetic field as follows:
+\begin{align}
+\label{eq:betadef}
+ \beta_0 &= \sum\ind{species} 2\mu_0\frac{n_sT_s}{B^2\ind{ref}} = \beta_{ref} \sum\ind{species} \frac{n_s}{n\ind{ref}}\frac{T_s}{T\ind{ref}} = \beta_{ref}
+\sum\ind{species} n_{N_s} T_{N_s}\\
+& = \beta_{ref} \sum\ind{species} \beta_{N,s}\qquad\text{with}\quad \beta_{N,s} := n_{N_s} T_{N_s}
+\end{align}
+The user can specify the value of $\beta_{ref}$ used by GKW within the namelist \name{SPCGENERAL}. Two options are implemented and controled by
+the switch \name{BETA_TYPE}:
+\begin{itemize}
+ \item \name{BETA_TYPE=`ref'}\\
+  The value of $\beta_{ref}$ is given as an input in \name{BETA_REF}.
+ \item \name{BETA_TYPE=`eq'}.\\
+ The total plasma $\beta$ at the reference magnetic field is read from the MHD equilibrium file and $\beta_{ref}$ is calculated using Eq.~\ref{eq:betadef}
+and the species parameters.  The value given as an input in \name{BETA_REF} is not used and replaced by the calculated value. Note that this option is
+only available if \name{GEOM_TYPE='chease'} in namelist \name{GEOM}. If it is not the case a warning is displayed and $\beta_{ref}=0$ is used instead. 
+\end{itemize}
+
+In addition, the radial derivative of the plasma $\beta$ modifies the curvature drift, as seen in Eq.~\ref{eq:drifts}. Here again, the value at the
+reference magnetic field is needed (the dependence on the magnetic field is introduced directly in \File{linear_terms.F90}): 
+\begin{equation}
+\label{eq:betapr0def}
+ \beta'_0 = \frac{2\mu_0}{B\ind{ref}^2}\sum\ind{species}\frac{\partial p_s}{\partial \psi} = - \beta_{ref} \sum\ind{species}  n_{N_s} T_{N_s}
+[R/L_{n_s} + R/L_{T_s}]
+\end{equation}
+Three ways of inputing $\beta'_0$ are implemented:
+\begin{itemize}
+ \item \name{BETAPRIME_TYPE=`ref'}\\
+The value of $\beta'_0$ is given as an input in \name{BETAPRIME_REF}.
+ \item \name{BETAPRIME_TYPE=`sp'}\\
+The value of $\beta'_0$ is made consistent with the species parameters and the value of $\beta_{ref}$ defined above
+using Eq.~\ref{eq:betapr0def}. The value given as an input in \name{BETAPRIME_REF} is not used and replaced by the calculated value
+ \item \name{BETAPRIME_TYPE=`eq'}. \\
+The value of $\beta'_0$ is read from the MHD equilibrium file. The value given as an input in \name{BETAPRIME_REF}
+is not used and replaced by the calculated value.
+\end{itemize}
+
+Note that when the species parameters are used, ALL species are considered including the adiabatic one.
+
+Reminder: if \name{GEOM_TYPE='chease'}, the values of $R\ind{ref}$ and $B\ind{ref}$ used in GKW are the values \name{R0EXP}
+and \name{B0EXP} given as an input to CHEASE. It is advised that \name{R0EXP} and \name{B0EXP} are chosen to be the radius of the magnetic axis and
+the value of the magnetic field at this position respectively for better convergence in CHEASE.
+ 
+\subsection{Generating a linear growth rate spectrum}
+GKW currently outputs the global growth rate (and frequency) in \File{time.dat} so the easiest way to generate a growth rate spectrum is do a batch of linear runs with \name{NMOD=1}, \name{mode_box=.false.}, and \name{NX=1}, and scan over \name{kthrho} and take the growth rate from each. 
+% If \name{mode_box=.true.} and you have mode than one radial mode, 
+% scan over \name{krhomax} to set the toroidal wavevectors (to keep the kx spacing the same you also have to vary ikxspace with krhomax); 
+The matlab scripts \matlab{create_gkwscan.m} and \matlab{growth_rate_spec.m} help with creating the input and plotting the output; 
+script \scripts{gkwnlin} runs the batch jobs. 
+
+Alternatively, a growth rate (frequency) spectrum can be generated by running with \name{mode_box=.true.} and setting
+\name{lgrowth_rates=.true.} (\name{lfrequencies=.true.})in the \name{DIAGNOSTIC} namelist.  For each toroidal mode,
+the growth rate and of the mode with $k_\psi=0$ will be output.  To get this spectrum to exactly match a spectrum
+generated by the first method at higher $k_\zeta$ will require large \name{NX} (and low \name{ikxspace}) to fully resolve 
+the mode along the field line.  The excercise of matching the spectra generated by these two methods
+will require the user to understand the mode coupling over the parallel boundary condition
+and will indicate the \name{nx} resolution required for \name{mode_box=true} and nonlinear runs.
+
+\pagebreak
+
+\subsection{Restarts \label{sec.restart} and checkpoints}
+
+On a successful exit, GKW writes a binary file \File{FDS} which
+contains the distribution function needed for a restart.  Along with the
+input file, this is the only file required to restart the code.  
+For seamless continuation, some other quantities such as file counters 
+and normalized time are also written to the ASCII file \File{FDS.dat} which
+contains Fortran namelist which the code reads.   The binary restart file 
+is written using MPI-IO and is independent of processor layout.  This means that
+runs can be restarted with different parallelizations from the original run.
+
+GKW will only attempt to restart from the above files if \name{read_file=T} in the \name{CONTROL}
+namelist.  If it does not find any files, it will initialize a new run.  Under the default behaviour,
+when this subsequent run completes, a restart files \File{FDS} and \File{FDS.dat} will be overwritten.
+This behavior can be altered by setting the integer \name{irun} in the \name{CONTROL} namelist which
+allows incremental numbering of restart files.  If \name{irun=1},  
+\File{FDS} is read if present and \File{FD1} is written.   If \name{irun=2},  
+\File{FD1} is read and \File{FD2} is written, and so on.
+
+For systems on which MPI-IO is not available or problematic\footnote{
+For large problems with more than about 64 processes,
+there can be problems/errors when reading/writing the restart files in
+parallel, depending the filesystem and the MPI implementation.
+This has been observed on some Cray XT4 machines, where in
+some cases it was necessary to modify environment variables to
+successfully write restart files. There is also a workaround in the
+code which must be set at compile time via adjustments to two variables in
+\File{switches.F90}: Rather than writing to file with all processes
+simultaneously, this allows writes with subsets of processes
+at a time, where the file is closed then re-opened between subsets.
+Increasing the number of subsets reduces overheads and can allow files to
+be written successfully. This might also improve the I/O performance on
+machines, where such operations already work. 
+However, if the number of subsets is too large, the I/O
+performance will suffer. The variable \name{min_fdisi_io_subsets} selects
+the minimum number of process subsets to use. When problems are encountered, 
+it is suggested to first try setting this value to the value of \name{n_procs_sp}, 
+then to \name{n_procs_sp*n_procs_s} if problems persist. Using larger values will
+likely give very poor performance, but may be necessary. The other variable,
+\name{min_procs_io_split}, sets the minimum number of processes for which
+the read/write split should be used.},
+GKW can also be made to write
+a legacy restart file format, in which each processor writes its own file 
+\File{FDSXXXXXX} numbered by processor (option \name{restart_file_version=1} in \name{CONTROL}).  
+In this case, restarts may not alter the parallelization.
+
+Intermediate checkpoints can also be written by setting the integer \name{n_dump_ts=50} in the \name{CONTROL} namelist,
+to write, for instance a checkpoint every 50 large timesteps.  This is strongly advised for any expensive nonlinear simulation.  
+Two restart files \File{DM1/2} are alternately overwritten by a newer one each time.  These files have exactly the 
+same format as the final restart file \File{FDS} and can be used for a restart by simple renaming.
+One should note that if restarting an interrupted run from a checkpoint,  some the time trace files may have duplicated lines, 
+which can be easily verified by checking or plotting column 1 of \File{time.dat}.
+
+A clean exit can be requested at anytime while the code is running by creating a
+file named \name{gkw.stop} in the run directory. An additional checkpoint 
+file can be created by instead creating a file named \name{gkw.dump}, after which
+the code will continue to run. 
+
+Some batch systems will automatically resubmit a job which is terminated by a hardware problem; 
+to allow GKW to automatically restart from the \File{DM1/2} files (and take precedence over FDS files) if present, 
+set \name{auto_restart=T} in the \name{CONTROL} namelist.   GKW could also be made to interface with batch 
+systems which are provide accounting flexibility for codes able to halt on request,
+by means of the \name{gkw.stop} file creation mechanism.  
+
+\pagebreak
+
+\subsection{Tips and tricks}
+
+%Should this be a wiki page?
+
+This section aims to document other useful things to know when running the
+code. Please add here anything else useful to the user that we have yet to
+document properly. Received wisdom, etc.
+
+\begin{itemize}
+
+\item The linear timestep estimator is based on the Courant condition for the
+       Vlasov equation, and the frequency of shear-Alfv\`{e}n wave \cite{LEE01}, so it is not
+       foolproof for some high frequency waves (e.g. ETG). If GKW gives unphysicaly large growth
+       rates, the first thing one should try is to reduce the timestep (no more
+       than a factor of two at a time). If your problem requires a very small
+       timestep (less than 1e-6), something else is likely to be wrong, but if
+       a very small timestep is really required it may be best to run with
+       \name{normalized=.false}. Equally, for most efficient resource usage,
+       one should try to find the upper limit of the stable timestep.
+
+\item For nonlinear kinetic runs, adding a small electromagnetic component e.g.
+       $\beta=0.03\%$ can stabilise some long wavelength instabilities
+       (electrostatic shear-Alfv\`{e}n waves), allowing a much larger stable
+       timestep, as suggested in \cite{MER10}. 
+       %Same trick is mentioned in Jenko 2010 paper
+       
+\item For kinetic electron runs (\name{adiabatic\_electrons=.false.}) the default 
+      initialization option \name{finit='cosine2'} may lead to 
+      initial bursts. A different initialization of the distribution function, 
+      e.~g., \name{finit='cosine5'}, may then be more appropriate.
+
+\item The nonlinear timestep estimator rarely manages to prevent blowup in the
+       event of numerical instability, but can be useful for strongly nonlinear
+       physics.   For very large numbers of processors it may cause an overhead
+       which reduces the scaling efficiency.  It can therefore be disabled
+       by setting. \name{nl_dtim_est=F} in the \name{CONTROL} namelist, which
+       will cause the code will abort rather than continue if the timestep
+       estimate is violated.  The code could then be restarted from the previous
+       dumpfile with the nonlinear timestep estimator enabled, or with a smaller
+       timestep.
+
+\item The nonlinear timestep estimator is often too conservative.  
+      If your problem is limited by the nonlinear timestep, 
+      it may be possible to save CPU resources by increasing it (no more than $90\%$) 
+      by setting e.g. \name{fac_nl_est = 1.6} in \name{CONTROL}.
+
+\item Don't be tempted to use more cores than you need.  Pushing the parallelisation to its limit 
+       (particularly less than 4 points per processor in parallel velocity) will result in inefficient scaling.
+
+\item Be aware of the effects of the boundary condition at the end of the field line. If not running a box of modes, you should
+       check that \name{nperiod} is large enough so that the results are insensitive to the free boundary. If running with
+       \name{mode_box}, care should be taken with the radial mode resolution so that most toroidal modes have several periods and
+       do not feel the effect of the boundary. This is particularly important when kinetic electrons are used.
+
+\end{itemize}
+
+\subsection{Hybrid scheme \label{sec:hybrid}}
+
+Hybrid parallelism combining distributed memory MPI parallelism with shared memory OpenMP parallelism
+has been implemented to allow the code to scale further, and more efficiently. 
+Many modern high performance machines now have an architecture with a number of shared memory CPU cores on each node (2-24), 
+and a large number of these nodes connected by a fast network interconnect.  
+The communication between nodes is much slower than between cores, and a well optimised and well
+utilised MPI implementation will take advantage of this by putting the most intensive communication on the local node.
+  In cases where this is not done, or cases where a subset of 
+the problem grid does not fit nicely on a single node, the efficiency of the inter-node communication may be increased by reducing 
+the number of MPI processes involved in the intra-node communication.  For example, on a machine with 8 cores per node (e.g. HPC-FF), 
+1024  processors can be utilised with the combinations 
+(number of MPI processes, number of OpenMP threads per node) = (1024,1), (512,2), (256,4), or (128,8), 
+where the lower number of MPI processes in the latter case may result in a more efficient reduction sum 
+(though in theory the amount of inter-node data communicated by the ideal MPI implementation would remain the same).
+
+In GKW, hybrid parallelism (for the spectral scheme only) is achieved by subdividing the most CPU intensive loops amongst OpenMP threads.  
+The slowest of these is the loop in nonlinear terms, where for each local grid point, 5-7 FFTS in 2D must be performed. 
+At the maximum limit on the number of MPI processes, 
+there will always be at least 2 (4 with collisions) points in this loop (it contains \name{NMU*NSP*NS} local grid points) 
+which can be divided between threads.  
+(The code could be rewritten here to increase the number of threads that can be used in this section, 
+if the hybrid scheme is demonstrated to bring a clear benefit at these numbers of threads).  
+The second largest loop which must be parallelised is the sparse matrix-vector multiply involved in the linear terms. 
+Due to the sparse matrix storage format, this loop cannot be vectorised, but cache efficiency can be maximised 
+by an appropriate sorting of the matrix.  After this sort, the matrix elements are subdivided between threads at carefully chosen boundaries,  
+to ensure there is no data race in the update of the right hand side.  The same technique is used for the fields calculation. 
+All possible smaller loops ($<$5\% runtime) are also parallelised with OpenMP, 
+but here there are diminishing returns here due to the overhead involved in thread branching.  
+This inherently serial element of the code will set the limit of the number of threads that can efficiently be used (likely four at present).
+ 
+The hybrid scheme with OpenMP parallelism can allow GKW to scale better in certain situations for large runs.  
+Tests on HPC-FF and Babel Bluegene machines (combined with some reasoning), suggest that the cases in which it is most likely to be useful 
+are those in which the MPI communications are the bottleneck.  When this occurs depends on the problem and the hardware.  
+These situations are likely to include one or more of the following:
+\begin{itemize}
+ \item Problems with large numbers of modes
+ \item Problems with collisions (4 threads has been demonstrated to bring a benefit here)
+ \item Runs on very large numbers of processsors, near the limit of GKW MPI capability
+ \item Hardware with slow communication (HPC-FF or BlueGene as opposed to Hector)
+\end{itemize}
+
+Preliminary tests with the hybrid scheme on up to 1536 processors (on HPC-FF: IBM-Intel-Xeon-Infiniband) demonstrated up to a 5\% 
+performance increase using two OpenMP threads per node.  More extensive scaling tests on Bluegene/P BABEL have
+demonstrated a scaling efficiency increase of up to 20\% with 4 threads when running a collisional case on 8192 cores and above 
+(for more details see Sec. \ref{sec:bluegene}).
+%ALSO, RECREATE HECTOR 2a or new HECTOR2b or HECTOR 3 scaling test to see in open MP can bring a benefit there.
+%Want to do a large collisional scaling test without the diagnostics on.
+%Want to know how much is due to momentum conservation (this was not even integrated into hybrid shcheme at time of test).
+
+You are advised to do some brief checks for your problem and hardware to determine
+if the hybrid scheme is an advantage.  Best results will probably be obtained using the hybrid scheme 
+with no more than four OpenMP threads per MPI process.
+ For acceptable results, the number of threads must be a factor of the local processor gridsize 
+ \name{NMU*NSP*NS} (which is also the maximum number of threads), as a loop of this size is parallelised in the nonlinear terms.
+
+To use the hybrid scheme, you need a compiler that supports OpenMP.  You will need to compile with
+SMP=OPENMP preprocessor flag, openmp compiler flag, and link with the correct libraries (by using the same compiler flag). 
+In the standard makefile build process, this is usually achived by setting 
+\begin{verbatim}
+SMP=OPENMP
+FFLAGS_OMP=-openmp (for intel, or -fopenmp for gnu)
+\end{verbatim}
+Using the compile optimisations specific to the processor is also recommended.
+
+\subsection{A brief guide to moving to global simulations}
+\label{sec:brief-guide-moving}
+
+\emph{This guide needs improvement, please add to it.}
+
+This section assumes you can already cope with running non_spectral.
+Running global simulations is somewhat more complicated:
+
+The input switches for the global version are not yet very well
+documented, and the input checks and error messages may not yet be
+very comprehensive or informative (there is a job there for anyone 
+that wants to be helpful).  
+
+It is probably easier to start from an existing global test case, 
+but to move from local to global you would need to add at least 
+the following switches.
+
+\paragraph{CONTROL}
+\subparagraph{\name{spectral_radius = .false.}}
+Since the radial direction is no longer 
+homogeneous you can not use a spectral 
+method 
+\subparagraph{\name{flux_tube = .false.}}
+This is the switch that tells the code 
+it is in fact a global run 
+\subparagraph{\name{disp_x = 0.05}}
+You need this (or more). Since there 
+are radial derivatives in the equation 
+one needs to put some dissipation. 
+
+\paragraph{GRIDSIZE}
+\subparagraph{\name{vpmax = 4.0}} The velocity grid does not vary with radius, 
+and so it must be able to resolve both the low 
+as well as the high temperatures in the radial 
+domain. This means that one often has to increase 
+both the maximum value of the grid (vpmax) as 
+well as the velocity space resolution (n_vpar_grid)
+The value chosen depends on how much the temperature 
+varies over the radial domain.
+\subparagraph{\name{n_vpar_grid = 64}} You must often choose this larger than a fluxtube 
+run (see comment vpmax)
+\subparagraph{\name{mumax = 8.0}} You must often make the perpendicular velocity 
+grid larger (see comment vpmax) 
+\subparagraph{\name{n_mu_grid = 16}} also the resolution in the perpendicular velocity
+must be larger usually (see comment vpmax)
+\subparagraph{\name{psil = 0.02}} inner boundary eps=r/Rref
+\subparagraph{\name{psih = 0.3}} outer boundary eps=r/Rref
+\subparagraph{\name{nx = 128}} Better to be even in nonspectral. Also this value 
+must be chosen high enough such that you resolve 
+at least 2 times the ion Larmor radius (1 is better
+and kinetic electron runs might require more 
+resolution (this is true for nonspectral as well) 
+\subparagraph{\name{n_procs_x = 4}} Now you can parallelize here too
+
+\paragraph{MODE}
+\subparagraph{\name{n_spacing = 2}} For a run with one mode this is the toroidal mode 
+number (kthrho / krhomax are not used). For a 
+nonlinear run with many modes this is the mode 
+spacing, i.e. n_spacing = 2 with nmod = 4 means 
+that the toroidal modes 0, 2, 4, and 6 are kept 
+in the simulation (this is the half-torus) 
+
+\paragraph{SPCGENERAL}
+\subparagraph{\name{rhostar = 1e-3}} rho_ref/R_ref
+
+\paragraph{SPECIES}
+\subparagraph{\name{dens_prof_type = 'exp_tanh'}}
+\subparagraph{\name{temp_prof_type = 'exp_tanh'}}
+\subparagraph{\name{temp_prof_coef = 0.0,0.0,0.0,0.0,0.0}}
+\subparagraph{\name{dens_prof_coef = 0.0,0.0,0.0,0.0,0.0}}
+These define the radial profile of temperature/density, and through the
+derviatives also the profiles of the density gradient lengths. For possible
+profile types and the meaning of the coefficients for those, see first part of
+section \ref{secprofilefunctions}.
+
+\paragraph{GEOM}
+\subparagraph{\name{prof_type = 'parabolic'}}
+\subparagraph{\name{qprof_coef = 0.0,0.0,0.0,0.0,0.0}}
+These define the radial profile of the safety factor, and through the
+derivative also the shear profile. For possible profile types and the meaning
+of the coefficients for those, see second part of section \ref{secprofilefunctions}.
+
+The chosen profiles are output in prof_back.dat 
+(and there is a matlab script to read them). 
+
+If you are going to attempt a nonlinear simulation, then you will
+probably also want the krook operator to prevent profile relaxation.
+See section \ref{seckrookoperator}, for more details.
+
+\paragraph{KROOK}
+\subparagraph{\name{krook_option=1}}, global krook preserving momentum
+\subparagraph{\name{gammak=0.05}}, global krook damping rate (should be << linear gr)
+\subparagraph{\name{nlkrook=.true.}}, global krook
+for boundary krook cells, see input.dat.sample
+
+You should also take a look at the \name{GYROAVERAGE} namelist, which
+is fairly well documented in \doc{input.dat.sample}.
+
+\pagebreak
+
+\section{Example GKW input file}
+\vskip 0.2 truecm
+Further example input files are provided with the code, including a comprehensive input file 
+\doc{input.dat.sample}, a minimal input \doc{input.dat.minimum}, 
+and input files for some common benchmark cases in \doc{input/}.
+\begin{scriptsize}
+\begin{verbatim}
+ &CONTROL                   !Namelist read in module CONTROL
+  non_linear = .false.      !Include the non linear terms, computationally expensive fft
+  zonal_adiabatic = .false.,!If zonal flows correction included for adiabatic electrons
+  order_of_the_scheme = 'fourth_order'  !or 'second_order' in space
+  dtim   = 0.02          !Time step size (normalised time)
+  ntime  = 25,           !Number of iterations of NAVERAGE.
+  naverage = 100,        !Number of timesteps between re-normalisation, data output
+  nlapar = .false.,      !true = keep parallel electro-magnetic potential.(electrostatic=false)
+  nlbpar = .false.,      !true = keep compressional magnetic field (electrostatic=false) 
+  collisions = .false.   !Turn on the collision operator
+  disp_par = 1.0         !Dissipation coefficient for parallel derivatives.
+  disp_vp  = 0.0         !Dissipation coefficient for parallel velocity space
+  max_seconds = 1000.    !Internal program kill time.
+  gamatol     = 0.       !tolerance in the linear growth rate for which the code should stop
+  io_format   = 'ascii'  !chose output format to be ascii
+ /
+ &GRIDSIZE        !Namelist read in module GRID
+  nx = 83,        !Number of radial wave vectors - needs to be an odd number for fft
+  n_s_grid = 50,  !Number of grid points along the field line 
+  nperiod = 1,    !Integer - the field line makes 2*nperiod - 1 poloidal turns. 
+  n_mu_grid   = 8,        !Number of magnetic moment grid points
+  n_vpar_grid = 32,       !Number of grid points for parallel velocity 
+  nmod = 21,              !Number of bi-normal modes (k_zeta)
+  number_of_species = 1   !Number of kinetic species. 
+ /
+ &MODE                !Namelist read in module MODE
+  kthrho  = 0.5,1.0,  !'Poloidal' wavevector(s) if mode_box=.false.
+  mode_box = .true.,  !Determines if there is a 2D grid of modes. If true use nperiod = 1
+                      !Also determines if radial modes are coupled at end of field line.
+  krhomax = 1.0,      !For mode_box, the maximum 'poloidal' wavevector (k_perp rho_i) used
+                      !k_perp evaluated on the low field side of the outboard midplane
+                      !rho_i evaluated on the flux surface at the major radius of magnetic axis
+  ikxspace = 7,       !Spacing between radial modes (resolution against box size)
+ /
+ &SPCGENERAL                   !Namelist read in module COMPONENTS
+  beta_ref = 0.000,            !Plasma beta (not used if both nlapar, nlbpar are .false.)
+  adiabatic_electrons = .true. !Kinetic electrons require a smaller timestep
+ /
+ &SPECIES       !Namelist read in module COMPONENTS
+  mass  = 1.0,  !Species mass in terms of reference mass
+  z     = 1.0,  !Species charge. If negative, assumed to be the electrons.
+  temp  = 1.,   !Temperature of species scaled by reference temperature 
+  dens  = 1.,   !Density of species scaled by reference density 
+  rlt   = 8,    !Temperature gradient R/LT
+  rln   = 3.5,  !Density gradient R/Ln
+  uprim = 0.0,  !Gradient of the toroidal rotation Rref^2 grad Omega / v_thref
+ / 
+ &SPECIES 
+  mass  = 2.72e-4, !Electrons
+  z     = -1.0,    !Only one negatively charged species is allowed.
+  temp  = 1.0, 
+  dens  = 1.0,
+  rlt   = 7.9,
+  rln   = 3.5, 
+  uprim = 0.0,
+ /
+ &GEOM          !Namelist read in module GEOM, s-alpha is default geometry
+  shat = 1.0,   !Magnetic shear
+  q    = 2.0,   !Safety factor
+  eps  = 0.1    !Radial Coordinate
+ /
+ &ROTATION                   !Namelist read in module ROTATION
+  vcor = 0.0                 !Rotation of the plasma vcor = Rref Omega / vthref = \Omega_N
+  shear_rate = 0.0           !Normalised shearing rate for the E x B perpendicular shear 
+  shear_profile  = 'none'    !To include a shear flow, use `wavevector_remap'
+  cf_trap = .true.           !Include the centrifugal trapping effects           
+  cf_drift = .true.          !Include the centrifugal drift
+ /
+ &COLLISIONS    !Namelist read in module COLLISONOP if collisions = .true.
+  rref = 1  !reference major radius used in collision operator 
+  tref = 1  !reference temperature in units of kev used for the collision operator
+  nref = 1  !reference density in units 10^19 m^-3 used for the collision operator
+  mom_conservation = .false.     !Use the correction to conserve momentum
+  mass_conserve = .true.,        !Forces zero flux boundary on velocity space so no out flow of mass   
+  freq_override=.false.          !Manually specify ii collision frequency to override ref values 
+  coll_freq=6.515E-5             !Ion-ion collision frequency used if freq_override=.true.
+ /
+\end{verbatim} 
+\end{scriptsize}
+
+% related to auctex mode and latex-preview-mode in Emacs:
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "doc"
+%%% End:

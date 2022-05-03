@@ -1,0 +1,12 @@
+The input files in this directory are used for verifying that mode_box 
+and non mode_box switches of the code are equivalent.
+
+The two cases without the arakawa scheme given identical results
+The two cases with the arakawa scheme give identical results
+
+The difference between the arakawa scheme and normal scheme is miniscule, and both results change the same with dissipation (issue 26)
+
+These tests were satisfied for r2838.
+
+(checked previously that this also holds when signB/signJ = -1, in issue 43)
+

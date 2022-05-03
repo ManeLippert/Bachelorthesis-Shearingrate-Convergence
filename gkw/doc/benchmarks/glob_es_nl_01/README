@@ -1,0 +1,13 @@
+This is a benchmark of the global electrostatic version. The case is cyclone base case 
+with the parameters chosen as much as possible equal to the publication 
+
+X. Lapillonne,  PHYSICS OF PLASMAS 17, 112321 (2010)
+
+Two values for the heat conductivity are quoted in this paper. X = 1.76 (ORB) and chi = 1.95 
+(GENE) Averaged over the same interval [180 420] GKW gives X = 1.90 [rho_s^2 c_s / a] in 
+very good agreement with the published results. Averaging over various intervales and 
+using the standard deviation one would give a value 1.9 +/- 0.1 for the GKW results 
+(obtained with r2901 of GKW). 
+
+The ion heat conductivity has been obtained by radial averaging of the heat flux and 
+over the range r/a = [0.4,0.6], and using the midpoint value 7.1 for the ion temperature gradient.

@@ -1,0 +1,38 @@
+October 2014
+
+A benchmark of the poloidal assymmetry quasineutrality solver was completed
+with the Qualikiz implementation by Jonathan Citrin, identical results were found. 
+The results were presented at ITPA Cadarache Nov 2014 (by J Citrin, see PDF).
+
+The benchmark includes strong rotation and ICRH anisotropy induced asymmetry.
+The benchmark includes the potential, densities of all species, and the radial deriviatives.
+
+The ABC Memo quantities for transformations of the flux surface average, in cffsa.dat, 
+were also checked and agree to within 0.1%.
+
+Here the GKW input files are archived.  Note that for the best agreement of the QN solver
+benchmark, GKW was modifed to include finite epsilon effects with a "s-alpha-eps" geometry
+(See issue 216)
+
+However, for growth rates, the s-alpha geometry of GKW is closest to Qualikiz (see eps figure).
+It is however difficult to say if this becuase of the geometry, or due to other approximations
+used in Qualikiz. 
+
+Version 3894 of GKW was used (or actually, 3863 M with the extra geometry of 3894, but before
+the IO rewrite merge.) 
+
+-------------------------------
+
+October 2014
+
+The implementation in Qualikiz was then compared to the results in 
+Angioni et al. Phys. Plasmas 19, 122311 (2012), see second PDF
+
+Note that the rotodiffusion model was not included in these Qualikiz results.
+Further refinement of the Qualikiz implementation may follow (J Citrin).
+
+GKW input files, output files, and matlab scripts are not presently available.
+
+
+
+

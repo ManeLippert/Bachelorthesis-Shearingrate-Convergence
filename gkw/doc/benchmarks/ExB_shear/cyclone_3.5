@@ -1,0 +1,76 @@
+!This GKW input file is for the well known cyclone benchmark case
+!See Physics of Plasmas, 2000, Dimitz et Al.
+!"Comparisons and phycics basis of tokamak transport models and turbulence simulations."
+
+!Given the nonlinear FFTs and long runtime 64 or more processors is recommended.
+ 
+&CONTROL
+ testing = .false.,
+ silent = .true.,
+ order_of_the_scheme = 'fourth_order'
+ parallel_boundary_conditions = 'zero'
+ matrix_format = 'complex'
+ READ_FILE  = .false.
+ NON_LINEAR = .true.
+ zonal_adiabatic = .true.,
+ METHOD = 'EXP',
+ METH   = 2,
+ DTIM   = 0.02
+ NTIME=1200
+ NAVERAGE = 50,
+ nlapar = .false.,
+ collisions = .false.
+ !output3d=.true.
+ disp_x=1.0
+ disp_vp=1.0
+ /
+ &GRIDSIZE
+ NX = 83,
+ N_s_grid = 16,
+ N_mu_grid = 8,
+ n_vpar_grid=16
+ NMOD = 21,
+ nperiod = 1,
+ number_of_species = 1 ! Number of species. Note: do not count the adiabatic species
+ /
+ &MODE
+ CHIN    = 0.,
+ KTHRHO  = 0.5, 0.5,
+ mode_box = .true.,
+ krhomax = 1.4,
+ ikxspace = 5,
+ /
+ &GEOM
+ shat = 0.8
+ Q    = 1.4,
+ eps = 0.18
+ /
+ &SPCGENERAL
+ beta = 0.000,
+ adiabatic_electrons = .true.
+ finit='noise'
+ /
+ &SPECIES
+ MASS = 1.0,
+ Z    = 1.0,
+ TEMP = 1.0,
+ DENS = 1.0,
+ rlt = 6.9,
+ rln = 2.2,
+ uprim = 0.0,
+ /
+ &SPECIES
+ MASS = 2.72e-4,
+ Z    = -1.0,
+ TEMP =  1.0,
+ rlt = 6.9,
+ rln = 2.2,
+ uprim = 0.0,
+ /
+ &ROTATION
+ t_shear_begin=200.0
+ shear_profile='wavevector_remap'
+ toroidal_shear="use_shear_rate"
+ shear_rate=3.500000e-01
+ /
+

@@ -1,0 +1,240 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage{fullpage}
+\setlength{\parskip}{8pt}
+\setlength{\parindent}{0pt}
+
+%opening
+\title{Ballooning representation of the Vlasov equation}
+\author{F. J. Casson}
+\date{May 2008}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+The solutions to magnetic differential equations have rapid spatial variation perpendicular to the magnetic field and slow variation along magnetic field lines. The eigensolutions may be represented as a rapidly varying eikonal in the perpendicular plane modified by a slowly varying envelope function along the field lines. In a toroidal geometry, periodicity constraints on the eigenmodes lead to the ballooning representation.  Using the gyrokinetic Vlasov equation as an example, we here introduce the concepts of the ballooning representation with certain simplifying assumptions.  This discussion is illustrative with many technical details omitted.
+
+\end{abstract}
+
+\section{Motivation with respect to GKW}
+The ballooning representation is not exactly the method used to solve the gyrokinetic Vlasov equation in GKW, but it is closely aligned to it.  By studying the ballooning representation we hope to reveal something about the structure of the solutions that GKW finds.  In the process this additional perspective should also illuminate a new way to think about periodicity and mode connections as implemented in GKW. This understanding of the periodicity constraints is vital to make appropriate choices for the mode namelist and in interpretation of results.  We shall return to these points later.
+
+\section{Eikonal representation}
+
+A magnetic differential equation (\cite{H+M} \S 3.3)  is of the inhomogeneous form
+\begin{equation}
+ {\bf B}\cdot \nabla f = U({\bf x})
+\end{equation}
+
+The eikonal representation here outlined is applicable to the solution of many equations of this form, but here we restrict ourselves to the example of the gyrokinetic Vlasov equation for a perturbation distribution function $f({\bf X},\mu,v_\parallel, t)$:
+\begin{equation}
+{\partial f \over \partial t} + v_\parallel {\bf b}\cdot \nabla f + {\bf v}_{D} \cdot \nabla f -{\mu B \over m}{{\bf B}\cdot \nabla B \over B^2}{\partial f \over \partial v_\parallel} = S
+%-{\mu B \over m}{{\bf B}\cdot \nabla B \over B^2}{\partial f \over \partial v_\parallel} = 0. 
+\label{eq.gyro}
+\end{equation}
+in which S is the source term determined by the background distribution function, and ${\bf v}_{D}$ contains all curvature and ${\bf E} \times {\bf B}$ drifts.
+ 
+% \begin{equation}
+% {\partial f \over \partial t} + v_\parallel {\bf b}\cdot \nabla f + {\bf v}_{D} \cdot \nabla f  = 0
+% %-{\mu B \over m}{{\bf B}\cdot \nabla B \over B^2}{\partial f \over \partial v_\parallel} = 0. 
+% \end{equation}
+%in which the mirror and source terms have been dropped.
+
+The perpendicular and parallel dynamics are strongly separated since $v_\parallel \approx v_{thermal}$ and $v_D \approx \rho_* v_{thermal}$ and $\rho_* = {\rho \over R} \ll 1$ for most toroidal devices.  We therefore look to construct an \textit{eikonal solution} that determines the rapidly varying perpendicular mode structure.  We can also view the eikonal representation as a perturbation series solution approach (c.f. Quantum theory) with ordering parameter $\rho_*$.
+%Furthermore we see that the mirror term is also of $O(\rho_*)$  since ??.
+To lowest order then, we take $\rho_* = 0$ and keeping only spatial dependence our eikonal $f^{(0)}$ must satisfy:
+\begin{equation}
+{\partial f^{(0)} \over \partial t} + v_\parallel {\bf b}\cdot \nabla f^{(0)} = 0
+\end{equation}
+We would also like our base solution $f^{(0)}$ to be time independent hence we have:
+\begin{equation}
+{\bf b}\cdot \nabla f^{(0)}  = 0
+\label{eq.mag}
+\end{equation}
+Expressing the magnetic field unit vector ${\bf b}$ in terms of its toroidal and polodial components we have
+\begin{equation}
+ {\bf b}= {{\bf B} \over B} = {1 \over B} (B_t {\bf {\hat e}}_t + B_p {\bf {\hat e}}_p)
+\end{equation}
+where the ${\bf {\hat e}}$ represent \textit{normalised} unit vectors.  
+
+%Perhaps not quite so illuminating?
+At this point it is necessary to be more specific about the coordinates of our presentation.  A general toroidal coordinate system with $(\rho,\theta,\phi)$ is not in general orthogonal.  Assuming $\rho$ as a flux surface label coordinate, we prefer to express the above in the covariant basis ${\bf e}_i={\partial {\bf x} \over \partial x^i}$ since ${\bf e}_\theta, {\bf e}_\phi$ lie in the flux surface (whereas $\nabla \theta$ in the contravariant basis may not). In this basis:
+\begin{equation}
+{\bf {\hat e}}_p = {{\bf e}_\theta \over |{\bf e}_\theta|},\quad {\bf {\hat e}}_t = {{\bf e}_\phi \over |{\bf e}_\phi|},\quad B_p = {B^\theta \over |\nabla \theta|},\quad B_t = {B^\phi \over |\nabla \phi|}
+\end{equation}
+So we may write:
+ \begin{equation}
+  {\bf B} = (B^\phi {\bf {e}}_\phi + B^\theta {\bf {e}}_\theta)
+ \end{equation}
+Recalling that 
+\begin{equation}
+ {\bf a} \cdot {\bf b} = a^i b_i {\bf e}_i \cdot \nabla x_i, \quad
+\nabla f = \nabla x^i {\partial f \over \partial x^i}
+\label{eq.bases}
+\end{equation}
+we have from Eq. \ref{eq.mag}:
+\begin{equation}
+B^\phi\left({\partial f^{(0)} \over \partial \phi} + {B^\theta \over B^\phi}{\partial f^{(0)} \over \partial \theta}\right) = 0
+\end{equation}
+%which we have factorized to make it clear that the ratio of the terms depends on ${B^\phi \over B^\theta}$.
+For simplicity in the solution of this equation we shall use the low aspect ratio approximation $\epsilon = r/R \ll 1$ which allows us to assume constant pitch over the poloidal angle with $q = {B^\phi \over B^\theta}$.  (Dropping this assumption would lead us to an integral over the local pitch in the eikonal.)
+%This definition of the local pitch is wrong....
+Hence:
+\begin{equation}
+ {\partial f^{(0)} \over \partial \phi} + {1 \over q}{\partial f^{(0)} \over \partial \theta} = 0
+\end{equation}
+To satisfy toroidal periodicity we look for solutions of the form $f_n^{(0)} = l(\theta)\exp [in\phi]$ characterised by toroidal wavenumber $n$. Solving leads us to the eikonal:
+\begin{equation}
+ f_n^{(0)}=exp[in(\phi-q(\theta+\theta_0))]
+\end{equation}
+What we have done is to construct, to lowest order in $\rho$, time independent solutions to Eq. \ref{eq.gyro} with rapid spatial variation perpendicular to the field (we shall assume $n \gg 1$) and with no phase variation along the field line.  The wavevectors are perpendicular to the field lines and parallel derivatives of the eikonal are zero by construction.
+
+\vspace*{5 pc}
+
+\section{Envelope function}
+To approach the first order solution in $\rho_*$ to Eq. \ref{eq.gyro} we assume the form of a slowly varying envelope function $g$ around our eikonal solution $f_n^{(0)}$:
+\begin{equation}
+ f_n^{(1)}=g_n(\theta,v_\parallel,\mu,t,)f_n^{(0)}(\rho,\theta,\phi)
+\end{equation}
+Note this is NOT the same meaning for $g$ as in the GKW manual. Substitution into Eq. \ref{eq.gyro} gives
+\begin{equation}
+g_n \left(\underbrace{{\partial f_n^{(0)} \over \partial t} + v_\parallel {\bf b}\cdot \nabla f_n^{(0)}}_A\right) + \underbrace{g{\bf v}_D \cdot \nabla f_n^{(0)}}_I + \left({\partial g_n \over \partial t} + v_\parallel{\bf b}\cdot\nabla g_n + \underbrace{{\bf v}_D \cdot \nabla g_n}_{O(\rho_*^2)} -{\mu B \over m}{{\bf B}\cdot \nabla B \over B^2}{\partial g_n \over \partial v_\parallel}\right)f_n^{(0)} = S
+\label{eq.substitute}
+\end{equation}
+The term labelled A is zero by our construction of the eikonal.  The term labelled $I$ is the only one of first order in $\rho_*$ for the drifts ${\bf v}_D)$ and we neglect the last of $O(\rho_*^2)$.  In a linear treatment of the drift term ${\bf v}_D$ we neglect the ${\bf E} \times {\bf B}$ drifts and using the approximation ${\bf e}_\perp \approx {\bf e}_\theta$ we can say that all other curvature drifts are in the vertical direction.  This approximation is the same as:
+\begin{equation}
+{B_p \over B_t} = {\epsilon \over q} \ll 1 \quad \Rightarrow q \approx 1
+\end{equation}
+Resolving this vertical drift into our toroidal coordinates ($|{\bf e}_\theta|=r$) we have:
+\begin{equation}
+ {\bf v}_D = |{\bf v}_D|\left(\cos(\theta) {{\bf e}_\theta \over r} + \sin(\theta) {{\bf e}_\rho \over |{\bf e}_\rho|}\right)
+\end{equation}
+and again using Eq. \ref{eq.bases} we have:
+\begin{equation}
+ I = g_n|{\bf v}_D|\left[\cos(\theta){1 \over r}(-inq)+{1 \over |{\bf e}_\rho|}\sin(\theta)(-{\partial q \over \partial \rho} in(\theta+\theta_0))\right]f_n^{(0)} 
+\end{equation}
+We now define a wavevector $k_{\theta,n}$ by analogy with a Fourier expansion such that: 
+\begin{equation}
+ {\bf e}_\theta \cdot \nabla f_n^{(1)} = ik_\theta f_n^{(1)} \Rightarrow k_{\theta,n} = - {nq \over r}
+\end{equation}
+Which allows us to write
+\begin{equation}
+ I = g_n|{\bf v}_D|k_{\theta,n} \left[\cos(\theta)+{\hat s}(\theta+\theta_0) \sin(\theta)\right]f_n^{(0)} 
+\end{equation}
+where ${\hat s}={r \over q |{\bf e}_\rho|}{\partial q \over \partial \rho}$ is the magnetic shear.  Hence we see that a consequence of toroidal geometry is that the radial wavevector is coupled to the perpendicular by
+\begin{equation}
+ k_{\rho,n}={\hat s}\theta k_{\theta,n}+k_{\rho_0,n}
+\label{eq.connect}
+\end{equation}
+where $k_{\rho_0,n}={nq \over r}{\hat s}\theta_0$ can be chosen arbitrarily.  Our envelope function can now be written in terms of the wavevectors and From Eq. \ref{eq.substitute} this envelope $g_n(k_\theta,k_\rho,\mu,v_\parallel,t)$ must satisfy:
+\begin{equation}
+{\partial g_n \over \partial t} + v_\parallel{\bf b}\cdot\nabla g_n + g_n|{\bf v}_D|k_\theta \left[\cos(\theta)+{\hat s}\theta \sin(\theta)\right]-{\mu B \over m}{{\bf B}\cdot \nabla B \over B^2}{\partial g \over \partial v_\parallel}=S
+\end{equation}
+
+Hence each discrete mode in $k_\theta$ must have an associated continuous spectrum in $k_\rho$. We see that the on the periodic domain $-\pi < \theta < \pi$ that if we have multiple discrete $k_{\rho}$ modes they must connect after one poloidal turn according to Eq. \ref{eq.connect}. An alternative way to interpret this is that in the infinite domian $-\infty < \theta < \infty$ there is only one $k_{\rho,n_p}$ mode for each $k_\theta$.
+
+\section{Periodicity constraints}
+Earlier we used the condition of toroidal periodicity to construct an eikonal with toroidal mode number $n$. Until this point we have ignored the additional constraint of poloidal periodicity. On any rational flux surface there will be an infinite set of mode numbers $n_q$ such that $n_q q$ is also an integer.  For each eikonal $f_{n_q}^{(0)}$, poloidal periodicity will be satisfied on this rational flux surface. 
+
+%I think this bit from page 329 of H + M only makes sense using the \eta coordinate
+% Furthermore \textbf{it can be shown} (check this argument before typing it up...) that the envelope functions for these eikonals are all related by
+% \begin{equation}
+%  g_{n_p}(\theta) = g_{n_0}(\theta+2\pi p)
+% \label{eq.envelope}
+% \end{equation}
+% % in which $g_{n_0}$ is one arbitrarily chosen periodic solution which determines all others.  Whilst we neglected poloidal periodicity, each $f_n^{(1)}$ was one member of a linearly independent basis set for the first order solutions to Eq. \ref{eq.gyro}.  
+% Applying the constraint of poloidal peridiocity to the eikonal we find that the $k_{\theta,n}$ modes are now coupled and any solution must be a sum of all of them:
+
+Note, however, that since the radial wavevector is increasing with $\theta$ (Eq. \ref{eq.connect}, a periodic envelope function cannot be physical as the energy in the mode would diverge).  We construct a periodic envelope function
+\begin{equation}
+  {\hat g}_n(\theta)=\sum_{p=-\infty}^\infty g_{n}(\theta + 2\pi p)
+\end{equation}
+where we also require that the infinite sum converges.  This last restriction results in a $g_{n}$ that must decay away as $\theta \rightarrow \pm \infty$.  Our new periodic envelope function ${\hat g}_n(\theta)$ then allows us to find periodic solutions $f_n^{(1)}={\hat g}_n f_n^{(0)}$:
+\begin{equation}
+ f_n^{(1)}(\theta)=\sum_{p=-\infty}^\infty g_{n}(\theta+2\pi p)\exp(-in(\phi-q(\theta+\theta_0+2\pi p))) 
+\end{equation}
+This is the idea that is the key to the ballooning representation.  
+
+%I Think this is also incorrect after conversation with Fulvio Zonca
+% Taking the rational surfaces to be closely packed and $n_p \gg 1$, a solution on an irrational surface can used as an accurate approximation for a nearby irrational surface.
+
+\vspace*{13 pc}
+
+%$f^{(1)}=\sum_n c_n f^{(1)}$ we can only admit solutions with $f^{(1)}(\theta)=f^{(1)}(\theta+2\pi)$
+%some detail missing here: To prove need to use \theta_0
+%If one of the solution branches with $n=n_0$ has a periodic poloidal dependence then the eikonal tells us
+% \begin{equation}
+% \sin(n_0 q\theta) = \sin(n_0 q(\theta+2\pi j )) = \sin(n_0q\theta + 2\pi p) 
+% \end{equation}
+%for all integers $j$ where $p = n_0qj$ is also an integer.  The envelope functions must then satisfy %$g_p(\theta) = g_{n_0}(\theta +2\pi p)$
+%But this defines another solution branch with$n = n_0 x$
+
+\section{The ballooning transform and its relation to GKW}
+\begin{small}
+
+% \addtolength{\textwidth}{1in}
+% % \addtolength{\hoffset}{-0.5in}
+% \addtolength{\textheight}{2in}
+% \addtolength{\voffset}{-2in}
+
+Here we have conducted our analysis in generalized toroidal coordinates with the assumptions $\epsilon = r/R \ll 1$ and ${\bf e}_\perp \approx {\bf e}_\theta$.  The ballooning representation can also be constructed in field aligned coordinates (see \cite{H+M} \S 7.10), rendering these simplifying assumptions unnecessary, since in the field aligned coordinates the local pitch is constant on a surface and $q(\rho)$ is flux label.
+
+We have already seen that our wavevectors were defined analogously to those under a Fourier transform.  Extending the analogy, the Ballooning representation can be viewed as a generalized \textit{transform} with the Fourier transform as one substep \cite{H+M} \cite{CHT}.  It has been shown \cite{HazeltineNewcomb} that this `Ballooning transformation' has an inverse.
+
+In GKW we use a spectral method in the perpendicular direction and disregard terms of $O(\rho_*^2)$.  In the field aligned coordinates, this becomes equivalent to the ballooning transform with the coupling of the modes after one poloidal rotation.  This is achieved with the routine \texttt{connect\_parallel} playing the role of Eq. \ref{eq.connect}. Note, the mode connection will only take place if $mode\_box=true$ and $nperiod=1$. In a linear run with $nperiod = a > 1$ and a single $k_\rho$ mode ($NX = 1$) then we should see a decaying parallel envelope. With identical parameters but $nperiod=1$ and with $NX =2a - 1$ modes in $k_\rho$ the use of the parallel connection should give an identical result.
+
+Of course we only have a discrete number of radial modes for each $k_\theta$ mode. Since the spacing of the radial modes is up to us, we choose them such that we can connect discrete modes after one poloidal turn according to Eq \ref{eq.connect}. This is achieved by making the spacing of the discrete radial modes
+\begin{equation}
+k_{\rho,n,i+1}-k_{\rho,n,i}={k_{\theta,n}{\hat s}\over j}
+\end{equation}
+for some integer $j$ (called \texttt{ikxspace} in the code) related to $k_{\rho_0}$.  For more details see the section `local limit' of the GKW manual.
+
+The effect of including the nonlinear $v_{{\bf E} \times {\bf B}} \cdot \nabla f$ term is to couple the $k_\theta$ modes in which case we must keep more than one to see this interaction.  A nonlinear run can also be viewed as the single $k_\rho$ mode nonlinearly interacting with itself in the infinite $\theta$ domain.  In practice of course we cannot extend to the infinite $\theta$ domain.
+
+Finally, our treatment here has been a local one, with the assumption that our envelope does not have a radial dependence.  This is equivalent to the use of the periodic radial boundary in GKW which makes it a local `flux tube' code.  Ballooning theory can be extended to allow for a radial variation in the form of a secondary, radial, envelope function but this is well beyond the scope of this work. See \cite{Dewar83}.
+
+\end{small}
+
+
+%Nperiod = 1 - infinite
+%S Boundaries set to zero.
+%Should see a decaying envelope in par.dat%
+
+\setlength{\parskip}{4pt}
+\begin{tiny}\section{Further Reading}
+
+For a readable presentation of the Ballooning representation and Ballooning transform in field aligned coordinates, see \cite{H+M} \S 7.10.  For the original paper by Connor describing the Ballooning transformation see \cite{CHT}.  For the proof of the existence of an inverse transformation and identification of an error in \cite{CHT} and other previous papers see \cite{HazeltineNewcomb}.  For a more complete discussion of the Ballooning representation and its relation to WKB theory see \cite{Dewar83}.  For a comparison of the representation and the transformation methods see \cite{Thy}.
+
+\begin{thebibliography}{5}
+
+\bibitem{H+M}
+R.~D. Hazeltine and J.~D. Meiss.
+\newblock {\em Plasma Confinement}.
+\newblock Dover, 2003.
+
+\bibitem{CHT}
+J.~W. Connor, R~.~J. Hastie, and J.~B. Taylor.
+\newblock Shear, periodicity, and plasma balooning modes.
+\newblock {\em Physcial Review Letters}, {\bf 40}, 396, 1978.
+
+\bibitem{HazeltineNewcomb}
+R.~D. Hazeltine and W.~A. Newcomb.
+\newblock Inversion of the ballooning transformation.
+\newblock {\em Physics of Fluids B: Plasma Physics}, {\bf 2}, 7, 1990.
+
+\bibitem{Dewar83}
+R.~L. Dewar and A.~H. Glasser.
+\newblock Ballooning mode spectrum in general toroidal systems.
+\newblock {\em Physics of Fluids}, {\bf 26}, 3038, 1983.
+
+\bibitem{Thy}
+A.~Thyagaraja.
+\newblock A spectral approach to ballooning theory. part 1.
+\newblock {\em J. Plasma Physics}, {\bf 59}, 367, 1998.
+
+\end{thebibliography}
+
+\end{tiny}
+\end{document}

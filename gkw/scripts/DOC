@@ -1,0 +1,19 @@
+Note most scripts require $GKW_HOME to be set as the path to your gkw
+
+####### Mentioned by the code #######
+gkw_clean_run - deletes all gkw output files
+
+####### Test Cases #######
+gkw_run_tests -    run the gkw test cases
+gkw_run_tests.pbs - run the above from within pbs
+
+####### Batch launchers #########
+gkwnlin - pbs, loadleveller, sun grid engine, batch launcher script 
+gkw_stop_all - for use with the above to stop all jobs
+
+####### Convenience ##########
+gkw_check_input_new - wrapper for checking many input files 
+gkwmake - for building gkw in $GKW_HOME
+gkwrun - for finding latest gkw executable and running in current directory
+
+

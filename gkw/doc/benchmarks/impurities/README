@@ -1,0 +1,5 @@
+This a benchmark for of non-trace impurities based on the waltz case
+between GKW and GS2, performed in 2011 by G Szepesi
+
+All three field equations are tested.
+This benchmark appears in the latest GKW manual, but not the CPC paper.

@@ -1,0 +1,28 @@
+Comparison of the different geometry treatments ('s-alpha', 'circ' and 'chease') in GKW.
+
+At low inverse aspect ratio, for circular flux surfaces and no Shafranov shift the three models should give the same result. 
+
+Two aspect ratio (eps=0.05 and eps=0.15) are tested for each geometry. The corresponding GKW input files are:
+input.GeomComp_ch_1
+input.GeomComp_circ_1
+input.GeomComp_sa_1
+input.GeomComp_ch_2  
+input.GeomComp_sa_2
+input.GeomComp_circ_2
+
+The metric for the real MHD equilibrium case is obtained by running CHEASE for a circular last closed flux surface parametrised by
+R = Rref + a*cos(theta)
+Z = a*sin(theta)
+with Rref=6.5m, a=1.2m and Bref=1.4T to also test the Rref and Bref normalisations in GKW
+
+F is taken to be RrefBref as in the 'circ' model and the pressure gradient is taken to be constant and very small. However, because of the hoop force, the flux surfaces are not exactly concentric.
+
+The metric elements calculated in GKW are stored in the following files:
+GeomComp_ch_1
+GeomComp_circ_1
+GeomComp_sa_1
+GeomComp_ch_2
+GeomComp_sa_2
+GeomComp_circ_2
+
+The results can be compared using the matlab script comp_geom.m 

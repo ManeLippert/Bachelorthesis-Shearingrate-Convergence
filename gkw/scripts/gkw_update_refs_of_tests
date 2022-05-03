@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ "$1x" == "--helpx" ]; then
+    cat <<EOF
+This script looks recursively for testcases below the
+current working directory
+($PWD at this moment),
+and updates all reference files reference/* with the result of the
+corresponding serial run, i.e. with the file of the
+same name in the folder named 1/.
+EOF
+    exit 0
+fi
+
+
+for dir in $(find . -name "reference" -type d); do
+
+    cd $dir
+    pwd
+    for file in *; do
+	cp -v $PWD/../1/$file .
+    done
+    cd -
+    echo
+
+done

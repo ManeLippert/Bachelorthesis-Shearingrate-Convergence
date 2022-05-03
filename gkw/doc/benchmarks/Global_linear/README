@@ -1,0 +1,10 @@
+Linear benchmark of the Cyclone case 
+
+input files of GKW: gyg51 gyg52 gyg53 gyg54 gyg55 gyg56
+results (from GKW r2876) are given in gyg5 
+
+One can run runme.m to produce the figures 
+
+NOTE: the GENE and GYGLES results have been read of from 
+a figure in [T. Goerler, CPC  Journal of Computational Physics 230 (2011) 7053–7071
+i.e. the accuracy could be improved. 

@@ -1,0 +1,22 @@
+The initial ExB shear benchmark is documented in Casson et al, Physics of Plasmas, 16, 092303 (2009)
+
+The input files here can be used to recreate the GKW benchmarks with GYRO (Waltz case without parallel shear) 
+and GS2 (Cyclone case with parallel shear).  Both sets of input files switch on the ExB shear after the 
+nonlinear phase is reached to acess the self sustained turbulence. 
+Both sets of input files here have improved dissipation settings from the original benchmark figures.
+
+The data in the .dat files is the non GKW data taken from the papers with which the benchmarks were made:
+GYRO data: Kinsey et Al, Physics of Plasmas, 12, 062302 (2005)
+GS2 data: Roach et Al, Plasma Physics and controlled Fusion, 51, 124020 (2009)
+
+Some investigations with GKW to try and improve the agreement of the ExB shear benchmark 
+were undertaken after the above paper was published which can be found in the PDF
+in this directory. It was found that the critical shear region (where fluxes drop to zero) 
+was very sensitive to radial dissipation (of which GKW usually has none). 
+When radial dissipation was added in GKW, the critical shear point reduced.  
+Parallel dissipation was found to allow nonphysical turbulence to persist at high shear.
+Exact correspondence between the codes was difficult to achieve due to the different grids in the two codes.
+
+The nonperiodic boundary condition in GYRO gives an almost identical result
+to the periodic boundary at zero ExB shear, but at nonzero shear with damped boundaries
+the radial box size convergence could also be tested.  F.J.Casson thanks W. Guttenfelder for doing the GYRO runs.  

@@ -1,0 +1,27 @@
+#!/usr/bin/env octave
+
+%% This is a GNU Octave script.
+
+try
+libgkwoct;
+catch
+disp('')
+disp('ERROR: Could not source libgkwoct. Please put the line ''addpath("~/gkw/octave");'' (with correct path to the $GKW_HOME/octave folder) into the file ~/.octaverc .')
+disp('')
+end
+
+eval(from_inputdat("nmod","input.dat"));
+eval(from_inputdat("nx","input.dat"));
+eval(from_inputdat("krhomax","input.dat"));
+eval(from_inputdat("ikxspace","input.dat"));
+eval(from_inputdat("shat","input.dat"));
+eval(from_inputdat("eps","input.dat"));
+eval(from_inputdat("q","input.dat"));
+disp("")
+
+%% call the matlab function:
+[out, in] = mode_box_calculator(nmod, nx, krhomax, ikxspace, shat, eps, q);
+out
+
+disp("computational box aspect ratio: lyn/lx")
+out.lyn/out.lx

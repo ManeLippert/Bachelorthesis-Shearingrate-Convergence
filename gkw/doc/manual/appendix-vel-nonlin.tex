@@ -1,0 +1,766 @@
+\chapter{Velocity Nonlinearity and Conservation Properties}
+\section{The velocity nonlinearity} 
+\label{sec:velocity-nonlinearity} 
+\index{Velocity nonlinearity} 
+
+There is a nonlinearity called the velocity nonlinearity, which is often neglected in the $\delta f$ formalism since it is one order smaller 
+in the normalized Larmor radius $\rho_*$ compared with the leading order terms. The
+expression for the velocity nonlinearity can be obtained by considering the evolution equation for 
+of the parallel velocity (Here without rotation and only electro-static) 
+\begin{equation}
+mv_\parallel \d{v_\parallel}{t} = - \d{\bf X}{t}\cdot \left [
+Ze \nabla \langle \phi \rangle + \mu \nabla B \right ] 
+\end{equation}
+In the $\delta f$ formalism the terms that are proportional to both the field $\phi$ as well as the perturbed 
+distribution $f$ are neglected. 
+Note that these terms do include the term due to ${\bf v}_E \cdot \mu \nabla B$, which cancels 
+${\bf v}_{\nabla B} \cdot Z e \nabla \langle \phi \rangle$. The remaining terms are 
+\begin{equation}
+ \d{v_\parallel}{t} = - \frac{Ze }{ m v_\parallel} [ v_\parallel {\bf b} + {\bf v}_{D-} ] \cdot 
+\nabla \langle \phi \rangle  
+\end{equation}
+where ${\bf v}_{D-}$ is the drift velocity minus the grad-B drift. 
+
+The parallel velocity nonlinearity therefore adds an additional term to the gyro-kinetic equation in the 
+form 
+\begin{equation}
+\pd{f}{ t} \overset{+}{=} \frac{Ze }{ m v_\parallel} [ v_\parallel {\bf b} + {\bf v}_{D-} ] \cdot 
+\nabla \langle \phi \rangle  \pd{ f }{v_\parallel} 
+\end{equation}
+Normalizing this contribution gives for the parallel motion and the drift, respectively 
+\begin{equation}
+\pd{f_N}{t_N} \overset{+}{=} \frac{Z \rho_*}{2 \sqrt{T_{GN} m_N}}
+ {\cal F} \pd{ \langle \phi_N \rangle }{s} 
+\pd{ f_N }{v_{\parallel N}} 
+\end{equation}
+\begin{equation}
+\pd{ f_N}{t_N} \overset{+}{=}  
+\frac{\rho_*^2 }{ 2} \left [ v_{\parallel N} {\cal D}^\alpha + v_{\parallel N} \beta^\prime {\cal E}^{1 \alpha} + 
+2 H^\alpha \sqrt{\frac{m_N }{ T_{GN}}} \Omega_N \right ] 
+\pd{ \langle \phi_N \rangle}{ x^\alpha} \pd{ f_N }{v_{\parallel N}} 
+\label{eq:parallel-velocity-nonlinearity-drift}
+\end{equation}
+(here the Coriolis drift is kept which is somewhat inconsistent with the fact that it has been neglected in the 
+equation above, but it is work in progress). 
+The drift terms involve derivatives in the perpendicular plane that scale as $1/\rho_*$. Therefore, both 
+terms are of the order $\rho_*$ and are usually neglected. 
+
+As discussed in section \ref{energy-conservation-local-limit}, in the case of the local limit the velocity nonlinearity 
+must be implemented as 
+\begin{equation}
+\pd{ f}{ t} \overset{+}{=} \pd{}{ v_\parallel} \left [ \frac{Ze }{ m v_\parallel} 
+[ v_\parallel {\bf b} + {\bf v}_{D-} ] \cdot \nabla \langle \phi \rangle  f \right ]  
+\end{equation}
+in order to assure phase space convervation. In the latter case an additional term appears in Eq.~(\ref{eq:parallel-velocity-nonlinearity-drift})
+which must be implemented as 
+\begin{align}
+\pd{ f_N}{ t_N} &\overset{+}{=}
+\frac{\rho_*^2 }{ 2} \left [ v_{\parallel N} {\cal D}^\alpha + v_{\parallel N} \beta^\prime {\cal E}^{1 \alpha} + 
+2 H^\alpha \sqrt{\frac{m_N}{T_{GN}}} \Omega_N \right ] 
+\pd{ \langle \phi_N \rangle}{ x^\alpha} \pd{ f_N }{v_{\parallel N}} \cr 
+\noalign{\vskip 0.2 truecm} \\
+& + \frac{\rho_*^2 }{ 2} \left [ {\cal D}^\alpha + \beta^\prime {\cal E}^{1 \alpha} \right ] \pd{ \langle \phi \rangle }{x^\alpha} f 
+\end{align}
+
+\section{Basic equation} 
+
+{\bf Warning: not all is correct in this section} 
+
+The equations in GKW are related to, but do not directly follow from a Lagrangian description. 
+Further approximations to the Lagrange equations of motion are made in order to obtain a system that 
+is easier to solve numerically. The approximations all involve neglecting higher order $\rho_*$ terms,
+and since the Lagrangian from which the equations are derived itself is accurate up to terms linear in $\rho_*$ 
+the neglection of higher order terms is consistent with accuracy of the Lagrange description. 
+Care has to be taken not to lose the properties that come with the Lagrange description, like conservation 
+of energy and momentum. Below it will be shown that these properties still hold for the model equations 
+used by GKW. 
+
+Starting point of the derivation is the system Lagrangian \index{Lagrangian} 
+\begin{equation}
+L = \sum_{sp} \int {\rm d}^3{\bf X} {\rm d}^3 {\bf v} \, f L_p + \sum_{sp} \int {\rm d}^3 {\bf X} 
+{\rm d}^3 {\bf v} \, \frac{Z_{sp}^2 e^2}{2 T_{sp} } [ \phi^2 - \langle \phi \rangle^2 ] F_M + \sigma_a \int {\rm d}^3 {\bf X} \,  L_{\rm adiabatic} 
++ \int {\rm d}^3 {\bf X} \, \frac{1 }{ 2 \mu_0} \vert \nabla A_\parallel \vert^2 
+  \label{eq:lagrangian}
+\end{equation}
+with the particle-Lagrange density 
+\begin{equation}
+L_p = \Gamma_a \dot z^a -H  = \left ( Z e {\bf A} + m {\bf u}_0 +  m v_\parallel {\bf b} + Z e \langle A_\parallel \rangle  {\bf b} \right ) \cdot \d{\bf X}{t} 
+- \left ( \frac{1 }{ 2} m v_\parallel^2 + \mu B + Z e \langle \phi \rangle + \frac{1 }{ 2} m u_0^2 \right ) ,
+\label{eq:plagrangian}
+\end{equation}
+where $L_p$ is written without the species index. The quantity $\Gamma$ refers to the discussion in section~\ref{sec:theoryLagrangian}, eq.~\eqref{eq:gyrocenterlagrangian}.
+The expressions above describe a gyrocenter lagrangian in the sense that the rapid gyro-motion has been removed from the Lagrangian. The indices in the Einstein 
+summation convention are $a = 1,2,3,4$ with $a = 4$ refering to the parallel velocity (Note that $\gamma_4$ is zero though). 
+The brackets $\langle \rangle$ correspond to the gyro-average operator, and the sum with index sp is over all 
+kinetic species. 
+The vector potential ${\bf A}$ describes the (constant) background magnetic field, while the perturbed magnetic field is 
+described by $A_\parallel$, the perturbed parallel component of the vector potential. 
+
+In the case of adiabatic electrons, the electron contribution is not included in the species-sum $\sum_{sp}$ but is treated by $\sigma_a = 1$ in a special term in eq. \eqref{eq:lagrangian}.
+(If electrons are meant to be kinetic, $\sigma_a = 0$ takes that term out.)
+The Lagrangian density associated with adiabatic electrons in that term is 
+\begin{equation}
+L_{\rm adiabatic} = - \frac{e^2 n_e }{ 2 T_e} [ \phi - \{ \phi \} ]^2 ,  
+\end{equation}
+where $\{ \}$ indicates the flux surface average. 
+
+\nomenclature[1L]{$L$}{The Lagrangian}
+\nomenclature[1Lp]{$L_p$}{The particle Lagrangian}
+\nomenclature[1Z]{$Z$}{The charge number}
+\nomenclature[1X]{${\bf X}$}{The gyro-centre spatial coordinate}
+\nomenclature[1v]{${\bf v}$}{The velocity} 
+\nomenclature[1f]{$f$}{The perturbed distribution} 
+\nomenclature[1e]{$e$}{The unit charge}
+\nomenclature[1T]{$T$}{The temperature} 
+\nomenclature[2f]{$\phi$}{The perturbed potential} 
+\nomenclature[3b]{$\langle \rangle $}{The gyro-average operation} 
+\nomenclature[3c]{$\langle \rangle^\dagger$}{The conjugate transpose of the gyro-average operator} 
+\nomenclature[1fm]{$F_M$}{The Maxwell distribution} 
+\nomenclature[1H]{$H$}{The Hamiltonian} 
+
+In the following, We occasionally split the Hamiltonian $H$ from \eqref{eq:plagrangian} into a field part $H_1 = Z e \langle \phi \rangle$ and the rest $H_0$ (which is time independent),
+\begin{align}
+  H &= \underbrace{\frac{1 }{ 2} m v_\parallel^2 + \mu B +  \frac{1 }{ 2} m u_0^2}_{H_0} +\underbrace{Z e \langle \phi \rangle}_{H_1} = H_0(\mathbf{X}, v_\parallel, \mu) + H_1(\mathbf{X}, t, \mu) 
+\label{eq:Hsplit}
+\end{align}
+
+Variation of $L$, which is already integrated over phase space, towards $\phi$
+\begin{align}
+  \frac{\delta L}{\delta \phi} &\overset{!}{=} 0  \\
+   &= - \sum_{sp}\int\ud^3v 
+\frac{\delta}{\delta\phi}
+\left(\int\ud^3X f_{s,tot}
+    \left[\underbrace{Ze\ga{\phi}}_{H_1} + \frac{Z_s^2e^2}{2T_s}\left(\ga{\phi}^2 - \phi^2\right)\right]
+ \right)
+ - \sigma_a\frac{\delta}{\delta\phi} \int \ud\mathbf{X} \frac{e^2 n_e }{ 2 T_e} [ \phi - \{ \phi \} ]^2
+\label{eq:Lfuncderivphi}
+\end{align}
+yields the Poisson equation \index{Poisson equation}.
+\ifmoredetails
+To see how, consider the derivative of the first term in \eqref{eq:Lfuncderivphi}, which becomes
+\begin{align}
+  &\d{}{\epsilon}\left[\int\ud^3X^\prime f_{tot}(\mathbf{X}^\prime) Ze\ga{\phi(\mathbf{X}^\prime) + \epsilon\delta(\mathbf{X}^\prime - \mathbf{X})}\right]_{\epsilon=0}  \nonumber\\
+{}={}&\d{}{\epsilon}\left[\int\ud^3X^\prime \iga{ f_{tot}}(\mathbf{X}^\prime,\mu) Ze(\phi(\mathbf{X}^\prime) + \epsilon\delta(\mathbf{X}^\prime - \mathbf{X}))\right]_{\epsilon=0}  \nonumber\\
+{}={}& \int\ud^3X^\prime \iga{f_{tot}}(\mathbf{X}^\prime,\mu) Ze \delta(\mathbf{X}^\prime - \mathbf{X}) \nonumber\\
+{}={}& Ze \iga{ f_{tot}}(\mathbf{X},\mu) 
+\label{eq:Lfuncderivphi1stterm}
+\end{align}
+Here, the gyroaverage operator was written as $\ga{}$ and must be distinguished from its adjoint $\iga{}$.
+The second term of \eqref{eq:Lfuncderivphi} becomes
+  \begin{align}
+   &\d{}{\epsilon}\Big[\int\ud^3X^\prime F_M\ga{\phi + \epsilon\delta(\mathbf{X}^\prime - \mathbf{X})}^2 &&- (\phi + \epsilon\delta(\mathbf{X}' - \mathbf{X}))^2\Big]_{\epsilon=0} \nonumber\\
+   {}={}& \int\ud^3X^\prime F_M 2\ga{\phi + \epsilon\delta(\mathbf{X}^\prime - \mathbf{X})}\ga{\delta(\mathbf{X}^\prime - \mathbf{X})}\Bigg|_{\epsilon=0} &&+ 2F_M\phi(\mathbf{X})\nonumber\\
+   {}={}& \int\ud^3X^\prime F_M 2\ga{\phi}\ga{\delta(\mathbf{X}^\prime - \mathbf{X})}&&+ 2F_M\phi(\mathbf{X})\nonumber\\
+   {}={}& \int\ud^3X^\prime \iga{F_M 2\ga{\phi}}\delta(\mathbf{X}^\prime - \mathbf{X})&&+ 2F_M\phi(\mathbf{X})\nonumber\\
+   {}={}&  F_M 2\iga{\ga{\phi}}(\mathbf{X},\mu)+ 2F_M\phi(\mathbf{X}) \label{eq:Lfuncderivphi2ndterm}
+   \end{align}
+and the third one works analogously to the simpler part in the right column of \eqref{eq:Lfuncderivphi2ndterm}.
+Derived this way, the Poission equation is then
+\fi
+\begin{equation}
+\sum_{sp} Z_{sp} e \int {\rm d}^3 {\bf v} \, \langle f \rangle^\dagger -\sigma_a \frac{n_e e^2 }{ T_e} ( \phi - \{ \phi \} ) 
+= \sum_{sp} \frac{Z_{sp}^2 e^2}{T_{sp}} \int {\rm d}^3 {\bf v} \, [ \phi - \langle \langle \phi \rangle \rangle^\dagger ] F_{Msp} 
+\label{eq:poissonequation}
+\end{equation}
+Furthermore, variation towards $A_\parallel$ yields Ampere's law. Again, we work each term separately:
+\begin{align}
+ \frac{\delta L}{\delta A_\parallel} &\overset{!}{=} 0  \\  
+&= \frac{\delta}{\delta A_\parallel}
+ \sum_{sp} \int {\rm d}^3{\bf X} {\rm d}^3 {\bf v} \, f Ze\ga{A_\parallel}\mathbf{b}
++ \frac{\delta}{\delta A_\parallel}\int {\rm d}^3 {\bf X} \, \frac{1 }{ 2 \mu_0} \vert \nabla A_\parallel \vert^2 
+\end{align}
+The first term is evaluated just like \eqref{eq:Lfuncderivphi1stterm}.
+\begin{align}
+   \frac{\delta}{\delta A_\parallel}
+ \sum_{sp} \int {\rm d}^3{\bf X} {\rm d}^3 {\bf v} \, f Ze\ga{A_\parallel}\mathbf{b}\cdot\d{\mathbf{X}}{t}
+&= 
+\sum_{sp}\int\ud^3\mathbf{v}
+\d{}{\epsilon}\left[\int\ud^3X^\prime \f_{tot}(\mathbf{X}^\prime) Ze\ga{A_\parallel(\mathbf{X}^\prime) + \epsilon\delta(\mathbf{X}^\prime - \mathbf{X})}\mathbf{b}\cdot\d{\mathbf{X}}{t}\right]_{\epsilon=0}  \nonumber\\
+&= 
+\sum_{sp}\int\ud^3\mathbf{v}
+Ze\iga{f_{tot}\mathbf{b}\cdot\d{\mathbf{X}}{t}}(\mathbf{X},\mu)\\
+&= 
+\sum_{sp}\int\ud^3\mathbf{v}
+Ze\iga{f_{tot}}(\mathbf{X},\mu)\mathbf{b}\cdot\d{\mathbf{X}}{t}
+\end{align}
+The second term is already more interesting due to the gradient.
+\begin{align}
+  \frac{\delta}{\delta A_\parallel}\int {\rm d}^3 {\bf X} \, \frac{1 }{ 2 \mu_0} \vert \nabla A_\parallel \vert^2 
+&=\frac{1}{2\mu_0}\d{}{\epsilon}\left[\int\ud^3X^\prime |\nabla \left(A_\parallel(\mathbf{X}^\prime)+ \epsilon\delta(\mathbf{X}^\prime - \mathbf{X})\right))|^2\right]_{\epsilon=0}  \nonumber\\
+&=\frac{1}{2\mu_0}\d{}{\epsilon}\left[\int\ud^3X^\prime (\nabla \left(A_\parallel(\mathbf{X}^\prime)+ \epsilon\delta(\mathbf{X}^\prime - \mathbf{X})\right))^2\right]_{\epsilon=0}  \nonumber\\
+&=\frac{1}{2\mu_0}2\left[\int\ud^3X^\prime (\nabla\left( A_\parallel(\mathbf{X}^\prime)+ \epsilon\delta(\mathbf{X}^\prime - \mathbf{X})\right))\nabla\delta(\mathbf{X}^\prime - \mathbf{X})\right]_{\epsilon=0}  \nonumber\\
+&=\frac{1}{\mu_0}\int\ud^3X^\prime (\nabla A_\parallel(\mathbf{X}^\prime))\nabla\delta(\mathbf{X}^\prime - \mathbf{X})  \nonumber\\
+&= \underbrace{\frac{1}{\mu_0}\int_\partial\ud^2X'(\nabla A_\parallel(\mathbf{X}^\prime))\delta(\mathbf{X}^\prime - \mathbf{X})}_0
+- \frac{1}{\mu_0}\int\ud^3X^\prime (\nabla^2 A_\parallel(\mathbf{X}^\prime))\delta(\mathbf{X}^\prime - \mathbf{X})  \nonumber\\
+&= -\frac{1}{\mu_0}\nabla^2A_\parallel
+\end{align}
+%FIXME SRG how does the boundary term vanish? For a periodic box, ok, but generally?
+That is, this variation yields Ampere's law.
+\begin{equation}
+- \frac{1}{\mu_0}\nabla^2 A_\parallel = \sum_{sp} Z_{sp} e \int {\rm d}^3 {\bf v} \, \d{\bf X}{t} \cdot {\bf b} \langle f \rangle^\dagger  
+\label{eq:ampereslaw}
+\end{equation} 
+
+GKW uses the Poisson equation and Ampere's law above, i.e. they follow directly from the Lagrange description. 
+Approximations, however, are made in the equations of motion of the particles. The Lagrange description yields the 
+equations of motion through the variation of the action 
+\begin{equation}
+\delta S = \delta \int_{t_0}^{t_1} L_p {\rm d} t  
+= \int_{t_0}^{t_1} \pd{ \gamma_a}{ z^b} \delta z_b \dot z^a + \gamma_a \delta \dot z^a - 
+\pd{ H}{ z^a} \delta z^a {\rm d} t . 
+\label{eq:eqmotionderivation}
+\end{equation}
+Integrating the term with $\delta \dot z^a$ once partial towards the time yields
+\ifmoredetails
+\begin{align}
+\delta S = \int_{t_0}^{t_1}  \gamma_a \delta \dot z^a  {\rm d} t 
+&=  \gamma_a \delta z^a\Big|_{t_0}^{t_1} - \int_{t_0}^{t_1} \dot\gamma_a \delta z^a  {\rm d} t \\
+&=  - \int_{t_0}^{t_1} \Big(\underbrace{\pd{\gamma_a}{z^b}}_{\gamma_{a,b}}\pd{z^b}{t} - \pd{\gamma_a}{t}\Big)\delta z^a  {\rm d} t
+\end{align}
+and rename $a\leftrightarrow b$ in the first term of \eqref{eq:eqmotionderivation}, to get
+\fi
+  the equations of motion in the form 
+\begin{align} 
+[ \gamma_{b,a} - \gamma_{a,b} ] \d{z^b}{ t} &= \pd{ H}{ z^a} + \pd{ \gamma_a}{ t} \label{Lagrangemotion} 
+\end{align}
+The equation above can be split into components $(1,2,3)$ and the fourth component as follows 
+\begin{align}
+\Gamma = \left ( Z e {\bf A} + m {\bf u}_0 +  m v_\parallel {\bf b} + Z e \langle A_\parallel \rangle  {\bf b} \right )  
+\end{align}
+\begin{align}
+(\nabla \times {\bf A}^*) \times \d{\bf X}{t} + \pd{{\bf A}^*}{v_\parallel} \d{v_\parallel}{t} 
+&= - \nabla H - \pd{{\bf A}^*}{t} \label{eqmotion} &&\text{eq. of motion for $v_\parallel$}\\
+\pd{{\bf A}^*}{v_\parallel} \cdot \d{\bf X}{t} &= \pd{H}{v_\parallel} \label{eqmotion2} &&\text{eq. of motion for position space coordinates }
+\end{align}
+where 
+\begin{align}
+Z e {\bf A}^* &= Z e {\bf A} + {\bf u}_0 + m v_\parallel {\bf b} + A_\parallel {\bf b} 
+\label{eq:Astar}
+\\
+{\bf B}^* = \nabla \times {\bf A}^*
+\end{align}
+% FIXME so $Ze\mathbf{A}^* \equiv \mathbf{\Gamma}$ from \eqref{eq:plagrangian}?
+% FIXME is there a gyroavg. around the $A_\parallel$ or not? in \eqref{eq:plagrangian}?
+
+The equations \eqref{eqmotion} and \eqref{eqmotion2} above determine both the evolution of both the position as well as the parallel velocity of a gyro-centre, in given fields. 
+A set of reduced equations can be derived by taking the inner product of the first equation \eqref{eqmotion} with $\,{{\rm d} {\bf X} / {\rm d} t}$ to 
+obtain 
+\begin{align}
+0 + \left (\d{\bf X}{t} \cdot  \pd{{\bf A}^*}{v_\parallel} \right ) \d{v_\parallel}{t} 
+&= -  \d{\bf X}{t} \cdot \nabla H -  \d{\bf X}{t} \cdot \pd{{\bf A}^*}{t} 
+\label{motionred1}
+\\
+ \pd{{\bf A}^*}{v_\parallel} \cdot \d{\bf X}{t} 
+&= \pd{H}{v_\parallel} 
+\label{motionred2} 
+\end{align}
+and by inserting \eqref{motionred2} into \eqref{motionred1} 
+\begin{align}
+\pd{H}{v_\parallel} \d{v_\parallel}{t} 
++  \d{\bf X}{t} \cdot \nabla H 
+&= 
+ -  \d{\bf X}{t} \cdot \pd{{\bf A}^*}{t} 
+\label{motionred3}
+\end{align}
+
+
+The essential observation here is that these equations will guarantee
+energy conservation independent of the choice of
+${{\rm d} {\bf X} / {\rm d} t}$. To proof this we will use that
+\begin{align}
+%\d{J_v(t,\mathbf{X}, v_\parallel, \mu)}{t} &= 0 \qquad |\cdot \frac{1 }{ J_v} 
+%\label{eq:phasespacecons}
+%\\
+\frac{1 }{ J_v} \pd{J_v}{ t} + \frac{1 }{ J_v} (\nabla \cdot  J_v) \d{\bf X}{t} 
+ + \frac{1 }{ J_v}\pd{J_v}{ v_\parallel}  \d{v_\parallel}{ t} 
+ + \frac{1 }{ J_v}\pd{J_v}{ \mu}  \underbrace{\d{\mu}{t}}_0
+&= 0,
+\label{eq:phasespacecons2}
+\end{align}
+where $J_v$ is the Jacobian of the velocity space integration. 
+%FIXME I do not really understand how the second equation is constructed. Is it really from the first line?|
+This condition \eqref{eq:phasespacecons2} expresses conservation of the gyrocenter phase space volume of an element in the flow.
+While this condition is perhaps not under all circumstances necessary to obtain
+exact energy conservation, it is in our derivation an additional constraint 
+that must be satisfied for the gyrocentre velocity.  
+This observation allows one to make approximations to ${{\rm d}{\bf X}/ {\rm d}t}$, removing higher order $\rho_*$ corrections, without 
+breaking energy conservation. 
+
+Adding the equations \eqref{motionred3} and \eqref{eq:phasespacecons2} above we have 
+\begin{align}
+\pd{ H}{ v_\parallel} \d{v_\parallel}{t}
++  \d{\bf X}{ t} \cdot \nabla H 
+&+&H
+%\left
+(
+\frac{1 }{ J_v} \pd{J_v}{ t} 
++ \frac{1 }{ J_v} \nabla \cdot  [ J_v \d{\bf X}{ t}  ] 
++ \frac{1 }{ J_v}\d{}{ v_\parallel}  [ J_v \d{v_\parallel}{ t}  ] 
+%\right
+)
+&=
+- \d{\bf X}{t} \cdot \pd{ {\bf A}^*}{ t} 
+\end{align}
+\begin{align}
+\pd{H}{v_\parallel} \d{v_\parallel}{t} 
++ H \frac{1 }{ J_v} \underbrace{\pd{J_v}{ t}}_0
++ H \frac{1 }{ J_v}\pd{}{ v_\parallel} \left [ J_v \d{v_\parallel}{ t} \right ]
+&+& 
+  \d{\bf X}{t} \cdot \nabla H 
++ H \frac{1 }{ J_v} \nabla \cdot \left [ J_v \d{\bf X}{t} \right ]
+&= 
+-  \d{\bf X}{t} \cdot \pd{{\bf A}^*}{t} 
+\\
+\frac{1 }{ J_v} \pd{}{ v_\parallel} \left [J_v H \d{v_\parallel}{t} \right ] 
+&+&
+\frac{1 }{ J_v} \nabla \cdot \left [ J_v H \d{\bf X}{t} \right ] 
+&= - \d{\bf X}{t} \cdot \pd{{\bf A}^*}{t} 
+\end{align}
+
+Then we split the Hamiltonian \eqref{eq:Hsplit} and use that the field part $H_1 = Z e \langle \phi \rangle$ is time dependent, whereas the rest $H_0$ is not.
+\begin{align}
+ \d{H}{t} &= \d{H_0}{t} + \d{H_1}{t} \\
+%\pd{H}{v_\parallel}\d{v_\parallel}{t} + \nabla H \d{X}{t} + \cancel{\pd{H}{t}} &= \pd{H_0}{v_\parallel}\d{v_\parallel}{t} + \nabla H_0 \d{X}{t} + \nabla H_1 \d{X}{t} + \cancel{\pd{H_1}{t}}
+\pd{H}{v_\parallel}\d{v_\parallel}{t} + \nabla H \d{X}{t} + \pd{H}{t} &= \pd{H_0}{v_\parallel}\d{v_\parallel}{t} + \nabla H_0 \d{X}{t} + \nabla H_1 \d{X}{t} + \pd{H_1}{t}
+\pd{H}{v_\parallel}\d{v_\parallel}{t} + \nabla H \d{X}{t}&= \pd{H_0}{v_\parallel}\d{v_\parallel}{t} + \nabla H_0 \d{X}{t} + \nabla H_1 \d{X}{t} 
+\end{align}
+to obtain 
+\begin{align} 
+\d{ H_0 }{t} = 
+\frac{1 }{ J_v} \pd{}{ v_\parallel} \left [J_v H_0 \d{v_\parallel}{t} \right ] + 
+\frac{1 }{ J_v} \nabla \cdot \left [ J_v H_0 \d{\bf X}{t} \right ] 
+&= - \d{\bf X}{t} \cdot \left [  \nabla H_1 + Z e \pd{{\bf A}^*}{t} \right ]  
+\end{align}
+Using furthermore that $\pd{f}{t} = 0$ we arrive at an energy balance equation. 
+\begin{equation} 
+\d{ }{ t} \left [ H_0 f \right ] 
+= -  \d{\bf X}{t} \cdot \left [  \nabla H_1 + Z e \pd{{\bf A}^*}{t} \right ] f 
+\label{eq:energyconsParticles}
+\end{equation} 
+The left hand side of this equation represents the change of kinetic energy.
+The right hand side represents the inner product of
+current and electric field. It is the transfer term between kinetic
+and field energy.
+
+We now would like to investigate the transferm term in more detail by deriving the corresponding energy balance from the field equations.
+We consider first the Poisson equation, afterwards the Ampere equation.
+Multiplying the time derivative of the Poisson equation \eqref{eq:Lfuncderivphi} with $\phi$ we obtain 
+
+\begin{align}
+0 &= - \phi \pd{}{t}\sum_{sp}\int\ud^3v 
+\frac{\delta}{\delta\phi}
+\left(\int\ud^3X f_{s,tot}
+    \left[\underbrace{Ze\ga{\phi}}_{H_1} + \frac{Z_s^2e^2}{2T_s}\left(\ga{\phi}^2 - \phi^2\right)\right]
+ \right)
+ - \sigma_a\phi \pd{}{t}\frac{\delta}{\delta\phi} \int \ud\mathbf{X} L_a
+\end{align}
+The functional derivative of the first term can be executed, and the rest is put to the right hand side.
+We may also substract the neutrality equation for the background $F_{sp,M}$ and continue with $f_{sp}$ in place of $f_{sp,tot} = F_{sp,M} + f_{sp}$.
+\begin{align}
+\sum_{sp} Z_{sp} e \phi \pd{}{t} \int {\rm d}^3 {\bf v} \, \langle f \rangle^\dagger 
+&=
+ % \sum_{sp} \frac{Z_{sp}^2 e^2}{T_{sp}}\phi\pd{}{t} \int {\rm d}^3 {\bf v} \, [ \phi - \langle \langle \phi \rangle \rangle^\dagger ] F_{Msp} 
+% +
+\phi \pd{}{t}\frac{\delta}{\delta\phi}\sum_{sp}\int\ud^3v \int\ud^3X f_{s,tot}\frac{Z_s^2e^2}{2T_s}\left(\ga{\phi}^2 - \phi^2\right)
++
+\sigma_a\phi \pd{}{t}\frac{\delta}{\delta\phi} \int \ud\mathbf{X} L_a
+\end{align}
+If we consider only quantities which are first order in $\rho_*$ then $f_{s,tot}$ is only $F_{s,M}$ and the fluctuation part of the distribution is neglegted for this term.
+\begin{align}
+ \sum_{sp}\int {\rm d}^3 {\bf v} \, Ze\phi \pd{\iga{f}}{t} 
+&=  \phi \pd{}{ t} \left [ \frac{\delta H_{2E}}{\delta \phi} \right ] 
+\end{align} 
+where 
+\begin{equation} 
+H_{2E} = \sum_{sp}\int {\rm d}^3 {\bf v} \int\ud\mathbf{X}\, \frac{Z_{sp}^2 e^2}{2 T_{sp} } [ \phi^2 - \langle \phi \rangle^2 ] F_M + \sigma_a \int\ud\mathbf{X}L_{adiabatic} 
+\end{equation} 
+By putting both sides under a position space integral $\int\ud^3\mathbf{X}$ again, we can roll the gyroaverage over to $\phi$ and identify $H_1$.
+\begin{align}
+ \sum_{sp} \int {\rm d}^3 {\bf X} \int {\rm d}^3 {\bf v} \, H_1 \pd{ f}{ t} 
+&=\int{\rm d}^3 {\bf X} \phi \pd{}{ t} \left [ \frac{\delta H_{2E}}{\delta \phi} \right ] 
+\end{align}
+And using ${\rm d} f / {\rm d} t = 0$ the first term in the equation can be rewritten in the form 
+\begin{equation} 
+- \sum_{sp}\int {\rm d}^3 {\bf X} \int {\rm d}^3 {\bf v} \, \d{\bf X}{t} \cdot \nabla H_1\, f  
+= \int{\rm d}^3 {\bf X} \phi \pd{}{ t} \left [ \frac{\delta H_{2E}}{\delta \phi} \right ] 
+\label{eq:energyconsPoisson}
+\end{equation} 
+%FIXME SRG I dont see how getting from $\pd{}{t}$ to $\d{}{t}$ is supposed to work.|
+On the left hand side of this equation we can already identify a part of the energy transfer term.
+Lets also evaluate the right hand side and construct time derivatives of quadratic quantities.
+\begin{align}
+- \sum_{sp}\int {\rm d}^3 {\bf X} \int {\rm d}^3 {\bf v} \, \d{\bf X}{t} \cdot \nabla H_1\, f  
+= &
+\int\ud\mathbf{X}
+\phi \pd{}{ t}
+\Big(
+\sum_{sp}
+ \int {\rm d}^3 {\bf v} \, \frac{Z_{sp}^2 e^2}{T_{sp}} [ \phi - \iga{\ga{\phi}} ] F_{M,sp}+{} \nonumber\\
+&{}+ \sigma_a \frac{n_e e^2 }{ T_e} (\phi - \{ \phi \} ) 
+\Big)\\
+=& 
+\int\ud\mathbf{X}
+\pd{}{ t}
+\Big(
+\sum_{sp}
+ \int {\rm d}^3 {\bf v} \, \frac{Z_{sp}^2 e^2}{T_{sp}} \frac{1}{2}[ \phi^2 - \ga{\phi}^2 ] F_{M,sp}
+\Big)
++{} \nonumber\\
+&{}+ \sigma_a \int\ud\mathbf{X}\frac{n_e e^2 }{ T_e} (\frac{1}{2}\pd{\phi^2}{t} - \phi\pd{}{t}\{ \phi \} ) 
+\end{align} 
+In order to arrive at the form of \eqref{eq:energyconservation}, we
+rewrite the term with the flux surface averaged potential $\fsa{\phi}$
+as follows. We take advantage of the fact that taking a flux surface avg. is executed by
+integrating over $s$ like $\fsa{.} = \int . \ud s$, and taking further averages has no effect $\fsa{\fsa{\phi}}= \fsa{\phi}$.
+\begin{align}
+\int\ud s\frac{1}{2}\pd{}{t}(\phi - \fsa{\phi})^2  
+&=\fsa{\frac{1}{2}2(\phi-\fsa{\phi})\pd{}{t}(\phi-\fsa{\phi})}
+\\
+&=\fsa{\phi\pd{}{t}\phi - \phi\pd{}{t}\fsa{\phi}-\fsa{\phi}\pd{}{t}\phi + \fsa{\phi}\pd{}{t}\fsa{\phi}
+}
+\\
+&=\fsa{\phi\pd{}{t}\phi - \phi\pd{}{t}\fsa{\phi}}
+-\fsa{\phi}\pd{}{t}\fsa{\phi} + \fsa{\fsa{\phi}\pd{}{t}\fsa{\phi}}
+\\
+&=\int \pd{}{t}\frac{1}{2}\phi^2-\phi\pd{}{t}\fsa{\phi} \ud s
+\end{align}
+
+We proceed analogously for Ampere's law \eqref{eq:ampereslaw} by multiplying it with $ A_\parallel\pd{}{t}$ and integrating over the whole of position space. 
+\begin{align}
+ \int\ud\mathbf{X}A_\parallel\pd{}{t}
+ \sum_{sp} Z_{sp} e \int {\rm d}^3 {\bf v} \, \d{\bf X}{t} \cdot {\bf b} \langle f \rangle^\dagger  
+&=
+ -\int\ud\mathbf{X}A_\parallel\pd{}{t}\frac{1}{\mu_0} \nabla^2 A_\parallel
+\\
+\sum_{sp} Z_{sp} e\int\ud\mathbf{X}\ud^3\mathbf{v}\ga{A_\parallel}\pd{}{t}
+   \d{\bf X}{t} \cdot {\bf b}  f 
+&=
+ -\frac{1}{\mu_0}\int_\partial\ud^2\mathbf{X} A_\parallel\nabla A_\parallel + \frac{1}{\mu_0} \int\ud\mathbf{X}(\nabla A_\parallel)\pd{}{t}\nabla A_\parallel
+\end{align}
+% FIXME SRG I dont see how to find $\mathbf{A}^*$ here.
+% FIXME SRG There must be a gyroavg around some $A$ in the energy balance, too, somewhere.
+We obtain 
+\begin{equation} 
+\sum_{sp} Z_{sp} e \int {\rm d}^3 {\bf X} {\rm d}^3 {\bf v} \,\d{\bf X}{t} \cdot \pd{{\bf A}^*}{t}f 
+=
+ \pd{}{t}\frac{1 }{ 2 \mu_0} \int {\rm d}^3 {\bf X} \, \vert \nabla A_\parallel \vert^2   
+\label{eq:energyconsAmpere}
+\end{equation}
+Consequently the energy conservation theorem results from adding
+\eqref{eq:energyconsParticles}, \eqref{eq:energyconsPoisson} and \eqref{eq:energyconsAmpere}, which yields
+\index{Noether's theorem, Energy conservation}  
+\begin{align}
+  \d{}{t}\int\ud^3\mathbf{X}\ud^3\mathbf{v}H_0f 
+&= - \int\ud^3\mathbf{X}\ud^3\mathbf{v} \d{\bf X}{t} \cdot \left [  \nabla H_1 + Z e \pd{{\bf A}^*}{t } \right ] f 
+\\
+&= \int{\rm d}^3 {\bf X} \phi \pd{}{ t} \left [ \frac{\delta H_{2E}}{\delta \phi} \right ] +  \frac{1 }{ 2 \mu_0} \int {\rm d}^3 {\bf X} \, \vert A_\parallel \vert^2   
+\\
+\pd{E}{t} &= 0\\
+E &=  \sum_{sp} \int {\rm d}^3 {\bf X} {\rm d}^3 {\bf v} \, \left ( \frac{1 }{ 2} m v_\parallel^2 + \mu B  + \frac{1 }{ 2} m u_0^2 \right ) f + \nonumber{}\\
+&+
+\sum_{sp} \int {\rm d}^3 {\bf X} {\rm d}^3 {\bf v} \, \frac{Z_{sp}^2 e^2}{2 T_{sp} } [ \phi^2 - \langle \phi \rangle^2 ] 
+F_{Msp} + \sigma_a \int {\rm d}^3 {\bf X} \, \frac{n_e e^2 }{ 2 T_e} (\phi - \{ \phi \} )^2 + \frac{1 }{ 2 \mu_0} \int {\rm d}^3 {\bf X} \, \vert \nabla A_\parallel \vert^2 
+\label{eq:energyconservation}
+\end{align}
+where the first part is the kinetic energy while the second part is the field energy. The Noether theorem on the original Maxwellian 
+gives exactly the same energy theorem. Furthermore, note that no assumption has been made on the form of ${\rm d} {\bf X} / {\rm d} t$ other 
+than that the equations and ?? must be satisfied. 
+
+Taking the cross product of eq.~(\ref{eqmotion}) with the unit vector along the magnetic field $\mathbf{b}$ one obtains the velocity of the gyro-centre 
+\begin{align} 
+\mathbf{b}\times\left(\mathbf{B}^* \times \d{\bf X}{t} + \pd{{\bf A}^*}{v_\parallel} \d{v_\parallel}{t} \right)
+&= - \mathbf{b}\times\left(\nabla H - \pd{{\bf A}^*}{t}\right)
+\\
+\mathbf{B}^*(\mathbf{b}\cdot\d{\bf X}{t}) - \d{\bf X}{t}\underbrace{(\mathbf{b}\cdot\mathbf{B}^*)}_{B^*_\parallel}
++ \mathbf{b}\times\pd{{\bf A}^*}{v_\parallel} \d{v_\parallel}{t} 
+&= - \mathbf{b}\times\left(\nabla H - \pd{{\bf A}^*}{t}\right)
+\\
+\d{ {\bf X} }{ t}
+&= 
+\frac{\mathbf{B}^*}{B^*_\parallel}(\mathbf{b}\cdot\d{ {\bf X} }{ t})
+ + \frac{\mathbf{b}}{B^*_\parallel}\times\nabla H 
++ \frac{\mathbf{b}}{B^*_\parallel}\times\underbrace{\pd{\mathbf{A}^*}{v_\parallel}}_{m\mathbf{b}} \d{v_\parallel}{t} 
+- \frac{\mathbf{b}}{B^*_\parallel}\times\underbrace{\pd{\mathbf{A}^*}{t}}_{\pd{A_\parallel}{t}\mathbf{b}}
+\\
+\d{\bf X}{t} &= \frac{{\bf B}^*}{B^*_{\parallel}} v_\parallel + \frac{{\bf b}}{B^*_\parallel} \times \nabla H 
+\label{eq:gyrocentrevelocity}
+\end{align}
+where
+\begin{equation} 
+B_\parallel^* = {\bf b} \cdot {\bf B}^* = {\bf b} \cdot \nabla \times {\bf A}^* 
+\label{eq:Bparallelstar}
+\end{equation}
+and $J_v = B_\parallel^*$. 
+It was also used that the parts of $\mathbf{A}^*$ which are dependent of $v_\parallel$ and $t$ are parallel to $\mathbf{b}$, cf \eqref{eq:Astar}.
+
+When used in the form of \eqref{eq:Bparallelstar}, $B_\parallel^*$ is a function of the field $\langle A_\parallel \rangle$, and therefore of time. 
+Since ${\rm d} {\bf X} / {\rm d} t$ depends nonlinearly on $B_\parallel^*(t)$ this complicates the numerical solution. At each 
+time point the gyro-centre velocity would have to be constructed explicitly and the various terms in the equation can not 
+be precalculated and stored in matrix format. 
+
+The approximation made in GKW is the approximation of $B_\parallel^*$ by $B$. Working out ${\bf B}^*$ 
+with the Hamiltonian from \eqref{eq:Hsplit}
+we then obtain 
+\begin{align} 
+\d{{\bf X}}{t}  &\approx 
+\frac{{\bf B}^* }{ B} v_\parallel 
++ \frac{{\bf b}}{ B} \times \nabla H\\
+% \left( \frac{1}{2} m v_\parallel^2 + \mu B +  \frac{1 }{ 2} m u_0^2 +Z e \langle \phi \rangle\right) 
+&=
+\frac{1}{B} v_\parallel \nabla\times\left({\bf A} + \frac{1}{Ze}{\bf u}_0 + \frac{m v_\parallel}{Ze} {\bf b} + \frac{1}{Ze}A_\parallel {\bf b} \right)
++ \frac{{\bf b}}{ B} \times \nabla H
+\\
+&=v_\parallel {\bf b} + \frac{m v_\parallel^2}{ZeB} \nabla \times {\bf b} + \frac{m v_\parallel}{ZeB} {\bf \Omega}
+ +  \frac{v_\parallel}{B} \nabla \times [ \langle A_\parallel \rangle {\bf b} ] 
++ \frac{1 }{ B} {\bf b} \times \nabla H 
+\label{eq:gyrocentrevelocity2}
+\end{align}
+%FIXME where $\mathbf{\Omega} = \frac{1}{m}\nabla\times\mathbf{u}_0$?
+With the approximation $J_v = B^*_\parallel \approx B$ it can be shown that eq.~\eqref{eq:phasespacecons2} is satisfied.
+%FIXME SRG What is $J_v$?
+
+A few remarks should be made here. First, the approximation
+\begin{equation} 
+\nabla \times \ga{ A_\parallel} {\bf b}
+= 
+\nabla \ga{A_\parallel}\times\mathbf{b} + \ga{A_\parallel}\nabla\times\mathbf{b}
+ \approx - {\bf b} \times \nabla \langle A_\parallel \rangle 
+\label{eq:approxtofindExBdrift2}
+\end{equation}
+is used in \eqref{eq:approxtofindExBdrift} to split the gyrocentre velocity into grad-B and ExB drifts.
+This approximation is problematic for exact energy conservation since in this case eq.~\eqref{eq:phasespacecons2} is not satisfied. 
+%FIXME how does this enter \eqref{eq:phasespacecons2}?|
+
+\subsection{Local limit} 
+
+\label{energy-conservation-local-limit}
+A brief look ahead for the local limit approximation may be in order. The local limit corresponds to a further approximation also in the gyro-centre velocity and must be 
+separately discussed. 
+Essentially, the local limit is the limit where the scale length of perpendicular dynamics, which is of the order of the Larmor radius $\rho_\tref$, is much much smaller than the equilibrium scale length $R_\tref$.
+\begin{align}
+  \rho_\tref \ll R_\tref
+\end{align}
+that means
+\begin{align}
+  \rho_* = \frac{\rho_\tref}{R_\tref} \ll 1
+\end{align}
+This implies further assumptions:
+\begin{itemize}
+\item all background and geometry quantities are assumed to be a function of the parallel coordinate ($s$) only.
+\item periodic poundary conditions
+\end{itemize}
+
+The gyro-centre velocity \eqref{eq:gyrocentrevelocity2} does not depend on the coordinates perpendicular to the field and, therefore the divergence of this velocity is different from the expression derived above. 
+% FIXME ?? Sure it does, there is $\nabla\ga{\phi}$, and this has dependencies on perp coords in leading order?!
+% FIXME Which divergence expression above? There is none!?
+The gyrocentre velocity \eqref{eq:gyrocentrevelocity2} can be
+understood to consist of parallel motion and several drift motions.
+\begin{align}
+\d{\mathbf{X}}{t}
+&=
+v_\parallel {\bf b} + \frac{m v_\parallel^2 }{ ZeB} \nabla \times {\bf b} + \frac{m v_\parallel }{ ZeB} {\bf \Omega}
++ \frac{v_\parallel }{ B} \nabla \times [ \langle A_\parallel \rangle {\bf b} ] 
++ \frac{1 }{ B} {\bf b} \times \nabla \left ( \frac{1 }{ 2} m v_\parallel^2 + \mu B  + \frac{1 }{ 2} m u_0^2 
++ Z e \ga{\phi}
+\right ) ,
+\\
+&= v_\parallel\mathbf{b}  
++ {\bf v}_D 
++  \underbrace{\frac{v_\parallel }{ B} \nabla \times [ \langle A_\parallel \rangle {\bf b} ]  + \frac{1 }{ B} {\bf b} \times \nabla Z e \langle \phi \rangle}_{\mathbf{v}_\chi}
+\end{align}
+where $\mathbf{v}_D$ is a perpendicular drift velocity due to the background magnetic fields and reference frame rotation. A drift of the form of an ExB drift can be identified if the additional approximation \eqref{eq:approxtofindExBdrift} is made:
+\begin{equation} 
+{\bf v}_\chi = \frac{{\bf b} \times \nabla \chi}{B} \qquad 
+\textrm{with} \qquad \chi = \langle \phi \rangle - v_\parallel \langle A_\parallel \rangle ,
+\end{equation}
+As mentioned above at \eqref{eq:approxtofindExBdrift2}, this approximation makes the system violate phase space conservation, though.
+
+Nevertheless, in the local limit, i.e. the limit of small $\rho_*$, phase space conservation is valid again:
+In this limit (i.e. to lowest order in $\rho_*$) the drift velocity ${\bf v}_D$ and ExB velocity ${\bf v}_E$ do not have a component in the direction of $\mathbf{e}^s\equiv\nabla s$, i.e. ${\bf v}_D\cdot \nabla s = v_D^s = {\bf v}_E \cdot \nabla s =v_E^s= 0$. 
+This is also strictly imposed in the code when the finite $\rho_*$ parallel derivatives are turned off. 
+
+With the velocity space jacobian
+\begin{align}
+  J_v \propto B
+\end{align}
+%FIXME I do not find an expression for the velspace jacobian anywhere.
+we consider
+\begin{align}
+B\d{\mathbf{X}}{t}\cdot\nabla f = B ( v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E ) \cdot \nabla f 
+&=
+\nabla \cdot [ B ( v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E ) f ] - f\nabla \cdot [ B ( v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E )] 
+\\
+&=
+ ... - f\nabla B(s)\cdot ( v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E ) - f B(s)\nabla\cdot ( v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E )
+% \\
+% &=
+%  ... - f(\mathbf{e}^s\pd{}{s} + \mathbf{e}^\psi\pd{}{\psi} + \mathbf{e}^\zeta\pd{}{\zeta} ) \cdot [ B(s) ( v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E )]
+\\
+&=
+ ... - f(\nabla s\pd{B(s)}{s}) \cdot ( v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E )
+\\
+&\qquad\qquad
+ - fB(s)\frac{1}{J}\left(
+\pd{J(v_\parallel {\bf b} + {\bf v}_D)^s}{s} + \pd{J({\bf v}_E)^\psi}{\psi} + \pd{J({\bf v}_E)^\zeta}{\zeta} 
+\right) 
+\\
+&=
+ ... - f\pd{B(s)}{s} v_\parallel \underbrace{\mathbf{e}^s\cdot\frac{\mathbf{B^s\mathbf{e}_s}}{B}}_{0}
+\\
+&\qquad\qquad
+ - fB(s)\frac{1}{J}\left(
+\pd{J(v_\parallel {\bf b} + {\bf v}_D + \mathbf{v}_E)^s}{s} + \pd{J({\bf v}_E)^\psi}{\psi} + \pd{J({\bf v}_E)^\zeta}{\zeta} 
+\right) 
+\\
+&=
+ - fB(s)\frac{1}{J}\left(
+\pd{Jv_\parallel \frac{\mathbf{B^s\mathbf{e_s}}}{B}\cdot\mathbf{e}^s}{s} + \pd{J({\bf v}_E)^\psi}{\psi} + \pd{J({\bf v}_E)^\zeta}{\zeta} 
+\right) 
+\\
+&=
+ - fB(s)\frac{1}{J}\left(
+\pd{J({\bf v}_E)^\psi}{\psi} + \pd{J({\bf v}_E)^\zeta}{\zeta} 
+\right) 
+\\
+&= ? FIXME
+\\
+&= \nabla \cdot [ B ( v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E ) f ]
+\end{align}
+i.e. the rewrite above shows that the whole gyro-centre velocity satisfies 
+\begin{equation}
+%\frac{1 }{ B}
+ \nabla \cdot \left [ B \d{\bf X}{t} \right ] \propto \nabla \cdot \left [ J_v \d{\bf X}{t} \right ] = 0
+\end{equation}
+The phase space conservation \eqref{eq:phasespacecons2} is then reduced to
+\begin{align}
+  \frac{1 }{ J_v} \pd{J_v}{ t} 
++ \frac{1 }{ J_v} (\nabla \cdot  J_v) \d{\bf X}{t} 
+ + \frac{1 }{ J_v}\pd{J_v}{ v_\parallel}  \d{v_\parallel}{ t} 
+ &= 0,
+\end{align}
+Then 
+\begin{equation} 
+\pd{}{ v_\parallel } \left [ \d{v_\parallel}{t} \right ] \quad \rightarrow \quad 
+\pd{}{ v_\parallel } \left [ - \frac{1 }{ m} {\bf b} \cdot \mu \nabla B \right ] = 0 
+\end{equation}
+must be zero in order for phase space conservation to apply. 
+% FIXME why? how does this enter the phasespacecons?
+% FIXME free floating term here? What is this supposed to tell?
+% FIXME Rico writes one has to implement 
+% \begin{align}
+%   \pd{}{v_\parallel}\left[\d{v_\parallel}{t}f\right]
+% \end{align}
+% rather than
+% \begin{align}
+%   \d{v_\parallel}{t}\pd{f}{v_\parallel}
+% \end{align}
+% but this is not the same as the term left of the arrow.
+% FIXME nobody says why, I suppose this is to implement a conservative
+% method - as far as I understand the matter (and the book of Toro on
+% Riemand Solvers for CFD), however, (1) a conservative method only
+% helps to conserve the quantitity the equation conserves ($f$ here) and
+% (2) if the solution is sufficiently smooth (i.e. no shock
+% discontinuities) it does not matter.
+
+
+The terms on the right (the trapping term) represent the only term of ${\rm d} v_\parallel / {\rm d} t$ that is kept for the perturbed distribution $f$. 
+Indeed for this term the parallel velocity derivative is zero and, consequently the phase space volume is conserved in the evolution of $f$. 
+
+The local limit is obtained through an expansion in $\rho_*$, and neglection of all terms which are of order $\rho_*^2$ or higher. In doing so, the velocity nonlinearity is neglected.
+%FIXME What is the precise expression for the velocity nonlinearity?
+A more correct approach 
+%(FIXME cite Scott) 
+would be to neglect contribution already at the level of the Lagrangian and make no approximation thereafter. This would ensure energetic consistency between particle and field dynamics.
+Following such a calculation, it turns out that neglection of certain nonlinear terms (the ``velocity nonlinearity'') is not allowed, i.e. they must be kept in the model to achieve energy conservation although they are formally $\orderof (\rho_*^2)$ terms in the particle dynamics equations.
+
+In fact, in the local limit with periodic boundary conditions,
+conservation of the energy \eqref{eq:energyconservation} is
+problematic since the total field energy is always positive, whereas
+the total kinetic energy
+\begin{equation} 
+\int {\rm d}^3 {\bf X} \int {\rm d}^3 {\bf v} \, \left [ \frac{1 }{ 2} mv_\parallel^2 + \mu B \right ] f 
+\end{equation} 
+integrates to zero for all Fourier modes except the mode that has a zero wave vector in both perpendicular directions (below this mode is refered to as the $(0,0)$ mode). 
+The $(0,0)$ mode is often not kept in the evolution equation (particularly in linear
+ simulations), and it is then not possible to conserve the energy since the positive 
+field energy can not be balanced with a 
+negative total kinetic energy. 
+
+Thus, it is necessary to keep both the $(0,0)$ mode
+and the velocity nonlinearity in the evolution equations, in order to be able to achieve energy conservation (there are further obstacles though).
+It is beneficial to implement  the velocity nonlinearity in the form of \eqref{eq:vel-nonlin-implementation} rather than \eqref{eq:vel-nonlin-not-implementation}.
+\begin{align} 
+\pd{f}{t} &\overset{+}{=} -\pd{}{v_\parallel} \left [ \d{v_\parallel}{t} f \right ] 
+\label{eq:vel-nonlin-implementation}
+\\
+&= -\d{}{t}(\pd{v_\parallel}{v_\parallel}) f - \d{v_\parallel}{t} \pd{f}{v_\parallel}\nonumber\\
+&= - \d{v_\parallel}{t} \pd{f}{v_\parallel}
+\label{eq:vel-nonlin-not-implementation}
+\end{align}
+The form \eqref{eq:vel-nonlin-implementation} ensures phase space conservation in the local limit where the divergence of the gyro-centre velocity is zero. 
+In the equation above the change in the parallel velocity is considered only through the electro-magnetic field. 
+It can easily be shown that when integrated over the whole computational domain the term only contributes to the $(0,0)$ mode. 
+The $(0,0)$ mode has no spatial derivatives perpendicular to the field, and except through the velocity nonlinearity it does not couple to any other mode. 
+The $(0,0)$ mode therefore only acts as a reservoir for the kinetic energy essuring that the balance equation for the energy holds. 
+
+%FIXME this sounds as if it was a success. According to Rico it is not - but Rico does not show data either!
+
+\subsection{Toroidal momentum conservation} 
+
+The equations of motion (Eq.~(\ref{Lagrangemotion}) can be written in the form \eqref{eq:Lagrangemotion-other-form}.
+\begin{align} 
+[ \gamma_{b,a} - \gamma_{a,b} ] \d{z^b}{ t} &= \pd{ H}{ z^a} + \pd{ \gamma_a}{ t}
+\nonumber\\
+\gamma_{b,a}\d{z^b}{ t} - \gamma_{a,b} \d{z^b}{ t} &= \pd{ H}{ z^a} + \pd{ \gamma_a}{ t}
+\nonumber\\
+ - \pd{ \gamma_a}{ t} - \gamma_{a,b} \d{z^b}{ t} &= \pd{ H}{ z^a} - \gamma_{b,a}\d{z^b}{ t}
+\nonumber\\
+\pd{ \gamma_a}{ t} + \gamma_{a,b} \d{z^b}{ t} &= -\pd{ H}{ z^a} + \gamma_{b,a}\d{z^b}{ t}
+\nonumber\\
+\d{\gamma_a}{t} &= - \pd{H}{z^a} - \gamma_{b,a} \d{z^b}{t} 
+\label{eq:Lagrangemotion-other-form}
+\end{align} 
+%FIXME I get a different sign here, + instead of the - that was here before.
+To have a symmetry in coordinate $z^a$ means that Hamiltonian $H$ and $\gamma_b$ are independent of $z^a$.
+\begin{equation} 
+\pd{H}{z^a} = 0 \qquad 
+\gamma_{b,a} = 0 
+\end{equation} 
+and from \eqref{eq:Lagrangemotion-other-form} follows then
+\begin{equation} 
+\d{ \gamma_a }{ t} = 0 
+\end{equation}
+This represents a conservation equation, in the sense that $\gamma_a$ is constant along along the trajectory of a particle.
+
+The case of interest here is the toroidal symmetry of the tokamak (and the consequent 
+conservation of toroidal angular momentum). To discuss this, note that both $\langle \phi \rangle$ and 
+$\langle A_\parallel \rangle$ are a function of the toroidal angle $\varphi$, but background quantities such as $\mathbf{A}$, $\mathbf{u_0}$, $\mathbf{b}$, and $H_0$ (cf. \eqref{eq:Hsplit}) are not.
+Choosing the toroidal angle $\varphi$ as coordinate one then
+obtains from \eqref{eq:Lagrangemotion-other-form}
+\begin{align} 
+\d{\gamma_\varphi}{t} &= - \pd{H_1}{\varphi} + Ze \pd{\langle A_\parallel \rangle}{\varphi } \mathbf{b}\cdot \d{\bf X}{t} 
+\nonumber\\
+&= - \pd{H_1}{\varphi} + Ze \pd{\langle A_\parallel \rangle}{\varphi } v_\parallel \\
+\d{\gamma_\varphi}{t} &= - \pd{H_1}{\varphi} - Ze \pd{\langle A_\parallel \rangle}{\varphi } v_\parallel \d{\bf X}{t} 
+\end{align}
+%FIXME Mistake in second term here, right?|
+Multiplying this equation with $f$ and integrating over the whole phase space (using ${{\rm d} f / {\rm d} t} = 0$ we obtain 
+\begin{align} 
+\int {\rm d}^3 {\bf X} {\rm d}^3\d{\gamma_\varphi}{t}f &= - \int {\rm d}^3 {\bf X} {\rm d}^3\mathbf{v}\left [
+\pd{H_1}{\varphi} - Ze \pd{\langle A_\parallel \rangle}{\varphi } v_\parallel
+ \right]f
+\\
+ \d{}{ t} \int {\rm d}^3 {\bf X} {\rm d}^3 {\bf v} \, \gamma_\varphi f&= - \int {\rm d}^3 {\bf X} {\rm d}^3\mathbf{v}\left [
+\pd{H_1}{\varphi} - Ze \pd{\langle A_\parallel \rangle}{\varphi } v_\parallel
+ \right]f
+\\
+\pd{}{ t} \int {\rm d}^3 {\bf X} {\rm d}^3 {\bf v} \, \gamma_\varphi f &= 
+- \int {\rm d}^3 {\bf X} {\rm d}^3 {\bf v} \,\left [ \pd{H_1}{\varphi} + Z e \pd{\langle A_\parallel\rangle}{ \varphi} v_\parallel \right ] f 
+\end{align}
+The right hand side of this equation can be shown to vanish
+%FIXME text missing?| 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "doc"
+%%% End:

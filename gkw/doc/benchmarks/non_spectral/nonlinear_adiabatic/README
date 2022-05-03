@@ -1,0 +1,18 @@
+These input files were used to generate the figure with revision 2657 of the
+code.  The case is the Waltz GA-STD case with adiabatic electrons, electostatic.
+
+Results are close, but as with the ETG case, the values are slightly lower for 
+non-spectral than spectral.  Results for both schemes are well converged in NX, 
+and the other grids are identical.
+
+It can be seen that the growth rates in the linear phase of non-spectral case 
+are slightly less, so the difference is probably not in the non-linearity, but 
+in the dissipation settings (whilst the values used are the same, disp_x is 
+likely not equivalent in magnitude in the two schemes).  Comparing to GYRO 
+(which is also non-spectral) we previously found that GYRO gave an ion
+diffusivity of 3.5 (gyro-bohm units) and the two codes could be made closer 
+by matching dissipation (see F.J.Casson thesis).
+
+Equally one might attribute the difference to the higher zonal flow in the
+non-spectral case: There are slightly larger non-spectral RH residuals in the 
+zonal benchmark. 

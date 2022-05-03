@@ -1,0 +1,274 @@
+#!/bin/bash
+
+if [ -n "$1" -a "x$1" != "x--only-data" ]
+then
+    cat <<EOF
+Usage: 
+  $(basename $0) [options]
+
+  This script removes GKW output files in current directory
+  Useful for cleaning a run folder for a restart
+
+  If called without arguments, all GKW diagnostic and
+  restart files in the current folder will be removed.
+
+Options:
+  --help              Display this usage message
+  --only-data         Delete files containing diagnostic
+                      data (incl. gkwdata.h5), but keep restart files.
+EOF
+exit 0
+fi
+
+
+if [ -f input.dat ]
+then
+
+  if [ "x$1" != "x--only-data" ]
+  then
+    #restart and checkpoint files:
+    rm -f FDS.h5 FDS.dat
+    rm -f FD*
+    rm -f DM*
+    rm -f nt_complete{,.dat,.bin} nt_remain{,.dat,.bin} time_complete{,.dat,.bin} dtim{,.dat,.bin}
+  fi
+  
+  #general:
+  rm -f gkwdata.h5
+  rm -f gkwdata.meta
+
+  #from diagnos_growth_freq:
+  rm -f growth{,.dat,.bin}
+  rm -f growth_rates{,.dat,.bin} frequencies{,.dat,.bin}
+  rm -f amplitudes{,.dat,.bin}
+  rm -f dominant_growth_rate{,.dat,.bin} dominant_real_freq{,.dat,.bin}
+  rm -f growth_rates_all_modes{,.dat,.bin} frequencies_all_modes{,.dat,.bin}
+  
+  #from diagnos_fluxes:
+  rm -f fluxes{,.dat,.bin}
+  rm -f fluxes_lab{,.dat,.bin}
+  rm -f fluxes_em{,.dat,.bin}
+  rm -f fluxes_em_lab{,.dat,.bin}
+  rm -f fluxes_nc{,.dat,.bin}
+  rm -f fluxes_nc_old{,.dat,.bin}
+  rm -f fluxes_bpar{,.dat,.bin}
+  rm -f fluxes_bpar_lab{,.dat,.bin}
+  rm -f [epv]flux_spectra{,.dat,.bin}
+  rm -f [epv]flux_xspec{,.dat,.bin}
+  rm -f [epv]flux_em_spectra{,.dat,.bin}
+  rm -f [epv]flux_em_xspec{,.dat,.bin}
+  rm -f [epv]flux_em_sup{,.dat,.bin}
+  rm -f torque{.dat,.bin}
+  rm -f deltaprime{,.dat,.bin}
+  rm -f [epv]flux_species[0-9][0-9]{,.dat,.bin}
+  rm -f [epv]flux{,.dat,.bin}
+  rm -f [epv]flux_{es,apar,bpar}{,_lab}{,.dat,.bin}
+  rm -f [epv]flux_rad_es{,.dat,.bin}
+  rm -f [epv]flux_rad_apar{,.dat,.bin}
+  rm -f [epv]flux_rad_bpar{,.dat,.bin}
+  rm -f [epv]flux_sup{,.dat,.bin}
+  rm -f [EPV]Fluxk[0-9][0-9]_*{,.dat,.bin}
+  # rm -f ?Flesr*{,.dat,.bin}}
+  # rm -f ?Flemr*{,.dat,.bin}}
+  # rm -f ?Flesp*{,.dat,.bin}}
+  # rm -f ?Flemp*{,.dat,.bin}}
+  # rm -f ?Flbpr*{,.dat,.bin}}
+  # rm -f ?FAesr*{,.dat,.bin}}
+  # rm -f ?FAemr*{,.dat,.bin}}
+  # rm -f ?FAesp*{,.dat,.bin}}
+  # rm -f ?FAemp*{,.dat,.bin}}
+  # rm -f ?FAbp*{,.dat,.bin}}
+  rm -f [PEV]F[lA]{es,em,bp}[rpk][0-9][0-9][0-9][0-9]{,.dat,.bin}
+  rm -f [PEV]F[lA]{es,em,bp}[rpk]{,.dat,.bin}
+  rm -f flmg[pr]*{,.dat,.bin}
+  rm -f rhtest{,.dat,.bin}
+
+  #from diagnos_fluxes_vspace:
+  rm -f fluxes_det{,.dat,.bin}
+  rm -f int_grids{,.dat,.bin}
+  rm -f [pev]fluxes_vspace[0-9][0-9]_{apa,bpa,phi}{,.dat,.bin}
+  rm -f [pev]fluxes_vspace[0-9][0-9]_{apa,bpa,phi}_bin
+  rm -f [pev]fluxes_vspace[0-9][0-9]{_bin,.dat}
+
+  #from diagnos_fields:
+  rm -f kyspec{,.dat,.bin}
+  rm -f kxspec{,.dat,.bin}
+  rm -f k{y,x}vort{,.dat,.bin}
+  rm -f kyspec_em{,.dat,.bin}
+  rm -f kxspec_em{,.dat,.bin}
+  rm -f phi[0-9]*{,.dat,.bin}
+  rm -f phi_xs_*{,.dat,.bin}
+  rm -f vort*{,.dat,.bin}
+  rm -f apar*{,.dat,.bin}
+  rm -f bpar*{,.dat,.bin}
+  rm -f parallel_phi{,_real,_imag}{,.dat,.bin}
+  rm -f parallel_apar{,_real,_imag}{,.dat,.bin}
+  rm -f parallel_bpar{,_real,_imag}{,.dat,.bin}
+  rm -f 3DOutputParam{,.dat,.bin}
+  rm -f spc*{,.dat,.bin} sac*{,.dat,.bin} apa*{,.dat,.bin} bpc*{,.dat,.bin} bpa*{,.dat,.bin} vok*{,.dat,.bin}
+  rm -f Poten*{,.dat,.bin} Apara*{,.dat,.bin} Bpara*{,.dat,.bin}
+  rm -f Spc3d*{,.dat,.bin} Apc3d*{,.dat,.bin} Bpc3d*{,.dat,.bin}
+  rm -f rhtest*{,_real,_imag}{,.dat,.bin} apar_fsa_kyzero*{,_real,_imag}{,.dat,.bin} 
+
+  #from diagnos_moments:
+  rm -f den*{,.dat,.bin}
+  rm -f pac*{,.dat,.bin} p2c* p2c*{,.dat,.bin}
+  rm -f ene0*{,.dat,.bin}
+  rm -f den0*{,.dat,.bin}
+  rm -f distr1{,.dat,.bin} distr2{,.dat,.bin} distr3.sp*{,.dat,.bin} distr4.sp*{,.dat,.bin}
+  rm -f intvp{,.dat,.bin}
+  rm -f intmu{,.dat,.bin}
+  rm -f D3d*{,.dat,.bin} E3d*{,.dat,.bin} P3d*{,.dat,.bin}
+  rm -f ene_spectra{,.dat,.bin} den_spectra{,.dat,.bin}
+  rm -f currentsq_xy{,.dat,.bin} current_xy{,.dat,.bin} 
+  rm -f dens_kyzero_xs*{,.dat,.bin}
+  rm -f current_kyzero_xs*{,.dat,.bin}
+  rm -f current2_kyzero_xs*{,.dat,.bin}
+  rm -f ene_kyzero_xs*{,.dat,.bin}
+  rm -f ene_perp_kyzero_xs*{,.dat,.bin}
+  rm -f ene_par_kyzero_xs*{,.dat,.bin}
+  rm -f phi_ga_fm_kyzero_xs*{,.dat,.bin}
+  rm -f phi_ga_deltaf_kyzero_xs*{,.dat,.bin}
+
+  #from diagnos_energetics:
+  rm -f ene_e{_ky,.kyspec}{,.dat,.bin} ene_f{_ky,.kyspec}{,.dat,.bin} ene_m{_ky,.kyspec}{,.dat,.bin} ene_e2{_ky,.kyspec}{,.dat,.bin}
+  rm -f entr{,_ps,_tr}{_ky,.kyspec}{,.dat,.bin} entr_field{_ky,.kyspec}{,.dat,.bin}
+  rm -f dt_entr{,_ps,_tr}{_ky,.kyspec}{,.dat,.bin} dt_entr_field{_ky,.kyspec}{,.dat,.bin}
+  rm -f entr_num_dis{_ky,.kyspec}{,.dat,.bin} entr_num_vp{_ky,.kyspec}{,.dat,.bin} entr_num_perp{_ky,.kyspec}{,.dat,.bin}
+  rm -f entr_coll{_ky,.kyspec}{,.dat,.bin} entr_temp_src{_ky,.kyspec}{,.dat,.bin} entr_src_dealiasing{,.dat,.bin}
+  rm -f dt_entr_field_adiacorr{_ky,.kyspec}{,.dat,.bin} entr_field_adiacorr{_ky,.kyspec}{,.dat,.bin}
+  rm -f entr_outflow{_ky,.kyspec}{,.dat,.bin} entr_landau{_ky,.kyspec}{,.dat,.bin}
+  rm -f entr_source[0-9][0-9]{_ky,.kyspec}{,.dat,.bin}
+  rm -f entr_kyx{,.dat,.bin} entr_src_kyx{,.dat,.bin}
+  rm -f entr_kyx_fsa{,.dat,.bin} entr_src_kyx_fsa{,.dat,.bin}
+     # new form:
+  rm -f ene_e_ky{,.dat,.bin} ene_f_ky{,.dat,.bin} ene_m_ky{,.dat,.bin} ene_e2_ky{,.dat,.bin}
+  rm -f entr_{,ps,tr}_ky{,.dat,.bin} entr_field_ky{,.dat,.bin}
+  rm -f dt_entr_{,ps,tr}_ky{,.dat,.bin} dt_entr_field_ky{,.dat,.bin}
+  rm -f entr_num_dis_ky{,.dat,.bin} entr_num_vp_ky{,.dat,.bin} entr_num_perp_ky{,.dat,.bin} 
+  rm -f entr_coll_ky{,.dat,.bin} entr_temp_src_ky{,.dat,.bin} entr_src_dealiasing{,.dat,.bin}
+  rm -f dt_entr_field_adiacorr_ky{,.dat,.bin} entr_field_adiacorr_ky{,.dat,.bin}
+  rm -f entr_outflow_ky{,.dat,.bin}
+  rm -f entr_source[0-9][0-9]_ky{,.dat,.bin}
+  #from diagnos_nonlin_transfer:
+  rm -f nonlin_transfer{,_fsa}{,_fdis,_T}{,_real,_imag}{,.dat,.bin}
+  rm -f nonlin_transfer_time{,.dat,.bin}
+  rm -f {x,y}_pairs{,.dat,.bin} {x,y}_triads{,.dat,.bin}
+  #from diagnos_zonal_evo:
+  rm -f zphi_kx{,_real,_imag}{,.dat,.bin}
+  rm -f dt_zphi_kx{,_real,_imag}{,.dat,.bin}
+  rm -f zevo*{,_real,_imag}{,.dat,.bin}
+  #from diagnos_grid
+  rm -f time{,.dat,.bin} time_fine{,.dat,.bin}
+  rm -f mode_label{,.dat,.bin}
+  rm -f xphi{,.dat,.bin} yphi{,.dat,.bin}
+  rm -f krho{,.dat,.bin} krho_extended{,.dat,.bin} kxrh{,.dat,.bin} kzeta{,.dat,.bin}
+  rm -f krloc{,.dat,.bin}
+  rm -f vperp{,.dat,.bin} vpgr{,.dat,.bin}
+  rm -f mphi{,.dat,.bin} mphit{,.dat,.bin} mphiw3{,.dat,.bin} mphiw3t{,.dat,.bin} mrad_l{,.dat,.bin} mrad_G{,.dat,.bin} lxn{,.dat,.bin} lyn{,.dat,.bin}
+  rm -f xgr{,.dat,.bin} sgrid{,.dat,.bin}
+  #from diagnos_zfshear:
+  rm -f zfshear_ga[0-9][0-9]{,.dat,.bin} 
+  rm -f zfflow_ga[0-9][0-9]{,.dat,.bin}
+  rm -f zfphi_ga[0-9][0-9]{,.dat,.bin}
+  rm -f zfshear{,.dat,.bin} 
+  rm -f zfflow{,.dat,.bin}
+  rm -f zfphi{,.dat,.bin}
+  #from diagnos_eng:
+  rm -f mode_energy{,.dat,.bin} entro{,.dat,.bin}
+  #from diagnos_rad:
+  rm -f entropy_rad{,.dat,.bin}
+  rm -f entropy_flr{,.dat,.bin}
+  rm -f delta_n[0-9][0-9]{,.dat,.bin}
+  rm -f delta_t[0-9][0-9]{,.dat,.bin}
+  rm -f delta_e[0-9][0-9]{,.dat,.bin}
+  rm -f delta_v[0-9][0-9]{,.dat,.bin}
+  rm -f fields_rad{,.dat,.bin}
+  rm -f f_int{,.dat,.bin}
+  rm -f zf_int{,.dat,.bin}
+  rm -f f_entropy_radial_profile{,.dat,.bin} zf_entropy_radial_profile{,.dat,.bin}
+  rm -f f_entropy_fields_radial_profile{,.dat,.bin} zf_entropy_fields_radial_profile{,.dat,.bin}
+  rm -f f_entropy_flux_{,re_,im_}radial_profile{,.dat,.bin} zf_entropy_flux_{,re_,im_}radial_profile{,.dat,.bin}
+  rm -f f_entropy_flux_fields_{_re,im_}radial_profile{,.dat,.bin} zf_entropy_flux_fields_{re_,im_}radial_profile{,.dat,.bin}
+  rm -f f_entropy_flux_drift_radial_profile{,.dat,.bin} zf_entropy_flux_drift_radial_profile{,.dat,.bin}
+  rm -f f_entropy_flux_fields_drift_radial_profile{,.dat,.bin} zf_entropy_flux_fields_drift_radial_profile{,.dat,.bin}
+  rm -f f_entropy_flux_fields_radial_profile{,.dat,.bin} zf_entropy_flux_fields_{re_,im_}radial_profile{,.dat,.bin}
+  rm -f kpar_rad{,.dat,.bin} kpar2_rad{,.dat,.bin}
+  rm -f theta0_rad{,.dat,.bin} kr_rad{,.dat,.bin}
+  rm -f prof_back{,.dat,.bin}
+  rm -f qx{,.dat,.bin} shatx{,.dat,.bin}
+  rm -f background_dens{,.dat,.bin} background_temp{,.dat,.bin}
+  rm -f background_rlt{,.dat,.bin} background_rln{,.dat,.bin} background_uprim{,.dat,.bin}
+  rm -f kr{_i,_r}_rad{,.dat,.bin}
+  #from diagnos_stresses:
+  rm -f reynolds_stress{,.dat,.bin}
+  #from diagnos_mode_struct:
+  rm -f parallel[0-9]*{,.dat,.bin} parallel{,.dat,.bin}
+  rm -f phi{,.dat,.bin} Bpar{,.dat,.bin} Apar{,.dat,.bin} dens{,.dat,.bin} Tpar{,.dat,.bin} Tperp{,.dat,.bin} vpar{,.dat,.bin}
+  rm -f phi_imag{,.dat,.bin} Bpar_imag{,.dat,.bin} Apar_imag{,.dat,.bin} dens_imag{,.dat,.bin} Tpar_imag{,.dat,.bin} Tperp_imag{,.dat,.bin} vpar_imag{,.dat,.bin}
+  rm -f phi_real{,.dat,.bin} Bpar_real{,.dat,.bin} Apar_real{,.dat,.bin} dens_real{,.dat,.bin} Tpar_real{,.dat,.bin} Tperp_real{,.dat,.bin} vpar_real{,.dat,.bin}
+  #from diagnos_velspace:
+  rm -f Momentum1{,.dat,.bin} Momentum2{,.dat,.bin}
+  rm -f IO0*{,.dat,.bin}
+  rm -f EL0*{,.dat,.bin}
+  rm -f vd_rad.pt*{,.dat,.bin} vd_pol.pt*{,.dat,.bin} Feq.pt*{,.dat,.bin}
+  rm -f vs.s*{,.dat,.bin} vs.x*{,.dat,.bin}
+  #from diagnos_jdote:
+  rm -f jdote{,_fsa}{_para_magnetic,_para_elec,_perp_elec,_em,,_pot}{,_rhostar}_pt[0-9][0-9]_sp[0-9][0-9]_[0-9]*{,.dat,.bin}
+  rm -f ene_pot_pt[0-9][0-9]_sp[0-9][0-9]_[0-9]*{,.dat,.bin}
+  #from diagnos_f:
+  rm -f fdi* fdi*{,.dat,.bin}
+  rm -f distr_at_point.imag.sp[0-9][0-9]{,_eim[0-9][0-9][0-9]}{,.dat,.bin} distr_at_point.real.sp[0-9][0-9]{,_eim[0-9][0-9][0-9]}{,.dat,.bin}
+  #from diagnos_cross_phase:
+  rm -f cross_phase_pdf{,_timetrace}*{,_ysx_weighted,_sx_weighted}{,.dat,.bin} cross_phase_degr_grid{,.dat,.bin}
+  #from diagnos_kinenergy_trappass:
+  rm -f gamma_contrib_{betaprime,centpot,centrifugal,coriolis,gradb,vpar,vpar_apar}_{ps,tr}{,_s,_xy,_sx}{,.dat,.bin} gamma_contrib_{pot,mag}_en{,_s,_xy,_sx}{,.dat,.bin}
+  #from diagnos_timetrace:
+  rm -f complex_signal_{real,imag}{,.dat,.bin}
+  #from diagnos_corr:
+  rm -f correlation_function_x{,.dat,.bin} correlation_function_y{,.dat,.bin} 
+  rm -f correlation_length_x{,.dat,.bin} correlation_length_y{,.dat,.bin}
+  #from diagnos_matrix:
+  rm -f mat{,_field,_field_diag,_maxwll_background,_poisson}_[0-9][0-9][0-9]_{nmat,values,ii,jj,irs}{,_real,_imag}{,.dat,.bin}
+  rm -f matrix{,1,2,3}_{values_real,values_imag,irs,jj,nmat}{,.dat,.bin}
+  #from diagnos_neoequil:
+  rm -f neof_flows.dat {neophi,neof,gradneophi,neo_coeffs_inter}{,.dat,.bin}
+  rm -f gradneof{,.dat,.bin}
+  rm -f neof_{den,flow}_profiles{,.dat,.bin}
+  #from mode:
+  rm -f par.dat parfun.dat
+  rm -f kx_connect.dat
+  #from geom:
+  rm -f geom.dat
+  #from collisionop:
+  rm -f D_nu_nu{,.dat,.bin} D_theta_theta{,.dat,.bin}  F_nu{,.dat,.bin}
+  rm -f Coll_params.dat
+  rm -f CollFreqs{,.dat,.bin}
+  rm -f CoulombLog{,.dat,.bin}
+  #from rotation:
+  rm -f cfen.dat
+  rm -f cfdens.dat
+  rm -f cfphi.dat
+  rm -f cffsa.dat
+  #from velocitygrid:
+  rm -f exintvp velgrid velgridtemp*
+  #from perform:
+  rm -f perf*
+  #from eiv_integration:
+  rm -f eigenvalues{,.dat,.bin}
+  #from gyroaverage:
+  rm -f effe
+  #from general:
+  rm -f effe.dat
+  #no so clear to SRG:
+  rm -f sp*distr*.dat
+  rm -f tem*
+  #not in use (at least not in the official trunk):
+  rm -f radial_profile.dat
+  rm -f DIn*	
+  rm -f bpak*
+  rm -f SPoints.dat
+  rm -f Frames.dat
+else
+  echo 'No input.dat in run directory, abort.'
+fi

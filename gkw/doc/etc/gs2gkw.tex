@@ -1,0 +1,125 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{fullpage}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\variable}[1]{\texttt{#1}}
+\newcommand{\File}[2][]{\texttt{#2}} %output files
+\newcommand{\src}[1]{\href{http://code.google.com./p/gkw/source/browse/trunk/src/#1}{#1}}
+\newcommand{\doc}[1]{\href{http://code.google.com./p/gkw/source/browse/trunk/doc/#1}{#1}}
+\newcommand{\scripts}[1]{\href{http://code.google.com./p/gkw/source/browse/trunk/scripts/#1}{#1}}
+\newcommand{\matlab}[1]{\href{http://code.google.com./p/gkw/source/browse/trunk/matlab/#1}{#1}}
+\newcommand{\name}[1]{\textsl{#1}} %find a way to make this link to correct doxygen search?
+
+
+%opening
+\title{Conversions between GKW and GS2 inputs}
+\author{F.J.~Casson}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+Converting between GKW and GS2 inputs should be straightforward, but it always seems to consume more time than it should.  Here we try to ease the process by documenting some knowledge that has been accumulated over experience of running benchmarks between the codes.  Checking it requires digging into the definitions and documentation of both codes.  This you should do if you want to check anything here, but you can use this note as a quick reference.  Please update this if you find anything wrong, or anything that is not covered here.  If you've not run GKW before, you should also look at the rest of the fairly comprensive GKW documentation.
+
+\end{abstract}
+
+\section{Radial Coordinate}
+
+GKW always uses the same normalised radial coordinate $\psi$:
+\begin{equation}
+ \label{eq:psi-def}
+ \epsilon = \psi = \frac{R_{\rm max}-R_{\rm min}}{2R_{\rm ref}},
+\end{equation}
+which is almost the LFS minor radius $r_{\rm minor}$ (except for peculiar geometries) normalised to some length scale.  The length scale can be anything, but will determine the definitions of gradients and collisionality.  It is traditionally thought of as a major radius.  When using Miller geometry it must be the major radius of the flux surface centre, thus
+\begin{equation}
+ R^{\rm GKW-Miller}_{\rm ref} = R^{\rm GS2}_{\rm maj} \cdot L_{\rm ref}^{\rm GS2}
+\end{equation}
+When using numerical equilbiria in GKW $R_{\rm ref} =$ \name{R0EXP} as written in the hamada.dat file output by CHEASE.  This can be set in the CHEASE inputs (a trick to overrid the EQDSK is to set \name{R0EXP} in CHEASE input negative), but is usually taken from the EQDSK file (5th entry).  It should be chosen to be near to the magnetic axis, but it appears that often it is related to the centre of the limiter geometry. It is always best to check the value used directly in the \name{hamada.dat} file output by CHEASE and read by GKW.  More information on running CHEASE for GKW is found in the document \name{chease/RunChease.tex}. The field $B_{\rm ref}$ in the Larmor radius and $\beta$ is always defined at $R_{\rm ref}$.
+
+\section{Radial gradients}
+
+The GKW lengthscale inputs are therefore $R_{\rm ref}/ L_n$ etc.  Depending on which radial coordinate you are using in GS2, all radial derivatives may need to be converted.  All the species gradient quantities in GKW are defined on the radial coordinate $\psi$ as follows:
+\label{eq:gradients}
+\begin{equation}
+{\rm rln} = {R_{\rm ref} \over L_n} = - {1\over n_{R_0}} {\partial n_{R_0} \over \partial \psi} ,
+\qquad 
+{\rm rlt} = {R_{\rm ref} \over L_T} = - {1 \over T} {\partial T \over \partial \psi} , 
+\qquad 
+{\rm uprim} = - {R_{\rm ref} \over v_{\rm thref}} {\partial \omega_\phi \over \partial \psi}  
+\end{equation}
+In GKW, \name{uprim} for every species is always normalised by the same thermal velocity.
+This is not the same as GS2 \name{uprime} which is normalised by the thermal velocity of each species.  In GKW all species should have the same value for \name{uprim} if they all rotate with the plasma rotation.  The standard ExB shearing in GKW is enabled through the rotation namelist with \name{shear\_profile='wavevector\_remap'} and the shearing rate can be coupled to the \name{uprim} value by using \name{toroidal\_shear='use\_uprim'}.  To use this ExB shearing you must have multiple $k_x$ and therefore \name{mode\_box=.true.}.
+
+\section{Grid sizes}
+
+In GKW, \name{n\_s\_grid} is the \textbf{total} number of points along the field line.  In GS2, \name{ntheta+1} is the number of points \textbf{per turn}.  The number of poloidal turns, \name{2*nperiod-1} has the same meaning in both codes.  Linear GKW is usually run with only one $k_y$ and one $k_x$ and multiple \name{nperiod}, with \name{mode\_box=.false.}.  (No twist and shift boundary condition needed). The velocity grids in the two codes are quite different and not directly comparable.  If resolving the trapped passing boundary is important (e.g. Collisionless TEM), in GKW you need \name{n\_vpar\_grid=64} or more, but this requirement diminishes for ITG or if collisions smooth the velocity space structures.
+
+\section{$\beta$ and $\beta^\prime$}
+
+$\beta_{\rm ref}$ is defined the same in both codes, assuming you choose the same species to have the reference values $n_{\rm ref}$ and $T_{\rm ref}$, and use the same location for $B_{\rm ref}$ in each code.   Using \name{alpha\_input} with \name{bishop = 5} in GS2 corresponds to the \name{gradp\_type=alpha\_mhd} option in GKW (NEEDS CHECKING for non circular surfaces). Using \name{beta\_prime\_input} with \name{bishop = 4} in GS2 corresponds to the \name{gradp\_type=betaprime} option in GKW (only the radial coordinate must be converted in the derivative) and is the safer option (betaprime was incorrect in some versions of GKW before r3012).
+
+\section{Collisions}
+
+The full collision operators are likely not completely identical but very close agreement can be achieved between the pitch angle scattering only versions.  In GKW it is usually easiest to set $n_{\rm ref}$, $T_{\rm ref}$ and $R_{\rm ref}$ and the collisionality for every species will be calculated internally.  However, since the Coulomb logarithm used for this is not a fixed value, if you want an exact benchmark with GS2 one should use the frequency override and input the collision frequency directly into GKW (which is the ion-ion collision frequency normalised by $v_{\rm thref} / R_{\rm ref}$).  The conversion from GS2 \name{newk} therefore contains a mass ratio as well as the length scale and temperature ratio factors.  Thus, assuming  $T_{\rm ref}=T_i$ in both GKW and GS2 and $L^{GS2}_{\rm ref} = R^{GKW}_{\rm ref}$, 
+%Assumes
+\begin{verbatim}
+gkwin.COLLISIONS.coll_freq = gs2in.electrons.vnewk*
+                             (gs2in.electrons.temp)^(1.5)*sqrt(gs2in.electrons.mass)
+\end{verbatim}
+
+
+\section{Miller Parameters}
+
+The Miller parameters are not defined the same in GKW and GS2.  GKW follows the definitions of Candy PoP 2009 and is thus almost exactly the same as the GYRO definitions (exceptions are the normalisation of the radial coordinate and $s_\delta$).  A conversion between GS2 and GYRO Miller parameters is given in Bravenec et Al PoP 2011 (http://dx.doi.org/10.1063/1.3671907).  Both GKW and GS2 use $r_{\rm minor}$ as the radial coordinate for Miller, and when $L^{GS2}_{\rm ref} = R^{GKW}_{\rm ref}$ the conversion is:
+\begin{verbatim}
+ gkwin.GEOM.kappa = gs2mil.akappa;
+ gkwin.GEOM.skappa = gs2mil.akappri/gkwin.GEOM.kappa*gkwin.GEOM.eps;
+ gkwin.GEOM.delta = sin(gs2mil.tri);
+ gkwin.GEOM.sdelta = gs2mil.tripri*cos(gs2mil.tri)*gkwin.GEOM.eps/sqrt(1-gkwin.GEOM.delta^2);
+ gkwin.GEOM.square = 0.;
+ gkwin.GEOM.ssquare = 0.;
+ gkwin.GEOM.dRmil = gs2mil.shift; 
+ gkwin.GEOM.Zmil = 0.;
+ gkwin.GEOM.dZmil = 0.;
+ gkwin.GEOM.geom_type='miller';
+ if isfield(gs2mil,'beta_prime_input')
+   gkwin.GEOM.gradp_type='beta_prime';
+   gkwin.SPCGENERAL.betaprime_type='ref';
+   gkwin.SPCGENERAL.betaprime_ref=gs2mil.beta_prime_input;
+ end
+\end{verbatim}
+
+We note that in GKW the gradp\_type alpha and alpha\_mhd definitions do not agree when kappa/=1,
+and it is not yet clear which one (if either) is the equivalent to the gs2 definition, since the benchmarks
+scans of alpha were performed with kappa=1.  It is therefore safer to use the gradp\_type=betaprime option in
+GKW.
+
+\section{$k_\theta \rho_i$}
+
+The projection of the poloidal wavevector onto the bi-normal is probably the biggest pain.  In any geometry other than $s-\alpha$, the $k_\theta$ wavevectors are not projected the same in GS2 and GKW.   The $\rho_{\rm ref}$ part is the same in both codes, (now that GS2 has lost the $\sqrt{T / m}$  velocity normalisation option, it agrees with GKW with $T_{\rm ref} = {1 \over 2} m_{\rm ref} v_{\rm thref}^2$), but the projection of $k_\zeta$ onto the $\theta$ coordinate is not (the reason why is open for discussion).   
+To understand: The GKW definition of the wave vector in normalised form uses the expression 
+\begin{equation}
+(k_\theta^{\rm GKW} \rho_{\rm ref} )^2 = g^{\zeta \zeta} k_\zeta^2  
+\end{equation}
+evaluated at the low field side midplane ($s=0$) to determine $k_\zeta$ from the value of $k_\theta \rho_{\rm ref}$ given as an input (here
+$k_\theta$ is not a normalised quantity).  In GKW, $\zeta$ is the bi-normal coordinate.   Recall also that $\rho_{\rm ref}$ is defined using $B_{\rm ref}$ at the major radius $R_{\rm ref}$.  GS2 uses 
+\begin{equation}
+k_\theta^{\rm GS2} \rho_{\rm ref} = 2 \pi \frac{\partial \Psi}{\partial \epsilon} k_\zeta = \frac{k_\zeta}{2{\cal E}^{\epsilon \zeta}}  
+\end{equation}
+in the projection of $k_y$, where $\Psi$ is the poloidal flux, and $2{\cal E}^{\epsilon \zeta}$ is a geometry quantity in GKW\\
+(see http://w3.pppl.gov/$\sim$hammett/work/gs2/docs/geometry/g\_short.pdf and the GKW manual).\\
+In $s-\alpha$ geometry with $\alpha = 0$, these are equivalent.
+
+Both quantities \name{kthnorm}=$\sqrt{g^{\zeta \zeta}(LFS)}$ and \name{e\_eps\_zeta}=${\cal E}^{\epsilon \zeta}$ (which is a flux function, but is given for every s point) are output by GKW in the GKW geom.dat file and the $k_\theta$ input conversion can then be written
+\begin{verbatim}
+gs2in.aky = gkwin.MODE.kthrho * gkwgeom.e_eps_zeta *2 / gkwgeom.kthnorm
+\end{verbatim}
+
+
+\section{Some other differences}
+
+The explicit solver makes GKW less efficient than GS2 for linear runs.  It also means that the timestep must be appropriate in order to get a numerically stable solution.  One advantage of this is that once the timestep is small enough to give a physical result, no convergence testing in timestep is required (the implicit solver of GS2, always gives a result, but one should check it's convergence in the timestep).  The GKW linear timestep estimator will try to choose a sensible value based on the Courant condition for the Vlasov equation, but it does not presently include the fields, so it is not foolproof for some high frequency waves (e.g long wavelength electrostatic - it is better to run with $\beta =$ 3e-4 for electrostatic runs), or fast growing modes (e.g. ETG).  If GKW gives unphysically large growth rates, the first thing one should try is to reduce the timestep (no more than a factor of ten at a time).  If your problem requires a very small timestep (less than 1e-6), something else is likely to be wrong; if a small timestep is really required it may be best to run with \name{normalized=.false}..
+
+\end{document}

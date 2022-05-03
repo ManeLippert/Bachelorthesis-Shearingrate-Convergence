@@ -1,0 +1,80 @@
+&CONTROL
+ testing = .false.,
+ silent = .false.,
+ order_of_the_scheme = 'fourth_order'
+ parallel_boundary_conditions = 'zero'
+ matrix_format = 'complex'
+ read_file=.true.
+ NON_LINEAR = .true.
+ zonal_adiabatic = .true.,
+ METHOD = 'EXP',
+ METH   = 2, 
+ DTIM   = 0.02 
+ NTIME  = 1000,			!Factor sqrt(2)/3 to get to gyro normalised time
+ NAVERAGE = 50,	     	
+ nlapar = .false., 
+ collisions = .false.
+ disp_par = 0.5			
+ disp_vp  = 0.0
+ disp_x   = 0.5
+ lverbose = .false.
+ spectral_radius=.false.
+ nl_dtim_est=.false.
+ max_sec=43200
+ /
+ &GRIDSIZE
+ NX = 160,   
+ N_s_grid = 16, 
+ N_mu_grid = 8,
+ n_procs_mu = 8
+ n_procs_x = 4
+ nperiod = 1, 
+ N_vpar_grid = 16, 
+ NMOD = 21		!More effcient usage up to 21
+ number_of_species = 1 ! Number of species. Note: do not count the adiabatic species 
+ lx = 85. 
+ /
+ &MODE
+ CHIN    = 0., 
+ KTHRHO  = 0.5,
+ mode_box = .true., 
+ krhomax = 1.41,    !Evaluated on the low field side of outboard midplane
+ ikxspace = 6, 
+ /
+ &GEOM 
+ SHAT = 1.0
+ Q    = 2.0, 
+ EPS  = 0.16667,
+ /
+ &SPCGENERAL
+ beta = 0.000,
+ adiabatic_electrons = .true.
+ /
+ &SPECIES 
+ MASS  = 1, 
+ Z     = 1.0, 
+ TEMP  = 1.0, 
+ dens  = 1.0,
+ rlt   = 9.0,
+ rln   = 3.0, 
+ uprim = 0.0,
+ / 
+ &SPECIES 
+ MASS  = 2.77e-4, 		!sqrt(mi/me)=60
+ Z     = -1.0, 
+ TEMP  = 1.0,
+ dens  = 1.0,
+ rlt   = 9.0,
+ rln   = 3.0, 
+ uprim = 0.0,
+ / 
+ &ROTATION
+ VCOR = 0
+ shear_rate=0.0
+ !shear_profile='wavevector_remap'
+ /
+ &DIAGNOSTIC
+ XY_DENS = T,
+ XY_TEMP = T,
+ XY_PHI  = T,
+ / 

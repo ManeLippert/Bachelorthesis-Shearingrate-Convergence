@@ -1,0 +1,10 @@
+This directory contains various python routines which may be useful in
+postprocessing data from GKW. $GKW_HOME/python should be included in the
+PYTHONPATH enviroment variable to use these routines from within a python
+shell -- `ipython' is suggested.
+
+import gkw
+
+OR
+
+from gkw import *

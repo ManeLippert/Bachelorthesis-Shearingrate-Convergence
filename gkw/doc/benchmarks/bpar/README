@@ -1,0 +1,6 @@
+The GKW version used in this benchmark is 1578.
+Versions of GKW much prior to this did not have compressional magentic field.
+
+This benchmark appears in the latest Manual, but not in the CPC paper.
+
+The input files are based on the Waltz test case.

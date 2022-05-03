@@ -1,0 +1,579 @@
+\chapter{Gyrokinetic theory}
+
+\section{The gyrokinetic framework}
+\label{sec:framework}
+The starting point of the equation for the evolution of the distribution function is the 
+gyrokinetic theory formulated in Refs \cite{LIT83,HAH88,BRI88,SUG00}. In GKW these equations 
+are solved up to first order in the Larmor radius over the major radius $\rho_* \ll 1 $ 
+(with the exception of the polarisation which enters in the field equations). 
+In order to determine which of the terms in the original formulation of the theory (which is
+accurate up to second order in $\rho_*$) must be kept, we will here briefly discuss the ordering. 
+More details can be found in Ref.~\cite{PEE09}.
+
+A thermal velocity ($v_{\rm th}$) and a major radius ($R$) are used to normalise the length and 
+time scales. For the gradients we assume 
+\begin{equation} 
+R \nabla_\parallel  \approx 1 \qquad 
+R \nabla_\perp \approx 1/ \rho_*,
+\end{equation} 
+i.e. the solution is assumed to have a length scale of the order of the system size along the 
+field, but can have a length scale of the order of the Larmor radius perpendicular to the 
+magnetic field. 
+This difference in length scales means that the convecting velocities must be evaluated to a 
+different order parallel and perpendicular to the field. 
+The velocity along the field is to be evaluated in lowest order only (i.e. of the order of $v_{\rm th}$), but
+the perpendicular velocity must be evaluated up to first order (order $\rho_* v_{\rm th}$). 
+In GKW the perturbations in the electro-static potential $\phi$ as well as the vector potential ${\bf A}$ are 
+retained.
+For the latter it is, however, assumed that 
+\begin{equation} 
+{\bf A} = A_\parallel {\bf b} ,
+\end{equation}
+where ${\bf b}$ is the unit vector in the direction of the unperturbed magnetic field. 
+The assumption above means that no compressional effects of the magnetic field are retained in the 
+description.
+Compressional effects are currently implemented in the code but are not yet described here.  
+Note that the vector potential above is the perturbed vector potential not to be confused with the one 
+connected with the equilibrium magnetic field.
+The equations will be formulated in the co-moving system of a toroidally rotating plasma. 
+The $E \times B$ drift velocity connected with this toroidal rotation is of the order of the thermal 
+velocity in the laboratory frame, but the transformation to the co-moving frame removes this largest order $E \times B$ velocity from the 
+equations \cite{PEE09,Casson-Thesis}. The transformation to the co-moving frame also introduces a background centrifugal potential $\Phi$.
+The perturbed potential $\phi$, perturbed vector potential $A_\parallel$, and background potential $\Phi$
+in the co-moving frame can then be taken to be of the order 
+\begin{equation} 
+\phi \approx {T \over e} \rho_* \qquad 
+A_\parallel \approx {T \over e v_{\rm th}} \rho_*
+\qquad
+\Phi \approx {T \over e} \qquad 
+\label{fieldordering}
+\end{equation}
+where $T$ is the temperature, and $e$ is the elementary charge. 
+Since $\Phi$ is an equilibrium quantity, the length scale of any variation is assumed large compared
+to the Larmor radius, whilst the perturbed quantities may have perpendicular gradient length scales on the order of the Larmor radius.  
+The field gradients can then be shown to be of the same order, with $\nabla_\perp \phi \approx \nabla_\perp \Phi$.  
+From these assumptions it can be derived that the $E \times B$ velocity is of the order $\rho_* v_{\rm th}$. 
+
+Gyro-centre coordinates (${\bf X},\mu,v_\parallel$) are used, with ${\bf X}$ being the gyro-centre position, $v_\parallel$ the parallel (to the magnetic field) velocity, and $\mu$ the magnetic moment $\mu = {m v_\perp^2 / 2 B} $.  
+Here $v_\perp$ is the velocity component perpendicular to the equilibrium magnetic field ${\bf B}$, $m$
+is the particle mass and $B$ is the magnetic field strength. 
+The magnetic moment is an invariant of motion, but the parallel velocity changes due to the electric field 
+acceleration and mirror force. 
+It turns out that for consistency one needs to keep both the lowest as well as the first order (in $\rho_*$) 
+contribution to the acceleration. 
+
+%FJC -> GSZ Add Bpar ordering here?
+
+Finally, the approximation known as the $\delta f$ approximation is employed. 
+This approximation assumes that the perturbed distribution $f$ is much smaller than the background distribution 
+$F$, but has a perpendicular length scale of the order of the Larmor radius whereas the background varies 
+on the length scale of the system size:
+\begin{equation} 
+f \approx \rho_* F \qquad 
+{\partial f \over \partial v_\parallel} \approx \rho_* {\partial F \over \partial v_\parallel}  \qquad 
+\nabla f \approx \nabla F .
+\end{equation}
+The ordering assumption above removes the `velocity non-linearity' (combinations of the 
+electro-magnetic fields and the velocity space derivative of the perturbed distribution) from
+the evolution equation of the perturbed distribution. 
+The disadvantage is  that strict energy conservation no longer applies.   
+
+With the help of these approximations the gyrokinetic equation of Refs. \cite{LIT83,BRI88,SUG00}
+can be rewritten. 
+
+\section{Lagrangian}
+\label{sec:theoryLagrangian}
+(This section is not in the CPC paper which instead refers to Ref. \cite{PEE09} which contains the full derivation with centrifugal effects.)
+(CHECK CONSISTENCY)
+
+The starting point is the Lagrangian \index{Lagrangian}
+\begin{equation}
+  \gamma=\left({e\over c}{\bf A}+{e\over c}A_{\parallel}{\bf b}+m{\bf v} \right)\cdot d{\bf x}-\left({m\over 2}v^{2}+e\phi \right)dt
+\end{equation}
+The coordinates are transformed into guiding center coordinates. The electrostatic guiding center
+Lagrangian is known, and can be found in Hahm 1988 \cite{HAH88}. For the magnetic perturbations we take that
+\begin{equation}
+  A_{\parallel}({\bf X}+{\bf \rho}){\bf b} \cdot d({\bf X}+\rho)
+\end{equation}
+where $\rho =\rho({\bf X},{\mu},{\theta})$. All the derivatives of $\rho$ will give vectors
+perpendicular to the magnetic field. Thus if there is not a perpendicular magnetic potential
+perturbation, the only term that survives is
+$$A_{\parallel}{\bf b}\cdot d{\bf X}$$
+Then the guiding center Lagrangian is
+\begin{equation}
+\gamma =\left({e\over c}{\bf A}+{e\over c}A_{\parallel}{\bf b}+mv_{\parallel}{\bf b} \right)\cdot 
+d{\bf X}+\mu d\theta -\left({m\over 2}v_{\parallel}^{2}+\mu B+e\phi \right)dt
+\end{equation}
+This Lagrangian is transformed in the gyrocenter coordinates with the Lie transforms.
+To the first order, if there are no perpendicular perturbations in the magnetic potential,
+we can just substitute the perturbations of the fields with the respective gyroaveraged quantities. 
+This can also be derived rigorously with the Lie transforms. The new Lagrangian will be
+\begin{equation}
+\Gamma =\left({e\over c}{\bf A}+{e\over c}\ga{A_{\parallel}}{\bf b}+mv_{\parallel}{\bf b} \right)\cdot 
+d{\bf X}+\mu d\theta -\left({m\over 2}v_{\parallel}^{2}+\mu B+e\ga{\phi} \right)dt
+\label{eq:gyrocenterlagrangian}
+\end{equation}
+where now ${\bf X},\mu,v_{\parallel},\theta$ are the gyrocenter coordinates. From this one can derive 
+the equations of motion using the Euler Lagrange equations
+\begin{equation}
+\omega_{ij}{dz^{j}\over dt}={\partial H \over \partial z^{i}}-{\partial \gamma_{i}\over \partial t}
+\end{equation}
+FIXME what is $\mathrm{d}\gamma$ or $\partial\gamma$ supposed to mean if $\gamma$ is already a differential (cf. \eqref{eq:gyrocenterlagrangian})?
+where $H$ is the Hamiltonian and 
+\begin{equation}
+\omega_{ij}={\partial \gamma_{j}\over \partial z^{i}}-{\partial \gamma_{i}\over \partial z^{j}}
+\end{equation}
+are the Lagrange brackets.
+
+The Lagrange brackets that are of interest are
+\begin{equation}
+\omega_{X_{i}X_{j}}={e\over c}\epsilon_{ijk}{\hat B}_{k}
+\end{equation}
+\begin{equation}
+\omega_{{\bf X}U}=-m{\bf b}
+\end{equation}
+where 
+\begin{equation}
+{\hat {\bf B}}=\nabla \times {\bf A}+\nabla \times A_{\parallel}{\bf b}+{mc \over e}v_{\parallel}\nabla \times {\bf b}
+\end{equation}
+
+Choosing $i=U$ we get that
+\begin{equation}
+m{\bf b}\cdot {\dot {\bf X}}=mv_{\parallel}
+\end{equation}
+Choosing $i={\bf X}$ we get that
+\begin{equation}
+m{\dot v}_{\parallel}{\bf b}-{e\over c}{\dot {\bf X}}\times {\hat{\bf B}}=-e\nabla \ga{\phi}-\mu \nabla B-{e\over c}
+{\partial \ga{A_{\parallel}}\over \partial t}{\bf b}
+\end{equation}
+and taking that
+\begin{equation}
+{\bf E}=-\nabla \phi -{1\over c}{\partial \ga{A_{\parallel}}\over \partial t}{\bf b}
+\end{equation}
+we get that
+\begin{equation}
+m{\dot v}_{\parallel}{\bf b}-{e\over c}{\dot {\bf X}}\times {\hat{\bf B}}=e{\bf E}-\mu \nabla B
+\end{equation}
+
+We can cross this equation with ${\bf b}$ to derive the equation for $\dot X$. To derive the equation of GKW we have
+to approximate
+\begin{equation}
+\nabla \times \ga{ A_\parallel} {\bf b}
+= 
+\nabla \ga{A_\parallel}\times\mathbf{b} + \ga{A_\parallel}\nabla\times\mathbf{b}
+ \approx - {\bf b} \times \nabla \langle A_\parallel \rangle 
+\label{eq:approxtofindExBdrift}
+\end{equation}
+Then the equation of $\dot X$ is.
+\begin{equation} 
+{{\rm d} {\bf X} \over {\rm d} t} = v_\parallel {\bf b} + {\bf v}_D + {\bf v}_E + {\bf v}_{\delta B_\perp}, 
+\end{equation}
+To derive the equation for $v_{\parallel}$ we dot with $\dot X$. This gives
+\begin{equation}
+mv_{\parallel}{\dot v}_{\parallel}={\dot {\bf X}}\cdot \left(e{\bf E}-\mu \nabla B\right)
+\end{equation}
+
+\section{The gyrokinetic equation}
+
+In a rigidly rotating frame, 
+the evolution of equation for the gyro-centre position ${\bf X}$, and the parallel velocity are \cite{PEE09}
+\begin{equation} 
+{{\rm d} {\bf X} \over {\rm d} t} = v_\parallel {\bf b} + {\bf v}_D + {\bf v}_\chi ,
+\qquad
+\label{eq:drifts}
+%\end{equation}
+%\begin{equation} 
+m v_\parallel {{\rm d} v_\parallel \over {\rm d} t} =   
+{{\rm d} {\bf X} \over {\rm d} t} \cdot \left[ Z {e }{\bf E}  - \mu 
+ \nabla B + m\Omega^2 R \nabla R \right],
+%\end{equation}
+%where $\mu$ is a constant of motion. 
+%\begin{equation} 
+\qquad 
+{{\rm d} \mu \over {\rm d} t} = 0 .
+\end{equation}
+Here $Z$ is the particle charge, $R$ the local major radius, and $\Omega$ the frame rotation frequency.  
+$\bf E$ is the gyro-averaged perturbed electric field plus the inertial electric field
+\begin{equation} 
+{\bf E} = -\nabla \langle \phi \rangle  - {\partial \langle A_\parallel \rangle \over \partial t} {\bf b}  -\nabla \langle \Phi \rangle ,
+\end{equation}
+where the angle brackets denote the gyro-average. 
+Since $\Phi$ is an equilibrium quantity, the scale lengths of any variation are assumed large compared
+to the Larmor radius and we neglect the gyroaverage, taking $\Phi \approx \langle\Phi\rangle$.  (The 
+full details of the calculation of $\Phi$ are given in Sec. \ref{cfphi}).  
+
+The velocities in \eq{drifts} are from left to right: the parallel motion along the 
+unperturbed field ($v_\parallel {\bf b}$), the drift motion due to the inhomogeneous field 
+(${\bf v}_D$), and 
+\begin{equation} 
+\label{eq:v-chi}
+{\bf v}_\chi = {{\bf b} \times \nabla \chi \over B} \qquad 
+\textrm{with} \qquad \chi = \langle \phi \rangle - v_\parallel \langle A_\parallel \rangle ,
+\end{equation}
+which is the combination of the $E \times B$ velocity 
+(${\bf v}_E = {\bf b} \times \nabla \langle \phi \rangle / B$) and the parallel motion along 
+the perturbed field line (${\bf v}_{\delta B} = - {{\bf b} \times \nabla v_\parallel 
+\langle A_\parallel \rangle /B}$).
+The drifts due to the inhomogeneous magnetic field and inertial terms can be written in the form
+\begin{equation}
+\label{eq:driftsinhomogeneousinterial}
+{\bf v}_D = 
+{1\over Ze} \biggl [ {m v_\parallel^2\over B} + \mu \biggr ] {{\bf B} \times \nabla B \over B^2}  
++ {m v_\parallel^2 \over 2 Z e B} \beta^\prime {\bf b} \times \nabla \psi
++ { 2 m v_\parallel \over Z e B } {\bf \Omega}_\perp + {1 \over ZeB} {\bf b} \times \nabla \cfen
+\end{equation}
+In the equation above $\psi$ is a radial coordinate (flux label) and ${\bf \Omega}_\perp$ is the angular
+(toroidal) rotation vector perpendicular to the field, i.e. ${\bf \Omega}_\perp = {\bf \Omega} 
+- ({\bf \Omega } \cdot {\bf b}) {\bf b}$.
+The first term on the right is the combination of the grad-B drift and curvature drift 
+in the low beta approximation, whereas the second term, involving
+\begin{equation}
+\label{eq:defbetapr}
+\beta' = \frac{2\mu_0}{B^2}\frac{\partial p}{\partial \psi},
+\end{equation}
+is the correction to the 
+curvature drift due to the modification of the equilibrium associated with the pressure
+gradient. The penultimate term is the Coriolis drift derived in Ref.~\cite{PEE07} 
+using the formulation of the gyrokinetic equations in the co-moving frame \cite{BRI95}.
+The formulation of Ref.~\cite{PEE07} was extended in Refs.~\cite{PEE09,Casson-Thesis} to include 
+the centrifugal force, and the first centrifugal results were published in  Refs.~\cite{CAS10,Casson-Thesis}.  
+The last term combines the centrifugal drift and background potential 
+in the (species dependent) centrifugal energy
+\begin{equation}
+\cfen=Ze\Phi - {1 \over 2} m \Omega^2 (R^2-R_0^2)
+\end{equation}
+where $R_0$ is the major radius of the point on the flux surface at which the densities are defined.
+
+From the equations above the gyrokinetic equation in (${\bf X}, v_\parallel, 
+\mu$) coordinates can be derived: \cite{LIT83,PEE09}
+\begin{equation} 
+{\partial f_{\rm tot} \over \partial t} + {{\rm d} {\bf X} \over {\rm d} t} \cdot \nabla_\mu 
+f_{\rm tot} + {{\rm d} v_\parallel \over {\rm d} t} {\partial f_{\rm tot} \over \partial v_\parallel} = 0 .
+\end{equation} 
+The distribution function $f_{\rm tot}$ in this equation is split in a background $F$ and a perturbed 
+distribution $f$. As discussed in Section \ref{sec:framework} the $\delta f$ approximation 
+will be employed. 
+Consequently, the equation for $f$ can be written in the form \cite{PEE09}
+\begin{equation} 
+{\partial f \over \partial t} + (v_\parallel {\bf b} + {\bf v}_D + {\bf v}_\chi) \cdot \nabla f  
+-{{\bf b} \over m}\cdot(\mu \nabla B + \nabla \cfen){\partial f \over \partial v_\parallel} = S. 
+\end{equation}
+where $S$ is determined by the background distribution function.
+The latter is assumed to be a Maxwellian ($F_M$), with
+temperature ($T$) and mean parallel velocity ($u_\parallel$) being functions of the radial coordinate only.
+In the case of a rotating plasma the density in the flux surface varies as $n(\theta)=n_{R_0} \exp(-\cfen(\theta)/T)$
+and is kept in the solution of the equilibrium equation \cite{PEE09}.
+\begin{equation} 
+\label{eq:maxwell}
+F_M = {n_{R_0} \over \pi^{3/2} v_{\rm th}^3 } \exp 
+\biggl [ - {(v_\parallel-(R B_t/B)\omega_\phi )^2 + 2 \mu B / m \over v_{\rm th}^2} - \cfen/T \biggr ] . 
+\end{equation} 
+Here $v_{\rm th}\equiv \sqrt{ 2 T / m}$ is the thermal velocity (note that in this area of 
+research the thermal velocity is usually defined without the $\sqrt{2}$ factor).
+The appearance of an explicit rotation velocity $u_\parallel$ in the Maxwellian may be confusing since the equations are formulated
+in the co-moving system in which the rotation vanishes. 
+However, under experimental conditions the plasma rotation $\omega(\phi)$ has a radial gradient while the frame is chosen
+to rotate as a rigid body with a constant angular frequency $\Omega$. 
+Indeed a differential rotation of the frame would be impractical since the distance between two
+fixed points in the co-moving 
+system would increase in time, i.e. the metric would be time dependent. 
+
+The local model constructed here chooses the rotation of the frame to be equal to the plasma rotation at one particular radius. 
+Therefore $\omega_\phi$ in the above Maxwellian is zero at the radial location considered, but has a finite radial gradient. This 
+gradient will enter the equations as $\nabla \omega_\phi$. (for more details see Ref.~\cite{PEE09}).  
+
+The term containing the derivative of the vector potential towards time presents a numerical difficulty. 
+In the $\delta f$ formalism it can, however, easily be combined with the time derivative of $f$. If one defines a `new' distribution $g$ 
+\begin{equation} 
+g = f + {Z e \over T} v_\parallel \langle A_\parallel \rangle F_M ,
+\end{equation}
+and replaces the time derivative of $f$ in the gyrokinetic equation with the time derivative of $g$, the cumbersome 
+time derivative of $\langle A_\parallel \rangle $ is removed. 
+Using the equations above one arrives at the following equation for the distribution function $g$
+\begin{equation} 
+{\partial g \over \partial t} + {\bf v}_\chi \cdot \nabla g  + (v_\parallel {\bf b} + {\bf v}_D) \cdot \nabla f  
+-{{\bf b} \over m}\cdot(\mu \nabla B + \nabla \cfen){\partial f \over \partial v_\parallel} = S. 
+\label{Vlasov}
+\end{equation}
+where $S$ is given by
+\begin{equation}
+S =  - ({\bf v}_\chi + {\bf v}_D) \cdot \biggl [ {\nabla n_{R_0} \over n_{R_0}} + \biggl ( {v_\parallel^2 \over v_{\rm th}^2 } 
++ {(\mu B + \cfen) \over T} - {3 \over 2} \biggr ) {\nabla T \over T} + {m v_\parallel \over T} {R B_t \over B }\nabla \omega_\phi \biggr ] F_M -  
+{Ze \over T} [ v_\parallel {\bf b} + {\bf v}_D ] \cdot \nabla \langle \phi \rangle  F_M .
+\label{source} 
+\end{equation}
+Note that both $g$ and $f$ appear in this equation. Since any form of dissipation on the field variables 
+leads to a numerical instability \cite{CAN03}, it is preferable to use $f$ in any term that requires 
+dissipation for stable numerical implementation.  
+It should also be noted here that the Maxwellian is not an exact solution of the gyrokinetic equation in the limit of a zero 
+perturbed electro-magnetic field. 
+From the equation above it follows that $S$ is nonzero due to the drifts connected with the magnetic field inhomogeneity 
+in the gradients of density temperature and velocity. 
+The solution of the evolution equation will determine the deviation away from the Maxwellian as a nonzero perturbed
+distribution $f$. 
+This perturbation is of the order $\rho_* F_M$, and neglecting it as part of the background distribution is consistent with 
+the ordering adopted. 
+The drift term is ${\bf v}_D$ in the first term of the equation above is nevertheless implemented in GKW since the perturbation 
+it generates is responsible for the neo-classical transport. All physics and diagnostic of the neo-classical fluxes have been 
+implemented in the code, but the implementation has not been benchmarked and should therefore not be used.   
+
+To close the set of equations, one needs to calculate the potential and vector potential through the (low 
+frequency ordering) Maxwell equations. These have been formulated in the literature, and 
+will be given in Section \ref{eqs:complete-set} when the full set of equations in normalised form is discussed. 
+
+
+\section{Fully electromagnetic gyrokinetic equation}
+In high beta tokamak plasmas the amplitude of the magnetic perturbations can become significant compared to the fluctuations of the electro-static potential. In such cases electro-magnetic effects should be taken into account in the Vlasov equation for an accurate gyrokinetic simulation. In this section the gyrokinetic Lagrangian, equations of motion, the Vlasov and Maxwell equations are summarized in the fully electro-magnetic, collisionless case in a rotating frame of reference. The detailed derivation of the equations can be found in \doc{tex/derivation.tex}.
+
+The gyrokinetic Lagrangian is
+\begin{eqnarray}
+	\bar{\Gamma} &=& \left( m v_{\parallel} \mathbf{b}(\mathbf{X}) + Z e \mathbf{A}_0(\mathbf{X}) + m \mathbf{u}_0 + Z e \langle \mathbf{A}_1 \rangle(\mathbf{X}) \right) \cdot \mathrm{d} \mathbf{X} + \frac{2 \mu m}{Z e} \mathrm{d} \theta - \nonumber\\
+	&& \left( \frac{1}{2} m \left(v_{\parallel}^2 - u_0^2 \right) + Z e \left(\Phi_0(\mathbf{X}) + \langle \phi \rangle(\mathbf{X}) \right) + \mu \left(B_0(\mathbf{X}) + \langle B_{1 \parallel} \rangle(\mathbf{X})\right) \right) \mathrm{d}t
+\end{eqnarray} 
+where $\langle \phi \rangle = J_0(\lambda) \phi$, $\langle \mathbf{A}_1 \rangle = J_0(\lambda) \mathbf{A}_1$ and $\langle B_{1 \parallel} \rangle = \hat{J}_1(\lambda) B_{1 \parallel}$ are the gyroaveraged field perturbations. $\mathbf{b}$ is the unit vector along the equilibrium magnetic field, $\mathbf{u}_0$ is the velocity of the rotating frame of reference, and $\Phi_0$ is the equilibrium electro-static potential due to the plasma rotation. The bar over $\bar{\Gamma}$ distinguishes the gyro-centre Lagrangian from its guiding-centre version.
+
+The equations of motion can be derived from the Euler--Lagrange equations and are written as
+\begin{eqnarray}
+	\dot{\mathbf{X}} &=& \mathbf{b} v_{\parallel} + \frac{m v_{\parallel}^2}{Z e B_0} \left( \nabla \times \mathbf{b} \right)_{\perp} + \frac{\langle \mathbf{B}_{1 \perp} \rangle} {B_0} v_{\parallel} - \frac{1}{B_0} \langle \mathbf{E} \rangle \times \mathbf{b} + \nonumber \\
+	&& \frac{\mu}{Z e B_0} \nabla \left( B_0 + \langle B_{1 \parallel} \rangle \right) \times \mathbf{b} + \frac{2 m v_{\parallel}}{Z e B_0} \mathbf{\Omega}_{\perp} - \frac{m R \Omega^2}{Z e B_0} \nabla R \times \mathbf{b} \nonumber \\
+	&=& \mathbf{b} v_{\parallel} + \underbrace{\mathbf{v}_{\langle \mathbf{B}_{1 \perp} \rangle} + \mathbf{v}_{\langle \mathbf{E} \rangle \times \mathbf{B}_0} + \mathbf{v}_{\nabla \langle B_{1\parallel} \rangle}}_{\mathbf{v}_{\chi}} + \underbrace{\mathbf{v}_{\st{C}} + \mathbf{v}_{\nabla \mathbf{B}_0} + \mathbf{v}_{\st{co}} + \mathbf{v}_{\st{cf}}}_{\mathbf{v}_{\st{D}}}
+\end{eqnarray}
+where $\mathbf{\Omega}$ is the angular momentum  vector associated with the rotation of the reference frame, and
+\begin{equation}
+	\dot{v}_{\parallel} = \frac{\dot{\mathbf{X}}}{m v_{\parallel}} \cdot \left( Z e \langle \mathbf{E} \rangle - \mu \nabla (B_0 + \langle B_{1 \parallel} \rangle) + \frac{1}{2}m \nabla u_0^2 \right).
+\end{equation}
+The quantity $\chi$, related to the drifts due to perturbations of the fields, can be now written as
+\begin{equation}
+\chi = \underbrace{\Phi_0 + \langle \phi \rangle}_{\langle \Phi \rangle} - v_{\parallel} \langle {A}_{1 \parallel} \rangle + \frac{\mu}{Z e} \langle B_{1 \parallel} \rangle 
+\end{equation}
+and
+\begin{equation}
+\mathbf{v}_{\chi} = \frac{\mathbf{b} \times \nabla \chi}{B_0} = \mathbf{v}_{\langle \mathbf{B}_{1 \perp} \rangle} + \mathbf{v}_{\langle \mathbf{E} \rangle \times \mathbf{B}_0} + \mathbf{v}_{\nabla \langle B_{1 \parallel} \rangle}. 
+\end{equation}
+
+The Vlasov equation in presence of magnetic field compression takes the form
+\begin{equation}
+	\frac{\partial g}{\partial t} + \mathbf{v}_{\chi} \cdot \nabla g + \left( v_{\parallel} \mathbf{b} + \mathbf{v}_{\st{D}} \right) \cdot \nabla \delta f - \frac{\mu}{m} \mathbf{b} \cdot \left(\nabla \Phi_0 - m R \Omega^2 \nabla R + \nabla B_0 \right) \frac{\partial \delta f}{\partial v_{\parallel}} = S 
+	\label{eq:vlasov}
+\end{equation}
+with the source term being
+\begin{equation}
+	S = - \left( \mathbf{v}_{\chi} + \mathbf{v}_{\st{D}} \right) \cdot \nabla_p F_M + \frac{F_M}{T} \left( v_{\parallel} \mathbf{b} + \mathbf{v}_{D} \right) \cdot \left( - Z e \nabla \langle \phi \rangle - \mu \nabla \langle B_{1 \parallel} \rangle \right)
+	\label{eq:vlasov-source}
+\end{equation}
+where $g$ is the modified distribution function
+\begin{equation}
+	g = \delta f + \frac{Z e v_{\parallel}}{T} \langle A_{1 \parallel} \rangle F_{\st{M}}.
+	\label{eq:g}
+\end{equation}
+
+Equations \ref{eq:vlasov} and \ref{eq:vlasov-source} show that there
+are four new terms appearing due to the inclusion of
+$B_{1 \parallel}$. These are related to the convection of the
+perturbed distribution function in phase space due to the grad-B drift
+in the fluctuating magnetic field (non-linear), the same convection of
+the equilibrium distribution function (linear), and a couple of
+additional mirror force terms in the direction of the parallel and
+drift velocities (linear). The normalised form of these terms can be
+found in section \ref{equations}. The former two is included in the
+modified definition of $\chi$ appearing in terms III and V (equations
+\ref{eq:nl-term} and \ref{eq:V}), the latter two are explicitly written in
+terms X and XI (equations \ref{eq:X} and \ref{eq:XI}).
+
+
+\subsection{Gyrokinetic field equations} 
+\label{field-equations}
+The normalised gyrokinetic field equations in presence of $B_{1 \parallel}$ are listed here. The normalizing assumptions can be found in section \ref{sec:normalisation}. The equations are written in Fourier-space, the Fourier components of the fields and the distribution function are denoted by $\hat{(.)}$. $\Gamma_0$ and $\Gamma_1$ are modified Bessel-functions, $b_{\st{sp}}$ denotes their species dependent attributes in the Fourier-space.
+
+The quasi-neutrality equation is
+\begin{eqnarray}
+	\hspace{-5mm}
+	&& \sum_{\st{sp}} Z_{\st{sp}} n_{\st{R,sp}} \left[ 2 \pi B_{\st{N}} \int J_0(k_{\perp} \rho_{\st{sp}}) \hat{g}_{\st{N,sp}} \mathrm{d} v_{\parallel N} \mathrm{d} \mu_{\st{N}} + \right. \nonumber \\ 
+	\hspace{-5mm}
+	&& \left. \frac{Z_{\st{sp}}}{T_{\st{R,sp}}} \hat{\phi}_{\st{N}} \left( \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} \Gamma_0(b_{\st{sp}}) - 1 \right) + \frac{\hat{B}_{1 \parallel \st{N}}}{B_{\st{N}}} \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} (\Gamma_0(b_{\st{sp}}) - \Gamma_1(b_{\st{sp}})) \right] = 0
+	\label{eq:poisson}
+\end{eqnarray}
+where $\mathcal{E}$ is a combined energy term including the kinetic energy of the toroidal rotation of the plasma and the energy stored in the equilibrium electric field:
+\begin{equation}
+ \mathcal{E} = Z e \langle \Phi_0 \rangle - \frac{1}{2} m \omega_{\varphi}^2 (R^2-R_0^2).
+\end{equation}
+The parallel component of Amp\`ere's law gives
+\begin{eqnarray}
+	&& \left[ k_{\perp \st{N}}^2 + \beta_{\st{ref}} \sum_{\st{sp}} \frac{Z_{\st{sp}}^2 n_{\st{R,sp}}}{m_{\st{R,sp}}} \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} \Gamma_0(b_{\st{sp}}) \right] \hat{A}_{1 \parallel \st{N}} = \nonumber \\
+	&& 2 \pi B_{\st{N}} \beta_{\st{ref}} \sum_{\st{sp}} Z_{\st{sp}} n_{\st{R,sp}} v_{\st{R,sp}} \int v_{\parallel N} J_0(k_{\perp} \rho_{\st{sp}}) \hat{g}_{\st{N,sp}} \mathrm{d} v_{\parallel N} \mathrm{d} \mu_{N}
+	\label{eq:apar} \label{eq:AmpPar}
+\end{eqnarray}
+where $\beta_{\st{ref}}$ is the reference plasma beta:
+\begin{equation}
+	\beta_{\st{ref}} = \frac{2 \mu_0 n_{\st{ref}} T_{\st{ref}}}{B_{\st{ref}}^2}.
+	\label{eq:beta}
+\end{equation}
+The perpendicular component of Amp\`ere's law gives
+\begin{eqnarray}
+	&& \hspace{-1cm} \left[ 1 + \sum_{\st{sp}} \frac{T_{\st{R,sp}} n_{\st{R,sp}}}{B_{\st{N}}^2} \beta_{\st{ref}} \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} \left( \Gamma_0(b_{\st{sp}}) - \Gamma_1(b_{\st{sp}}) \right) \right] \hat{B}_{1 \parallel \st{N}} = \nonumber \\
+	&& \hspace{1cm} - \sum_{\st{sp}} \beta_{\st{ref}} \left[ 2 \pi B_{\st{N}} T_{\st{R,sp}} n_{\st{R,sp}} \int \mu_{N} \hat{J}_1(k_{\perp} \rho_{\st{sp}}) \hat{g}_{\st{N,sp}} \mathrm{d}v_{\parallel N} \mathrm{d} \mu_{\st{N}} \right. \nonumber\\
+	&& \hspace{1cm} + \left. \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} \left( \Gamma_0(b_{\st{sp}}) - \Gamma_1(b_{\st{sp}}) \right) \frac{Z_{\st{sp}} n_{\st{R,sp}}}{2 B_{\st{N}}} \hat{\phi}_{\st{N}} \right].
+	\label{eq:bpar} \label{eq:AmpPerp}
+\end{eqnarray}
+where $\hat{J}_1(z) = \frac{2}{z} J_1(z)$ is a modified first order Bessel function of the first kind.
+
+\subsection{Field equations in GKW} \label{sec:gkw}
+The gyrokinetic Poisson equation \ref{eq:poisson} and perpendicular Amp\`ere's law \ref{eq:bpar} are coupled through the fluctuating electro-static potential and magnetic compression appearing in both of them. For simpler numerical treatment the two equations have to be decoupled. By introducing the notations
+\begin{eqnarray*}
+	I_{1 \st{sp}} &=& Z_{\st{sp}} n_{\st{R,sp}} 2 \pi B_{\st{N}} \int J_0(k_{\perp} \rho_{\st{sp}}) \hat{g}_{\st{N,sp}} \mathrm{d} v_{\parallel N} \mathrm{d} \mu_{\st{N}} \\
+	F_{1 \st{sp}} &=& \frac{Z^2_{\st{sp}} n_{\st{R,sp}}}{T_{\st{R,sp}}} \left( \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} \Gamma_0(b_{\st{sp}}) - 1 \right) \\
+	B_{1 \st{sp}} &=& \frac{Z_{\st{sp}} n_{\st{R,sp}}}{B_{\st{N}}} \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} (\Gamma_0(b_{\st{sp}}) - \Gamma_1(b_{\st{sp}})) \\
+	I_{2 \st{sp}} &=& \beta_{\st{ref}} 2 \pi B_{\st{N}} T_{\st{R,sp}} n_{\st{R,sp}} \int \mu_{N} \hat{J}_1(k_{\perp} \rho_{\st{sp}}) \hat{g}_{\st{N,sp}} \mathrm{d}v_{\parallel N} \mathrm{d} \mu_{\st{N}} \\
+	F_{2 \st{sp}} &=& \frac{\beta_{\st{ref}} Z_{\st{sp}} n_{\st{R,sp}}}{2 B_{\st{N}}} \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} ( \Gamma_0(b_{\st{sp}}) - \Gamma_1(b_{\st{sp}}) )  \\
+	B_{2 \st{sp}} &=& \frac{T_{\st{R,sp}} n_{\st{R,sp}}}{B_{\st{N}}^2} \beta_{\st{ref}} \st{e}^{\frac{-\mathcal{E}_{\st{N,sp}}}{T_{\st{R,sp}}}} ( \Gamma_0(b_{\st{sp}}) - \Gamma_1(b_{\st{sp}}) )
+\end{eqnarray*}
+equations \ref{eq:poisson} and \ref{eq:bpar} take the form
+\begin{eqnarray*}
+	\sum_{\st{sp}} I_{1 \st{sp}} + \hat{\phi}_{\st{N}} \sum_{\st{sp}} F_{1 \st{sp}} + \hat{B}_{1 \parallel \st{N}} \sum_{\st{sp}} B_{1 \st{sp}} &=& 0 \\
+	\left( 1 + \sum_{\st{sp}} B_{2 \st{sp}} \right) \hat{B}_{1 \parallel \st{N}} + \sum_{\st{sp}} I_{2 \st{sp}} + \hat{\phi}_{\st{N}} \sum_{\st{sp}} F_{2 \st{sp}} &=& 0.
+\end{eqnarray*}
+Accordingly, the decoupled field equations for $\hat{\Phi}_1$ and $\hat{B}_{1 \parallel \st{N}}$ can be written as
+\begin{eqnarray}
+	&& \left[ \sum_{\st{sp}} F_{1 \st{sp}} \left(1 + \sum_{\st{sp}} B_{2 \st{sp}} \right) - \sum_{\st{sp}} F_{2 \st{sp}} \sum_{\st{sp}} B_{1 \st{sp}} \right] \hat{\phi}_{\st{N}} + \nonumber \\
+	&& \left[ \sum_{\st{sp}} I_{1 \st{sp}} \left(1 + \sum_{\st{sp}} B_{2 \st{sp}} \right) - \sum_{\st{sp}} I_{2 \st{sp}} \sum_{\st{sp}} B_{1 \st{sp}} \right] = 0
+	\label{eq:poisson-dec}
+\end{eqnarray}
+and
+\begin{eqnarray}
+	&& \left[ \sum_{\st{sp}} F_{1 \st{sp}} \left(1 + \sum_{\st{sp}} B_{2 \st{sp}} \right) - \sum_{\st{sp}} F_{2 \st{sp}} \sum_{\st{sp}} B_{1 \st{sp}} \right] \hat{B}_{1 \parallel \st{N}} + \nonumber \\
+	&& \left[ \sum_{\st{sp}} I_{2 \st{sp}} \sum_{\st{sp}} F_{1 \st{sp}} - \sum_{\st{sp}} I_{1 \st{sp}} \sum_{\st{sp}} F_{2 \st{sp}} \right] = 0.
+	\label{eq:bpar-dec}
+\end{eqnarray}
+The implementation of the field equations in GKW follows the above notation. 
+
+%%Please see Appendix A for full derivation of the feild equations
+
+% (Optional Section - NOT IN CPC PAPER, NEED TO CHECK CONSISTENCY)
+% (YC: why not rather use here the derivation done by Gabor, which is consistent and done within the same formalism as the GK equations?)
+% The quasi-neutrality equation (also referred to as Poisson equation) and the Amp\`{e}re Law are used to calculate the perturbed electrostatic potential $\phi$ and vector potential $A_\parallel$ from
+% the perturbed distribution function. These equations apply in real space while the perturbed distribution function $f$ is calculated in the gyrocenter phase space. We therefore need to express the
+% distribution function in the real phase space $f^{*}_{tot}(\mathbf{x};\mu,v_\parallel,\gamma)$ as a function of the distribution in the gyrocenter phase space $f_{tot}(\mathbf{X};\mu,v_\parallel)$:
+% \index{field equations}
+% \begin{eqnarray}
+% \label{eq:f-real}
+%  f^{*}_{tot}(\mathbf{x};\mu,v_\parallel,\gamma) &=& f_{b}(\mathbf{X};\mu,v_\parallel) + f(\mathbf{X};\mu,v_\parallel) \\
+%  &+& \frac{Ze}{B}\frac{\partial f_{b}^{*}}{\partial \mu}(\mathbf{x}) \left[ \phi(\mathbf{x}) - \left< \phi\right>(\mathbf{X}) - \frac{v_\parallel}{c}\left(A_\parallel(\mathbf{x}) - \left<
+% A_\parallel\right>(\mathbf{X})\right) \right] \nonumber
+% \end{eqnarray}
+% In this expression, $<.>$ denotes the gyroaverage and $\mathbf{X}$ is the gyrocenter of the particle in $\mathbf{x}$ with velocity coordinates $(\mu,v_\parallel,\gamma)$, where $\gamma$ is the
+% gyroangle. The total distribution functions (subscript \textit{tot}) have been split as usual in a background part (subscript \textit{b}) and a perturbed part (no subscript) with the assumption that
+% the background distribution is approximately constant over a gyro-orbit. The three contributions to the real space distribution function in Eq.~(\ref{eq:f-real}) are therefore, in that order, the
+% background, the gyroaveraged perturbed part and the gyroangle dependent perturbed part (which arises from the variation of the potential and vector potential over a gyro-orbit). In the following,
+% the background distribution is taken to be a Maxwellian: 
+% $$f_{b}^{*}(\mathbf{x};\mu,v_\parallel,\gamma) = f_{b}(\mathbf{X};\mu,v_\parallel) = F_M(\mathbf{X};\mu,v_\parallel)$$
+% Using for the potential the local limit approximation already used in Eq.~(\ref{eq:local-limit}) for the distribution function, one can write:
+% \begin{equation}
+%  \phi(\mathbf{x}) = \sum_\mathbf{k_\perp} \phi_{k_\perp}(\mathbf{X})\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{x}} = \sum_\mathbf{k_\perp}
+% \phi_{k_\perp}(\mathbf{X})\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{X}}\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{\rho}}
+% \end{equation}
+% where $\mathbf{x} = \mathbf{X} + \mathbf{\rho}$  has been used, $\mathbf{\rho}$ being the gyroradius vector. Note that $\phi_{k_\perp}(\mathbf{X})$ is a slowly varying amplitude that can be
+% apporximated by $\phi_{k_\perp}(\mathbf{x})$. The gyro-average leads to 
+% \begin{equation}
+% \label{eq:phi-gyro}
+%  \left<\phi\right>(\mathbf{X}) = \sum_\mathbf{k_\perp}
+% \phi_{k_\perp}(\mathbf{X})\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{X}}\left<\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{\rho}}\right> = \sum_\mathbf{k_\perp}
+% \phi_{k_\perp}(\mathbf{X})\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{X}}J_0(k_\perp\rho)
+% \end{equation}
+% where the Bessel function $J_0$ arises from: 
+% \begin{equation}
+%  \left<\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{\rho}}\right> = \frac{1}{2\pi}\oint \textrm{e}^{ik_\perp\rho\cos(\gamma-\gamma_{\rm{\rm ref}})} \,\textrm{d}\gamma= J_0(k_\perp\rho)
+% \end{equation}
+% From Eq.~(\ref{eq:f-real}) and Eq.~(\ref{eq:phi-gyro}) one can then calculate the density in real space:
+% \begin{eqnarray*}
+% n(\mathbf{x}) &=& \int f^{*}_{tot}(\mathbf{x};\mu,v_\parallel,\gamma) B\,\mathrm{d}\mu\,\mathrm{d}v_\parallel\,\mathrm{d}\gamma \\
+%  &=& \int f_{b}(\mathbf{X};\mu,v_\parallel) B\,\mathrm{d}\mu\,\mathrm{d}v_\parallel\,\mathrm{d}\gamma + \int \sum_\mathbf{k_\perp} 
+% f_{k_\perp}(\mathbf{x};\mu,v_\parallel)\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{x}}  \textrm{e}^{-i\mathbf{k_\perp}\cdot\mathbf{\rho}} B\,\mathrm{d}\mu\,\mathrm{d}v_\parallel\,\mathrm{d}\gamma \\
+%  &-& \frac{Ze}{T} \int F_M(\mathbf{X};\mu,v_\parallel) \sum_\mathbf{k_\perp} \left(\phi_{k_\perp}(\mathbf{X}) - \frac{v_\parallel}{c}A_{k_\perp}(\mathbf{X})\right)
+% \textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{x}} \left(1-\textrm{e}^{-i\mathbf{k_\perp}\cdot\mathbf{\rho}}J_0(k_\perp\rho)\right)     B\,\mathrm{d}\mu\,\mathrm{d}v_\parallel\,\mathrm{d}\gamma
+% \end{eqnarray*}
+% Note that the integral over $\gamma$ is NOT a gyroaverage but the sum of the contribution to the local density coming from all the
+% gyrocenters $\mathbf{X}$ around $\mathbf{x}$. The reference point is $\mathbf{x}$ and the perturbed distribution function has been expressed as
+% $$f(\mathbf{X}) = \sum_\mathbf{k_\perp} f_{k_\perp}(\mathbf{x})\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{X}} = \sum_\mathbf{k_\perp}
+% f_{k_\perp}(\mathbf{x})\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{x}} \textrm{e}^{-i\mathbf{k_\perp}\cdot\mathbf{\rho}}$$
+% Performing the velocity space integrals, one obtains:
+% \begin{eqnarray*}
+% \label{eq:density}
+% n(\mathbf{x}) &=& \overbrace{n_0 + 2\pi B \int \sum_{k_\perp} f_{k_\perp}(\mathbf{x})\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{x}}J_0(k_\perp\rho)
+% \,\mathrm{d}\mu\,\mathrm{d}v_\parallel}^\textrm{\scriptsize guiding center density (background+perturbed)}\\* 
+% & & - \underbrace{n_0\frac{Ze}{T}\sum_{k_\perp} \phi_{k_\perp}(\mathbf{x})\textrm{e}^{i\mathbf{k_\perp}\cdot\mathbf{x}}\left(1-\Gamma(b)\right)}_\textrm{\scriptsize
+% polarisation density}
+% \end{eqnarray*}
+% where $n_0$ and $T$ are the density and temperature of the Maxwellian and where the following relationship has been used:
+% $$\frac{1}{v_{\rm th}^2}\int_0^\infty \mathrm{e}^{-v_\perp^2/v_{\rm th}^2}J_0^2(k_\perp v_\perp \frac{ZeB}{m}) v_\perp \,\mathrm{d}v_\perp = \Gamma(b)=\textrm{e}^{-b}I_0(b) \qquad \mathrm{with} \qquad b={1
+% \over 2} {k_\perp^2 m^2 v_{\rm th}^2 \over Z^2e^2 B^2}$$
+% with $I_0$ the modified Bessel function. The gyro-kinetic quasi-neutrality equation is then obtained by summing over the different species and assuming quasi-neutrality for the background (see also
+% Ref. \cite{BEER} Eq. (2.55)). Writing the result for a single wave vector to keep the expressions shorter, one obtains:
+% \begin{equation} 
+% \sum_s Z_s n_s(\mathbf{x}) = 0 = \sum_s  Z_s \left[2\pi B \int  f_s(\mathbf{x})J_0(k_\perp\rho_s)\,\mathrm{d}\mu\,\mathrm{d}v_\parallel + {Z_s e n_s \over T_s} ( \Gamma(b_s) - 1)\phi \right] 
+% \end{equation} 
+% The quasi-neutrality equation in normalised form is 
+% \begin{equation} 
+% \sum_s  Z_s n_{Rs} \biggl [ 2 \pi B_N \int {\rm d} v_{\parallel N} {\rm d} \mu_N J_0(k_\perp\rho_s) g_{Ns} 
+% + {Z_s \over T_{Rs}} [ \Gamma(b_s) -1]\phi_N \biggr ] = 0 
+% \end{equation}
+% \blue From here on still needs to be checked \black 
+% with the argument of the Bessel function being 
+% \begin{equation} 
+% k_\perp \rho_s = { k_\perp \rho_* R_{\rm ref} \over Z} \sqrt{ 2 m_R T_R \mu_N \over B_N}
+% \end{equation}
+% 
+% The vector potential must be calculated from Ampere's law 
+% \begin{equation} 
+% \nabla^2 A_\parallel = \mu_0 {\bf J} = \mu_0 \sum_s Z_s e \int {\rm d}^3 {\bf v} \, 
+% v_\parallel J_0 f_s 
+% \end{equation} 
+% Since we the distribution $g$ forward in time, we have to express this equation 
+% in terms of $g$ 
+% \begin{equation} 
+% \nabla^2 A_\parallel + \mu_0 \sum_s {Z_s^2 e^2 \over T} \int {\rm d}^3 {\bf v} \, 
+% v_\parallel^2 J_0^2 A_\parallel F_M 
+%  =  \mu_0 \sum_s Z_s e \int {\rm d}^3 {\bf v} \, v_\parallel J_0 g_s  
+% \end{equation} 
+% The integral over the Maxwell distribution can be performed analytically with the 
+% help of the integrals 
+% \begin{equation} 
+% {1 \over \sqrt{\pi}} \int_{-\infty}^\infty {\rm d} v_\parallel  v_\parallel^2 
+% \exp \biggl [ - {v_\parallel^2 \over v_{\rm th}^2} \biggl ] = {1\over 2} v_{\rm th}^3 
+% \end{equation} 
+% \begin{equation} 
+% \int_0^\infty {\rm d} x J_0(\sqrt{2 b x}) \exp [ -x ] = \Gamma(b) = \exp [ -b ] I_0(b) 
+% \end{equation} 
+% where $I$ is the modified Bessel function. 
+% Using these expressions one obtains 
+% \begin{equation}
+% \int {\rm d}^3 {\bf v}\, v_\parallel^2 J_0^2 F_M = {n v_{\rm th}^2 \over 2} \Gamma(b)
+% \end{equation} 
+% with 
+% \begin{equation} 
+% b = {1 \over 2} {k_\perp^2 m^2 v_{\rm th}^2 \over e^2 B^2} = {1 \over 2} m_R T_R (k_\perp 
+% \rho_* R_{\rm ref} / Z B_N^2)^2
+% \end{equation}
+% Replacing furthermore $\nabla_\perp^2$ with $-k_\perp^2$ Ampere's law for $g_s$ can be 
+% written as 
+% \begin{equation} 
+% -k_\perp^2 A_\parallel + \mu_0 \sum_s {Z_s^2 e^2 n \over m} \Gamma(b) A_\parallel =
+% \mu_0 \sum_s Z_s e \int {\rm d}^3 {\bf v} v_\parallel J_0^2 g_s
+% \end{equation}
+% The normalization can then be applied to yield 
+% \begin{align}
+% \biggl [ -k_{\perp N}^2 + \beta \sum_s {Z_s^2 n_{rat,s} \over m_{rat,s}} \Gamma(b_s) \biggr ] A_{\parallel N}
+% = \beta \sum_s Z_s v_{thrat,s} n_{rat,s} \times \cr 
+% \noalign{\vskip 0.2 truecm} 
+% 2 \pi B_N \int {\rm d} v_{\parallel N} \int {\rm d} \mu_N
+% v_{\parallel N} J_0 g_{N,s}
+% \end{align}
+% where $g_N$ is given by 
+% \begin{equation} 
+% g_N = f_N + 2 Z {v_{\rm thrat} \over T_{\rm rat}} v_{\parallel N} J_0 A_{\parallel N} F_{MN}
+% \end{equation}
+
+% related to auctex mode and latex-preview-mode in Emacs:
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "doc"
+%%% End:

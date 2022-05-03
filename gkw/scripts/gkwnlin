@@ -1,0 +1,1454 @@
+#! /bin/bash
+#######################################################################
+# Generic GKW PBS batch launcher script configured for 
+# PBS, MOAB/Torque, SGE, loadleveller, SLURM, ...
+# but can be easily adapted for other architectures / batch systems
+#
+# For usage instructions call script with --help.
+#
+# Original version,       A G Peeters: gkwlin      2008
+# Extended functionality, F J Casson:  gkwnlin     2008-11
+# Bash rewrite,           R Buchholz:  gkwnlin     2017
+#
+# Works with general geometry if correct relative location
+# of geometry file hamada.dat is specified in input.dat
+#
+# Works for restarting a run with new or old input file.
+# Keeps ALL output files: unknown files go in /other
+#
+# TO DO:
+#   * make less 'linear'; more reusable functions 
+#   * better abstraction of different batch systems
+#   * simplified folder structure for HDF5 users; 
+#   * better abstraction of folder list and file moving
+#   * cleaner inversion of moving for restarts
+#   * More informative error messages
+#
+#######################################################################
+#Set variable defaults, modified on a per host basis (first three letters only).
+
+host=`hostname | cut -c 1-3` # match first three letters of hostname only
+PROC_INFO=0
+procs=1         # number of processes
+VPBS='#PBS'     # lead-in for the batch directives
+sub_cmd='qsub'  # job submission command
+threads=1
+folders=1       # move runs from run  folders
+runcommand='mpirun'
+chain=0         # chain runs into one run
+qscript=pbs     # type of batch script to write
+qext='pbs'      # extension for the batch script file
+mem=400M        # memory resources if needed by host
+wtime=00:10:00  # default walltime
+seconds=1800    # default max_sec time
+resources=''    # batch resources header (literal)
+resources2=''   # batch resources header (literal)
+resources3=''   # batch resources header (literal)
+resources4=''   # last batch resources header (literal)
+exports2=''     # use with a literal export command == resources5
+header1=''      # use for a specific first batch line (loadleveller)
+exports='DUMMY' # use with PBS -v only
+many_folders=0  # create folders for nearly everything
+restart=0
+restart_file=0
+gkwroot=''
+mv_cmd="mv"     #sometime you might want to use softlinks or hardlinks
+cp_cmd="cp -p"  #sometime you might want to use softlinks or hardlinks
+COMMANDLINE="$@"
+rank=16
+debug=0
+restart_chain=0
+link=0
+nodes=""
+cores="Not set" # number of cores per node
+tasks="" #MPI tasks per node
+processors=""
+
+# Variables used for copy/move/link of files.
+DATFILESWR="time fluxes fluxes_lab fluxes_det"
+DATFILESWOR="geom perform perfloop distr1 distr2 distr3 distr4 parallel cfdens cfphi"
+KFILESWR="kyspec kxspec kyvort kxvort kyspec_em kxspec_em"
+DELTAFILESWR="delta_n01 delta_n02 delta_n03 delta_v01 delta_v02 delta_v03 delta_t01 delta_t02 delta_t03"
+FLUXWR="eflux pflux vflux"
+SPECTRUMDATWR="pflux_em_sup eflux_em_sup pflux_sup eflux_sup den_spectra ene_spectra entro mode_energy"
+SPECTRUMKYSPECWR="ene_e ene_e2 ene_f ene_m"
+SLICES2DWR="phi apa bpa"
+SLICES2D="den01 den02 den03 ene01 ene02 ene03"
+SPECTRA2DWR="spc vok sac bpc"
+PARALLELTIMEWR="phi apar"
+
+#######################################################################
+# functions
+# Introduced to structure the script, not necessarily to shorten it.
+
+function parse_options {
+  # no arguments, print help.
+  if [ "x$#" = "x0" ]; then
+    print_usage # function call
+    exit 0
+  fi
+
+  while :; do
+    case $1 in
+      -\?|--help)   # Call a "show_help" function to display a synopsis, then exit.
+          print_usage # function call
+          exit 0
+        ;;
+      -c|--chain)
+        chain=1
+        echo "Only a single chained pbs script will be produced."
+        shift
+        continue
+        ;;
+      -debug|--debug)
+        if [[ "x$host" = "xtok" ]] ; then
+          debug=1
+          echo
+          echo 'Job submitted into the development queue'
+          echo
+          shift
+          continue
+        else
+          echo 'Debugging option only available for TOK-P cluster'
+          exit 1
+        fi
+        ;;
+      -f|--folders)
+        folders=0
+        echo "Folders workaround: Files will remain in run folder."
+        shift
+        continue
+        ;;
+      -h|--hours|--time)
+        shift
+        if [ -n "$1" ]; then
+          wtime=$1':00:00'
+          hours=$1
+          seconds=$(( $hours * 3600 ))
+          shift
+          continue
+        else
+          printf 'ERROR: "-h" requires a non-empty option argument.\n' >&2
+          exit 1
+        fi
+        ;;
+      -l|--link)
+        link=1
+        mv_cmd="ln -s"
+        ;;
+      -mem|--memory)   # Takes an option argument, ensuring it has been specified.
+        shift
+        if [ -n "$1" ]; then
+          mem=$1
+          shift
+          continue
+        else
+          printf 'ERROR: "-mem" requires a non-empty option argument.\n' >&2
+          exit 1
+        fi
+        ;;
+      -n|--create-base-folders)   # Takes an option argument, ensuring it has been specified.
+        shift
+        if [ -n "$1" ] ; then
+          if [ -e "$1" ] ; then
+            echo "'$1' already exists"
+            exit 1
+          else
+            mkdir "$1"
+            cd "$1"
+            mkdir input
+            mkdir input/scan
+            mkdir time
+            mkdir fluxes
+            mkdir runs
+          fi
+        else
+          echo "Usage gkwnlin -n name"
+          exit 1
+        fi
+        exit 0
+        ;;
+      -np|--number-of-processors)   # Takes an option argument, ensuring it has been specified.
+        shift
+        if [ -n "$1" ]; then
+          procs=$1
+          shift
+          continue
+        else
+          printf 'ERROR: "-np" requires a non-empty option argument.\n' >&2
+          exit 1
+        fi
+        ;;
+      -p|--create-folders)   # Takes an option argument, ensuring it has been specified.
+        shift
+        if [ -n "$1" ] ; then
+          if [ -e "$1" ] ; then
+            echo "'$1' already exists"
+            exit 1
+          else
+            create_folder_structure $1
+          fi
+        else
+          echo "Usage gkwnlin -p name"
+          exit 1
+        fi
+        exit 0
+        ;;
+      -ra|--rank)   # Takes an option argument, ensuring it has been specified.
+        shift
+        if [ -n "$1" ]; then
+          rank=$1
+          shift
+          continue
+        else
+          printf 'ERROR: "-ra" requires a non-empty option argument.\n' >&2
+          exit 1
+        fi
+        ;;
+      -restart|--restart)
+        restart=1
+        restart_file=0
+        echo
+        echo 'Restart files will be read from directory name of input file'
+        echo 'Existing final output data and restart files will be overwritten'
+        echo 'Append files will be extended'
+        echo
+        shift
+        continue
+        ;;
+      -restart_file|--restart_file)
+        shift
+        if [ -n "$1" ]; then
+          restart=1
+          restart_file=1
+          run_to_restart=$1
+          echo "Restarting new input files with restart data from $run_to_restart"
+          shift
+          continue
+        else
+          printf 'ERROR: "-restart_file" requires a non-empty option argument.\n' >&2
+          exit 1
+        fi
+        ;;
+      -restart_chain|--restart_chain)
+        restart=0
+        restart_chain=1
+        chain=1
+        echo "Will restart from previous run in chain"
+        shift
+        continue
+        ;;
+      -th|--number-of-threads)   # Takes an option argument, ensuring it has been specified.
+        shift
+        if [ -n "$1" ]; then
+          threads=$1
+          shift
+        else
+          printf 'ERROR: "-th" requires a non-empty option argument.\n' >&2
+          exit 1
+        fi
+        continue
+        ;;
+      --)              # End of all options.
+        shift
+        COMMANDLINE="$@"
+        break
+        ;;
+      -?*)
+        printf 'WARN: Unknown option (ignored): %s\n' "$1" >&2
+        ;;
+      *)               # Default case: If no more options then break out of the loop.
+        # Options have been parsed, so remove them from the argument list.
+        COMMANDLINE="$@"
+        break
+    esac
+    shift
+  done
+}
+
+function print_usage {
+  echo "***********************************************"
+  echo
+  echo  "Script that launches batches of GKW runs through queue systems"
+  echo  "'(PBS, MOAB/Torque, SGE, loadleveller)'"
+  echo
+  echo  "The executable used is the most recent in '$GKW_HOME/run=':"
+  echo    "$GKW_HOME/run '(set this environment variable to the GKW trunk directory)'"
+  echo
+  echo  "'On some machines you also need to set your EMAIL_ADDRESS as an environment variable'"
+  echo
+  echo  "To set up a correct directory structure for"
+  echo  "the execution of this script first use"
+  echo
+  echo    "gkwnlin -p name"
+  echo
+  echo  "(or --create-folders instead of -p)"
+  echo  "where name is the name of the project. A"
+  echo  "directory with this name will be generated"
+  echo  "from the directory where you call this script"
+  echo  "inside this directory there will be the"
+  echo  "directories with the input and output files"
+  echo
+  echo  "Next, create input files '(e.g. using ./matlab/create_gkwscan.m)' in the"
+  echo  "input directory and then launch multiple runs from the input directory using"
+  echo
+  echo  "  usage  : gkwnlin [-c] [-f] [-np 8] [-th 2] [-mem 100M] [-h 16] [-restart] [-debug] file1 file2 file3"
+  echo
+  echo  "  example: gkwnlin -np 32 -h 4 mygkwin*"
+  echo
+  echo  "where  -c,--chain"
+  echo  "        chains all runs into one pbs job (e.g. for many linear runs)."
+  echo  "       -f,--folders"
+  echo  "        leaves data in run folders, creating a separate move script"
+  echo  "       -np X, --number-of-processors X"
+  echo  "        specifies the number of processes (default 1)"
+  echo  "       -th X, --number-of-threads X"
+  echo  "        is the number of threads per process (default 1)"
+  echo  "                (not implemented on all machines)"
+  echo  "       -mem X, --memory X"
+  echo  "        is the memory request per node (default 400M)"
+  echo  "                (not needed on most machines)"
+  echo  "       -h X, --hours X, --time X"
+  echo  "        selects number of hours of runtime (default is ten minutes)"
+  echo  "       -restart will restart a run using existing files"
+  echo  "                and when finished will overwrite the existing files"
+  echo  "       -debug will submit the job into the development queue"
+  echo  "                (valid only for the TOK-P cluster)"
+  echo
+  echo  "Restarts can also be made using the restart files of a previous run"
+  echo 
+  echo     "usage: gkwnlin [resource options] [--restart_file run_to_restart] input1 input2"
+  echo
+  echo  "This will read restart files from run_to_restart (for both input1 and input2)"
+  echo  "so no files will be overwritten.  The previous time trace append files"
+  echo  "can be ommitted by setting the submission shell environment variable"
+  echo  "export EIV_RESTART=1"
+  echo
+  echo  "One can also chain restarts from the previous run, useful in a parameter scan"
+  echo
+  echo     "usage: gkwnlin [resource options] --restart_chain input1 input2 input3 input4"
+  echo
+  echo  "Here input(n+1) will be restarted from the FDS output of input(n)" 
+  echo  "For the eigenvalue solver, set irun=2 in CONTROL to use the dominant mode FD1"
+  echo  "or irun=3 to use the subdominant mode FD2 as the restart distribution."
+  echo
+  echo  "ALWAYS execute the script in the directory"
+  echo  "where the input files are given, it will then"
+  echo  "automatically store the output in the corre-"
+  echo  "sponding directories. You can use wildcards."
+  echo
+  echo  "The runs will take place in the ./runs directory."
+  echo
+  echo  "To use with general geometry, the geometry file '(hamada.dat)'"
+  echo  "output by CHEASE can be located in '(e.g.)' the inputs folder and set"
+  echo  "eqfile='../../input/hamada.dat' as a relative path in the GKW input file"
+  echo
+  echo  "if max_sec lowercase exists in your input file, it will be reset"
+  echo  "correctly to correspond to the walltime of the job script."
+  echo
+  echo "***********************************************"
+}
+
+function create_folder_structure {
+  main_folder="$1"
+  mkdir "$main_folder"
+  cd "$main_folder"
+  for FOLDER in input input/scan runs out input_out job_out \
+                parallel parallel/phi_time parallel/apar_time time \
+                fluxes fluxes_lab fluxes_det fluxes/em fluxes/bpar fluxes_lab/em fluxes_lab/bpar \
+                distr1 distr2 distr3 distr4 \
+                grids grids/krho grids/kxrh grids/xphi grids/yphi grids/file_count \
+                spectrum spectrum/kyspec spectrum/kxspec spectrum/kyvort spectrum/kxvort \
+                spectrum/kyspec_em spectrum/kxspec_em spectrum/eflux spectrum/vflux spectrum/pflux \
+                spectrum/eflux_kx spectrum/vflux_kx spectrum/pflux_kx \
+                spectrum/eflux_em spectrum/vflux_em spectrum/pflux_em \
+                spectrum/eflux_em_kx spectrum/vflux_em_kx spectrum/pflux_em_kx \
+                spectrum/den_spectra spectrum/ene_spectra \
+                spectrum/eflux_sup spectrum/pflux_sup spectrum/eflux_em_sup spectrum/pflux_em_sup \
+                spectrum/ene_e spectrum/ene_e2 spectrum/ene_f spectrum/ene_m \
+                spectrum/entro spectrum/mode_energy \
+                spectra_2D spectra_2D/spc spectra_2D/vok spectra_2D/sac spectra_2D/bpc \
+                slices_2D slices_2D/phi slices_2D/apa slices_2D/bpa \
+                slices_2D/den01 slices_2D/den02 slices_2D/den03 slices_2D/ene01 slices_2D/ene02 slices_2D/ene03 \
+                radial radial/pflux_es radial/eflux_es radial/vflux_es \
+                radial/delta_n01 radial/delta_n02 radial/delta_n03 \
+                radial/delta_v01 radial/delta_v02 radial/delta_v03 \
+                radial/delta_t01 radial/delta_t02 radial/delta_t03 \
+                radial/fields radial/prof_back \
+                par restart other geom perform perfloop cfdens cfphi total_energy intdens \
+                spectra_3D spectra_3D/fields spectra_3D/moments spectra_3D/j0_moments \
+                spectra_3D/j1_moments
+  do
+    #echo "$FOLDER"
+    mkdir $FOLDER
+  done
+
+  ln -s ../distr1 grids/vpar
+  ln -s ../distr2 grids/mu
+
+  if [ "x$many_folders" = "x1" ] ; then
+    for FOLDER in EFlesk0[123] EFlemk0[123] EFlbpk0[123] \
+                  PFlesk0[123] PFlemk0[123] PFlbpk0[123] \
+                  VFlesk0[123] VFlemk0[123] VFlbpk0[123]
+    do
+      #echo "$FOLDER"
+      mkdir spectra_2D/$FOLDER
+    done
+
+    for FOLDER in EFlesr0[123] EFlesp0[123] EFlemr0[123] EFlemp0[123] \
+                  PFlesr0[123] PFlesp0[123] PFlemr0[123] PFlemp0[123] \
+                  VFlesr0[123] VFlesp0[123] VFlemr0[123] VFlemp0[123]
+    do
+      #echo "$FOLDER"
+      mkdir slices_2D/$FOLDER
+    done
+
+  fi
+
+  echo "Folder grids contains grids corresponding to other outputs" > ./grids/metadata
+  echo "krho: binormal wavenumber grid" >> ./grids/metadata
+  echo "kxrh: radial wavenumber grid"   >> ./grids/metadata
+  echo "yphi: binormal real space grid" >> ./grids/metadata
+  echo "xphi: radial real space grid"   >> ./grids/metadata
+  echo "vpar: parallel velocity grid"   >> ./grids/metadata
+  echo "mu: magnetic moment grid"       >> ./grids/metadata
+  echo "s: the s grid is the first column of /parallel" >> ./grids/metadata
+
+  echo "Folder spectrum contains 1D spectra, integrated over flux surface" > ./spectrum/metadata
+  echo "These spectra are time traces plotted against values in ../time" >> ./spectrum/metadata
+  echo "ky (binormal) spectra correspond to grids/krho " >> ./spectrum/metadata
+  echo "kx (radial) spectra correspond to grids/kxrh " >> ./spectrum/metadata
+  echo "If kx/ky is not specified by the folder name, ky should be assumed" >> ./spectrum/metadata
+  echo "------------------------------------------------------------------" >> ./spectrum/metadata
+  echo "k[x/y]spec: electrostatic potential phi" >> ./spectrum/metadata
+  echo "k[x/y]vort: vorticity spectra" >> ./spectrum/metadata
+  echo "eflux[_kx]: electrostatic energy flux, for each species" >> ./spectrum/metadata
+  echo "pflux[_kx]: electrostatic particle flux, for each species" >> ./spectrum/metadata
+  echo "vflux[_kx]: electrostatic parallel momentum flux, for each species" >> ./spectrum/metadata
+  echo "eflux_em[_kx]: electromagnetic flutter energy flux, for each species" >> ./spectrum/metadata
+  echo "pflux_em[_kx]: electromagnetic flutter particle flux, for each species" >> ./spectrum/metadata
+  echo "vflux_em[_kx]: electrosagnetic flutter parallel momentum flux, for each species" >> ./spectrum/metadata
+
+  echo "Folder spectra_2D contains 2D perpendicular spectra, at a local s point along the field" > ./spectra_2D/metadata
+  echo "The point is selected by the input variable  XY_SLICE_IPAR " >> ./spectra_2D/metadata
+  echo "By default this point corresponds to the low field side" >> ./spectra_2D/metadata
+  echo "These spectra are time slices, where the file number corresponds to the line number in ../time" >> ./spectra_2D/metadata
+  echo "or in the case of binary outputs, all time slices are stacked in the same file as fortran records" >> ./spectra_2D/metadata
+  echo "The binary outputs can be read using matlab script read_file2d.m " >> ./spectra_2D/metadata
+  echo "2D spectra correspond to grids/krho and grids/kxrh " >> ./spectra_2D/metadata
+  echo "------------------------------------------------------------------" >> ./spectra_2D/metadata
+  echo "spc: 2D spectrum of electrostatic potential phi" >> ./spectra_2D/metadata
+  echo "sac: 2D spectrum of sheared electromagnetic field apa" >> ./spectra_2D/metadata
+  echo "bpc: 2D spectrum of compressional electromagnetic field bpa" >> ./spectra_2D/metadata
+  echo "vok: 2D spectrum of vorticity" >> ./spectra_2D/metadata 
+  echo "[P/E/V]Fl[es/em/bp]k[1/2/3] contains particle/energy/momentum fluxes" >> ./spectra_2D/metadata
+  echo "electrostatic / em flutter / compressional, radial / poloidal for species 1/2/3" >> ./spectra_2D/metadata
+
+  echo "Folder slices_2D contains slices perpendicular to B, at a local s point along the field" > ./slices_2D/metadata
+  echo "The point is selected by the input variable  XY_SLICE_IPAR " >> ./slices_2D/metadata
+  echo "By default this point corresponds to the low field side" >> ./slices_2D/metadata
+  echo "These outputs are time slices, where the file number corresponds to the line number in /time" >> ./slices_2D/metadata
+  echo "or in the case of binary outputs, all time slices are stacked in the same file as fortran records" >> ./slices_2D/metadata
+  echo "The binary outputs can be read using matlab script read_file2d.m " >> ./slices_2D/metadata
+  echo "2D slices correspond to grids/xphi and grids/yphi " >> ./slices_2D/metadata
+  echo "------------------------------------------------------------------" >> ./slices_2D/metadata
+  echo "phi: 2D slice of electrostatic potential phi" >> ./slices_2D/metadata
+  echo "apa: 2D slice of sheared electromagnetic field apa" >> ./slices_2D/metadata
+  echo "bpa: 2D slice of compressional electromagnetic field bpa" >> ./slices_2D/metadata
+  echo "den0[1/2/3]: density fluctuations of species 1/2/3" >> ./slices_2D/metadata
+  echo "ene0[1/2/3]: temperature fluctuations of species 1/2/3" >> ./slices_2D/metadata
+  echo "[P/E/V]Fl[es/em][r/p]0[1/2/3] contains particle/energy/momentum fluxes" >> ./slices_2D/metadata
+  echo "electrostatic / em flutter, radial / poloidal for species 1/2/3" >> ./slices_2D/metadata
+
+}
+
+function check_if_in_input_directory {
+  # Script should always be executed in the input directory
+  cd ..
+  gkwroot=`pwd`
+  if [ ! -e input ] ; then
+    echo "Execute the script in the input directory"
+    exit 1
+  fi
+  if [ ! -e fluxes ] ; then
+    echo "NO fluxes directory found, did you execute inside input?"
+    exit 1
+  fi
+  if [ ! -e parallel ] ; then
+    echo "NO parallel directory found, did you execute inside input?"
+    exit 1
+  fi
+  if [ ! -e runs ] ; then
+    echo "NO runs directory found, did you execute inside input?"
+    exit 1
+  fi
+  if [ ! -e time ] ; then
+    echo "NO time directory found, did you execute inside input?"
+    exit 1
+  fi
+  if [ ! -e job_out ] ; then
+    echo "NO job_out directory found, this project uses gkwnlin_old"
+    exit 1
+  fi
+
+  echo "Your root directory: $gkwroot"
+  cd input
+}
+
+function create_move_file {
+  mname="$1"
+  rundir="$2"
+  gkwroot="$3"
+  JOBNAME="$4"
+  MOVECOMMAND="$5"
+
+  rm -f $mname
+
+  echo '#! /bin/bash' > $mname
+  echo "cd $rundir" >> $mname
+
+  for OUTPUT in $DATFILESWR $DATFILESWOR ; do
+    echo "$MOVECOMMAND $rundir/${OUTPUT}.dat $gkwroot/${OUTPUT}/$JOBNAME" >> $mname
+  done
+
+  for OUTPUT in total_energy intdens ; do
+    echo "$MOVECOMMAND $rundir/${OUTPUT} $gkwroot/${OUTPUT}/$JOBNAME" >> $mname
+  done
+
+  for OUTPUT in $PARALLELTIMEWR ; do
+    echo "$MOVECOMMAND $rundir/parallel_${OUTPUT}.dat $gkwroot/parallel/${OUTPUT}_time/$JOBNAME" >> $mname
+  done
+  #Note rename commmand may differ on machines.
+  echo "rename distr3 $JOBNAME distr3.*" >> $mname
+  echo "$MOVECOMMAND $rundir/$JOBNAME.sp* $gkwroot/distr3" >> $mname
+  echo "rename distr4 $JOBNAME distr4.*" >> $mname
+  echo "$MOVECOMMAND $rundir/$JOBNAME.sp* $gkwroot/distr4" >> $mname
+  echo "$MOVECOMMAND $rundir/int_grids.dat $gkwroot/fluxes_det/$JOBNAME.g" >> $mname #?
+  echo "$MOVECOMMAND $rundir/fluxes_em.dat $gkwroot/fluxes/em/$JOBNAME" >> $mname
+  echo "$MOVECOMMAND $rundir/fluxes_bpar.dat $gkwroot/fluxes/bpar/$JOBNAME" >> $mname
+  echo "$MOVECOMMAND $rundir/fluxes_em_lab.dat $gkwroot/fluxes_lab/em/$JOBNAME" >> $mname
+  echo "$MOVECOMMAND $rundir/fluxes_bpar_lab.dat $gkwroot/fluxes_lab/bpar/$JOBNAME" >> $mname
+
+  for GRID in krho kxrh xphi yphi file_count
+  do
+    echo "cp -p $rundir/$GRID $gkwroot/grids/$GRID/$JOBNAME" >> $mname
+  done
+  echo "$MOVECOMMAND $rundir/krho $gkwroot/spectrum/kyspec/$JOBNAME.krho" >> $mname
+  echo "$MOVECOMMAND $rundir/kxrh $gkwroot/spectrum/kxspec/$JOBNAME.kxrh" >> $mname
+
+  for OUTPUT in $KFILESWR ; do
+    echo "$MOVECOMMAND $rundir/${OUTPUT} $gkwroot/spectrum/${OUTPUT}/$JOBNAME" >> $mname
+  done
+
+  for OUTPUT in $FLUXWR ; do
+    echo "$MOVECOMMAND $rundir/${OUTPUT}_spectra.dat $gkwroot/spectrum/${OUTPUT}/$JOBNAME" >> $mname
+    echo "$MOVECOMMAND $rundir/${OUTPUT}_xspec.dat $gkwroot/spectrum/${OUTPUT}_kx/$JOBNAME" >> $mname
+    echo "$MOVECOMMAND $rundir/${OUTPUT}_em_spectra.dat $gkwroot/spectrum/${OUTPUT}_em/$JOBNAME" >> $mname
+    echo "$MOVECOMMAND $rundir/${OUTPUT}_em_xspec.dat $gkwroot/spectrum/${OUTPUT}_em_kx/$JOBNAME" >> $mname
+    echo "$MOVECOMMAND $rundir/${OUTPUT}_rad_es $gkwroot/radial/${OUTPUT}_es/$JOBNAME" >> $mname
+  done
+
+  for OUTPUT in $SPECTRUMDATWR ; do
+    echo "$MOVECOMMAND $rundir/${OUTPUT}.dat $gkwroot/spectrum/${OUTPUT}/$JOBNAME" >> $mname
+  done
+  for OUTPUT in $SPECTRUMKYSPECWR ; do
+    echo "$MOVECOMMAND $rundir/${OUTPUT}.kyspec $gkwroot/spectrum/${OUTPUT}/$JOBNAME" >> $mname
+  done
+
+  for OUTPUT in $DELTAFILESWR ; do
+    echo "$MOVECOMMAND $rundir/${OUTPUT}.dat $gkwroot/radial/${OUTPUT}/$JOBNAME" >> $mname
+  done
+
+  echo "$MOVECOMMAND $rundir/fields_rad $gkwroot/radial/fields/$JOBNAME" >> $mname
+  echo "$MOVECOMMAND $rundir/prof_back.dat $gkwroot/radial/prof_back/$JOBNAME" >> $mname
+  for OUTPUT in $SPECTRA2DWR ; do
+    echo "mkdir $gkwroot/spectra_2D/${OUTPUT}/$JOBNAME" >> $mname
+  done
+
+  if (( $many_folders == 1 )) ; then
+
+    for OUTPUT in EFlesk01 EFlesk02 EFlesk03 PFlesk01 PFlesk02 PFlesk03 \
+                  VFlesk01 VFlesk02 VFlesk03 EFlemk01 EFlemk02 EFlemk03 \
+                  PFlemk01 PFlemk02 PFlemk03 VFlemk01 VFlemk02 VFlemk03 \
+                  EFlbpk01 EFlbpk02 EFlbpk03 PFlbpk01 PFlbpk02 PFlbpk03 \
+                  VFlbpk01 VFlbpk02 VFlbpk03
+    do
+      echo "mkdir $gkwroot/spectra_2D/${OUTPUT}/$JOBNAME" >> $mname
+    done
+
+  fi
+
+  for OUTPUT in fields moments j0_moments j1_moments; do
+    echo "mkdir $gkwroot/spectra_3D/${OUTPUT}/$JOBNAME" >> $mname
+  done
+
+  for OUTPUT in $SLICES2DWR $SLICES2D ; do
+    echo "mkdir $gkwroot/slices_2D/${OUTPUT}/$JOBNAME" >> $mname
+  done
+
+  if (( $many_folders == 1 )) ; then
+
+    for OUTPUT in EFlesr01 EFlesr02 EFlesr03 EFlesp01 EFlesp02 EFlesp03 \
+                  EFlemr01 EFlemr02 EFlemr03 EFlemp01 EFlemp02 EFlemp03 \
+                  PFlesr01 PFlesr02 PFlesr03 PFlesp01 PFlesp02 PFlesp03 \
+                  PFlemr01 PFlemr02 PFlemr03 PFlemp01 PFlemp02 PFlemp03 \
+                  VFlesr01 VFlesr02 VFlesr03 VFlesp01 VFlesp02 VFlesp03 \
+                  VFlemr01 VFlemr02 VFlemr03 VFlemp01 VFlemp02 VFlemp03
+    do
+      echo "mkdir $gkwroot/slices_2D/${OUTPUT}/$JOBNAME" >> $mname
+    done
+
+  fi
+
+  echo "mkdir $gkwroot/restart/$JOBNAME" >> $mname
+
+  echo "rm $rundir/input.dat" >> $mname
+
+  #Beware the following lines can mean large amount of data movement!
+  #Wildcard expansion is slo for large numbers of files
+  #The binary output option is recommended for the 2D outputs
+  {
+    echo "$MOVECOMMAND $rundir/FD* $gkwroot/restart/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/DM* $gkwroot/restart/$JOBNAME/" >> $mname
+
+    for OUTPUT in $SLICES2DWR $SLICES2D ; do
+      echo "$MOVECOMMAND $rundir/${OUTPUT}* $gkwroot/slices_2D/${OUTPUT}/$JOBNAME/" >> $mname
+    done
+
+    for OUTPUT in EFlesr EFlesp EFlemr EFlemp PFlesr PFlesp PFlemr PFlemp VFlesr VFlesp VFlemr VFlemp
+    do
+      echo "$MOVECOMMAND $rundir/${OUTPUT}0001* $gkwroot/slices_2D/${OUTPUT}01/$JOBNAME/" >> $mname
+      echo "$MOVECOMMAND $rundir/${OUTPUT}0002* $gkwroot/slices_2D/${OUTPUT}02/$JOBNAME/" >> $mname
+      echo "$MOVECOMMAND $rundir/${OUTPUT}0003* $gkwroot/slices_2D/${OUTPUT}03/$JOBNAME/" >> $mname
+    done
+
+    for OUTPUT in $SPECTRA2DWR ; do
+      echo "$MOVECOMMAND $rundir/$OUTPUT* $gkwroot/spectra_2D/$OUTPUT/$JOBNAME" >> $mname
+    done
+
+    for OUTPUT in EFlesk PFlesk VFlesk EFlemk PFlemk VFlemk EFlbpk PFlbpk VFlbpk
+    do
+      echo "$MOVECOMMAND $rundir/${OUTPUT}0001* $gkwroot/spectra_2D/${OUTPUT}01/$JOBNAME/" >> $mname
+      echo "$MOVECOMMAND $rundir/${OUTPUT}0002* $gkwroot/spectra_2D/${OUTPUT}02/$JOBNAME/" >> $mname
+      echo "$MOVECOMMAND $rundir/${OUTPUT}0003* $gkwroot/spectra_2D/${OUTPUT}03/$JOBNAME/" >> $mname
+    done
+
+    echo "$MOVECOMMAND $rundir/Phi_kykxs* $gkwroot/spectra_3D/fields/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/Apa_kykxs* $gkwroot/spectra_3D/fields/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/Bpa_kykxs* $gkwroot/spectra_3D/fields/$JOBNAME/" >> $mname
+
+    echo "$MOVECOMMAND $rundir/dens_kykxs* $gkwroot/spectra_3D/moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/vpar_kykxs* $gkwroot/spectra_3D/moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/Tpar_kykxs* $gkwroot/spectra_3D/moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/Tperp_kykxs* $gkwroot/spectra_3D/moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/Qpar_kykxs* $gkwroot/spectra_3D/moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/M12_kykxs* $gkwroot/spectra_3D/moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/M24_kykxs* $gkwroot/spectra_3D/moments/$JOBNAME/" >> $mname
+
+    echo "$MOVECOMMAND $rundir/dens_ga_kykxs* $gkwroot/spectra_3D/j0_moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/vpar_ga_kykxs* $gkwroot/spectra_3D/j0_moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/Tpar_ga_kykxs* $gkwroot/spectra_3D/j0_moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/Tperp_ga_kykxs* $gkwroot/spectra_3D/j0_moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/Qpar_ga_kykxs* $gkwroot/spectra_3D/j0_moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/M12_ga_kykxs* $gkwroot/spectra_3D/j0_moments/$JOBNAME/" >> $mname
+    echo "$MOVECOMMAND $rundir/M24_ga_kykxs* $gkwroot/spectra_3D/j0_moments/$JOBNAME/" >> $mname
+
+    echo "$MOVECOMMAND $rundir/Tperp_J1_kykxs* $gkwroot/spectra_3D/j1_moments/$JOBNAME/" >> $mname
+  }
+  #End beware
+
+  echo "$MOVECOMMAND $rundir/input.out $gkwroot/input_out/$JOBNAME" >> $mname
+  echo "rm $rundir/gkw" >> $mname
+  echo "$MOVECOMMAND $rundir/par.dat $gkwroot/par/$JOBNAME" >> $mname
+  echo "$MOVECOMMAND $rundir/parfun.dat $gkwroot/par/parfun/$JOBNAME" >> $mname
+  echo "$MOVECOMMAND $rundir/out $gkwroot/out/$JOBNAME" >> $mname
+
+  #echo "mkdir $gkwroot/other/$JOBNAME" >> $mname
+  echo "$MOVECOMMAND $rundir $gkwroot/other" >> $mname
+  # if the other directory already exists, the mv will fail, so overwite files
+  echo "$MOVECOMMAND $rundir/* $gkwroot/other/$JOBNAME" >> $mname
+  #echo "rm -rf $rundir" >> $mname
+  echo "cd .." >> $mname
+  #echo "rmdir $rundir" >> $mname
+}
+
+function copy_files_for_restart {
+  gkwroot=$1
+  run_to_restart=$2
+  rundir=$3
+  COPYCOMMAND="cp -p"
+
+  # A more flexible way to invert the mv / cp paradigm
+  # exists using softlinks or hardlinks and leaving the run folder in place
+  # Then all restarts work perfectly and those that prefer to
+  # have all data in place get that as well.
+
+  # This was protyped in gkwnlin_new, and gkwnlin_mv, removed in commit 5473664
+  # however hardlinks cannot be created before a file exists
+  # and hardlinks don't work on all filesystems (e.g. afs)
+  # therefore the _mv script needs a choice of cp -l or ln -s
+
+  for OUTPUT in $DATFILESWR ; do
+    $COPYCOMMAND $gkwroot/${OUTPUT}/$run_to_restart $rundir/${OUTPUT}.dat
+  done
+
+  for OUTPUT in total_energy intdens ; do
+    $COPYCOMMAND $gkwroot/${OUTPUT}/$run_to_restart $rundir/${OUTPUT}
+  done
+
+  $COPYCOMMAND $gkwroot/fluxes/em/$run_to_restart $rundir/fluxes_em.dat
+  $COPYCOMMAND $gkwroot/fluxes/bpar/$run_to_restart $rundir/fluxes_bpar.dat
+  $COPYCOMMAND $gkwroot/fluxes_lab/em/$run_to_restart $rundir/fluxes_em_lab.dat
+  $COPYCOMMAND $gkwroot/fluxes_lab/bpar/$run_to_restart $rundir/fluxes_bpar_lab.dat
+
+  for OUTPUT in $KFILESWR ; do
+    $COPYCOMMAND $gkwroot/spectrum/${OUTPUT}/$run_to_restart $rundir/${OUTPUT}
+  done
+
+  for OUTPUT in $FLUXWR ; do
+    $COPYCOMMAND $gkwroot/spectrum/${OUTPUT}/$run_to_restart $rundir/${OUTPUT}_spectra.dat
+    $COPYCOMMAND $gkwroot/spectrum/${OUTPUT}_kx/$run_to_restart $rundir/${OUTPUT}_xspec.dat
+    $COPYCOMMAND $gkwroot/spectrum/${OUTPUT}_em/$run_to_restart $rundir/${OUTPUT}_em_spectra.dat
+    $COPYCOMMAND $gkwroot/spectrum/${OUTPUT}_em_kx/$run_to_restart $rundir/${OUTPUT}_em_xspec.dat
+    $COPYCOMMAND $gkwroot/radial/${OUTPUT}_es/$run_to_restart $rundir/${OUTPUT}_rad_es
+  done
+  for OUTPUT in $SPECTRUMDATWR ; do
+    $COPYCOMMAND $gkwroot/spectrum/${OUTPUT}/$run_to_restart $rundir/${OUTPUT}.dat
+  done
+  for OUTPUT in $SPECTRUMKYSPECWR ; do
+    $COPYCOMMAND $gkwroot/spectrum/${OUTPUT}/$run_to_restart $rundir/${OUTPUT}.kyspec
+  done
+
+  for OUTPUT in $PARALLELTIMEWR
+  do
+    $COPYCOMMAND $gkwroot/parallel/${OUTPUT}_time/$run_to_restart $rundir/parallel_${OUTPUT}.dat
+  done
+
+  for OUTPUT in $DELTAFILESWR ; do
+    $COPYCOMMAND $gkwroot/radial/${OUTPUT}/$run_to_restart $rundir/${OUTPUT}.dat
+  done
+
+  $COPYCOMMAND $gkwroot/radial/fields/$run_to_restart $rundir/fields_rad
+
+  for OUTPUT in $SLICES2DWR ; do
+    $COPYCOMMAND $gkwroot/slices_2D/${OUTPUT}/$run_to_restart/${OUTPUT}_bin $rundir
+  done
+  for OUTPUT in $SPECTRA2DWR ; do
+    $COPYCOMMAND $gkwroot/spectra_2D/${OUTPUT}/$run_to_restart/${OUTPUT}_bin $rundir
+  done
+
+  $COPYCOMMAND $gkwroot/grids/file_count/$run_to_restart $rundir/file_count
+  $COPYCOMMAND $gkwroot/slices_2D/ene*/$run_to_restart/ene*_bin $rundir
+  $COPYCOMMAND $gkwroot/slices_2D/den*/$run_to_restart/den*_bin $rundir
+  $COPYCOMMAND $gkwroot/slices_2D/*Fl*/$run_to_restart/*Fl*_bin $rundir
+  $COPYCOMMAND $gkwroot/other/$run_to_restart/*_bin $rundir
+  $COPYCOMMAND $gkwroot/other/$run_to_restart/*.dat $rundir
+  $COPYCOMMAND $gkwroot/other/$run_to_restart/*_real $rundir
+  $COPYCOMMAND $gkwroot/other/$run_to_restart/*_imag $rundir
+  #$COPYCOMMAND $gkwroot/other/$run_to_restart/* $rundir
+}
+
+function print_resource_usage {
+  echo "MPI tasks:          $procs"
+  echo "Threads per task:   $threads"
+  echo "Cores per node:     $cores"
+  echo "MPI tasks per node: $tasks"
+  echo "Total nodes:        $nodes"
+  echo "Total processors:   $processors"
+}
+
+function compute_resources {
+  processors=$(( $procs * $threads ))
+  nodes=$(( $processors / $cores ))
+  tasks=$(( $cores / $threads ))
+  if (( $nodes == 0 )) ; then
+    cores=$processors
+    nodes=1
+    tasks=$procs
+  fi
+
+  checkprocs=$(( $nodes * $tasks ))
+  if (( $checkprocs < $procs )) ; then
+    nodes=$(( $nodes + 1 ))
+  fi
+}
+
+########################################################################
+# Main script starts here
+########################################################################
+
+echo "Running on $host"
+
+# Always run the latest version of the code for the current machine
+# ls -t orders by modification time with newest first thus use head.
+code=`ls -t $GKW_HOME/run/gkw*.x | grep $host | head -n 1`
+echo "The version of the executable : $code"
+
+parse_options "$@" # function call, provide comm
+
+echo "Running on $procs procs"
+echo "$threads threads per proc"
+#echo "$rank MPI process per node"
+#echo "$wtime  $hours  $seconds"
+#echo "$COMMANDLINE"
+
+########################################################################
+# Per host settings follow
+# See http://services.tacc.utexas.edu/index.php/batch-systems-comparison
+########################################################################
+
+# resource request and other settings tailored by host
+if [[ "x$host" = "xcur" ]] ; then #Curie TGCC
+
+  echo 'Running on Curie: use multiples of 16 processors'
+  cores=16 #number of cores per node (thin nodes, partition standard)
+  seconds=86400
+  qscript='slu'
+  compute_resources # function call
+  sub_cmd=ccc_msub
+  VPBS='#MSUB'
+  resources=$VPBS' -q standard'  # use thin nodes (16 cores per node)
+  resources2=$VPBS' -A gen6892' # project ID (YC 2012)
+  resources3=''
+  resources4=''
+  runcommand='ccc_mprun'
+
+  print_resource_usage # function call
+
+elif [[ "x$host" = "xhel" ]] ; then #Helios IFERC 
+  echo 'Running on Helios: use multiples of 16 processors.'
+  cores=16
+  sub_cmd='sbatch'
+  compute_resources # function call
+  #VPBS='#SBATCH'
+  #set the project to use in your environment (either RESIDUAL OR TURBISLE), check with id -nG
+  echo '*************** Billing to project '${IFERC_PROJECT}
+  resources='#SBATCH --time='${wtime}' -A '${IFERC_PROJECT}
+  resources2='#SBATCH --ntasks='${procs}' -N '${nodes}
+  resources3='#SBATCH --cpus-per-task='${threads}
+  resources4='module purge; module load intel bullxmpi srun fftw; module list'
+  runcommand='srun'
+  #runcommand='mpirun -n '${procs}
+
+  # EXPORTS NOT PROPAGATED TO SLURM !!
+  #exports2='export OMPI_MCA_coll=^ghc,tuned'
+  #exports2='export OMPI_MCA_coll=ghc,^tuned'
+  # last one best for very large jobs only ?
+  #exports2='export OMPI_MCA_coll=^ghc'
+  if (( $cores > $tasks )) ; then
+    #line below is advised, but appears to run no faster in main loop,
+    #and makes chease broadcasts very slow
+    #runcommand='mpiexec -n '${procs}' -bind-to-socket -bysocket'
+    exports2='export KMP_AFFINITY=compact KMP_STACKSIZE=1G OMPI_MCA_coll=^ghc'
+  fi
+  # To use intelmpi exe instead of bullmpi, set the env variable USE_IMPI = 1
+  #if ( ($?USE_IMPI) ) # if set(USE_IMPI) then ...
+  if [ -n "${USE_IMPI+x}" ] ; then # if set(USE_IMPI) then ...
+    if [[ "x${USE_IMPI}" = "x1" ]] ; then
+      resources4='module purge; module load intel intelmpi fftw'
+      #workaround until the module enviroment commands are fixed
+      #resources4='export LD_LIBRARY_PATH=/csc/softs/upv/slepc-3.2-p3/intel-12.0.5.220/intelmpi-4.0.3/avx/lib:/csc/softs/anl/petsc-3.2-p6/intel-12.0.5.220/intelmpi-4.0.3/avx/lib:/csc/softs/fftw/fftw-3.3/intel-12.0.5.220/intelmpi-4.0.3/default/lib:/opt/intel/impi/4.1.1.036/intel64/lib:/opt/intel/composer_xe_2011_sp1.13.367/mkl/lib/intel64:/opt/intel/composer_xe_2011_sp1.13.367/compiler/lib/intel64'
+      exports2='export I_MPI_EXTRA_FILESYSTEM=enable I_MPI_EXTRA_FILESYSTEM_LIST=lustre I_MPI_DAPL_UD=1 I_MPI_DAPL_UD_PROVIDER=ofa-v2-mlx4_0-1u'
+      #runcommand='/opt/intel/impi/4.1.1.036/intel64/bin/mpirun -n '${procs}' -ppn '${tasks}
+      runcommand='mpirun -n '${procs}' -ppn '${tasks}
+      echo '*************** INTELMPI batch settings'
+    else
+      echo '*************** BULLXMPI batch settings'
+    fi
+  fi
+
+  print_resource_usage # function call
+
+elif [[ "x$host" = "xesl" ]] ; then #Archer
+#http://www.archer.ac.uk/documentation/user-guide/batch.php
+  echo 'Running on Archer: Performance not yet checked with OpenMP'
+  cores=24
+  compute_resources # function call
+
+  mpiperdie=$(( 12 / $threads )) #MPI tasks per 12 core die 
+  resources='#PBS -l walltime='${wtime}'' 
+  resources2='#PBS -l select='${nodes}
+  if [ -n "${ARCHER_PROJECT+x}" ] ; then
+    resources3='#PBS -A '${ARCHER_PROJECT}
+  else
+    resources3='#PBS -A e281'
+    echo '*** WARNING: ENV VAR ARCHER_PROJECT NOT SET, USING DEFAULT'
+  fi
+  echo "USING $resources3"
+
+  #resources4='#PBS -q lowpriority'
+  runcommand='aprun -n '${procs}' -N '${tasks}' -d '${threads}' -S '${mpiperdie}
+  exports='PSC_OMP_AFFINITY=FALSE,MPICH_PTL_OTHER_EVENTS=100000,MPICH_PTL_UNEX_EVENTS=400000,MPICH_UNEX_BUFFER_SIZE=1073741824,MPICH_ENV_DISPLAY=1'
+  #cp_cmd='ln -s
+  echo "MPI tasks:              $procs"
+  echo "Cores per node:         $cores"
+  echo "MPI tasks per node:     $tasks"
+  echo "12 core dies per node: 2"
+  echo "MPI tasks per die:      $mpiperdie"
+  echo "Threads per task:       $threads"
+  echo "**** WARNING processors not in multiples of $cores are wasted ****"
+  occupied=$(( (($procs - 1) / $cores + 1) * $cores * $threads ))
+  echo "**** Cores occupied:  $occupied"
+
+elif [[ "x$host" = "xfe1" ]] ; then #warwick cluster fe1
+  runcommand='mpirun'
+  resources='#PBS -l select='$procs':ncpus='$threads':ompthreads='$threads':mem='$mem',walltime='$wtime',place=free'
+  #resources='#PBS -l select='$procs':ncpus=1:mem='$mem',walltime='$time',place=pack'
+  EMAIL_ADDRESS=`whoami`@warwick.ac.uk
+
+elif [[ "x$host" = "xtok" ]] ; then    #IPP linux tokp / toks cluster, uses sge, not pbs
+
+  #hostlong=`hostname | cut -c 1-4`
+
+  echo 'If running on TOK-P cluster: use multiples of 16 processors.'
+  echo 'If running on TOK-S cluster (untested): use maximum of 20 processors.'
+
+  cores=16
+  runcommand=''
+  resources2='#$ -l h_vmem='$mem
+  if (( $procs > 1 )) ; then
+    #runcommand='/afs/@cell/common/soft/intel/impi/4.1.0/bin64/mpirun -perhost 16 -l -np '$procs
+    runcommand='mpirun -perhost 16 -l -np '$procs
+    if [[ "x$debug" = "x1" ]] ; then
+      if (( $hours > 2 )) ; then
+        echo 'Development queue is limited to a run time of two hours'
+        exit 0
+      else
+        resources2='#$ -P debug -pe impi_hydra.* '$procs
+      fi
+    else
+      resources2='#$ -P tokp -pe impi_hydra.* '$procs
+    fi
+    #resources3='module load impi fftw'
+    resources3='module load impi'
+  fi
+  qext='sge'
+  VPBS='#$'
+  resources='#$ -l h_rt='$wtime
+  EMAIL_ADDRESS=`whoami`@ipp.mpg.de
+
+elif [[ "x$host" = "xtur" ]] ; then # turing, uses loadleveler
+  echo 'Running on Turing BG/Q, uses multiples of 16 processors'
+  cores=16
+  nodes=$(( $procs / $rank )) # nb of nodes required
+  if (( $nodes == 0 )) ; then
+    nodes=1
+  fi
+  hard_th=$(( $rank * $threads )) #nb of hardware threads per node
+  if (( $hard_th > 64 )) ; then
+    echo "Number of hardware threads limited to 64 per node"
+    exit 1
+  fi
+  #env='--envs "OMP_NUM_THREADS='$threads'"'
+  echo 'MPI tasks:           $procs'
+  echo 'Threads per task:    $threads'
+  echo 'MPI tasks per node:  $rank'
+  echo 'Nodes:               $nodes'
+  runcommand='runjob --np '${procs}' --ranks-per-node '${rank}' --envs "OMP_NUM_THREADS='$threads'" --mapping ABCDET : '
+  qext='ll'
+  qscript='ll3' #use seperate branch lower down, differs from pbs
+  VPBS='# @ '
+  sub_cmd='llsubmit'
+  header1='# @ shell=/bin/bash'
+  resources='# @ wall_clock_limit = '$wtime
+  resources2='# @ bg_size = '$nodes
+
+elif [[ "x$host" = "xvip" ]] ; then #ipp vip blade cluster, uses loadleveler
+  echo 'Running on VIP: use multiples of 32 processors. Not yet tested for OpenMP'
+  cores=32
+  compute_resources # function call
+  runcommand='poe '
+  qext='lle'
+  qscript='lle' #use seperate branch lower down, differs from pbs
+  VPBS='# @ '
+  sub_cmd='llsubmit'
+  header1='# @ shell=/bin/bash'
+  resources='# @ wall_clock_limit = '$seconds
+  resources2='# @ tasks_per_node = '$cores
+  resources3='# @ resources = ConsumableCpus(1)'
+  resources4='# @ node = '$nodes
+
+elif [[ "x$host" = "xhyd" ]] ; then #ipp hydra cluster, uses loadleveler
+
+  processors=$(( $procs * $threads )) #total processors
+  if (( $processors <= 256 )) ; then
+    echo 'Running on hydra SANDY: use multiples of 16 processors.'
+    cores=16
+  else
+    echo 'Running on hydra IVY: using nodes with 20 cores'
+    cores=20
+  fi
+  # check when job is running:
+  # any node named hy0xxxs is sandy
+  # any node named hy[1,2,3,4,5]xxxs is ivy
+  tasks_per_node=$(( $cores / $threads ))
+  nodes=$(( $processors / $cores ))   #nodes required
+  if (( $nodes == 0 )) ; then
+    nodes=1
+  fi
+  #round integer arithmetic up to integer ceiling
+  checkprocs=$(( $nodes * $tasks_per_node ))
+  mostnodes=$nodes
+  if (( $checkprocs < $procs )) ; then
+    nodes=$(( $nodes + 1 ))
+  fi
+  runcommand='poe '
+  qext='lle'
+  qscript='lle' #use seperate branch lower down, differs from pbs
+  VPBS='# @ '
+  sub_cmd='llsubmit'
+  header1='# @ shell=/bin/bash'
+  resources='# @ wall_clock_limit = '$seconds
+  resources2='# @ tasks_per_node = '$tasks_per_node
+  resources3='# @ resources = ConsumableCpus('$threads')'
+  resources4='# @ node = '$nodes
+  mostprocs=$(( $mostnodes * $tasks_per_node ))
+  if (( $mostprocs < $procs )) ; then
+    exports2='# @ first_node_tasks = '`expr $procs - $mostprocs`
+    echo "$exports2"
+    echo "Nodes needed $nodes"
+  fi
+
+elif [[ "x$host" = "xbtr" ]] ; then #Bayreuth cluster
+  cores=8
+  compute_resources # function call
+  print_resource_usage # function call
+  resources='#PBS -l nodes='$nodes':ppn='$cores',walltime='$wtime''
+  #runcommand='$(MPI_RUN)$'
+  runcommand='${MPI_RUN} -hostfile $PBS_NODEFILE'
+  EMAIL_ADDRESS=`whoami`@uni-bayreuth.de
+
+elif [[ "x$host" = "xlog" ]] ; then # new Bayreuth cluster or Aix-Marseille cluster
+
+  if [[ `dnsdomainname` == 'cluster' ]] ; then # Aix-Marseille cluster (mesocentre)
+    echo 'Running on AMU Mesocentre'
+#    cores=12 # westmere partition
+    cores=32 # skylake partition
+    sub_cmd='sbatch' 
+    qscript='slu2'
+    qext='slurm'
+    compute_resources # function call
+    VPBS='#SBATCH' 
+    resources=$VPBS' -p skylake'  # partition (westmere or skylake)
+    resources2=$VPBS' -A b024' # project number
+#    resources3=$VPBS
+#    resources4=$VPBS
+    runcommand='mpirun'
+
+    print_resource_usage # function call
+
+  elif [[ `dnsdomainname` == '' ]] ; then #MareNostrum4
+    cores=48
+    echo 'Running on MareNostrum4'
+    compute_resources # function call
+    print_resource_usage # function call
+    sub_cmd='sbatch'
+    qscript='slu2'
+    qext='slurm'
+    VPBS='#SBATCH'
+    resources=$VPBS' --qos=prace'  # partition
+#    resources2=$VPBS' --constraint=highmem' # big memory nodes, comment out to use standard nodes 
+    runcommand='srun'
+
+  else # new Bayreuth cluster
+    cores=24
+    compute_resources # function call
+    print_resource_usage # function call
+    resources='#PBS -l nodes='$nodes':ppn='$cores',walltime='$wtime''
+    runcommand='${MPI_RUN} -hostfile $PBS_NODEFILE'
+    EMAIL_ADDRESS=`whoami`@uni-bayreuth.de
+
+  fi
+
+elif [[ "x$host" = "xr00" ]] ; then #Marconi  
+    cores=48
+    echo 'Running on Marconi'
+    compute_resources # function call
+    print_resource_usage # function call
+    sub_cmd='sbatch' 
+    qscript='slu2'
+    qext='slurm'
+    VPBS='#SBATCH' 
+    resources=$VPBS' -p skl_fua_prod'  # partition 
+    resources2=$VPBS' -A FUA33_GLOBAL' # project number
+#   resources3=$VPBS' --qos=skl_qos_fuabprod' # to request more than 128 nodes
+    runcommand='mpiexec'
+
+elif [[ "x$host" = "xsdc" ]] ; then #ITER cluster
+    cores=36
+    echo 'Running on the ITER cluster'
+    compute_resources # function call
+    print_resource_usage # function call
+    sub_cmd='sbatch' 
+    qscript='slu2'
+    qext='slurm'
+    VPBS='#SBATCH'
+    resources=$VPBS' --exclusive'
+    resources2=$VPBS' -p gen10_ib'
+    runcommand='mpiexec'
+    
+elif [[ "x$host" = "xjac" || "x$host" = "xfre" ]] ; then #JET / UKAEA machines: Docs say SGE but looks like loadleveler
+  # Warning: qsub is present, but do not use it, use llsubmit !
+  # qstat is present and is more like normal qstat -u $USER
+  # webpage instructions for mpirun -np $NSLOTS, are incorrect, NSLOTS is always 1.
+  echo "Culham machines, no walltime used."
+  
+  cores=16
+  threads=1
+  qext='lle'
+  qscript='ll2'
+  VPBS='# @'
+  header1='# @ shell=/bin/bash'
+  
+  compute_resources # function call
+  print_resource_usage # function call
+  
+  if (( $procs > 1 )) ; then
+    resources='# @ jobtype = openmpi'
+    resources2='# @ min_processors = '$procs
+    resources3='# @ max_processors = '$procs
+    runcommand='mpirun -np '$procs
+  else
+    runcommand=''
+  fi
+  sub_cmd='llsubmit'
+  EMAIL_ADDRESS=$USER'@jet.uk'
+
+else #Host not known
+
+  echo "unknown host $host, please configure."
+  exit 0
+
+fi #host
+
+if [ -z "${EMAIL_ADDRESS}" ] ; then
+  EMAIL_ADDRESS='none'
+  echo 'To receive job notifications, set environment variable EMAIL_ADDRESS'
+else
+  echo "Notification emails to ${EMAIL_ADDRESS}"
+fi
+##########################################################################
+
+echo "Request resources: $resources"
+echo "Runcommand: $runcommand"
+
+check_if_in_input_directory # function call
+
+if [[ "x$COMMANDLINE" = "x" ]] ; then
+  echo
+  echo
+  echo 'Please supply input file names as final arguments'
+fi
+
+for runname in $COMMANDLINE
+do
+  if [ ! -e $gkwroot/input/$runname ] ; then
+    echo "$runname : file does not exist"
+  else
+    echo "----------------------------------------------------------------------"
+    echo "$runname : preparing the run"
+
+    # making a work directory 
+    gkwworkdir=$gkwroot/runs
+
+    rundir=$gkwworkdir/$runname/
+    mkdir $rundir
+
+    if (( $chain > 0 )) ; then
+      qname=$gkwworkdir/chain.$qext
+    elif (( $chain == 0 )) ; then
+      qname=$gkwworkdir/$runname.$qext
+    fi
+    subname=$qname
+
+    cp $code $rundir/gkw
+    if (( $restart == 1 )) ; then
+      if (( ( $restart_file == 1 ) || ( $link == 0 ) )) ; then
+
+        if (( $restart_file == 0)) ; then
+          run_to_restart=$runname
+        fi
+
+        echo "Restarting with data from $run_to_restart"
+
+        #Check for existance of restart files
+        n_files=`ls -1 $gkwroot/restart/$run_to_restart/FD* | wc -l`
+        n_files2=`ls -1 $gkwroot/restart/$run_to_restart/IN* | wc -l`
+        if (( $n_files == 0 && $n_files2 == 0 )) ; then
+          echo "***** '$n_files' restart files found, abort *****"
+          rmdir $rundir
+          exit 1
+        fi
+
+        echo "$n_files  restart files found"
+
+        $cp_cmd $gkwroot/restart/$run_to_restart/FD* $rundir
+        $cp_cmd $gkwroot/restart/$run_to_restart/IN* $rundir
+        echo $run_to_restart > $rundir/restart.dat
+
+        # when "restarting" an eigenvalue run, only use the FD? files
+        if [ -z $EIV_RESTART ] ; then
+
+          copy_files_for_restart $gkwroot $run_to_restart $rundir # function call
+
+        fi
+
+      fi
+
+    else #No restart
+      cp $code $gkwroot/restart #/`md5sum $code | cut -f 1 -c " "`_gkw.x
+      cp $code.info $gkwroot/restart #/`md5sum $code | cut -f 1 -c " "`_gkw.x.info
+    fi #restart
+
+    cp $gkwroot/input/$runname $rundir/input.dat
+    if [ -e "$gkwroot/input/$runname.prof" ] ; then
+      cp $gkwroot/input/$runname.prof $rundir/input.prof
+    fi
+    if [ -e "$gkwroot/input/$runname.profile" ] ; then
+      cp $gkwroot/input/$runname.profile $rundir/input.prof
+    fi
+
+    #reset max_sec in input file (only if it exists in lowercase) appropriately
+    if (( $chain < 1 )) ; then
+      perl -p -i -n -e 's/max_sec.*$/max_sec='"${seconds}"'/g' $rundir/input.dat
+    fi
+    if (( $restart == 1 || $restart_chain == 1 )) ; then
+      perl -p -i -n -e 's/read_file.*$/read_file=\.true\./g' $rundir/input.dat
+      perl -p -i -n -e 's/READ_FILE.*$/read_file=\.true\./g' $rundir/input.dat
+    fi
+
+    cd $rundir
+    #$GKW_HOME/scripts/gkw_upgrade_inputfile.pl
+    #mv input.dat input.dat.old
+    #mv input.dat.new input.dat
+
+    #ln -s ../../input/hamada.dat $rundir/hamada.dat
+
+    #Make useful temporary softlinks, useful while the run is ongoing
+    #overwritten when it finishes (use with rsync -L option)
+    #which are overwritten when the run completes
+    ln -s $rundir/fluxes.dat $gkwroot/fluxes/$runname
+    ln -s $rundir/time.dat $gkwroot/time/$runname
+    ln -s $rundir/out    $gkwroot/out/$runname
+    ln -s $rundir/kyspec $gkwroot/spectrum/kyspec/$runname
+    ln -s $rundir/kyspec_em $gkwroot/spectrum/kyspec_em/$runname
+    ln -s $rundir/krho   $gkwroot/spectrum/kyspec/$runname.krho
+    ln -s $rundir/kxspec $gkwroot/spectrum/kxspec/$runname
+    ln -s $rundir/kxrh   $gkwroot/spectrum/kxspec/$runname.kxrh
+    ln -s $rundir/kxvort $gkwroot/spectrum/kxvort/$runname
+    ln -s $rundir/kyvort $gkwroot/spectrum/kyvort/$runname
+    ln -s $rundir/eflux_rad_es $gkwroot/radial/eflux_es/$runname
+    ln -s $rundir/delta_t01.dat $gkwroot/radial/delta_t01/$runname
+    ln -s $rundir/delta_t02.dat $gkwroot/radial/delta_t02/$runname
+
+    #Delete old softlinks only
+    #find . -maxdepth 1 -type l -name $gkwroot/fluxes/$runname -print0
+    # | xargs -0 rm -f
+
+    #Truncate the PBS name if too long
+    pbsname=J`echo $runname | tail -c15`
+
+    if (( $chain == 1 )) ; then
+      pbsname = CH_`echo $runname | tail -c12`
+    fi
+
+    if (( $chain < 2 )) ; then
+      #echo $chain
+      rm -f $qname
+
+      # Generating a pbs script 
+      if [[ "x$qscript" = "xpbs" ]] ; then
+        echo "preparing pbs script"
+
+        #echo '#! /bin/bash --login' > $qname
+        echo '#! /bin/bash' > $qname
+        #echo $VPBS' -j oe' >> $qname
+        echo "$VPBS -e $gkwroot/job_out/$runname.e" >> $qname # #PBS read correctly by slurm
+        echo "$VPBS -o $gkwroot/job_out/$runname.o" >> $qname # #PBS read correctly by slurm
+        echo "$VPBS -N $pbsname" >> $qname # #PBS directive read correctly by slurm
+        echo "$VPBS -v $exports" >> $qname # WARNING -v not interpreted by slurm !
+        echo "$VPBS -m be" >> $qname       # #PBS directive read correctly by slurm
+        #echo "$VPBS -V" >> $qname
+        echo "$VPBS -M $EMAIL_ADDRESS" >> $qname #PBS directive read correctly by slurm
+        echo "$VPBS -v tpt=$threads" >> $qname
+        echo "$resources" >> $qname
+        echo "$resources2" >> $qname
+        echo "$resources3" >> $qname
+        echo "$resources4" >> $qname
+        echo "$exports2" >> $qname   # use exports2 for more robust exports
+
+      # SLURM manager on AMU cluster, Marconi or MN4
+      elif [[ "x$qscript" = "xslu2" ]] ; then
+        echo "preparing slurm script"
+
+        echo '#! /bin/bash' > $qname
+        echo "$VPBS -J $pbsname" >> $qname
+        echo "$VPBS -N $nodes" >> $qname
+        echo "$VPBS --ntasks=$procs" >> $qname
+        echo "$VPBS --ntasks-per-node=$tasks" >> $qname
+        echo "$VPBS --cpus-per-task=$threads" >> $qname
+        echo "$VPBS -t $wtime" >> $qname
+        echo "$VPBS -e $gkwroot/job_out/$runname.e" >> $qname
+        echo "$VPBS -o $gkwroot/job_out/$runname.o" >> $qname
+        echo "$resources" >> $qname
+        echo "$resources2" >> $qname
+        echo "$resources3" >> $qname
+        echo "$resources4" >> $qname
+        echo 'set -x' >> $qname
+
+      elif [[ "x$qscript" = "xslu" ]] ; then
+        echo "preparing slurm script"
+
+        echo '#! /bin/bash' > $qname
+        echo "$VPBS' -r '$pbsname" >> $qname
+        echo "$VPBS' -n '$procs" >> $qname
+        echo "$VPBS' -c '$threads" >> $qname
+        echo "$VPBS' -T '$seconds" >> $qname
+        echo "$VPBS' -e '$gkwroot'/job_out/'$runname.e" >> $qname
+        echo "$VPBS' -o '$gkwroot'/job_out/'$runname.o" >> $qname
+        echo "$resources" >> $qname
+        echo "$resources2" >> $qname
+        echo "$resources3" >> $qname
+        echo "$resources4" >> $qname
+        echo 'set -x' >> $qname
+
+      # OAR manager
+      elif [[ "x$qscript" = "xoar" ]] ; then
+        echo "preparing oar script"
+        touch $qname
+        chmod +x $qname
+        echo '#! /bin/bash' > $qname
+        echo "$resources" >> $qname
+        echo "$resources2" >> $qname
+        echo "$VPBS' -n '$pbsname" >> $qname
+        echo "$VPBS' -E '$gkwroot'/job_out/'$pbsname.e" >> $qname
+        echo "$VPBS' -O '$gkwroot'/job_out/'$pbsname.o" >> $qname
+        echo "$resources3" >> $qname
+        echo "$resources4" >> $qname
+
+      # Loadleveller requires fundamentally different format to PBS type managers
+      # here for IPP machines
+      elif [[ "x$qscript" = "xlle" ]] ; then
+        echo "preparing loadleveller script"
+        echo "$header1" > $qname
+        echo "$resources" >> $qname
+        echo "$resources2" >> $qname
+        echo "$resources3" >> $qname
+        echo "$resources4" >> $qname
+        echo "$exports2" >> $qname
+        echo "$VPBS environment= COPY_ALL" >> $qname
+        echo "$VPBS error   = $gkwroot/job_out/$runname.e" >> $qname
+        echo "$VPBS output  = $gkwroot/job_out/$runname.o" >> $qname
+        echo "$VPBS job_type = parallel" >> $qname
+        echo "$VPBS job_name = $pbsname" >> $qname
+        echo "$VPBS network.MPI = sn_all,not_shared,us" >> $qname
+        echo "$VPBS 'notification = complete'" >> $qname
+        echo "$VPBS queue" >> $qname
+        ### should use $exports; $exports2 here
+        echo "export MP_EUILIB=us" >> $qname
+        echo "export MP_EUIDEVICE=sn_all" >> $qname
+        echo "export MP_SHARED_MEMORY=yes" >> $qname
+        echo "export MEMORY_AFFINITY=MCM" >> $qname
+        echo "export MP_SINGLE_THREAD=yes" >> $qname
+
+      # Loadleveller on Turing at IDRIS
+      elif [[ "x$qscript" = "xll3" ]] ; then
+        echo "preparing loadleveller script"
+        echo "$header1" > $qname
+        echo "$resources" >> $qname
+        echo "$resources2" >> $qname
+        echo "$exports2" >> $qname
+        echo "$VPBS error   = $gkwroot/job_out/$runname.e" >> $qname
+        echo "$VPBS output  = $gkwroot/job_out/$runname.o" >> $qname
+        echo "$VPBS job_type = BLUEGENE" >> $qname
+        echo "$VPBS job_name = $pbsname" >> $qname
+        echo "$VPBS queue" >> $qname
+
+      # Loadleveller at CCFE / UKAEA / JET, which they call "sun grid engine"
+      elif [[ "x$qscript" = "xll2" ]] ; then
+        echo "preparing SGE script"
+        #echo $VPBS executable = $qname >> $qname  #use the same script as the exectuable
+        echo "$resources" >> $qname
+        echo "$resources2" >> $qname
+        echo "$resources3" >> $qname
+        #echo $resources4 >> $qname
+        echo "$VPBS error   = $gkwroot/job_out/$runname.e" >> $qname
+        echo "$VPBS output  = $gkwroot/job_out/$runname.o" >> $qname
+        echo "$VPBS network.MPI = sn_all,not_shared,us" >> $qname
+        echo "$VPBS job_name = $pbsname" >> $qname
+        echo "$VPBS 'notification = complete'" >> $qname
+        echo "$VPBS queue" >> $qname
+        echo "export MP_EUILIB=us" >> $qname
+        echo "export MP_EUIDEVICE=sn_all" >> $qname
+        echo "export MP_SHARED_MEMORY=yes" >> $qname
+        echo "export MEMORY_AFFINITY=MCM" >> $qname
+        echo "export MP_SINGLE_THREAD=yes" >> $qname
+      fi #pbs
+
+      echo 'export OMP_NUM_THREADS='${threads}' OMP_SCHEDULE=static OMP_DYNAMIC=FALSE' >> $qname
+      #echo 'echo $OMP_SCHEDULE' >> $qname
+      #echo 'echo $PSC_OMP_AFFINITY' >> $qname
+      #echo 'export MPICH_ENV_DISPLAY=1' >> $qname
+      #echo 'export MPICH_COLL_OPT_OFF=mpi_allgatherv' >> $qname
+      #echo 'export MPICH_COLL_SYNC=mpi_allgatherv' >>  $qname
+
+      if (( $chain == 1 )) ; then
+        chain=2
+      fi
+    fi # chain < 2
+
+    echo "cd $rundir" >> $qname
+
+    # get restart file from previous run in chain, if present
+    if [[ "x$restart_chain" = "x1" && -n $prev ]] ; then
+      echo "cp $prev/FD* $rundir"  >> $qname
+    fi
+
+    #stamp the exe
+    echo "echo GKW exe md5hash \`md5sum ./gkw\` > $rundir/out" >> $qname
+
+    # https://www.iferc-csc.org/index.php/jobs/batch-jobs/submit-jobs#h3-binary-location
+    # recommended not to use the binary on lustre for large jobs
+    if [[ "x$host" = "xxxhel" ]] ; then
+      echo "rm -f /tmp/gkw.local" >> $qname
+      echo "rm -f ./gkw.local" >> $qname
+      echo 'srun -N ${SLURM_NNODES} -n ${SLURM_NNODES} cp ./gkw /tmp/gkw.local' >> $qname
+      echo 'srun -N ${SLURM_NNODES} -n ${SLURM_NNODES} cp /csc/softs/cscst/FIXES/1683.so /tmp/' >> $qname
+      #echo "rm ./gkw" >> $qname
+      echo "ln -s /tmp/gkw.local ./gkw.local" >> $qname
+
+      #Finally, Run GKW !!
+      echo "${runcommand} ./gkw.local >> $rundir/out" >> $qname
+    else
+      #Finally, Run GKW !!
+      echo "${runcommand} ./gkw >> $rundir/out" >> $qname
+    fi
+
+    #If leaving run data in run folders, make a different mv script.
+    mname=$gkwroot/runs/$runname'.mv'
+
+    create_move_file $mname $rundir $gkwroot $runname $mv_cmd # function call
+
+    echo >> $qname
+
+    # Execute the move script from the queue job script, if desired.
+    if (( $folders == 1 )) ; then
+      echo "bash $mname" >> $qname
+    fi
+
+    # Submit queue job if not chaining
+    if (( $chain == 0 )) ; then
+      $sub_cmd $qname &
+    fi
+
+  fi #file existing
+
+  prev=$gkwroot/restart/$runname
+  shift
+
+done # for
+
+#Submit chain job if desired
+if (( $chain >= 1  )) ; then
+  $sub_cmd $subname &
+fi

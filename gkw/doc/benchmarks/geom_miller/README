@@ -1,0 +1,56 @@
+This folder contains input files for GS2 and GKW used to benchmark the miller
+geometry, to create the figure that appears in the manual.
+
+The version of GKW first used for the benhmark was r2839, and it has been replicated 
+with the same input files with r3012.  In versions of GKW between r2956 and r3012 there
+was a normalisation error (factor 2) in the gkw gradp_type = betaprime options.
+
+The version of GS2 used is the old tarball from http://gs2.sourceforge.net/
+The input files may need some tweaking to run with newer gs2
+as some variables have been removed (normalisation and diagnostics switches)
+
+Some translation between input file parameters was required:  
+
+Firstly the miller parameters are defined slightly differently in the two codes.
+This is similar to the GYRO conversion described in Bravenec et Al PoP 2011 
+(http://dx.doi.org/10.1063/1.3671907).
+
+More subtly, the two codes do not normalise the ky vector in the same way for 
+general geometries.  
+
+GS2 uses 4*pi*dPsipf/deps (= 1/efun_eps_zeta) in the normalization of ky, 
+(see http://w3.pppl.gov/~hammett/work/gs2/docs/geometry/g_short.pdf)
+GKW uses g_zeta_zeta(@LFS) for kthnorm.
+
+To correct this difference, the gs2 ky inputs were multiplied by efun_eps_zeta 
+and then divided by the gkw kthnorm.  The differences in input ky between the 
+two codes can become quite large when the shaping parameters are strong 
+(mainly the radial derivatives).
+
+The GS2 input files cannot be created until after the GKW cases have run
+because the values output in GKW geom.dat are used to correct the GS2 ky
+normalisation.
+
+The matlab scripts used to perform these transformations are also as found in r2839: 
+convert_inputs.m, gkw2gs2_input.m, gs2_gkw_gyro_miller.m 
+
+Two possibilities for benchmarking the pressure gradient were tested, with
+gradp_type='alpha_mhd' and 'beta_prime' in GKW corresponding to bishop=5 and 4
+respectively in GS2.  However we note that the alpha and alpha_mhd definitions 
+have not yet been tested with kappa/=1.  Since gradp_type = alpha and alpha_mhd
+options do not agree when kappa/=1, it is not yet clear which one (if either)
+is the equivalent to the gs2 definition.
+ 
+Note that beta_prime in the curvature operator has very little influence on 
+this test case, the main influence is on the miller geometry. It was not clear
+if GS2 uses beta_prime_input also there (cannot be distinguished from the results)
+
+At very strong radial derivatives, the numerical miller integrator can become unstable. 
+This was fixed for all the values used in the benchmark in GKW by increasing 
+the number of points in the integrator (now 501) but the benchmark discrepancies at 
+strong triangularity might be explained by a similar instability in GS2.
+
+
+
+
+

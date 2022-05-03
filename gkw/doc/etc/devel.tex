@@ -1,0 +1,634 @@
+%% GKW developer notes: presently only rules and guidelines for developers. 
+%
+\documentclass[12pt,twoside,notitlepage,a4paper]{article}
+
+%% caption modifications; default to footnotesize - tweak as appropriate
+\usepackage[font={footnotesize,it}]{caption}
+%\usepackage[small,labelfont=bf,textfont=it,width=0.9\textwidth]{caption} 
+
+%% for modifying description lists 
+%\usepackage{expdlist}
+
+%% the listings package; useful for blocks of code
+\usepackage{listings}
+
+%% fancy verbatim {Verbatim}
+\usepackage{fancyvrb}
+
+%% for using some regular formatting in verbatim {alltt}
+%\usepackage{alltt}
+
+%% underscore
+\usepackage{underscore}
+
+%% graphics
+%\usepackage{graphicx}
+
+%% look for figure input in ./figs
+%%\graphicspath{{../figs/}}
+
+%% fullpage
+\usepackage{fullpage}
+
+%% color
+\usepackage{color}
+
+
+%% makeindex ?
+%\usepackage{makeidx}
+
+\usepackage{bm}
+
+%% hyperref
+\usepackage[hyperindex]{hyperref}
+
+% ---------------------------------------------------------------------------- %
+%% Macros
+\newcommand{\file}[1]{\texttt{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\variable}[1]{\texttt{#1}}
+
+%%\newenvironment{mylisting}
+%%{\begin{list}{}{\setlength{\leftmargin}{1em}}\item\scriptsize\bfseries}
+%%{\end{list}}
+%%
+%%\newenvironment{mytinylisting}
+%%{\begin{list}{}{\setlength{\leftmargin}{1em}}\item\tiny\bfseries}
+%%{\end{list}}
+
+
+% ---------------------------------------------------------------------------- %
+
+\begin{document}
+\pagestyle{empty}
+\pagestyle{plain}
+\pagenumbering{roman}
+
+% ============================================================================ %
+
+\begin{titlepage}
+  \begin{center}
+
+  \large
+
+  \vspace*{2cm}
+
+  {\Large\sffamily\bfseries GKW:\\[2\parskip]
+    Notes}
+
+  \vspace{3ex}
+
+  {\sffamily DeveloperGuidelines}
+
+  \vspace{\stretch{2}}
+
+
+  \vspace{\stretch{2}}
+
+  \vspace{\stretch{1}}
+
+  \emph{$ $Date$ $, $ $Revision$ $}\\
+  \url{http://gkw.googlecode.com}
+
+  \vspace{\stretch{3}}
+
+
+\end{center}
+
+\end{titlepage}
+
+\clearpage
+\tableofcontents
+\cleardoublepage
+%\pagestyle{fancy}
+\pagenumbering{arabic}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cleardoublepage
+\appendix
+\part{Appendix}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% ============================================================================ %
+
+
+\section{Coding GKW: rules, style and recommendations}
+
+It is intended that this appendix becomes a part of the main code documentation.
+Its purpose should be to make clear what standards are expected of code or files
+committed to the repository.
+For now, we should use it as a discussion about what exactly these things should be.
+The motivations for adopting such conventions are fairly clear (e.g. keeping the code
+readable, portable, maintainable, flexible etc.). We should aim to
+find a {\it reasonable} set of conventions to agree on, rather than iterate to perfection.
+
+I suggest that we initially focus only on the Fortran source parts of the code, then
+develop conventions for other files later as necessary. It may also be worth adding
+a section of notes about ways of avoiding certain undesirable features (e.g.
+non-standard/extended Fortran -- just a list of things we already know about that you should not
+do).
+
+So far we have adopted some conventions and style fairly consistently throughout the code
+and these can be documented here already. There are some conventions which should be
+clarified and perhaps more that should be adopted. If the code is tidied a bit, some
+conventions will become self-evident and we may not need to document them here.
+
+Please discuss (in this document file even). The following could be restructured a bit...
+
+FC, YC:  I agree with all, except where I have commented otherwise.\\
+{\bf YC: it looks like GKW is not in a state consistent with the guidelines. How do we implement the changes ?
+Each of us takes a couple of files and does it ? APS: it is not difficult for one of use to do it. Some checks
+are difficult so I will likely write a short script to do them. It might be
+worth 2 people first independently look look at 1 module, then review what the other did to see
+if it meets their understanding of the conventions...}
+
+\subsection{General}
+
+The code is written in standard Fortran 95. Extensions to the standard are not
+allowed and redundant features should be avoided. The code should always
+be able to compile and run on any system which has a working Fortran compiler.
+
+External Fortran libraries may be added to the repository to provide extra     
+functionality to the code. These should be no less portable than the rest
+of the code and their license must be compatible with the one with which the
+code is distributed. Anything copied from some other source should have its
+origin made very clear, and again, do make sure that it is allowed to
+be distributed together with the rest of the code (If in doubt, please
+discuss with the code administrators.). 
+%APS:
+{\bf APS: Is this OK? If so, must the added code meet any conventions? For example, 
+our FFT interface follows different style and conventions to the rest of the code.
+Also, can any added code have unintended consequences? What should the policy be?}
+
+{\bf AGP: Everything in /trunk/src should follow the style rules, even if we 
+stole it from somewhere else. Is there a good suggestion on where to store library 
+source code. APS: separate subdirectory at the same level as trunk, branches; 
+README file making it clear it is not part
+of the code; named `external', `lib', ? (I don't like any of these names very  much). }
+
+The code may make use of calls to other 3rd-party libraries, provided they have
+some sort of Fortran interface. Calls to such libraries should be hidden away
+from the rest of the code as much as possible. The use of non-portable and
+non-free software libraries is strongly discouraged; they should never be
+enabled as default and must never constitute an essential code component;
+they should only be used to enhance performance of the code on specific systems
+rather than functionality. (FC: The OpenMP in exp integration currently makes use of the Intel MKL, 
+but as discussed in issue 5 this is only a temporary arrangment during testing and development.)
+
+We aim to make the code easy to read, understand, maintain and modify. 
+To this end, we make many functions and subroutines as general as possible to encourage code re-use.
+The following sections highlight particular aspects of this style and adopted conventions.
+
+Suggestions regarding adding new features to the code, restructuring the existing code etc. can be discussed in the discussion list.
+
+\subsection{Files}
+
+Each source code file should contain either a Fortran program or a module.
+The name of the file should correspond to the program or module contained within it,
+followed by either a \file{.f90} or \file{.F90} suffix (the \file{.F90} suffix
+denoting a file which must be preprocessed -- see {\it preprocessing} later). 
+
+Including files via the obsolete \code{include} statement should be avoided.
+An exception is made for the interfaces to Fourier transforms and MPI libraries etc. -- if a file
+must be included it should be included only once in a single file.
+
+\subsection{Names}
+
+Modules, subroutines, functions, variables etc. should be given meaningful or self-explanatory
+names in general (be careful with spellings!). The names should be fairly concise, but not so short
+that they are not understood and absolutely not more than 32 characters. For indices that are used in loops, the variable names
+need only a single letter if desired (and should probably be kept short?). {\bf FC: I think two letters max is plenty.
+APS: so we should explicitly discourage/disallow long indices names?}
+{\bf AGP: to letters max is not a bad idea, but the code does violate this restriction rather strongly 
+at present (imod). I think furthermore that we should encourage the use of standard indices for certain 
+loops (for instance imod (or better im) for the toroidal mode number}
+\textbf{YC: I do not really care about the length of the indice names as long as it is clear from their name that they are indices (which is I think is the case for imod) and are only used to that purpose. }
+All names should be written in lower case in the code source files, apart from a few exceptions
+
+\begin{itemize}
+\item Optional function and subroutine Keywords.
+\item External variable and subroutine names (e.g. the integer \code{MPI_OFFSET_KIND} is a
+MPI variable.)
+\item
+%APS: 
+{\bf APS: Anything else? We could add macro definitions, directives etc? (I vote for these)}
+\end{itemize}
+
+\subsection{Modules}
+
+Each module should have a clearly defined purpose or set of tasks associated
+with it as described in its doxygen compatible leading comment. Usually, all functions, subroutines and variables should be
+private to that module my default and only those used elsewhere should be
+exposed via the \code{public} statement.
+
+\subsection{The use of \code{use} statements}
+
+Every \code{use} statement should always be followed by the \code{only} option to explicitly
+state which variables and functions are in scope. There is one exception for the MPI
+interfaces, i.e. every module which has a name beginning `mpi' may drop this convention.
+%APS:
+{\bf APS: this need not be the case, only at the moment you would need to put all the MPI
+things in too, e.g.
+\begin{verbatim}
+  use mpiinterface, only : MPI_ALLREDUCE, MPI_TYPE_CREATE_SUBARRAY
+\end{verbatim}
+etc.}
+
+
+%Since the routines in a module typically work on the same arrays and structures etc.,
+%a commonly used convention is to declare all the variables and routines used in
+%other modules once globally at the module level via USE statements.
+Rather than putting all the required \code{use} statements for a module at the beginning,
+we have adopted a convention that \code{use} statements should only appear when required -- i.e.
+they should pertain only to the subroutine in which they exist. 
+%APS:
+{\bf APS: this does not preclude the possibility of them appearing at the beginning of a module,
+since they well may be necessary to define variables that are global to the module.}
+{\bf AGP: if really necessary for the definition of global variables they may appear at the 
+top, but only then. (This is not done consistently in the code at present)}
+This enables one to see exactly what is within scope at the subroutine level.
+To maximise the usefulness of this convention, only those variables
+actually used should be imported to each routine. When starting a new routine, it
+is very tempting to copy the \code{use} statements from a neighbouring code block without
+checking if all variables are actually needed. When doing so, you should check that
+any variable not used is removed.
+
+
+\subsection{Interfaces}
+
+%APS:
+{\bf APS: There is a suggestion that we should restrict function overloading
+to functions which have the same number of arguments. For example, the
+\code{indx} function gets called with either 4 or 6 arguments, so perhaps
+there should be two distinct functions that are called. Other overloads, such
+as \code{mpibcast}, are fine as they always take the same number of arguments,
+independent of datatype.}
+{\bf FC:I see no benefit in overloading functions through interfaces, it only makes 
+the actual bit of code take longer to find and makes the code harder to read. APS:
+The purpose of interfaces is to make things easier all round. If something is not clear
+we should change it. I don't believe the interfaces themselves are the problem.
+Say I want to do a MPI_BCAST. Then doing it explicitly I have to (i) look up the interface
+\url{http://www.mcs.anl.gov/research/projects/mpi/www/www3/MPI_Bcast.html}; (ii) include
+preprocessor directives. (iii) check all the datatypes are correct. Using the 
+overloaded function I get to know at compile time if I've made a mistake (rather than when the code
+runs with some obscure MPI error message). (and the
+wrapper can be used to handle all the mpi things in a consistent way rather than having to
+repeat the same code over and over elsewhere).
+FC: I also suggest generally avoiding optional arguments, they also make the code harder to read. APS:
+sometimes we would be left with passing many lines of unnecessary variables to
+a subroutine -- it would be nice to see which ones are actually being used. I agree with the examples
+we discussed earlier, but these should be indentified in the
+code and made clear.}
+
+\subsection{Some things not allowed}
+
+\begin{itemize}
+\item No variable may have the pointer attribute. We do not use pointers in the code.
+\item Derived data types should be avoided for the most numeric parts of the code (and in general?)
+where potential compiler optimisation may be lost.
+\end{itemize}
+
+\subsection{Variable declaration}
+
+\begin{itemize}
+%APS:
+\item {APS: \bf should we use \code{dimension} or not? I think putting the dimension after the
+variable instead is fine, but we should stick to one or the other.} FC: Agree, no strong preference.
+\item We do not use non-standard \code{real*8} etc. Instead we use \code{character (len=32)}, 
+\code{real (kind=somekind)}, etc.
+\item We use \code{::} for all declarations, not only for consistency but to avoid problems with some
+compilers and also clarity.
+\item Every dummy variable in a subroutine should have an \code{intent} (the default is
+{\it undefined!}). This includes intent \code{inout}.
+\end{itemize}
+
+\subsection{Subroutines}
+
+Individual subroutines should be kept short, not more than say $\sim200$ lines. A subroutine likely
+tries to do too much if it is long and could be split into more subroutines.
+%APS:
+{\bf APS: perhaps part of the reason we are not encouraged to break subroutines is that we have
+to set up all the use statements again? Subroutines can themselves contain subroutines, which
+gets around this.}
+
+All optional arguments should be capitalised.
+e.g. the subroutine
+\begin{verbatim}
+subroutine mpibcast_real_array1(rscalar,nscalar,IPROC)
+
+  real, intent(in) :: rscalar
+  integer, intent(in) :: nscalar
+  integer, optional, intent(in) :: IPROC
+\end{verbatim}
+with optional argument \code{IPROC} and its call
+\begin{verbatim}
+  call mpibcast(some_real,some_integer,IPROC=some_proc)
+\end{verbatim}
+
+\subsection{Code comments} 
+
+Comments are important! We can certainly have too many comments. We should aim
+to explain what each routine does in the description. No need to go overboard;
+comment should say what task is being performed; "This is a loop over x..."
+is useless?
+
+This is bad? (and hard to read?)
+\begin{verbatim}
+  ! something
+  call do_something()
+  ! something else
+  call do_something_else()
+  ! more still
+  call do_more()
+\end{verbatim}
+is this better?
+\begin{verbatim}
+  ! something
+  call do_something()
+
+  ! something else
+  call do_something_else()
+  
+  ! more still
+  call do_more()
+\end{verbatim}
+
+
+Comments in GKW should be written in such a way as to be parsable by \href{http://www.doxygen.org}{Doxygen}.
+The \href{http://www.gkw.org.uk/doxygen}{reference dictionary} for the code can then be automatically generated.
+
+\begin{itemize}
+\item All modules, functions and (module level) variable declarations have a useful Doxygen comment.
+{\bf APS: should it be public variables, rather than module level?}
+{\bf AGP: I would say module level as well, since a module can 5000 lines, and rather confusig to look through}
+\item Make informative comments thinking of others {\bf APS: Sentences in English are very much appreciated!}
+\item Notes to self should be marked with your initials e.g. \texttt{!APS: check this} {\bf APS: These should be in col 1 and considered as bugs! we should aim
+to remove them. Note should be meaningful to all, not just creator; should it be dated?}
+\textbf{YC: yes, I like the idea of dating it. It makes it easier to guess what is right when two comments are inconsistent.}
+\item Questions to others should be marked e.g \texttt{!APS -> WAH: is this correct?} {\bf APS: I dont think it is so useful. Issue tracker is fine. initials 
+considered as bugs; always start in the first col. Also all preprocessor and compiler directives. I think all other comments need a space between \code{!} and the first real
+character of the comment.}
+\item Input variables are labelled as such with default values listed if applicable at declaration comment
+\item Allocatable arrays should have their size noted at declaration comment 
+\item Indent comments inline with code
+\item How do we do block comments?
+\item Commented out code starts \code{!NAME: }? or what? Double \code{!}, with a
+tag to explain who commented it out and why?
+\textbf{YC: yes, I think it is good practice to explain why part of the code is commented out. Otherwise, why not remove it?}
+%APS: \item Unused code should be commented out? Then comment rules apply...
+%APS: comments are bugs?
+\end{itemize}
+
+\subsubsection{How to write comments compatible with the doxygen parser}
+
+\textbf{Variables} can have either a leading comment, or trailing comments on same line.
+
+\begin{itemize}
+\item 
+\textbf{Example 1:}\end{itemize}
+
+
+\begin{verbatim}
+!> the total energy flux per species : eflux_tot(number_of_species) 
+!> electrostatic contribution 
+real, allocatable, dimension(:) :: eflux_tot_es 
+\end{verbatim}
+
+\begin{itemize}
+\item 
+\textbf{Example 2:}\end{itemize}
+
+
+\begin{verbatim}
+logical :: coriolis             !< true if coriolis drift term is kept 
+\end{verbatim}
+
+\textbf{Functions}, \textbf{subroutines} and \textbf{modules} must have their description \textbf{preceding} the declaration. To keep it simple, use the \texttt{!>} comment format for all comment lines above a function declaration.  Lines will run together as a single sentence.
+
+\begin{itemize}
+\item 
+\textbf{Example 3:}\end{itemize}
+
+
+\begin{verbatim}
+!-----------------------------------------------------------------------------
+!> This routine calculates the correction necessary to go from the
+!> distribution g (which includes the correction of the parallel
+!> vector potential) to the distribution f
+!-----------------------------------------------------------------------------
+subroutine g2f_correct
+..
+..
+\end{verbatim}
+
+Alternatively, comments preceding a function can be written as a formatted block which will retain its layout through the parser (in next example).
+
+Latex math mode can be used if enclosed within two \texttt{\\f\$} groups.  If used, it must
+be valid latex without macros or packages - or the doxygen parser will fail.  See
+\texttt{linear\_terms} for examples.
+
+\begin{itemize}
+\item 
+\textbf{Example 4:}\end{itemize}
+
+\begin{verbatim}
+!++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+!> Add terms I and IV as one term : \f$ v_R {\cal F} \{H,g_N\} \f$
+!! where
+!!         \f$ H  = (1/2) v_{\parallel N}^2 + \mu_N B_N + (1/2) {\cal E}_R = H(s,\mu,v_{\parallel}) \f$,
+!! and
+!!         \f$ \{H,g_N\} = (d H/d s)(d g_N/d v) - (d H/d v)(d g_N/d s). \f$
+!!
+!! At the boundaries in the s-direction, we apply something similar to the
+!! wills=1 scheme to do upwinding. Note that the routines that this calls to
+!! deal with points near the boundaries do not presently work in second order.
+!!
+!! See jhg_interior for the main bit of these terms.
+!!
+!! ( Note that above we dropped the second index with respect to `j'(for \mu)
+!!  in H; the second index is always j. Below we use `HH' for `H')
+!<----------------------------------------------------------------------------
+subroutine igh(disp_par,disp_vp)
+...
+... 
+\end{verbatim}
+{\bf APS: in the last two examples above, is the \code{-} character the one we
+have decided to use to break up the code blocks in all cases? Only in the code we use at least \code{+,*}
+as well...}
+\subsection{Code blocks, line indentation, whitespace and continuation}
+
+We do not allow TAB characters in the code. They may mean something in an extension of Fortran, so
+could have unintended consequences. Also, they can make reading the source between different
+editors difficult.
+
+Blank lines may appear in the code (see comments section); they should contain no characters (including
+whitespace characters). A line may be a blank comment line (e.g. in a comment block), but should
+start with \code{!}. FC: Comments should indented inline with code.
+
+
+\begin{itemize}
+\item \code{module, subroutine, function, contains statements etc. begin in col 1} 
+(unless they are functions inside subroutines?)
+\item code is indented 2 columns from the program unit.  FC: I prefer 3. AGP: I prefer 2. YC: 2 for me 
+\item \code{do,if,select case} require indent of 2 cols.  FC: I prefer 3. AGP: I prefer 2. YC: 2 for me. APS: so it is 0 or 2 and never 3?
+\item Maximum line length. There is no need to use the old Fortran 77 limit. However, anyone
+editing with emacs or vi would greatly appreciate it if most lines do not go beyond 78 cols
+(I suspect most potential coders would use one editor or the other). What lines should go beyond the
+limit? Lines that do not need to be read to understand what the code does? FC: I vote for more than 78.
+APS: The original code used around the Fortran 77 limit. Since the style should be similar, we need not
+usually use more than that. If we set a _hard_ limit around 78, and a suggest using less in general, that
+already allows one to use several more cols. If we agree that this is too restrictive, why not set the hard
+limit to 132 (as allowed by the standard). To make it clear - the main reason for 78 is that when remote
+editing a file (such as when you do some tweaking to the source you are compiling on a cluster), it is usual
+and convenient to run your editor in non-graphical mode. When doing so, lines longer than 78 are wrapped in
+emacs and it can be awkward to work with. \textbf{YC: I would prefer the limit to be 132, but it is because I never run an editor in non-graphical mode...}
+\item Long lines should be broken by placing a continuation character (\code{\&}) in the last col?
+A continuation character should also appear in the next line, indented 4(?) cols in from the start
+of the previous line. Lines which end part way through a character string should be terminated before
+the continuation character, then concatenated with another string on the next line.
+e.g. {\bf AGP: continuation characters should be placed in a readable place, for instance directly 
+under the = in an assignment statement.APS: In the line below it could instead go under the opening brace?
+Setting to a fixed number is easy for editors though - I don't have a macro to
+automatically put it in the right place}
+\begin{Verbatim}
+call gkw_init('gkw_init: I do something related to reading files and'//      &
+    &         ' allocating memory')
+\end{Verbatim}
+\end{itemize}
+
+{\bf Need we discuss where whitespace is used in e.g. \code{if, do}?}
+
+\subsection{Misc - unsorted ideas}
+
+\begin{itemize}
+\item \code{endif,enddo,endsubroutine} vs \code{end if, end do, end subroutine}; should we be consistent? 
+AGP: Not a major point for me. APS: looking in the code, mostly the words are
+split, apart from "endif" (roughly 4 times more common than "end if").
+\item Should we use the operators $<, >, <=, >=, ==, /=$? They are easy to read and the
+old ones are considered obsolete. AGP: Yes would be nice 
+\item Should we avoid using multiple \code{return} statements? They are redundant at the end of subroutines
+anyhow. Sometimes it is difficult to see which code gets reached if there are many. Any thoughts?
+The only advantage is in an optimised routine when many more unnecessary tasks would otherwise be
+performed (but these should be in sub, or subsub routines, right?) AGP: I have always considered multiple 
+returns useful. Often there are special cases in which the job gets done with just a few lines. APS: certainly in
+some optimal cases. Not needed at the end of subroutines or functions though. I'll refer other specific cases to you.
+Some are really difficult to debug.
+\item Should we use \code{()} for function and subroutine calls which have no variables to pass? FC: yes.
+\item Numbered lines - are they needed? Formats in write statements are the only thing that use them, but
+even that is not necessary. FC: neater and easier for (repeated) write statments. APS: Rather than have
+numbered lines all over the place, I suggest using character strings instead. Even better, putting
+all the formats in a module, so that they are done consistently throughout (and could potentially be
+modified via a namelist). AGP: indeed numbered lines only for the write statements. Putting them in 
+a module is not a bad idea. 
+\item Do we allow \code{;} to e.g. put multiple assignments on one line or for multiple do loops etc.?
+When and why?  FC: yes as it keeps routines shorter and more readable. AGP: After being initially against
+it, I now have changed my mind. Indeed it does make the code a lot more readable. So yes. 
+\item No hard coded numbers? - should use \code{parameter} instead?  FC: Clarify $10^-10$ not ``two''.  Does this include: \texttt{max_iterations}, \texttt{nmmx}? AGP : I prefer no hard coded numbers (although I am guilty) YC: what do we do for things like $2\pi$, etc.? We want to have it with the same precision everywhere in the code, no ?
+\item Always use \code{implicit none} exactly once in each module. 
+\item Array syntax. It should be kept simple in the optimal parts of the code, right? FC: Don't understand. APS: OK, when should we use (if ever) array syntax?
+It is extremely concise and usually at least as efficient as doing it explicitly, but mistakes can be made if you try to be a bit tricky.
+(when assigning with array syntax, use \code{A(:) = 0.}, rather than \code{A = 0.}? etc.) AGP : I agree use A(:) and preferably no array syntax a = b + c. It can be confusing
+\end{itemize}
+
+\subsection{Input files}
+
+Input files are also Fortran files! (Only applies to files checked into the repository, such
+as the test files and samples.)
+(and we have had some problems with them! We use some non-standard features which could be avoided
+by introducing simple guidelines for writing them.)
+How about:
+
+\begin{Verbatim}[commandchars=\\\{\}]
+! This is a sample input file.
+! Comments are allowed as in normal fortran while outside a namelist block.
+! No non-Fortran chars allowed! (Including TABS)
+       \textit{! Blank lines are allowed}
+
+&CONTROL  \textit{! no need to be capitals; comments allowed this line; \code{\&} in col 1 only}
+ some_variable = 1. \textit{! variables indented 1 space, comments only on same line}
+ another_variable = 1, ! comment allowed here
+       ! comment allowed here (unless the previous variable is a character, if that
+	   ! is the correct interpretation of the standard) NO TABS!
+ \textit{(some compilers apparently do not allow comments in the block at all;}
+ \textit{ not sure the standard allows them on next line unless they start}
+ \textit{col 1 and the previous line has no comma at the end..)}
+
+/ \textit{! end of block starts in col 1}
+\end{Verbatim}
+
+in summary:
+\begin{itemize}
+\item Blocks start and end in col. 1
+\item \code{var = val} starts in col. 2
+\item No TABS
+\item No comments after \code{char=val}. The comment can go on the next line or previous line.
+\item If the line ends with \code{","} with no comment afterwards, the next line can not be a comment?
+\item Stick to the same line length as for the fortran files (when we decide)
+\end{itemize}
+
+\subsection{Preprocessing}
+
+We use C preprocessor directives in the code for the purpose of conditional compilation only.
+They are used to enable/disable calls to optional libraries, such as MPI, FFTW, UMFPACK etc.
+and also to get the right datatypes in those calls. Ideally, the actual calls to
+these external libraries should limited to 1 module per library (this is already the
+case for FFTW, and almost true for the MPI).
+
+The compiler should see as much of the code as possible when testing, so we avoid
+any other use. (One can use the timings module \file{PERF}, together with directives
+for testing parts of the code, but putting these all over the checked in code make it messy?
+Perhaps we could always call perf at the desired places, but either put a 
+logical "perf" (which decides if the call actually does anything), or preprocess perf itself
+with the list of perf names)
+
+Allowed list:
+\begin{verbatim}
+#ifdef ONE || TWO
+#elif defined(THREE)
+#else
+#endif
+\end{verbatim}
+(Do we need more?)
+\subsection{Fortran best practices}
+
+Do we need such a section? Most people know it is bad to put conditionals in the middle of 
+optimised loops, that all cases should be covered by conditionals etc. {\bf APS: I have a list.
+}. \textbf{YC: This would be useful to me. The little I know in Fortran is from copy-pasting bits of code. So I might very well have taken bad practices with it.
+APS: Right, the list can begin with things we removed already.
+Then whenever cleaning up, add more things to the list.
+The old features can be summarised in another section again, although they can be found in most fortran books.}. We should always try to generalise bits of code though to encourage re-use, so
+examples of generalisation could go here. Obsolete and old features that are not used in the code
+could also be listed.
+{\bf AGP : Optimized routines should be flagged as such. It is often very useful to program 
+with readability in mind rather than performance. This should be encouraged in all the 
+non-optimized routines. Only a few routines of the code need really be optimized for speed}
+
+\subsection{Summary of main unresolved points}
+
+\begin{description}
+ \item Most things that were here are resolved or unimportant.
+%  \item If \code{dimension} should be used or not.
+%  \item What character(s) should be used to break up code blocks in comment lines.
+%Presently, at least \code{-,*} and \code{+} are used.
+%  \item The number of indentation whitespace characters used. We agreed on 2 in all cases, apart from the
+%  start of a subroutine (no indent, or 2)? In the special case of continuation, is it always clear where
+%  to put it on the next line? it could be omitted completely. Do we indent the code under each \code{case} in a \code{select case}?
+%  \item The first continuation character should go at the end of the line, or not? (i.e. if we allow 78 cols it goes in col 78)
+%  \item The number of allowed cols. 78 vs more?
+  \item \code{endif} vs \code{end if}: see A.12
+\end{description}
+
+
+%\section{The previous section again}
+
+
+%%%% ============================================================================ %
+%%%% Index 
+%%%% Put the indexes here for files, variables, then another for names,
+%%%% defs, commands etc.
+%%%%
+%%%% ============================================================================ %
+
+\end{document}

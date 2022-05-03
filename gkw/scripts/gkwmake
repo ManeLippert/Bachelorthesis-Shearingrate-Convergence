@@ -1,0 +1,32 @@
+#!/bin/sh
+# Find and build gkw using make; simply moves to the gkw
+# directory and runs `make' with any extra arguements.
+# usage: 
+#   gkwmake
+#   gkwmake -j 3 EXEC="gkw_hostname_123M" COMPTYPE="GNU" ...
+
+# use a suitable make
+GNU_MAKE=make
+
+if [ -z "${GKW_HOME}" ]; then
+    echo "You need to set GKW_HOME!"
+    exit 1
+else
+    echo "Building the code in ${GKW_HOME}"
+    DIR="$PWD"
+
+    cd "${GKW_HOME}"
+    if [ $? -ne 0 ]; then
+	echo "cannot cd to ${GKW_HOME}"
+	exit 1
+    fi
+    
+    ${GNU_MAKE} $@
+    ret=$?
+    if [ $ret -ne 0 ]; then
+	echo "cannot build the code"
+    fi
+    
+    cd "${DIR}"
+    exit $ret
+fi

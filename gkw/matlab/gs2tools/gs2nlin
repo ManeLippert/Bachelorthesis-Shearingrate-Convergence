@@ -1,0 +1,614 @@
+#! /bin/tcsh
+#######################################################################
+# GKW PBS batch launcher script configured for qa0X, vip, Hector, HPCFF
+#         (PBS, MOAB/Torque, SGE, loadleveller)
+# but can be easily adapted for other architectures / batch systems
+#
+# For usage instructions call script with --help.
+#
+# Original version,       A G Peeters: gkwlin      2008
+# Extended functionality, F J Casson:  gkwnlin     2008-11
+#
+# Works with general geometry if correct location 
+# of geometry file hamada.dat is specified in input.in
+#
+# Works for restarting a run with new or old input file.
+# Keeps ALL output files.
+#
+# TO DO:
+#   1) Covert to bash (tcsh is a scripting nightmare)
+#   2) Improve option parsing using getopts (make POSIX compliant)
+#   3) Use functions etc to improve readabiltiy, make less 'linear'
+#   4) More informative error messages
+#   5) Auto fix max_sec in the input file to walltime.
+#
+#######################################################################
+
+if ( $#argv == 0 ) then
+  echo For usage call with --help
+  exit(0)
+endif
+
+if ( "x$argv[1]" == "x-h" || "x$argv[1]" == "x-help" || "x$argv[1]" == "x-v" || "x$argv[1]" == "x--help" ) then
+  echo '***********************************************'
+  echo 
+  echo  Script that launches batches of GKW runs through queue systems 
+  echo  '(PBS, MOAB/Torque, SGE, loadleveller)'
+  echo  'configured for qa0X, vip, hpcff, btr, ...' 
+  echo
+  echo  The executable used is the most recent in '$GKW_HOME/run=':
+  echo    $GKW_HOME/run '(set the environment variable to GKW trunk)'
+  echo
+  echo  To set up a correct directory structure for 
+  echo  the execution of this script use 
+  echo  
+  echo    gkwnlin -p name 
+  echo 
+  echo  where name is the name of the project. A 
+  echo  directory with this name will be generated 
+  echo  from the directory where you call this script
+  echo  inside this directory there will be the 
+  echo  directories with the input and output files 
+  echo 
+  echo  First, create input files '(e.g. using ./matlab/create_gkwscan.m)'
+  echo  then launch from the input directory using
+  echo
+  echo  '  usage  : gkwnlin [-c] [-f] [-np 8] [-th 2] [-mem 100mb] [-h 16] [-restart] file1 file2 file3'  
+  echo
+  echo  '  example: gkwnlin -np 32 -h 4 mygkwin*'
+  echo 
+  echo  'If used, the [options] must appear IN THE ORDER ABOVE.'
+  echo
+  echo  'where  -c       chains all runs into one pbs job (e.g. for many linear runs).'
+  echo  '       -f       leaves data in run folders, creating a separate move script'
+  echo  '       -np X    specfies the number of processes (default 1)'
+  echo  '       -th X    is the number of threads per process (default 1)'
+  echo  '                (not implemented on all machines)'
+  echo  '       -mem Xmb is the memory request per node (default 1900mb)'
+  echo  '                (not needed on most machines)'  
+  echo  '       -h       selects number of hours of runtime (default 12)'
+  echo  '       -restart will restart a run using existing files '
+  echo  '                and when finished will overwrite the existing files'
+  echo  
+  echo  Restarts can also be made using the restart files of a previous run
+  echo 
+  echo     'usage: gkwnlin [resource options] [-restart_file run_to_restart] input1 input2'
+  echo 
+  echo  'This will read restart files from run_to_restart (for both input1 and input2)' 
+  echo  so no files will be overwritten.
+  echo
+  echo  ALWAYS execute the script in the directory 
+  echo  where the input files are given, it will then 
+  echo  automatically store the output in the corre-
+  echo  sponding directories. You can use wildcards. 
+  echo  
+  echo  To use with general geometry, the hamada.dat
+  echo  can be located in the inputs folder and set
+  echo  eqfile='../../input/hamada.dat' in the input
+  echo
+  echo  Ideally max_sec should be set less than walltime
+  echo
+  echo '***********************************************'
+  exit(0)
+endif 
+
+#Set variable defaults, modified on a per host basis.
+set host=`hostname | cut -c 1-3`
+#set host='jf2'
+set PROC_INFO=0
+set procs=1
+set cp_cmd='cp' #used only for copying large restart files.
+set VPBS='#PBS'
+set hector=0
+set juropa=0
+set sub_cmd='qsub'
+set threads=1
+set folders=1
+set runcommand='mpirun'
+set chain=0
+set qscript=pbs
+set qext='pbs'
+set mem=400M
+set walltime=00:10:00
+set resources2=''
+set resources3=''
+set resources4=''
+set exports='DUMMY'
+set header1=''
+
+#Setup directory structure
+#Need to be careful when parsing single letter flags
+if ( "x$argv[1]" == "x-p" ) then 
+  shift 
+  if ( $#argv == 0 ) then 
+    echo Usage gkwlin -p name 
+    exit(1)
+  else 
+    if (-e $argv[1] ) then 
+      echo $argv[1] already exists
+      exit(1) 
+    else 
+      mkdir $argv[1]
+      cd $argv[1] 
+      mkdir input
+      mkdir input/scan
+      mkdir runs
+      mkdir eigenf
+      mkdir energy_pfl
+      mkdir energy_qht
+      mkdir error
+      mkdir fields
+      mkdir lambda_pfl
+      mkdir lambda_qht
+      mkdir out
+      mkdir output
+      mkdir out.nc
+      mkdir pbs
+      mkdir theta_pfl
+      mkdir theta_qht
+    endif 
+  endif
+  exit(0)
+endif 
+
+
+  ########################################################################
+  # Option parsing depends on ORDER! - please improve (use getopts)
+  ########################################################################
+
+  echo Running on $host
+
+  # Always run the latest version of the code for the current machine
+  set code='~/gs2_cla/gs2_coriolis'
+  echo The version of the executable : $code[1]
+
+   if ( "$argv[1]" == "-c" ) then
+       set chain=1
+       echo Only a single chained pbs script will be produced.
+       shift
+   else
+      set chain=0
+   endif
+
+   if ( "$argv[1]" == "-f" ) then
+       set folders=0
+       echo Folders workaround: Files will remain in run folder.
+       shift
+   else
+      set folders=1
+   endif
+
+   ##Get number of procs for parallel runs
+   if ( "$argv[1]" == "-np" ) then
+       shift
+           set procs=$argv[1]
+       shift
+   else
+      set procs=1
+   endif
+   echo Running on $procs procs
+
+   if ( "$argv[1]" == "-th" ) then
+       shift
+           set threads=$argv[1]
+       shift
+   else
+      set threads=1
+   endif
+   echo $threads threads per proc
+
+   if ( "$argv[1]" == "-mem" ) then
+      shift
+           set mem=$argv[1]
+      shift
+   endif
+   
+   if ( "$argv[1]" == "-h" ) then
+      shift
+           set walltime=$argv[1]':00:00'
+           set hours=$argv[1]
+           set seconds=`expr $hours \* 3600`
+      shift
+   endif
+
+   set restart=0
+   set restart_file=0
+
+   if ( "$argv[1]" == "-restart" ) then
+           set restart=1
+           set restart_file=0
+           echo
+           echo 'Restart files will be read from directory name of input file'
+           echo 'Existing final output data and restart files will be overwritten'
+           echo 'Append files will be extended'
+           echo
+      shift
+   else
+      set restart=0
+   endif
+
+   if ( "$argv[1]" == "-restart_file" ) then
+           set restart=1
+           set restart_file=1
+      shift
+      set run_to_restart=$argv[1]
+      echo Restarting new input files with restart data from $run_to_restart
+      shift
+   endif
+
+  ########################################################################
+  # Per host settings follow
+  # See http://services.tacc.utexas.edu/index.php/batch-systems-comparison
+  ########################################################################
+
+  #resource request and other settings tailored by host
+  if ( $host == 'nid' ) then #Hector phase 2a - memory request ignored
+  #http://www.hector.ac.uk/support/documentation/userguide/hectoruser/Batch_Processing.html
+      set hector=1
+      set cores=4 
+      set tasks=`expr $cores / $threads` #MPI tasks per node
+      set resources='#PBS -l walltime='${walltime}'' 
+      set resources2='#PBS -l mppnppn='${tasks}',mppwidth='${procs}',mppdepth='${threads}
+      set resources3='#PBS -A e122'
+      set runcommand='aprun -n '${procs}' -N '${tasks}' -D '${threads}
+      set exports='PSC_OMP_AFFINITY=FALSE,MPICH_PTL_OTHER_EVENTS=100000,MPICH_PTL_UNEX_EVENTS=400000,MPICH_UNEX_BUFFER_SIZE=1073741824'
+      #set cp_cmd='ln -s'
+      echo MPI tasks:          $procs
+      echo Cores per node:     $cores
+      echo MPI tasks per node: $tasks
+      echo Threads per task:   $threads
+
+  else if ( $host == 'hec' ) then #Hector phase 2b - memory request ignored
+  #http://www.hector.ac.uk/support/documentation/userguide/hectoruser/Batch_Processing.html
+      set hector=1
+      set cores=24
+      set tasks=`expr $cores / $threads` #MPI tasks per node
+      set mpiperdie=`expr 6 / $threads` #MPI tasks per hex core die 
+      set resources='#PBS -l walltime='${walltime}'' 
+      set resources2='#PBS -l mppnppn='${tasks}',mppwidth='${procs}',mppdepth='${threads}
+      set resources3='#PBS -A e122'
+      #set resources4='#PBS -q lowpriority'
+      set runcommand='aprun -n '${procs}' -N '${tasks}' -d '${threads}' -S '${mpiperdie}
+      set exports='PSC_OMP_AFFINITY=FALSE,MPICH_PTL_OTHER_EVENTS=100000,MPICH_PTL_UNEX_EVENTS=400000,MPICH_UNEX_BUFFER_SIZE=1073741824'
+      #set cp_cmd='ln -s
+      echo MPI tasks:              $procs
+      echo Cores per node:         $cores
+      echo MPI tasks per node:     $tasks
+      echo Hex core dies per node: 4
+      echo MPI tasks per die:      $mpiperdie
+      echo Threads per task:       $threads
+      echo '****' WARNING processors not in multiples of $cores are wasted '****'
+      @ occupied = (($procs - 1) / $cores + 1) * $cores
+      echo '****' Cores occupied:  $occupied 
+
+  #Julich HPC-FF machine - memory request ignored
+  else if ( $host == 'jf2' ) then
+      echo 'Running on Juropa: use multiples of 8 processors'
+      set VPBS='#MSUB'
+      #set cp_cmd='ln -s'
+      set sub_cmd='msub'
+      set juropa=1
+      set cores=8
+      @ processors = $procs * $threads #total processors
+      echo Total processors $processors
+      set nodes=`expr $processors / $cores`   #nodes required
+      if ( $nodes == 0 ) set nodes=1
+      echo Total nodes $nodes
+      set resources='#MSUB -l nodes='$nodes':ppn='$cores',walltime='$walltime'' 
+      set runcommand='mpiexec -np '$procs' --exports=OMP_NUM_THREADS'
+      #Alternative to setting email address mannaully as enviroment variable:
+      set EMAIL_ADDRESS=`q_cpuquota -a email -f l | grep @ | sed 's/|//'`
+
+  else if ( $host == 'fe1' ) then #warwick cluster fe1
+      #set cp_cmd='ln -s'
+      set runcommand='mpirun'
+      set resources='#PBS -l select='$procs':ncpus='$threads':ompthreads='$threads':mem='$mem',walltime='$walltime',place=free'
+      #set resources='#PBS -l select='$procs':ncpus=1:mem='$mem',walltime='$walltime',place=pack'
+      set EMAIL_ADDRESS=`whoami`@warwick.ac.uk
+      
+  else if ( $host == 'qa0' ) then #ipp linux cluster, uses sge, not pbs
+      #set cp_cmd='ln -s'
+      set runcommand=''
+      if ( $procs > 1 ) then
+        set runcommand='mpirun -np '$procs
+        set resources2='#$ -pe mpich2_tok_devel '$procs
+        set resources3='module load impi'
+      endif
+      set qext='sge'
+      set VPBS='#$'
+      set resources='#$ -l h_cpu='$walltime
+      set resources2='#$ -l h_vmem='$mem
+      set EMAIL_ADDRESS=`whoami`@ipp.mpg.de
+      
+  else if ( $host == 'vip' ) then #ipp vip blade cluster, uses loadleveler
+      #set cp_cmd='ln -s'
+      echo 'Running on VIP: use multiples of 32 processors. Not yet tested for OpenMP'
+      set cores=32
+      @ processors = $procs * $threads #total processors
+      set nodes=`expr $processors / $cores`   #nodes required
+      if ( $nodes == 0 ) set nodes=1
+      set runcommand='poe '
+      set qext='lle'
+      set qscript='lle' #use separate branch lower down, differs from pbs
+      set VPBS='# @ ' 
+      set sub_cmd='llsubmit'
+      set header1='# @ shell=/bin/bash'
+      set resources='# @ wall_clock_limit = '$seconds
+      set resources2='# @ tasks_per_node = '$cores
+      set resources3='# @ resources = ConsumableCpus(1)'
+      set resources4='# @ node = '$nodes 
+           
+  else if ( $host == 'btr') then #Bayreuth cluster
+      set cores=8
+      @ processors = $procs * $threads #total processors
+      echo Total processors $processors
+      set nodes=`expr $processors / $cores`   #nodes required
+      if ( $nodes == 0 ) set nodes=1
+      echo Total nodes $nodes
+      set resources='#PBS -l nodes='$nodes':ppn='$cores',walltime='$walltime'' 
+      #set runcommand='$(MPI_RUN)$'
+      set runcommand='${MPI_RUN} -hostfile $PBS_NODEFILE'
+      set EMAIL_ADDRESS=`whoami`@uni-bayreuth.de
+
+  else if ( $host == 'col' ) then #Culham cluster columbus. Uses SGE instead of PBS.
+    #set cp_cmd='ln -s'
+    set VPBS='#$'
+    set resources='#$ -cwd -V'
+    set resources2='#$ -pe mpich-t '$procs
+    set resources3='#$ -l 64bit'
+    set resources4='#$ -q multiway.q'
+    set runcommand='mpirun -np '$procs' -machinefile $TMPDIR/machines'
+    set qext='sge'
+         
+  else #Host not known
+     echo unknown host $host, please configure.
+     exit(0)
+
+  endif #host
+
+  ##########################################################################
+
+echo Request resources: $resources
+echo Runcommand: $runcommand
+
+# Script should always be executed in the input directory 
+cd .. 
+set gkwroot=`pwd` 
+if ( ! -e input ) then 
+  echo Execute the script in the input directory 
+  exit(1)
+endif 
+if ( ! -e out ) then 
+  echo "NO out directory found, did you execute inside input? "
+  exit(1)
+endif 
+if ( ! -e out.nc ) then 
+  echo "NO out.nc directory found, did you execute inside input?"
+  exit(1)
+endif 
+if ( ! -e runs ) then 
+  echo "NO runs directory found, did you execute inside input? "
+  exit(1) 
+endif 
+if ( ! -e eigenf ) then 
+  echo "NO eigenf directory found, did you execute inside input? "
+  exit(1) 
+endif 
+
+echo 'Your root directory:' $gkwroot 
+cd input 
+
+#does not work
+if ( $#argv == 0 ) then
+  echo 'Please supply input file names as final arguments'
+endif
+
+while ($#argv)
+  if ( ! -e $gkwroot/input/$argv[1] ) then
+    echo $argv[1] : file does not exist
+  else
+    echo "----------------------------------------------------------------------"
+    echo $argv[1] : preparing the run
+ 
+    # making a work directory 
+    set gkwworkdir=$gkwroot/runs
+    #set count=1
+    #while ( -e $gkwworkdir/run$count )
+    #  @ count++
+    #end
+    #set rundir=$gkwworkdir/run$count
+    set runname=$argv[1]:t 
+    set rundir=$gkwworkdir/$runname
+    mkdir $rundir
+ 
+    if ( $chain > 0) then
+       set qname=$gkwworkdir/chain.$qext
+       set subname=$qname
+    else if ( $chain == 0) then
+       set qname=$gkwworkdir/$runname.$qext
+       set subname=$qname 
+    endif
+
+    if ( $restart == 1 ) then
+      #set code=`ls -t $gkwroot/restart/gkw*.x`
+      #echo Restart version of the executable : $code[1]
+      #echo 'With restart, set irun in input file or old restart files will be clobbered'
+      cp $code[1] $rundir/gkw
+
+      if ( $restart_file == 0) then
+         set run_to_restart=$runname 
+         #echo 'With restart, set irun in input file or restart files ' $run_to_restart ' will be clobbered'
+      endif
+
+      echo Restarting with data from $run_to_restart
+
+      #Check for existance of restart files
+       set n_files=`ls -1 $gkwroot/restart/$run_to_restart/F* | wc -l`
+       set n_files2=`ls -1 $gkwroot/restart/$run_to_restart/I* | wc -l`
+       if ( $n_files == 0 && $n_files2 == 0 ) then 
+             echo '***** '$n_files' restart files found, abort *****'
+             rmdir $rundir
+             exit(1) 
+       endif
+
+      echo $n_files ' restart files found'
+
+       $cp_cmd $gkwroot/restart/$run_to_restart/FD* $rundir
+#      $cp_cmd $gkwroot/restart/$run_to_restart/FDS000* $rundir
+#      $cp_cmd $gkwroot/restart/$run_to_restart/FDS001* $rundir
+#      $cp_cmd $gkwroot/restart/$run_to_restart/FDS002* $rundir
+      $cp_cmd $gkwroot/restart/$run_to_restart/IN* $rundir
+      echo $run_to_restart > $rundir/restart.dat
+      cp $gkwroot/time/$run_to_restart $rundir/time.dat
+      cp $gkwroot/fluxes/$run_to_restart $rundir/fluxes.dat
+      cp $gkwroot/fluxes/em/$run_to_restart $rundir/fluxes_em.dat
+      cp $gkwroot/fluxes/bpar/$run_to_restart $rundir/fluxes_bpar.dat
+      cp $gkwroot/spectrum/kyspec/$run_to_restart $rundir/kyspec
+      cp $gkwroot/spectrum/kxspec/$run_to_restart $rundir/kxspec
+      cp $gkwroot/spectrum/kyspec_em/$run_to_restart $rundir/kyspec_em
+      cp $gkwroot/spectrum/kxspec_em/$run_to_restart $rundir/kxspec_em
+      cp $gkwroot/spectrum/eflux/$run_to_restart $rundir/eflux_spectra.dat
+      cp $gkwroot/spectrum/pflux/$run_to_restart $rundir/pflux_spectra.dat
+      cp $gkwroot/spectrum/vflux/$run_to_restart $rundir/vflux_spectra.dat
+      cp $gkwroot/spectrum/eflux_kx/$run_to_restart $rundir/eflux_xspec.dat
+      cp $gkwroot/spectrum/pflux_kx/$run_to_restart $rundir/pflux_xspec.dat
+      cp $gkwroot/spectrum/vflux_kx/$run_to_restart $rundir/vflux_xspec.dat
+      cp $gkwroot/spectrum/eflux_em/$run_to_restart $rundir/eflux_em_spectra.dat
+      cp $gkwroot/spectrum/pflux_em/$run_to_restart $rundir/pflux_em_spectra.dat
+      cp $gkwroot/spectrum/vflux_em/$run_to_restart $rundir/vflux_em_spectra.dat
+      cp $gkwroot/spectrum/eflux_em_kx/$run_to_restart $rundir/eflux_em_xspec.dat
+      cp $gkwroot/spectrum/pflux_em_kx/$run_to_restart $rundir/pflux_em_xspec.dat
+      cp $gkwroot/spectrum/vflux_em_kx/$run_to_restart $rundir/vflux_em_xspec.dat
+      cp $gkwroot/parallel/phi_time/$run_to_restart $rundir/parallel_phi.dat
+      cp $gkwroot/parallel/apar_time/$run_to_restart $rundir/parallel_apar.dat
+    else #No restart
+      cp $code[1] $rundir/gkw
+      cp $code[1] $gkwroot/restart
+    endif #restart
+
+    cp $gkwroot/input/$argv[1] $rundir/input.in
+    
+    cd $rundir
+
+  #Truncate the PBS name if too long
+  set pbsname=`echo $runname | cut -c 1-15`
+  if ( $chain == 1 ) then
+    set pbsname = `echo chain_$runname | cut -c 1-15` 
+  endif
+
+  if ( $chain < 2 ) then 
+    #echo $chain
+    rm -f $qname
+
+    # Generating a pbs script 
+    if ( $qscript == 'pbs' ) then 
+        echo preparing pbs script
+
+            #echo '#! /bin/bash --login' > $qname 
+            echo '#! /bin/bash' > $qname
+            #echo $VPBS' -j oe' >> $qname 
+            echo $VPBS' -e '$gkwroot'/pbs/'$pbsname.e >> $qname
+            echo $VPBS' -o '$gkwroot'/pbs/'$pbsname.o >> $qname
+            echo $VPBS' -v OMP_NUM_THREADS='$threads >> $qname
+            echo $VPBS' -N '$pbsname >> $qname
+            #echo $VPBS' -v KMP_AFFINITY="verbose,proclist=[3,2,1,0]"' >> $qname
+            #echo $VPBS' -v OMP_DYNAMIC=FALSE' >> $qname
+            #echo $VPBS -v OMP_SCHEDULE=static' >> $qname
+            echo $VPBS' -v '$exports >> $qname
+            echo $VPBS' -m be' >> $qname
+            #echo $VPBS' -V' >> $qname
+            echo $VPBS' -M '$EMAIL_ADDRESS >> $qname
+            echo $VPBS '-v tpt='$threads >> $qname
+            echo $resources >> $qname
+            echo $resources2 >> $qname
+            echo $resources3 >> $qname
+            echo $resources4 >> $qname
+    
+    # Loadleveller requires fundamentally different format to PBS type managers
+    else if ( $qscript == 'lle' ) then
+          echo preparing loadleveller script          
+          echo $header1 > $qname
+          echo $resources >> $qname
+          echo $resources2 >> $qname
+          echo $resources3 >> $qname
+          echo $resources4 >> $qname
+          echo $VPBS environment= COPY_ALL >> $qname
+          echo $VPBS error   = $gkwroot/out/pbs/$argv[1].e >> $qname
+          echo $VPBS output  = $gkwroot/out/pbs/$argv[1].o >> $qname
+          echo $VPBS job_type = parallel >> $qname
+          echo $VPBS job_name = $pbsname >> $qname  
+          echo $VPBS network.MPI = sn_all,not_shared,us >> $qname 
+          echo $VPBS 'notification = complete' >> $qname
+          echo $VPBS queue >> $qname
+          echo export MP_EUILIB=us >> $qname
+          echo export MP_EUIDEVICE=sn_all >> $qname
+          echo export MP_SHARED_MEMORY=yes >> $qname
+          echo export MEMORY_AFFINITY=MCM >> $qname
+          echo export MP_SINGLE_THREAD=yes >> $qname
+                                              
+    endif #pbs
+  
+    echo 'export OMP_NUM_THREADS='${threads}'' >> $qname
+
+    if ( $chain == 1 ) then 
+      set chain=2
+    endif
+  endif # chain < 2
+
+      echo cd $rundir >> $qname 
+      #Finally, Run GS2 !!
+      echo ${runcommand} ./gkw input ' > ' $rundir/output >> $qname
+
+      #If leaving run data in run folders, make a different mv script.
+      set mname=$gkwroot/runs/$runname'.mv'
+      rm -f $mname
+
+      echo '#! /bin/bash' > $mname
+      echo cd $rundir >> $mname
+       
+      echo mv $rundir/pbs.dat $gkwroot/out/pbs/$argv[1].pbs_nodes >> $mname
+      
+      echo mv $rundir/input.fields $gkwroot/fields/$argv[1] >> $mname
+      echo mv $rundir/input.out $gkwroot/output/$argv[1] >> $mname
+      echo mv $rundir/output $gkwroot/out/$argv[1] >> $mname
+      
+      echo mv $rundir/input.energy $gkwroot/energy_pfl/$argv[1] >> $mname
+      echo mv $rundir/input.energye $gkwroot/energy_qht/$argv[1] >> $mname
+      
+      echo mv $rundir/input.theta $gkwroot/theta_pfl/$argv[1] >> $mname
+      echo mv $rundir/input.thetae $gkwroot/theta_qht/$argv[1] >> $mname
+    
+      echo mv $rundir/input.lam $gkwroot/lambda_pfl/$argv[1] >> $mname  
+      echo mv $rundir/input.lame $gkwroot/lambda_qht/$argv[1] >> $mname
+            
+      echo mv $rundir/input.error $gkwroot/error/$argv[1] >> $mname
+      echo mv $rundir/input.eigenfunc $gkwroot/eigenf/$argv[1] >> $mname
+      
+      #echo mv $rundir/input.amoments $gkwroot/amoments/$argv[1] >> $mname
+      echo mv $rundir/input.out.nc $gkwroot/out.nc/$argv[1] >> $mname
+      
+      echo cd .. >> $mname
+      #echo rmdir $rundir >> $mname
+   
+      echo >> $qname
+      
+      
+      # Execute the move script from the queue job script, if desired.
+      if ( $folders == 1 ) then
+         echo bash $mname >> $qname
+      endif         
+
+      # Submit queue job if not chaining
+      if ( $chain == 0 ) then
+         $sub_cmd $qname &
+      endif
+   
+  endif #file existing
+
+  shift
+end
+
+#Submit chain job if desired
+if ( $chain >= 1  ) then
+         $sub_cmd $subname 
+endif

@@ -1,0 +1,44 @@
+Non-exhaustive list of papers containing GKW benchmarks, 
+which are not presently listed in the GKW manual.
+(should be added there)
+
+
+2014:
+
+Rotation and ExB shearing benchmark with Qualikiz (P. Cottier)
+https://pastel.archives-ouvertes.fr/pastel-00939240
+P Cottier et al 2014 
+Plasma Phys. Control. Fusion 56 015011 
+http://dx.dox.org/10.1088/0741-3335/56/1/015011
+
+MAST L mode / H mode benchmark (lineer)
+S.S Henderson et al.
+2014 Nucl. Fusion 54 093013 
+http://dx.doi.org/10.1088/0029-5515/54/9/093013
+
+
+2013:
+
+AUG L-mode edge benchmarks:
+E. Fable et al. (linear)
+Inputs: http://gkw.googlecode.com/svn/input/2013_Fable_PPCF/
+2013 Plasma Phys. Control. Fusion 55 124028
+doi:10.1088/0741-3335/55/12/124028
+https://code.google.com/p/gkw/source/browse/input/
+---
+D. Told et al. (nonlinear)
+Inputs: http://gkw.googlecode.com/svn/input/2013_Told_PoP/
+Phys. Plasmas 20, 122312 (2013);
+http://dx.doi.org/10.1063/1.4858899
+
+MAST MTM benchmark with GS2 (linear):
+D. Dickinson et al., EPS 2013
+http://ocs.ciemat.es/EPS2013PAP/pdf/O3.105.pdf
+
+Benchmark of GKW spectral with nonspectral:
+P. Migliano et al.
+Phys. Plasmas 20, 022101 (2013); 
+http://dx.doi.org/10.1063/1.4789856 
+
+
+2009 and earlier: See CPC paper

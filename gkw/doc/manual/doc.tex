@@ -1,0 +1,156 @@
+\documentclass[fleqn]{report}
+\usepackage{fullpage}
+\usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{hyperref} 
+\usepackage{underscore} %This is messy - it means no underscores in labels or figure names.
+\usepackage{subfigure}
+\usepackage{fancyvrb}
+\usepackage{chngpage} % allows for temporary adjustment of side margins
+\usepackage{lscape} % allows for some landscape orientated pages, the pdf version is:
+\usepackage{cancel}
+%\usepackage{pdflscape}
+
+% \usepackage[small,compact]{titlesec}
+
+% Comment this as well as the \printindex at the end out to avoid the generation of a 
+% book index 
+% \usepackage{makeidx}
+% \makeindex 
+% To simplify the build, do not generate the index
+\renewcommand{\index}[1]{}
+
+\usepackage{nomencl} % List of symbols 
+\makenomenclature
+
+
+%Comment the block below to remove the version control footers.  Leave the definitions in each chapter file alone!.
+\pagestyle{fancy}
+\fancyhead{} %leave this here to blank fancy header
+\renewcommand{\headrulewidth}{0pt} %leave this here to blank header line
+\fancyfoot[C]{$\qquad \qquad \qquad \qquad \qquad \qquad \qquad \qquad$ \thepage} %To avoid clash with date
+
+% The convention is British spelling:
+%  -ise -isation, like in 'parallelise', 
+%  centre
+%  analyse
+%  analogue
+
+\hypersetup{
+bookmarks,
+plainpages=false,
+colorlinks=true,
+pdfborder={0 0 0 0},
+linkcolor=blue,
+citecolor=blue,
+urlcolor=blue,
+pdfstartview={FitH},
+pdftitle={GKW Manual},
+bookmarksopen=false,
+unicode
+}
+%if not using hyperref, uncomment this
+%\newcommand\texorpdfstring[2]{#1}
+
+%Attempt to keep the complete set of equations on one page...
+\setlength{\textheight}{24cm}
+%\setlength{\textwidth}{16cm}
+%\topskip{21mm}
+%\bottomskip{21mm}
+\setlength{\topmargin}{-10truemm}
+%\setlength{\abovedisplayskip}{10pt}
+%\setlength{\belowdisplayskip}{10pt}
+
+
+%For Binding
+%\setlength{\oddsidemargin}{+10truemm}
+%\setlength{\evensidemargin}{-10truemm}
+
+%Double Spacing
+%\renewcommand{\baselinestretch}{2}
+%\parindent0cm
+
+%Controlling Floats
+%\renewcommand{\textfraction}{0.15}
+%\renewcommand{\topfraction}{0.85}
+%\renewcommand{\bottomfraction}{0.85}
+%\renewcommand{\floatpagefraction}{0.9}
+
+% define an environment to escape underscores (not needed in href environments due to underscaore package)
+% this is a neater alternative
+\makeatletter
+\DeclareRobustCommand*{\escapeus}[1]{%
+  \begingroup\@activeus\scantokens{#1\endinput}\endgroup}
+\begingroup\lccode`\~=`\_\relax
+   \lowercase{\endgroup\def\@activeus{\catcode`\_=\active \let~\_}}
+\makeatother
+
+%% Various macros are defined below in order to aid with the formatting
+%% and to enable indexing at some point (via makeindex, xindy or similar).
+%% Please use these and add more as appropriate.
+
+\usepackage{gkwdoccommands}
+
+\setlength{\mathindent}{0.5cm}
+
+\usepackage{graphicx}
+\graphicspath{{../fig/}}
+
+
+\begin{document}
+
+\title{GKW how and why}
+
+\author{A.G. Peeters, R. Buchholz, Y. Camenen, F.J. Casson, \\ 
+        S. Grosshauser, W.A. Hornsby, P. Manas, P. Migliano, \\
+        M. Siccinio, A.P. Snodin, D. Strintzi, T. Sung, \\ 
+        G. Szepesi, D. Zarzoso}  
+
+\date{Updated in 2016, work in progress. \thanks{Copyright \copyright{}
+2007-2016, by named authors.}}
+
+\maketitle
+
+\setlength{\parskip}{8pt}
+\setlength{\parindent}{0pt}
+
+\include{preface}
+\include{theory}
+\include{practise}
+\include{collisions}
+\include{rotation}
+\include{tearing}
+\include{eiv}
+\include{global}
+\include{implementation}
+\include{buildandrun}
+\include{diagnostics}
+\include{benchmarks}
+\include{neoclassics}
+
+\begin{appendix}
+
+\include{Appendixgeometry}
+\include{appendix-vel-nonlin}
+
+\include{Memo-LFS-FSA-density}
+
+\end{appendix}
+
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+\include{bibliography}
+
+% \printindex 
+% \printnomenclature
+
+\end{document}
+
+% related to auctex mode and latex-preview-mode in Emacs:
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "doc"
+%%% End:

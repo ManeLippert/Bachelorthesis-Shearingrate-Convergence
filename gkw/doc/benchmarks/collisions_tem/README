@@ -1,0 +1,27 @@
+The benchmark is a logarithmic collisionality scan for a AUG TEM case, 
+between GS2 and GKW, both for pitch angle scattering only.
+This benchmarked was performed in Oct 2011 by FJ Casson.
+
+Scattering of ions (off either species) makes no difference for this benchmark 
+(turning them on / off did not change the result of either code)
+
+To isolate the effect of e-e collisions and e-i collisions, the variable Zeff 
+(a multiplier in front of the e-i collision rate)is also varied.
+
+The Zeff input varaible appeared in GKW inputs at r2225, so the input files
+will not work with GKW versions older than that.
+
+The version of GS2 used is the old tarball from sourceforge.  
+The input files may need some tweaking to run with newer gs2
+as some variables have been changed (normalisation swtiches?),
+and in particular the "default" option for the collision operator 
+may no longer be "lorentz", which is required for this benchmark.
+
+At the lowest collisionalities, GKW requires very high v|| resolution
+and very low v|| dissipation (best with arakawa scheme) allows best match the GS2 result,
+but the convergence is very slow.
+
+At higher collisionalities, the eigenfunction extends further, and nperiod=15 may
+be needed for good convergence (it is not known if the treatment of the flappy 
+s boundary in both codes is equivalent, so the periods should be ample)
+

@@ -1,0 +1,7 @@
+Graphs for tests of conservation / convergence properties of collision operator
+(Test not benchmark)
+
+The inputs for the benchmark of collisions in Peeters PoP 2009 (self-consistent mode structure paper) 
+should be found / recreated in due course.
+
+A more thorough benchmark of the pitch angle part of the collisions is in ../collisions_tem

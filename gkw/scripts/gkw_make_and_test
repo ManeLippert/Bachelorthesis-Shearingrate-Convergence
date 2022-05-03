@@ -1,0 +1,150 @@
+#!/bin/bash
+
+# This script may be useful for hunting down a commit which caused a problem.
+# Users of git-svn can use it on their local GKW repository.
+##########
+#
+# First, tell git that you want to start searching for a
+# commit that caused a problem:
+#     git bisect start
+# Tell git that the current commit is broken:
+#     git bisect bad
+# Tell git that a certain commit with that hash is not broken:
+#     git bisect good 128dafd75384f42c2544acd28d432c8abef79878
+# Instead of those three commands, you can also do it in one, if you like:
+#     git bisect start HEAD 128dafd75384f42c2544acd28d432c8abef79878
+#
+# Then make git search automatically for the first commit for
+# which the exit code of your script is not 0.    
+#     git bisect run gkw_make_and_test
+# If you want to save time, then test only certain testcases.
+#     git bisect run gkw_make_and_test -t "$GKW_HOME/scripts/gkw_run_tests $GKW_HOME/tests/standard/global_em/"
+# This should spit out information about the first broken commit.
+#
+# Do not forget to say
+#     git bisect reset
+# in the end, to officially end the binary search.
+#
+# Good luck!
+#
+###########
+#
+# There may be situations were old code is involved and the
+# instructions above do not apply immediately.
+#
+# Ex.: Old commits need to be tested. However, the old configuration
+# included in those commits is now wrong and after a simple checkout
+# the code cannot be compiled. To overcome this, one make copies the
+# up-to-date configuration files outside the control of git.
+# i.e. for example
+#
+#    cp $GKW_HOME/scripts/gkw_make_and_test $GKW_HOME/scripts/gkw_make_and_test.copy
+#    cp $GKW_HOME/config/btppx/default.mk $GKW_HOME/config/btppx/default.copy.mk
+#    cp $GKW_HOME/config/btppx/compiler/gnu.mk $GKW_HOME/config/btppx/compiler/gnu.copy.mk
+# 
+# and then in gkw_make_and_test.copy change the compilation line
+#
+#    make -j
+#
+# to
+#
+#    make -j CONFIG=config/btppx/default.copy.mk COMPILER=gnu.copy DEBUG=on OPTFLAGS=off
+#
+# Furthermore, one may want to test only a specific testcase:
+#
+#    git bisect run gkw_make_and_test.copy -t "gkw_run_tests tests/standard/shat0"
+#
+
+TEST_COMMAND="gkw_run_tests"
+AFTER_COMMAND="git checkout -f"
+
+function usage_exit(){
+    cat <<EOF
+Usage:
+      $0 [ -p <preparation command> ...] [ -t <alternative test script> ] "path/to/test/input.dat" ...
+
+EOF
+    exit $1
+}
+
+function read-args-and-prepare(){
+    while getopts "hp:t:s:a:" OPTION
+    do
+    	case "$OPTION" in
+    	    h) usage_exit;;
+    	    p) echo "The preparation command '$OPTARG' is executed."
+    		PREPARATION_COMMANDS="$OPTARG"
+    		# prepare, e.g. override old config files with newer ones, so that one can compile.
+    		$PREPARATION_COMMANDS
+    		;;
+	    t) 
+    		TEST_COMMAND="$OPTARG"
+		echo "The test command is set to '$TEST_COMMAND'"
+		;;
+	    s)
+                TIMEOUT="$OPTARG"
+		echo "The timeout is set to $TIMEOUT."
+		;;
+	    a) echo "The afterwork command '$OPTARG' is recognized."
+		#AFTER_COMMAND="$AFTER_COMMAND $OPTARG ;"
+		# It does not yet work to set this via cmd line
+		#arguments, the bash/git complains about the semicolon
+		;;
+    	    \?) echo "Invalid option: -$OPTARG"
+    		usage_exit
+    		;;
+    	    *) echo "Unimplemented option chosen."
+    		usage_exit
+    		;;   # Default.
+    	esac
+    done
+
+    shift $(($OPTIND - 1))
+}
+
+
+read-args-and-prepare "$@"
+
+# compile gkw.
+gkwmake -j DEBUG=on OPTFLAGS=on
+# If you want to use a different compilation command, you have to make
+# a copy of this script at the moment, at use thät for bisection (see
+# description at the beginning of the file)
+
+if [ $? -ne 0 ]; then
+    #exit code 125 tells git-bisect that this commit could not be tested.
+    echo "BISECT: This commit could not be tested, it does not compile."
+
+    # clean up working tree, so that the next checkout does not fail.
+    echo "BISECT: execute cleanup command '$AFTER_COMMAND'"
+    $AFTER_COMMAND
+
+    exit 125
+fi
+
+# run a specific test or the whole standard test suite, if you have time
+echo "BISECT: execute test command '$TEST_COMMAND'"
+if [ -n "$TIMEOUT" ]
+then
+    timeout $TIMEOUT $TEST_COMMAND
+else
+    $TEST_COMMAND
+fi
+
+test_success=$?
+
+# clean up working tree, so that the next checkout does not fail.
+echo "BISECT: execute cleanup command '$AFTER_COMMAND'"
+$AFTER_COMMAND
+
+# check for the exit code of the testing script:
+if [ $test_success -ne 0 ]; then
+    # a nonzero exit code (which is not 125) tells git-bisect that this commit
+    # is a bad one
+    echo "BISECT: this is a bad commit"
+    exit 1
+else
+    # whereas this commit is a good one.
+    echo "BISECT: this is a good commit"
+    exit 0
+fi

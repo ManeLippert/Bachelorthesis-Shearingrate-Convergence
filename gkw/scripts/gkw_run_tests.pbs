@@ -1,0 +1,26 @@
+## Example script to show how to run the gkw tests through a batch system
+##
+## Create a similar script using the relevant batch script header commands
+## for a given machine (which can be taken from the gkwnlin script output).
+##
+## Submit from the a gkw working copy (on some machines this must reside on scratch)
+## from the scripts directory assuming the GKW executable is already compiled. 
+##
+#! /bin/bash --login
+#PBS -l select=32:ncpus=1:ompthreads=1:mem=100mb,walltime=00:10:00,place=free
+#PBS -j oe
+#PBS -o gkw_run_tests.o
+#PBS -e gkw_run_tests.o
+#PBS -v OMP_NUM_THREADS=1
+#PBS -V
+#PBS -N gkw_tests
+
+cd $PBS_O_WORKDIR
+cd ..
+export GKW_HOME=`pwd`
+export GKW_MPIRUNCMD=`mpirun` #used by gkw_run_tests
+echo using GKW_HOME $GKW_HOME
+
+$GKW_HOME/scripts/gkw_run_tests -p > $GKW_HOME/scripts/tests.out
+now=$(date +%F_%T)
+cp $GKW_HOME/scripts/tests.out $GKW_HOME/tests/tests${now}.out

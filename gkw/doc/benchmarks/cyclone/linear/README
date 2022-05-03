@@ -1,0 +1,17 @@
+This directory contains the GKW and GS2 input files for the cyclone basecase 
+(linear) using different values of R/LT, as appears in the CPC paper. 
+
+The files in gkw_old_cyclone... are the ones originally used for the benchmark
+and are in an older format, (and won't run directly in the new version of the code). 
+They are mostly for reference, but might with version 1 from the repository. 
+
+The files in gkw_cyclone... have simply had the inputs updated to run with 
+newer versions of gkw (checked with r2250, but should work with CPC version
+and anything from ~r1000 onwards)
+
+In the future a set of input files that run with the new version 
+of the code will be added.
+
+Also given are the GS2 input files that have been used for comparison 
+which were run with the old GS2 tarball available from sourceforge.
+(These also might not run with newer versions of GS2)

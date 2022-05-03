@@ -1,0 +1,768 @@
+!This example input file should be a comprehensive list of possible inputs, some experimental or obsolete.
+!Default values are used if no value is provided.
+!Some values have no default (or a default which fails) and must be provided to run (see other minimum sample).
+
+! WARNING:  This file is hand-made and maintained and has been known to contain errors, e.g. for the default values.
+! Check input.out written by the code to unambiguously see the values used in any run.
+
+!---------------------------------------------------------------------------------------------------------------------
+ &CONTROL                                !This namelist is read in control.f90
+ order_of_the_scheme = 'fourth_order'    !Scheme is "fourth_order" or "second_order" in space (default='fourth_order')
+                                         !for differencing of parallel spatial and parallel velocity derivatives
+ parallel_boundary_conditions = 'open'   !Either 'open' or 'Dirichlet' (not recommended)            (default = 'open')
+ radial_boundary_conditions = 'periodic' !Specify the radial boundary conditions. Only relevant 
+                                ! for non-spectral runs. Tested are 'periodic' and 'Dirichlet'      (default = 'periodic')
+                                ! experimental are: 'Neu-Dir' and 'Neuslab'
+ NON_LINEAR = .false.           !Include the non linear terms, computationally expensive fft        (default = F)
+ zonal_adiabatic = .false.,     !If zonal flows corrections included for adiabiatic electrons       (default = F)
+ METHOD = 'EXP',                !Time integration "EXP" for explicit, "IMP" (under development)     (default = 'EXP')
+                                !for implicit or "EIV" for eigenvalue solver.
+ METH   = 2                     !Choice of algorithm for time integration METHOD.
+                                !For EXP 1 = modified mid point, 2 = 4th order RK, 3 = 3rd order scheme (default = 2)
+                                !or -4,-6,-7 = diffusive dominated schemes, or 99 = auto selection (either 2 or -4)
+                                !For IMP, meth = 1 or meth = 2 (needs documenting)
+ DTIM   = 0.02                  !Initial time step size (normalized), will be reduced if needed     (default = 0.005)
+ NTIME  = 5,                    !Number of iterations of NAVERAGE.                                  (default = 0 fails)
+ NAVERAGE = 100                 !No of timesteps between re-normalisation, data output              (default = 0 fails)
+                                !NTIME * NAVERAGE = total number of timesteps
+ nlapar = .false.,              !True = keep the electromagnetic potential. false = electrostatic      (default = F)
+ nlbpar = .false.,              !True = keep the electromagnetic compression.                          (default = F)
+ nlphi = .true.                 !True if the electrostatic potential is kept in the equations          (default = T)
+                                !Setting nlphi=.false. is broken (matrix compression), it is never used
+ neoclassics=.false.            !True if the neoclassical drive terms are kept                         (default = F)
+ collisions = .true.            !Turn on the collision operator, use the collision namelist below      (default = F)
+ disp_par = 1.0                 !(Hyper) dissipation coefficient for parallel derivatives.             (default=0.2)
+ disp_vp  = 0.0                 !(Hyper) dissipation coefficient for parallel velocity space           (default=0.2)
+                                ! WARNING: Acts like collisionality.  Can be zero when collisions are used
+                                ! and also must be zero for a true "collisionless" or low collisionality run.
+ disp_x   = 0.0                 !(Hyper) dissipation coefficient in perpendicular x direction           (default=0.0)
+ disp_y   = 0.0                 !(Hyper) dissipation coefficient in perpendicular y direction           (default=0.0)
+                                ! if disp_[x/y] are >0, dissipation is k^4, if <0, k^2
+ lverbose     = .false.         !Switch for verbose code screen output                                 (default = F)
+ io_format = 'ascii'            ! Use 'ascii' to output all data as formatted text files         (default = 'mixed')
+                                !     'binary' to output all data as unformatted binary files
+                                !     'mixed' to output some binary and mostly text files
+                                !     'hdf5' to output a single HDF5 file (needs compilation with HDF5 libraries)
+                                !     'hdf5+ascii' to output a single HDF5 file and duplicate 1D and 2D data to
+                                !         formatted text files.
+                                !     'none' to output no data at all.
+ io_legacy = .true.             ! The setting .true. makes GKW output data as in the past.             (default = T)
+                                ! but .false. should produce (as far as it is implemented) a more natural data layout.
+ io_testdata = .true.           ! This switch causes very small numbers ("numerically zero") in the output
+                                ! data to be rounded to exactly zero. This can be useful e.g. for testcases,
+                                ! to avoid differences between serial and parallel runs.               (default = F)
+ silent = .false.,              !Reduce screen output of the matrix compression                        (default = F)
+ vp_trap = 0                    !Integer that determines the parallel velocity set up.                 (default = 0)
+                                !If = 0  parallel velocity grid is uniform and constant along the field line
+                                !If = 1  parallel velocity follows the trapping condition (developmental)
+ uniform_mu_grid = .false.      !Uniform spacing of the points in mu, default is uniform in vperp      (default = F)
+ lflapv = .false.               !Switch for flappy boundary conditions in velocity space on trapping   (default = F)
+ normalized =.true.             !If the distribution function is renormalised every naverage timesteps (default = T)
+                                !For linear runs only, ignored for nonlinear runs.
+                                !If true, the fluxes solution are normalised by { |phi|^2 + |Apar|^2 + |Bpar|^2}
+                                !so that they can be used directly in quasi-linear models.
+normalize_per_toroidal_mode= F  ! Use a separate normalization factor for each toroidal mode (such that
+                                ! kyspec is just 1.0 for every mode, for a electrostatic run). This is useful
+                                ! for linear runs with nmod>1.
+                                ! Note that the switches 'normalize' and 'normalize_per_toroidal_mode'
+                                ! are mutually exclusive, and the latter takes precedence if both are
+                                ! set.                                                                 (default = F)
+ max_sec = 1000                 !Internal program kill time (integer) (set lower than walltime)        (default =-1)
+ max_seconds = 1000.            !Real version of above int. Real version takes priority if both set    (default =-1)
+ READ_FILE  = .false.           !Restart from file: requires dist file(s) FDS*                         (default = F)
+                                !Will read either restart_file_version if present, per processor files take priority
+                                !You also need a compatible input.dat. If no restart file found, a new run is started
+ irun = 0                       !Run number - use for optional sequential numbering of restart files.   (default = 0)
+                                !If 0, FDS will be read and overwritten. If 1, FDS will be read and FD1 will be written
+                                !If 2, FD1 will be read and FD2 will be written, etc (up to 99)
+ restart_file_version = 2       !Controls the restart file version *output* by the code                 (default = 2)
+                                !Use 0 to supress writing of all restart files 
+                                !Use 1 (1 file per processor) if mpi implementation cannot write single restart file.
+                                !Use 2 (Single file) for flexibility to restart with different processor layouts
+ ltrapping_arakawa = .false.    !Use Arakawa type differencing for trapping terms                       (default = F)
+ testing = .false.,             !Disable file [in/out]puts for mpitune testing, sets NTIME = 1          (default = F)
+ matrix_format = 'gkw-crs'      !Chose the format for the Sparse Matrix. Actually available 
+                                !options depend on linked libraries, and are 'gkw-crs','librsb',
+                                ! 'mkl-crs'.                                                            (default=depends on compilation)
+ gamatol     = 0.               !Tolerance in the linear growth rate gamma for which the code will stop (default=0.)
+                                !Code stops if std(growth_rate) < gamatol where the std deviation is taken on the 
+                                !last 6 big time steps (a big time step is of length DTIM*NAVERAGE)
+ fluxtol     = 0.               !Tolerance in es fluxes which stops the code                            (default=0.)
+ ifluxtol = 0                   !Which column of fluxes.dat to use for the fluxes tolerance             (default=2)  
+                                !(uses legacy fluxes "column numbering", even if io_legacy=F)                                
+ ncqtol      = 0.               !Tolerance in the neoclassical ion heat flux which stops code           (default=0.)
+ nl_dtim_est = .true.           !Use the nonlinear timestep adjustor, slow in big parallel job          (default = T)
+                                !If false, the code will be forced to abort if the timestep is too large.
+ fac_dtim_est = 0.8             !Factor to multiply the linear timestep estimator by (METHOD=EXP only)  (default = 0.95)
+ fac_dtim_nl = 1.8              !Factor to multiply the nonlinear timestep estimator by                 (default = 1.0)
+ dt_min = 0.                    !the code will stop if dtim gets smaller than this value                (default = 1e-6)
+ min_gr = 0.                    !gamatol will stop early if growth rate stays smaller than this value   (default = 0.01)
+ max_gr = 200.0                 !the code will stop if growth rate stays larger than this value         (default = 100.)
+ ndump_ts=10                    !Number of large timesteps between writing of checkpoint DMP files      (default = 0)
+ auto_restart=.false.           !The code will look for checkpoint files DMP and restart if found       (default = F)
+                                !Code will run to original NTIME. The checkpoint files take preference over FDS files
+                                !Note: some lines in append files may be repeated - check time.dat (needs fix).
+ lrestart_new_grid=.false.      !Experimental restarting with different nx, nmod, or trace species      (default = F)
+ spectral_radius = .true.       !If false, use finite differences in the radial direction                 (default = T)
+ order_of_the_radial_scheme = 'fourth_order'    ! For nonspectral, "fourth_order" or "second_order"       (default=order_of_the_scheme)
+ order_of_the_zf_scheme = 'fourth_order'       !use a different finite-differences scheme for      (default = order_of_the_scheme)
+                                 !the calculation of the derivatives of the zonal flow
+ flux_tube = .true.             !If true, use the flux tube approximation. Otherwise global               (default = T)
+ lpar_vel_nl = .false.          !If true, the parallel velocity nonlinearity is included                  (default = F)
+ shift_metric = .true.          !Apply the shifted metric procedure (for spectral_radius=F only)          (default = F)
+ iperform_set = 2               !Measure the timing of the code. This works only if compiled with         (default = 2)
+                                !the performance library. Allowed options are: 0 no timing, 1 nonlinear 
+                                !terms (spectral), 2 explicit time integration and 3 diagnostics.
+                                !The value -1 causes *all* timing sets to be active. 
+ laverage_dist_over_time = .false. ! Averaging the distribution function over time window given by 
+                                   ! [tavg_start, tavg_end] (specified in namelist control). 
+                                   ! The averaged distribution is save to FTA[/.dat]                     (default = F)
+/
+!---------------------------------------------------------------------------------------------------------------------
+ &GRIDSIZE                      !Namelist read in grid.f90
+                                !Default grids sizes of 0 will not run, hence these must be provided.
+ NX = 1,                        !Number of radial wave vectors / points: needs to be an odd number for spectral
+ N_s_grid = 50,                 !Number of grid points along the field line
+ NPERIOD = 1,                   !Integer that specifies the length of the field line,
+                                !The field line makes 2*nperiod - 1 poloidal turns. For nonlinear, nperiod must be 1.
+                                !Note that for nperiod = 1 and mode_box=true the kx modes are connected
+                                !For other nperiod /= 1 the solution is set to zero at the end of the field line.
+                                !                                                                 (default = 1)
+ N_mu_grid   = 5,               !Total number of magnetic moment grid points
+ N_vpar_grid = 8,               !Number of grid points for parallel velocity (must be even)
+ NMOD = 3,                      !Number of binormal modes - do not interact for linear runs
+ number_of_species = 1          !Number of species. Note: do not count the adiabatic species
+ N_trapped  = 2                 !The number of grid points in the trapping region. (note only used if vp_trap = 1.)
+                                !The value gives the number of grid points with positive parallel velocity. 
+                                !The total number in the trapped domain is 2*n_trapped
+ psil = 0.02                    !The lower boundary of the radial grid (for global calculations)
+ psih = 0.3                     !The upper boundary of the radial grid (for global calculations)
+ N_procs_sp   = 1               !Manually specify the number of procs over species ; the total number of processors
+                                !must be equal to the product of N_procs_[sp|mu|vpar|s] UNLESS all are 1 (default),
+                                !in which case the code automatically decides how many procs to use in each direction
+ N_procs_mu   = 1               !As above, but for mu                                              (default = 1)
+ N_procs_vpar = 1               !As above, but for vpar (>1 only works if vp_trap = 0)             (default = 1)
+ N_procs_s    = 5               !As above, but for s                                               (default = 1)
+ N_procs_x    = 1               !As above, but for x (spectral_radius = F only)                    (default = 1)
+ vpmax = 4.2                    !maximum normalized value of the parallel velocity grid            (default = 3.)
+ mumax = 5.1                    !maximum normalized value of the mu velocity grid                  (default = 4.5)
+ non_blocking_vpar = T          !Obsolete, do not use this.
+ lx=50.0                        !LFS radial boxsize only in fluxtube nonspectral                   (no default)
+                                !lx = sqrt(g11(LFS)) lx_real
+ /
+!---------------------------------------------------------------------------------------------------------------------
+ &MODE                          !Namelist read in mode.f90
+ kr_type = 'chin',              !Allowed are 'chin' (poloidal shift of the ballooning transform) 
+                                !         or 'kr' (radial wave vector)                              (default='chin')   
+ CHIN    = 0.,                  !Poloidal shift of the ballooning transform for mode_box false only (default = 0)
+ KRRHO   = 0.,                  !Radial wave vector for mode_box false only (default = 0)
+ KTHRHO  = 0.5,1.0,1.5          !Poloidal wave vector(s) if mode_box=.false.                        (default = 0 fails)
+                                !Only first nmod are used. Does nothing for mode_box=.true.
+                                !For ITG The most unstable mode has kthro ~ 0.5
+ mode_box = .false.,            !Determines if there is a 2D grid of ky,kx. if true use nperiod = 1  (default = F)
+                                !If nperiod = 1 and mode box = .true. the kx modes will be coupled.
+ krhomax = 1.0,                 !For mode_box, this is the maximum k_theta rho_i (ky) on the grid.   (default = 0.0)
+                                !For nmod>1, modes are equidistantly spaced from 0.0 to to krhomax.
+                                !k_perp is evaluated on the low field side of the outboard midplane.
+                                !rho_i evaluated on the flux surface at the major radius of the magnetic axis.
+                                !Note that other codes may normalise the thermal velocity differently
+                                !which can correspond to  gkw k_theta that are a factor sqrt(2) greater.
+ ikxspace = 7,                  !Integer, determines the spacing between the different kx modes      (default = 0 fails)
+                                !Use to control relative kxmax (radial resolution) and kxmin (Lx).  ikxspace ~ Lx/Ly
+                                !Not used if mode_box=.false. or shat=0.
+                                !See mode_box_calculator.m for detail. ikxspace is 'p' in the manual, sec. local limit.
+ rkxspace = 0.0                 !Real: For case with shat = 0 only, sets kx spacing: rkxspace = Lx/Ly (default = 0.)
+ n_spacing = -1                 !Only for global runs, when rhostar is specified. When positive the 
+                                !the wave vector is determined through n_spacing, which is the toroidal 
+                                !mode number of the instability for the case of one mode and gives the 
+                                !spacing between the toroidal modes for the case nmod>1               (default = -1)
+ no_transfer_to = 0             !suppress nonlinear interaction producing intensity at the 
+                                !mode indices ky1, kx1, ky2, kx2, ... given here. Negative values are ignored.
+                                !Values in the range 1,...,nmod (or n_x_grid) specify the respective ky
+                                !(or kx) index. A pair 0,n means "any ky, with kx index n".
+                                ! A pair 0,0 is ignored. 
+                                ! For example, 2,1,0,5,3,0 means: (ky=2,kx=1) (ky=*,kx=5) (ky=3,kx=*) (default = 0,0)
+ no_transfer_from = 0           !Analogous to no_transfer_to: suppress nonlinear interaction involving
+                                !the given mode indices.                                              (default = 0)
+ no_drive_of = 5, 7             !Suppress linear drive of the given mode numbers. Values outside the
+                                !range 1,...,nmod are ignored.                                        (default = 0)
+ /
+!---------------------------------------------------------------------------------------------------------------------
+ &GEOM                          !Namelist read in geom.F90
+ SHAT = 1.07,                   !Magnetic shear           (not used with geom_type chease)        (default = 1.23e4)
+ Q    = 1.57,                   !Safety factor            (not used with geom_type chease)        (default = 1.0)
+ EPS  = 0.177                   !minor radial coordinate / major radius                           (default = 1.0)
+ GEOM_TYPE = 's-alpha'          !Switch for the metric: 's-alpha', 'circ', 'miller', 'fourier' or 'chease'   (default = 's-alpha')
+                                !Experimental: `slab' and `slab_periodic'.  
+                                !The 's-alpha' model actually has alpha=0. 
+ EQFILE='path/to/chease/output/hamada.test.dat'    !file containing the chease output, only for 'chease' mode
+ SIGNB = 1,                     !Sign of B.grad_phi, the toroidal component of the magnetic field (default = 1)
+ SIGNJ = 1                      !Sign of j.grad_phi, the toroidal component of the plasma current (default = 1)
+ EPS_TYPE = 1                   !Radial coordinate used to specify the chosen FS (chease only)  (default=1)
+                                !1=eps, 2=rho_psi
+ R0_LOC = 'LFS',                ! R0 value at which species densities and gradients are defined  (default='LFS')
+                                ! Irrelevant if no centrifugal effects as density is constant on FS
+                                ! Allowed are 'axis' (point on flux surface where R=Raxis)
+                                ! and 'LFS' (low field side in plane of magnetic axis, s=0)
+                                ! For chease, the s point nearest to the top FS-axis intersection (not exact) is used.
+                                !------------------------------------------------------------------
+                                ! The parameters below are only used by the miller parametrisation model:
+                                !  R = Rmil + r*cos(theta + arcsin(delta)*sin(theta))
+                                !  Z = ZZmil + r*kappa*sin(theta + square*sin(2*theta))
+                                ! with r=(Rmax-Rmin)/2
+                                ! Miller geometry is normalised with Rmil (Rref=Rmil, EPS=r/Rmil)
+                                ! Bref=Bt(R=Rmil) -> F=RBt=RrefBref
+                                ! There are no default values, each numerical parameter MUST be provided
+ kappa = 1.,                    ! Elongation
+ delta = 0.,                    ! Triangularity
+ square = 0.,                   ! Squareness (zeta)
+ Zmil = 0.,                     ! Elevation : Zmil = ZZmil/Rmil
+ skappa = 0.,                   ! Radial derivative of kappa : (r * dkappa/dr) / kappa
+ sdelta = 0.,                   ! Radial derivative of delta : (r * ddelta/dr) / sqrt(1-delta^2) :
+                                ! definition from Miller et al. PoP 5, 973 (1998)
+ ssquare = 0.,                  ! Radial derivative of squareness : r * dsquare/dr
+ dRmil = 0.,                    ! Radial derivative of Rmil : dRmil/dr
+ dZmil = 0.,                    ! Radial derivative or Zmil : dZmil/dr
+                                !------------------------------------------------------------------
+                                ! The parameters below are only used by the Fourier geometry parametrisation model:
+                                ! R = Rref + a(theta)*cos(theta) and Z = Zref + a(theta)*sin(theta)
+                                ! with a(theta) = sum_n c_n*cos(n*theta) + s_n*sin(n*theta)
+ N_shape = 3,                   ! Number of Fourier coefficients used to parametrise the flux surface shape (max 50)
+ c = 1.,0.,0.,                  ! cosine Fourier coefficients (N_shape elements)
+ s = 0.,0.,0.,                  ! sine Fourier coefficients (N_shape elements)
+ c_prime = 0.,0.,0.,            ! radial derivative of the cosine Fourier coefficients (Nshape elements)
+ s_prime = 0.,0.,0.,            ! radial derivative of the sine Fourier coefficients (Nshape elements)
+                                !------------------------------------------------------------------
+                                ! Pressure gradient specification, used in miller and fourier parametrisation
+ gradp_type = 'alpha_mhd'       ! 'alpha', 'alpha_mhd', 'pprime', or 'beta_prime', 'beta_prime_input'
+                                ! , 'rota_miller' (default = 'alpha_mhd')
+ gradp = 0.,                    ! Pressure gradient in form determined by gradp_type
+                                ! alpha: interpret gradp as alpha definition: eq. 42 of Miller et al. PoP 5, 973 (1998)
+                                ! alpha_mhd: interpret gradp as definition:  eq. 141 of Candy PPCF 51, 105009 (2009)
+                                ! alpha_mhd and alpha are the same for circular surfaces with skappa=sdelta=square=0..
+                                ! pprime: interpret gradp as pressure gradient with respect to poloidal flux in normalised units
+                                ! (gradp = 2 mu0 * dpdpf * Rref^2 / Bref)
+                                ! beta_prime_input: interpret gradp as beta_prime (independent of the SPCGENERAL value)
+                                ! beta_prime: use the value of beta_prime used in the curvature operator (set by SPCGENERAL)
+                                ! (either beta_prime_type='ref' or beta_prime_type='sp') is used (gradp is ignored).
+                                ! rota_miller : add the effect of rotation in the magnetic equilibrium using
+                                ! eq.24 of Miller et al. PoP 5, 973 (1998). beta_ref from SPCGENERAL, mass, temp, dens,
+                                ! rlt, rln, uprim from SPECIES and vcor from ROTATION are used (2 species only).
+                                ! NOTE alpha is NOT used by the 's-alpha' model, which has alpha=0 !                                
+                                !---------------------------------------------------------------
+                                ! Treatment of strong rotation for miller parametrisation
+ curv_effect = .true.           ! For rota_miller only:  If false, decouple the effect of toroidal rotation on the geometric 
+                                ! tensors from the curvature drift (this effect removed). (default = .true.)
+ beta_rota_miller_type = 'spc'  ! For rota_miller only : If 'geom', uses beta_rota_miller instead of beta_ref to calculate
+                                ! the effect of toroidal rotation on the geometric tensors in miller geometry.
+                                ! If 'spc', uses beta_ref. (default = 'spc')
+ beta_rota_miller = 0.          ! Used only if beta_rota_miller_type = 'geom'.
+                                !---------------------------------------------------------------
+ prof_type        = 'parabolic' ! Only used in the global version. Selects an analytic q-profile  (default = 'parabolic')
+                                ! as a function of radius. Allowed are at present: 'parabolic','parabolic2','orb',
+                                ! 'wesson','rexp', 'mishchenko', 'file'. If 'file' is chosen, the q profile and miller
+				! profiles (if geom_type = 'miller') are read from the file input.prof. 
+                                ! For details on the analytic profiles see chapter 7 of the documentation.   
+ qprof_coef=0.0,0.0,0.0,0.0,0.0 ! coefficient array used for the analytic profiles.               (default=0.8854,19.656,3*0)
+/
+!---------------------------------------------------------------------------------------------------------------------
+ &SPCGENERAL                    !Namelist read in components.f90
+ beta_ref = 0.000,              !Plasma beta (not used if nlapar = .false.)                        (default = 0.00)
+ beta_type = 'ref',             !Allowed are 'ref' (value of beta_ref used) or 'eq' (plasma beta from the equilibrium,
+                                !0 if no equilibrium available)                                    (default = 'ref')
+ betaprime_ref = 0.000,         !Radial derivative of beta (default = 0.00), does not affect
+                                !geometry (unlike Miller geom)                                     (default = 0)
+ betaprime_type = 'sp',         !Allowed are 'ref' (value of betaprime_ref used), 'sp' (value
+                                !calculated from the species params AND beta) or 'eq' (value from the
+                                ! eqm, 0 if no eqm available)                                      (default = 'ref')
+ adiabatic_electrons = .true.   !Adiabatic electrons (alternative is kinetic electrons)            (default = .false.)
+                                !Note that kinetic electrons require a smaller timestep for stability
+ amp_init = 1e-3                !Initial amplitude of distribution function (real)                 (default = 1e-3)
+ amp_init_imag = 1e-3           !Initial amplitude of distribution function (imag)                 (default = 0)
+ kwid_ini = 0.3                 !Parameter for adjusting kspace width of initial conditions with * (default = 0.3)
+ finit = "noise"                !Specifies the initial condition for the perturbed distribution function.
+                                !                                                                  (default = 'cosine2')
+                                !Allowed are "noise","cosine2" (default), "cosine3", "cosine4", "sine", "gauss",
+                                !"zero", "zonal", "cosine5" (ballooning *), "cosine6" (ballooning, no streamers *)
+                                !"line" (of gaussians), "sgauss" (velocity space), "sgauss2" (velocity space),
+                                !"cosine" (deprecated),
+                                !"ecurrent" (experimental current in electron population to initiate tearing mode),
+                                !"helical" (a density perturbation resonant to the magnetic island perturbation).
+                                !'kxzero' and 'kyzero' for an individual mode only, for testing
+                                !'gnoise' (gaussian grid scale noise), 'hybrid' (noise modulated by ballooning *), 
+                                !"cos-zonal-tmp" (sinusoidal zonal perturbation with additional sinusoidal zonal 
+                                ! temperature perturbation; init_coef is used for controling the perturbation)
+                                !The settings from the following list allow to read the distribution
+                                !as at a typical simulation restart,
+                                !but modify it at the beginning. Allowed settings of this kind are
+                                ! "restart+quench_ky" (in connection with the quench_modes parameter),
+                                ! "restart+quench_turbulence" (in connection with amp_init/amp_init_imag),
+                                ! "restart+quench_all_except_SI" (in connection with amp_init/amp_init_imag),
+                                ! "restart+scale_turbulence" (in connection with amp_init/amp_init_imag).
+                                ! "restart+quench_turb_and_some_ZF" (with quench_switch and n_quench=.
+                                ! "restart+scale_zonal_mode" (in connection with amp_init/amp_init_imag and quench_modes;
+                                ! the latter is a list of radial mode indices relating to the radial mode index ix in the
+                                ! code through ix = ixzero +/- quench_modes).
+ init_coef = 1.0, 0.0, 0.0, 0.0, 0.0 ! Parameters for "cos-zonal-tmp" initialization method: radial wave number, 
+                                ! additionl phase in the argument of the sinusoidal perturbation, amplitude of the
+                                ! temperature perturbation, additional phase in the argument of the sinusoidal temperature 
+                                ! perturbation, normalization of the inital density perturbation such that it does not 
+                                ! introduce a temperature perturbation               (default = 1.0, 0.0, 0.0, 0.0, 0.0)
+ finit_imod = 'cosine2'         ! Specifies the inital conditions for the perturbed disitribution function that is
+                                ! used for the mode specified by imod_init (only if imod_init > 0) (default = 'cosine2')
+ imod_init = 0,                 ! Binormal mode that is treated in particular during initialization of the 
+                                ! distribution function                                             (default = 0)
+ amp_imod  = 1.0e-3             ! real amplitude of the mode specified by imod_init (like amp_init) (default = 1e-3)
+ amp_imod_imag  = 0             ! imaginary amplitude of the mode specified by imod_init (like amp_init_imag)
+                                !                                                                   (default = 0)
+ mode_persist = .false.,        ! Switch for setting the mode specified by imod_init constant during the time
+                                ! integration                                                       (default = .false.)
+ amp_zon =  1.0                 ! Real factor that is used to scale the zonal part of the distribution function 
+                                ! during initialization                                             (default = 1.0)
+ amp_zon_imag =  0.0            ! Iaginary factor that is used to scale the zonal part of the distribution function 
+                                ! after initialization                                              (default = 0.0)
+ lfinit_radial_dirichlet = .false.         ! If true, then the initial condition is multiplied with a factor dependent on psi,
+                                ! that will cause the distribution to become zero at psil and psih. (default = F)
+ quench_modes = 4,5,6           ! If finit="restart+quench_ky" is used, then the binormal components
+                                ! of the distribution listed in this parameter are nullified.
+                                ! Values of 0 are ignored.                                         (default = 0 )
+ quench_switch = 'except'       ! switch to specify what to quench in the case finit = "restart+quench_turb_and_some_ZF",
+                                ! allowed are "just", "except", "above", "below".
+ n_quench = 0                   ! integer to specify what to quench, for example in the case
+                                ! finit = "restart+quench_turb_and_some_ZF" (here allowed 0 to floor(nx/2) is allowed).
+ tearingmode=.false.            !Apply the magnetic island perturbation (experimental)             (default = F )
+ tear_zero_epar=.false.         !Impose island phi perturbation (even more experimental)           (default = F )
+ rhostar=0.0                    !rho_ref/R_ref. Only for global effects, zero in true flux tube    (default = 0.0)
+                                !rho_ref is defined at the profile location of Tref, mref.  Bref is defined at R_ref
+ wstar = 10.0                   !The normalised magnetic island width, used with tearingmode       (default = 0.0)
+ psi_0 = 30.0                   !tearing mode nonspectral only: psi_0 the radial position (in gyro-radii units) 
+                                !inside which the island perturbation is damped with tanh profile  (default = lx/3.E0)
+ delta_psi_0 = 4                !The radial extension of the tanh damping (in gyro-radii units).   (default = lx/20.E0)
+                                !Beyond psi_0+delta_psi, the island perturbation is effectively zero.	   
+ Ls    = 2.0                    !In the tearing mode initialisation, Ls is the mode damping length (default = 2.0)
+ isl_rot_freq = 0.1             !The rotation frequency of the magnetic island perturbation        (default = 0.0)
+                                !Positive is in electron diamagnetic direction (unlike mode freq)
+ isl_mode = 2                   !Determines which poloidal mode the island is initialised in when mode_box=T. (default = 2)
+ isl_shear = 0.2                !Magnetic shear for 2D islands only                                (default = 0.0)
+ tm_drive = F                   !Drive rather than impose the tearing mode (experimental)          (default = F)
+ tm_start =-10.0                !Time at which imposed island starts to grow linearly              (default = -10.0)
+ tm_sat   =0.0                  !Time at which imposed island saturates at width wstar             (default = 0.0)                              
+ icrh_params = 0.0, 1.0, 0.0, 1.0  ! Parameters for anisotropic minority species, see manual       (defaults as shown)
+ energetic_particles = F        !Logical parameter to add a non Maxwellian distribution function representing energetic particles to the background Maxwellian representing the bulk (default = F)
+ vpar_mean = 2.0                !Only used if background = 'energetic_particles=T' (default = 0.0)
+/
+!---------------------------------------------------------------------------------------------------------------------
+ !The species must satify quasi-neutrality.
+ !This requires you to set ratios of densities and charge appropriately
+ !Note that the if number_of_species above is less than the number in the list below, later ones will not be read in
+ !If number_of_species is greater than the number in the in the list below, the program will crash.
+ !There are no default values for most of the parameters.
+ !If there is an adiabatic species, it is the negatively charged species.
+
+ &SPECIES                       !This namelist read in components.f90
+ MASS  = 1.0,                   !Species mass in terms of reference value
+ Z     = 1.0,                   !Species charge. If negative, assumed to be the electrons (when adiabatic).
+ TEMP  = 1.,                    !Temperature of species scaled by reference temperature
+ DENS  = 1.,                    !Density of species scaled by reference density
+ rlt   = 8,                     !Temperature gradient R/LT
+ rln   = 3.5,                   !Density gradient R/Ln
+ uprim = 0.0,                   !Gradient of the toroidal velocity Rref^2 grad Omega / v_thref     (default = 0.0)
+ background = 'maxwell'         !Used to select the background distribution function               (default = 'maxwell')
+                                !Can be `maxwell', 'alpha' (slowing down, Phys. Plasmas 15, 052307 2008),
+                                !'ICRH' (minority heated poloidal asymmetry, PPCF 54 045004 2012)
+				!or 'EP' (energetic particles)
+ param = 0.0,0.0                !Only used if background /= `maxwell'                              (default = 0.0)
+ dens_prof_type = 'none'        !Only used in global. Specify the analytic function used in the    (default = 'none') 
+                                !calculation of the density profile. Allowed are (at present) 
+                                !'const', 'cosh2', 'tanh', 'exp_tanh', 'orb', 'orb3', 'exp_poly3' 
+                                !and 'exp_poly6'. The parameters needed to calculate the profile 
+                                !are given the array 'dens_prof_coef'. For the profile shape see
+                                !chapter 7 of the documentation. Finally, one can use the 'file' 
+                                !in which case the profiles are read from the input.prof file.  
+ dens_prof_coef=0.,0.,0.,0.,0.  !array of 5 values used in the calculation of the global density   no default 
+                                !profiles
+ temp_prof_type = 'none'        !Only used in global. Specify the analytic profile of the          (default = 'none') 
+                                !temperature. The switches are similar to those of the 
+                                !density profile and the parameters are given through 
+                                !'temp_prof_coef' 
+ temp_prof_coef=0.,0.,0.,0.,0.  !array of 5 values used in the calculation of the global           no default 
+                                !temperature
+/ 
+ &SPECIES 
+ MASS  = 2.72e-4,               !Yes, these are the electrons (with example ions as dueterium)
+ Z     = -1.0,                  !If adiabatic_electrons, a single negative species is allowed as the adiabatic species
+ TEMP  = 1.0,
+ dens  = 1.0,
+ rlt   = 7.9,
+ rln   = 3.5,
+ uprim = 0.0,
+ /
+!---------------------------------------------------------------------------------------------------------------------
+ &ROTATION                      !Optional Namelist read in rotation.F90
+ VCOR = 0.0                     !Rotation of the plasma vcor =  Rref Omega / vthref = \Omega_N        (default = 0.0)
+                                !Always in direction of toroidal magnetic field if positive.
+ shear_rate = 0.0               !Normalised shearing rate for the ExB perpendicular shear             (default = 0.0)
+                                !Positive values correspond to postive uprim for toroidal rotation
+ shear_profile   = 'none'       !Include a perpendicular shear flow, allowed are:                     (default = 'none')
+                                !'wavevector_remap' discrete mapping of wavevectors (needs high NX > NMOD resolution)
+                                !The following shear methods are experimental - NOT recommended:
+                                !'symmetric', triangle wave, added as a nonlinear term
+                                !'linear' sawtooth wave discontinuous at the boundary, added as a nonlinear term
+                                !'ky_shift', shear by the shifting theorem in ky, with boundary discontinuity
+ t_shear_begin = 0.0            !Normalised time at which shearing should begin                        (default = 0.0)
+ toroidal_shear = 'none'        !Make ExB shear_rate and uprim consistent for toroidal rotation        (default ='none')
+                                !Allowed are: 'use_uprim': shear_rate derived from uprim of species 1
+                                !or 'add_uprim' : uprim value is added on top (input shear_rate is poloidal rotation)
+                                !or 'use_shear_rate': uprim inputs are ignored, derived from shear_rate
+                                !use_uprim and use_shear_rate give pure toroidal rotation with uprim=q*shear_rate/eps
+ coriolis = .true.              !Keep the coriolis drift                                               (default = T)
+ cf_drift = .false.             !Keep the centrifugal drift                                            (default = F)
+ cf_trap = .false.              !Keep the centrifugal trapping and potential                           (default = F)
+                                !(The following two switches, cf_up---, do nothing unless cf_trap=T
+                                !and relate to the 2012 Peeters / Casson Errata.  Read those to understand.)
+ cf_upphi = .true.              !Keep gradient of centrifugal energy in eqm Phi (uses uprim of sp 1 !) (default = T)
+ cf_upsrc = .true.              !Keep gradient of centrifugal energy in source (uprim is per species)  (default = T)
+ cf_qncheck = .true.            !With cf_trap, force quasineutrality of gradients (require same uprim) (default = T)
+ / 
+!---------------------------------------------------------------------------------------------------------------------
+ &COLLISIONS                    !Optional namelist only read if collisions = .true.  Read in collisionop.f90
+                                !WARNING: NO COLLISIONS UNLESS collisions = .true. also in CONTROL namelist
+ rref = 1.                      !reference major radius used in collision operator (see manual)        (default=1.0)
+ tref = 1.                      !reference temperature in units of kev used for the collision operator (default=1.0)
+ nref = 1.                      !reference density in units 10^19 m^-3 used for the collision operator (default=1.0)
+ zeff = 1.                      !scale the electron-main ion scattering by _additional_ zeff                (default=1.0)
+                                !assumes electrons have negative charge, if impurity species are included the scaling 
+                                !factor is automatically reduced accordingly to still obtain the same total effect
+ pitch_angle = .false.          !Switches for the collision terms, this one is pitch angle scattering  (default = collisions)
+ en_scatter = .false.           !Energy scattering term (use with friction_coll)                       (default = collisions)
+ friction_coll = .false.        !Collisional friction term (use with en_scatter)                       (default = collisions)
+ lorentz = .false.              !Disable everything except electron pitch-angle scattering off ions    (default = F)   
+ mom_conservation = .false.     !Use the correction to conserve momentum                               (default = F)
+ ene_conservation = .false,     !Use the correction to conserve energy                                 (default = F)
+ cons_type = 'Xu',              !Change the velocity dependence of the ad-hoc field particle collision 
+                                !operator used for momentum and energy conservation:                   (default = 'Xu')
+                                !- type 'Xu' described in Xu and Rosenbluth, Phys. Fluids B,627 (1991)
+                                !- type 'Lin' described in Z. Lin et al, Physics of Plasmas 2, 2975 (1995)                             
+
+ mass_conserve = .false.,       !Use zero flux velocity space boundary so no mass outflow (for debug)  (default = F)
+ freq_override=.false.          !Manually specify ii collision frequency to override ref values above. (default = F)
+ coll_freq=6.515E-5             !Ion-ion collision frequency used if freq_override=.true.              (default=0.0)
+ selfcollcon=.true.             !Switch between momentum conservation for self-collisions only (.true.) and
+                                !all collisions (.false.). True is the physically correct option.      (default=T)
+                                !Momentum conservation for all collisions is unphysical and implemented
+                                !for testing purposes only
+ /
+!---------------------------------------------------------------------------------------------------------------------
+ &DIAGNOSTIC !> Optional namelist read in diagnostics.F90 to switch individual diagnostics on / off
+             !< This is for the diagnostic switches; some switches from elsewhere will be moved here
+! from module diagnostic:
+nflush_ts = 2          ! The number of large time steps between flushing fluxes,time etc. to file (default = 10)
+screen_output = .true. ! Write per timestep data to screen  (fluxes, timestep, growth rates)      (default = T) 
+lfinal_output = .true. ! Write final output                                                       (default = T)
+! from module diagnos_generic:
+lwrite_output1 = .true. ! Meta switch for all per timestep output (fluxes, time traces, 2D)       (default = T)
+lphi_diagnostics = .true. ! Meta switch for 2-D diagnostics for
+                          ! nonlinear or mode_box runs                                            (default = T)
+                          ! The following xy_* switches produce both power spectrum and real space versions 
+xy_estep = T          ! True for XY output at every large time step, False for only at last step  (default = T)
+                      ! Also controls ky,kx,s outputs
+lisl_follow=F         ! Makes the X-Y diagnostics follow the o-point of rotating magnetic island  (default = T)
+zonal_scale_3d = 1.0  ! Factor by which to scale the zonal phi in the 2D and 3D xy output         (default = 1.0)
+out3d_interval = 1    ! Output of 3d data only for every out3d_interval'th large timestep         (default = 1)
+phi3d = .false.       ! 3d electrostatic potential in real space (binary)                         (default = F)
+spc3d = .false.       ! 3d electrostatic potential spectrum (binary)                              (default = F)
+den3d = .false.       ! 3d density for all species in real space (binary) - D3d0*_* files         (default = F)
+apa3d = .false.       ! 3d electromagentic potential in real space (binary)                       (default = F)
+apc3d = .false.       ! 3d electromagentic potential spectrum (binary)                            (default = F)
+ene3d = .false.       ! 3d energy output for all species in real space (binary) - E3d0*_* files   (default = F)
+bpa3d = .false.       ! 3d compressional magnetic field in real space (binary)                    (default = F)
+bpc3d = .false.       ! 3d compressional magnetic field spectrum (binary)                         (default = F)
+xy_fluxes = .false.    ! Per species radial electrostatic heat fluxes in perp plane at LFS mp      (default = F)
+xy_fluxes_bi = .false. ! Output selected XY fluxes also in binormal direction                      (default = F) 
+xy_fluxes_p = .false.  ! Output also XY particle fluxes for selected fields                        (default = F)
+xy_fluxes_v = .false.  ! Output also XY momentum fluxes for selected fields                        (default = F)
+xy_fluxes_fsa = F      ! Output also selected fluxes as flux surface averages                      (default = F)
+xy_fluxes_em = .false. ! Output also XY flutter fluxes for selected moments                        (default = F)
+xy_fluxes_k = .false.  ! Output selected fluxes (Flux surface average) also in 2d k-space          (default = F)
+xy_fluxes_bpar = F     ! Output also XY compressional B fluxes for selected moments                (default = F)
+xy_slice_ipar = 2      ! The point on the s grid that the XY outputs are output from (usually LFS) (default = n_s_grid/2+1)
+xy_dens = .false.      ! Per species densities in perpendicular plane at LFS midplane              (default = F)
+xy_temp = .false.      ! Per species temperatures in perpendicular plane at LFS midplane           (default = F)
+xy_current = .false.   ! Per species parallel currents in perp plane at LFS midplane               (default = F)
+xy_current2 = .false.  ! Per species parallel currents^2 in perp plane at LFS midplane             (default = F)
+xy_spec = T           ! Write the XY moments (if chosen) in their spectral (binormal) form         (default = F)
+lradial_profile = .false.    ! switch that sets whether radial fluxes and background profiles are 
+                              ! written out (for non-spectral runs only)               (default = .not.flux_tube)
+! from module diagnos_fluxes:
+lcalc_fluxes = .true. ! Calculate integrated fluxes as function of time                           (default = T)
+lfluxes_spectra=T     ! Enable output of ES fluxes spectra - time diagnostic                      (default = T)
+                      ! also output spectra of flux weights, and moments of density & pressure
+lfluxes_em_spectra=F  ! Enable output of EM (apar) fluxes spectra - time diagnostic               (default = F)
+flux3d = .false.      ! 3d fluxes spectrum
+! from module diagnos_fluxes_vspace:
+lfluxes_detail=F      ! writes the final fluxes as a function of all coordinates (binary)         (default = F)
+lfluxes_vspace=F      ! writes total FSA fluxes as a function of time, mu and vpar (binary)       (default = F)
+lfluxes_vspace_phi=F  ! writes ES FSA fluxes as a function of time, mu and vpar (binary)          (default = F)
+lfluxes_vspace_em=F   ! writes EM FSA fluxes as a function of time, mu and vpar (binary)          (default = F)
+lfluxes_vspace_bpar=F ! writes Bpar FSA fluxes as a function of time, mu and vpar (binary)        (default = F)
+! from module diagnos_energetics:
+lcalc_energetics = .true. ! Calculate energetics ky spectra (experimental)                        (default = F)
+! from module diagnos_fields:
+kykxs_phi = .false.   ! 3D electrostatic potential on the ky,kx,s grid (spectral runs)            (default = F)
+kykxs_apar = .false.  ! 3D parallel vector potential on the ky,kx,s grid (spectral runs)          (default = F)
+kykxs_bpar = .false.  ! 3D parallel magnetic field on the ky,kx,s grid (spectral runs)            (default = F)
+xy_phi = .true.       ! Electrostatic potential in perpendicular plane at LFS midplane            (default = T)
+xy_apar = .true.      ! Parallel vector potential in perpendicular plane at LFS midplane          (default = F)
+xy_bpar = .true.      ! Compressional magnetic field in perpendicular plane at LFS midplane       (default = F)
+xy_vort = F           ! Flux surface average vorticity spectrum in 2D (spectrum only)             (default = T)
+xs_phi = F            ! Output XS slice of the electrostatic potential for the binormal modes
+                      ! given in the vector imod_field                                            (default = F)
+!nmodepoints = 1      ! Formerly: Number of modes to be considered in the output of the XS slices of the
+                      ! electrostatic potential. Not needed if xs_phi = F. This is now ignored.   (default = 1)
+imod_field = 1,2,3    ! Vector containing the binormal modes to be output if xs_phi = T . Note than
+                      ! values less than 1 are ignored and a value greater than nmod causes *all* modes
+		      ! to be output.                                                             (default = 0)
+field_fsa_kyzero = T  ! output the flux-surface averaged ky=0 component of the potentials
+                      ! (Rosenbluth-Hinton Test)                                                  (default = 0)
+! from module diagnos_moments:
+kykxs_moments = F     ! 3D density, v_//, T_//, T_perp on the ky,kx,s grid (spectral runs)        (default = F)
+kykxs_j0_moments = F  ! same as above, but with a J0(x) factor in the velocity space integral     (default = F)
+kykxs_j1_moments = F  ! T_perp only with a J1(x)/x factor in the velocity space integral          (default = F)
+xs_kyzero_dens = .false.      ! Pert. density moment on global xs-slice for kzeta=0 mode          (default = F)
+xs_kyzero_current = .false.   ! Pert. current moment on global xs-slice for kzeta=0 mode          (default = F)
+xs_kyzero_ene = .false.       ! Pert. kinetic energy moment on global xs-slice for kzeta=0 mode   (default = F)
+xs_kyzero_ene_perp = .false.  ! Pert. perpendicular kinetic energy moment on global xs-slice for 
+                              ! kzeta=0 mode                                                      (default = F)
+xs_kyzero_ene_par = .false.   ! Pert. parallel kinetic energy moment on global xs-slice for 
+                              ! kzeta=0 mode                                                      (default = F)
+xs_kyzero_phi_ga_fm = .false. ! Gyro-averaged (using maxwellian) el.-stat. potential moment on
+                              ! global xs-slice for kzeta=0 mode                                  (default = F)
+! from module diagnos_f:
+tavg_start = 1        ! Start of time window over which distribution is averaged in terms of
+                      ! large time steps.                                                         (default = 1)
+tavg_end = 100        ! End of averaging window.                                                  (default = ntime)
+! from module diagnos_grid:
+! from module diagnos_stresses:
+lcalc_stresses = .false. ! Calculate Reynolds stresses                                            (default = F)
+! from module diagnos_eng:
+lmode_energy = .false. ! FIXME Please document
+! from module diagnos_growth_freq:
+lamplitudes = F,      ! Amplitudes diagnostic per mode (kx, ky 2D)                                (default = F)
+lgrowth_rates = F     ! Output growth rates diagnostic per toriodial mode (kx=0 mode)             (default = T)
+lfrequencies = F      ! Output frequencies diagnostic per toroidal mode (kx=0 only)               (default = T)
+! from module diagnos_mode_struct:
+lparallel_output =T ! writes final output of the moments along the magnetic field (ascii)         (default = T)
+parallel_output_timestamps = 11.0, 12.2, 13.3
+                    ! If lparallel_output is set, this list can be used to specify times at which
+		    ! numbered output files parallel[0-9].dat are created. This example produces
+		    ! parallel001.dat once (time>11.0), parallel002.dat once (time>12.2) and so on ...
+		    ! Note: timestamps should be ordered
+		    ! Note: timestamps are in dimensionless code time units (see time.dat)
+		    ! Note: timestamps bigger than the simulation duration are ignored.
+		    ! Note: negative values are ignored.                                        (default = -1)
+lrotate_parallel=T  ! normalizes the parallel output such that Re[phi(s=0)] = 1.                (default = T)
+! from module diagnos_velspace:
+lvelspace_output = .true. ! Velspace diagnostic #1:
+                          ! Output full velocity space at a hardcoded spatial position          (default = F)
+psi_velspace = 0.,0.,0.,  ! List psi coordinates of points for velocity space diagnostic #2     (list max 32)
+zeta_velspace = 0.,0.,0., ! List zeta coordinates of points for  velocity space diagnostic #2   (list max 32)
+npointsvel = 0    ! Velspace diagnostic #2:
+                  ! Number of points for velocity_pointwise diagnostic              (max = 32)  (default = 0)
+lfinvel = .false. ! Velspace diagnostic #3:
+                  ! Outputs the velocity space structure for every point in s for the 0,0 mode
+                  !                                                                             (default = F)
+! from module diagnos_jdote:
+lcalc_jdote = .false. ! Calculate power exchange between particles and field, as function of
+                      ! velocity space at the positions indicated by npointsvel,psi_velspace and zeta_velspace
+                      !                                                                         (default = F)
+! from module diagnos_rad:
+lrad_moment = .false.  ! Radial profiles of the density/energy at every large timestep          (default = F)
+lrad_entropy = .false. ! Radial profiles of the entropy and entropy flux. Only calculated       (default = F)
+                       ! for the non-spectral case. Split of zonal and perturbations parts. 
+lradial_entropy = .false. ! Radial profiles of the entropy and entropy flux (real space). Only calculated    (default = F)
+                          ! for the non-spectral case. 
+lrad_field = .false.      ! Radial profiles of the fields at every large timestep               (default = .not.flux_tube) 
+lrad_tint = .false.       ! Radial profiles of the turbulence intensity at every large timestep (default = F)
+lrad_kpar = .false.       ! Radial profiles of the parallel wave-number                         (default = F)
+! from module diagnos_zfshear:
+lcalc_zfshear = .false. ! Switch for the diagnostic which calculates the zonal flow velocity and
+                        ! zonal flow shearing rate                                              (default = F)
+! from module diagnos_nonlin_transfer:
+lnonlin_transfer = .false. ! Detailed output of nonlinear entropy transfer, is computationally
+                           ! very expensive .                                                   (default = F)
+lnonlin_transfer_fsa = .false. ! Additional (even more expensive) flux surface averaged
+                               ! nonlinear entropy transfer.                                    (default = F)
+nonlin_transfer_interval = 1 ! Calculate and output the nonlin_transfer data only for every n'th
+                             ! large timestep                                                  (default = 1)
+! from module diagnos_zonal_evo:
+lcalc_zonal_evo = .false.  ! kx-spectra of the zonal potential, the time derivative of the zonal potential
+                           ! and contributions to the time derivative of the zonal potential.  (default = F)
+zevo_detail = .false.      ! Detailed output of the linear contributions to the time derivative of 
+                           ! the zonal potential. Also kx-spectra.                             (default = F)
+zevo_xy_spec = .false.     ! Output of the nonlinear contributions to the time derivative of the 
+                           ! zonal potential on the kx-ky-grid.                                (default = F)
+! from module diagnos_kinenergy_trappas:
+lcalc_kinenergy_trappas = .false. ! Calculates the terms used for the growth rate determination via energy conservation
+                       ! See A. Bottino EPFL thesis 2938 (2004)                                (default = F)
+! from module diagnos_cross_phase:
+cross_phases='dens','phi','T','dens',60*'',
+                       ! Calculate probability density functions for
+                       ! the phase difference of fluctuations
+                       !(here: dens with phi, T with dens). Lots of fields and moments
+                       ! can be used, see tokens listed in diagnos_generic. If this namelist entry
+		       ! causes an error, try putting it as the very last item of the DIAGNOSTIC
+		       ! namelist. Sometimes it seems to be necessary to specify the empty elements,
+		       ! sometimes not.                                                        (default = 64*'')
+cross_phase_timetrace = .false. ! Produce additional output of the pdfs for every timestep     (default = F)
+! from module diagnos_corr:
+lcalc_corr   = .false. ! Switch for the calculation of the correlation lengths                 (default = F) 
+imod_corr    = 1,1     ! (only for spectral_radius = T) Number of modes for which the data is  (default = 1,1)
+                       ! calculated separately. The first number is the number of toroidal 
+                       ! modes for which the correlation length is calculated, the second is 
+                       ! the number of radial modes. If the values 1,1 are given, the 
+                       ! correlation function will be averaged over all modes.
+! from module diagnos_matrix:
+loutput_matrix = .false. ! Output the sparse matrix of the linear terms                         (default = F)
+! from module diagnos_timetrace
+lcomplex_timetrace = .true. ! Output timetraces that can be used for higher-order spectral 
+                       ! analysis or thelike                                                   (default = F)
+! from module io:
+lmpi_broken_io = T ! If MPI_IO fully supports derived datatypes, use F for faster file write   (default = T)
+! obsolete or deprecated:
+xy_bin = T           ! Formerly: Write the XY outputs as binary files (alternative is many ASCII
+                     ! files). This is now ignored.
+lcalc_freq = .false. ! Formerly: Calculate the mode frequencies. This is now ignored.
+lparallel_phi=T      ! Formerly: time output of electrostatic potential along field line. This is now ignored.
+lparallel_apar=F     ! Formerly: time output of A_// magnetic potential along field line. This is now ignored.
+lparallel_bpar=F     ! Formerly: time output of B_// magnetic field along field line. This is now ignored.
+ /
+!---------------------------------------------------------------------------------------------------------------------
+ &LINEAR_TERM_SWITCHES     !Optional namelist read in linear_terms.F90 to switch on /off individual linear terms.
+ apply_on_imod = 0,0,0          !Switch linear terms on for all modes (according to the default
+                                !value of the other switches in this namelist),
+                                !but apply non-default switch settings on specified binormal modes.
+                                !A list of zeros means switches apply to all modes, whereas list
+                                !of nonzero indices makes the switches apply only to those imods. (default = 0)
+ lampere = .true.               !Allows time evolution of vector potential                      (default = .true.)
+ lpoisson = .true.              !Allows time evolution of electro-static potential              (default = .true.)
+ lbpar = .true.                 !FIXME please document
+ lvpar_grad_df = .true.         !Parallel streaming (I)                                         (default = .true.)
+ lvdgradf = .true.              !Effect of drifts on g (II)                                     (default = .true.)
+ ltrapdf = .true.               !Particle trapping term  (IV)                                   (default = .true.)
+ lve_grad_fm = .true.           !Source terms (V)                                               (default = .true.)
+ lvd_grad_phi_fm = .true.       !Source terms (VIII)                                            (default = .true.)
+ lvpgrphi = .true.              !Particle acceleration via E fields, Landau damping (VII)       (default = .true.)
+ lg2f_correction = .true.       !Adds electromagnetic correction to f                           (default = .true.)
+ lpoisson_zf = .true.           !Zonal flow term in poissons equation                           (default = .true.)
+ lneoclassical = .true.         !Neoclassical effects (VI) (also needs neoclassics in CONTROL)  (default = .true.)
+ idisp = 2                      !Select between dissipation schemes in finite differences       (default = 2)
+ lneo_equil = .false.           !Add the neoclassical corrections to the equilibrium            (default = .false.)
+ neo_equil_parse_sp_seq = 1,2,3,3 ! means: give GKW's first species the NEO background #1, the
+                                ! second species background #2, the third and fourth species
+				! background #3, and initialise the rest (elements having the 
+				! default value -1) as indicated by 'background' in their respective
+				! species namelist. Indices do not have to be
+				! given in increasing order, but there must not be -1 values before
+				! the last >0 element. There is no obligation to use all NEO species.
+				!                                      (default = 1,2,3,...neo_n_species,-1,-1...)
+ lneo_rad = .false.             !Switches off the radial gradient to the neoclassical correction(default = .true.)
+ lneo_trap = .false.            !Switches off the correction to the trapping due to the neoclassical potential
+                                !                                                                (default = .true.)
+ lneorotsource = .false.        ! FIXME please document (default = .false.)
+ /
+!---------------------------------------------------------------------------------------------------------------------
+ &FINITE_RHO_PARALLEL       !Optional namelist for order rhostar terms in parallel derivatives, see Sung PoP 2013
+ ltrapdf_rhostar =.false.        !                                                               (default = .false.)
+ lvdgrad_phi_fm_rhostar =.false. !                                                               (default = .false.)
+ lve_grad_fm_rhostar =.false.    !                                                               (default = .false.)
+ lvdgradf_rhostar =.false.       !                                                               (default = .false.)
+ s_average =  .false.            !switch for finite rhostar parallel derivatives in the gyro     (default = .false.)
+                                 !average and polarization
+ lnonlinear_rhostar = .false.    !switch for finite rhostar parallel derivatives in the non-     (default = .false.) 
+                                 !terms 
+ lflux_rhostar      = .false.    !switch for finite rhostar parallel derivatives in the cal-     (default = .false.)
+                                 !calculation of the fluxes
+ /
+!---------------------------------------------------------------------------------------------------------------------
+ &GYROAVERAGE        ! Optional namelist only relevant for spectral_radius = F
+ n_points_ga = 32               !the number of points on the gyro-ring used for the average        (default = 32)
+ gyro_average_electrons = T     !if false no gyro-average is performed for the electron eqs.       (default = .true.)
+ orb_polarize = F               !if true a polarization similar to NEMORB is used                  (default = .false.) 
+ consistent_long_wave = F       !Correct the gyroaverage to produce long wavelength results        (defaut = .false.)
+                                !equivalent to the orb polarisation
+ mk_gyro_av_hermitian = T       !if true the gyro-average operator is forced Hermitian, G*=G       (default = .false.)
+ use_conj = F                   !use the conjugate operator G* in polarisisation (most physical)   (default = .false.)
+                                !the above 2 options are mutally exclusive, and make no diffuerence if flux_tube=T
+ blending_order = 2             !order of the blending function used in the calculation of the     (default = 2)
+                                !gyro_average. Allowed are 2 (linear interpolation), 3 and 4.  
+ parallel_mod = T               !If true the field solve is parallelised over toroidal modes       (default = .true.)
+                                !On some machines this has given problems in MPI_ALLGATHERV
+ n_gav_bound_ex = 0             !Extra ghost points for the radial boundaries.                     (default = 0) 
+                                !If the number of points are overestimated, negative values may allow larger n_procs_x                                                           
+ /
+ !---------------------------------------------------------------------------------------------------------------------
+ &KROOK                   ! Optional namelist only relevant for spectral_radius = F    
+ nlkrook = F              ! Use the full domain krook operator
+ gammak  = 0.0            ! damping rate for krook operator         (should be of order 10% of linear growth) 
+ krook_option = 1         ! See krook.tex:  only option 1 conserves momentum, 2 is also less stable.     (default = 1)
+ nlbound = F              ! use the boundary damping krook
+ bwidth  =  0.0,          ! if > 0, exponential falloff length of each damping layer (in radial grid points)
+                          ! if < 0, heaviside damping layer on zonal mode only       (in radial grid points)
+ gammab  =  0.0,          ! boundary damping rate relative to fdis (should be of order 1 ?) 
+ gamkpre = 0.0            ! When using krook option 4 (selective n=0 flow damping).  One can increase the damping rate
+                          ! by this factor to preferentially damp the equilibrium flow           (default = 1.0)
+ /
+ !--------------------------------------------------------------------------------------------------------------------- 
+ &SOURCE_TIME    !Optional namelist read in source_time.F90 to initialize the source modulation parameters. 
+ source_time_ampl = (0.0,0.0)    ! Complex amplitude of the time dependent source.
+                                 ! A value of zero switches the time dependent source off.       (default = (0.0,0.0))
+ source_profile = 'cosine'       !shape of radial heating profile (cosine, gauss, gauss_sfr)    (default = 'cosine')
+ source_wave_number = 1          !Integer for the turbulence length L=lx/source_wave_number      (default = 1)
+ mod_freq = 1.0                  !the modulation frequency of the timedependent source.          (default = 1.0)
+ gauss_source_median = 20        !Position median of gaussian                                    (default = n_x_grid/8)
+                                 !(distance from inner edge in gridpoints)
+ gauss_source_stdev = 1.8        !Standard deviation of gaussian
+ dsfr = 40                       !Begin of source free region. This is a global ix index.        (default = n_x_grid/4)
+                                 !(distance from inner edge in gridpoints)
+! deprecated, do not use:
+ modulation = .true. ! do not use this.
+ /
+!---------------------------------------------------------------------------------------------------------------------
+ &EIV_INTEGRATION             ! Optional namelist used if METHOD='EIV' in CONTROL for experimental eigenvalue solver 
+                              ! Requires compilation with the PETSC and SLEPSC libraries
+ max_iterations = 10000       ! The maximum number of iterations the eigenvalue solver should do.(default = PETSC_DECIDE)
+ tolerance = 1.0e-4           ! Accuracy goal, determined via ||Ax-\lambda x||/||\lambda x||.    (default = 1.0e-04)
+ type_solver = 'krylovschur'  ! Which solver of slepc to use (default = 'krylovschur')
+                              ! possible options are so far:
+                              ! 'gd'          (generalized Davidsen)
+                              ! 'jd'          (Jacobi-Davidsen)
+                              ! 'krylovschur'
+ type_extraction = 'ritz'     ! Projection method for extracting the subspace.                   (default='ritz')
+                              ! Possible values 'ritz', 'harmonic'.
+                              ! Note that the harmonic extraction method makes use of the target
+                              ! values, to better find modes of interest.
+ number_eigenvalues = 2       ! The number of eigenvalues to search.                             (default = 1)
+ nr_column_vec      = 0       ! The number of column vectors that slepc should use.              (default=0 -> set by slepc)
+ mat_vec_routine    = 1       ! Which subroutine to use for matrix vector multiplication.        (default=1)
+                              !  1 - Using exp_integration::explicit integration (affected by METH).
+                              !  2 - Using exp_integration::calculate_rhs
+ which_eigenvalues  = 5       ! Determines which of the eigenvalues are prefered.                (default = 11)
+                              !  1 largest eigenvalues in magnitude
+                              !  2 smallest eigenvalues in magnitude
+                              !  3 largest growthrate
+                              !  4 smallest growthrate
+                              !  5 largest frequency
+                              !  6 smallest frequency
+                              !  7 eigenvalues magnitude closest to the target
+                              !  8 eigenvalues with growthrate closest to target
+                              !  9 eigenvalues with frequency closest to target
+                              ! 10 - cannot be used
+                              ! 11 eigenvalues with small but positive growthrate. This may be
+                              !    useful to find subdominant modes
+                              ! 12 eigenvalues close to the target in the complex plane (by
+                              !    magnitude of the complex distance)
+ growthrate        = 0.18     ! Target value for the growth rate.                                 (default = 1.0e+0)
+ freq              = 0.66     ! Target value for the frequency.                                   (default = 0.0)
+ comparison_routine = 1       ! deprecated and obsolete, do not use this
+ luse_initial_value = T       ! deprecated and obsolete, do not use this
+ /

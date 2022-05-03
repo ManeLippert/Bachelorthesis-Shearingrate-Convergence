@@ -1,0 +1,81 @@
+Running local input.dat
+Running single process for /home/fcasson/gkw/run/gkw_jac-DP_3863M.x
+
+ Running with             1  MPI processes
+
+ * Optional namelist diagnostic MISSING.
+
+ With mode_box off input value of krhomax is ignored
+ No 2D diagnostics will be written
+ Ensure you have             1  value(s) in kthrho list
+
+
+ Z_eff (of species inputs) =     1.000000000000000     
+
+
+ Negative T_||/T_Perp: Bilato anisotropy model selected
+
+*** WARNING *** cf_trap: Parallel variation in collision frequency
+*** WARNING *** cf_trap: Collision freq. taken at R=R_0=R_LFS
+*** WARNING *** cf_trap: Parallel variation not kept in Coloumb logarithm
+ * Optional namelist eiv_integration MISSING.
+ * Optional namelist linear_terms MISSING.
+ * Optional namelist krook MISSING.
+ * Optional namelist gyroaverage MISSING.
+ * Optional namelist source_time MISSING.
+ * Optional namelist finite_rho_parallel MISSING.
+
+ Geometry numerical accuracy:  6.778E-01
+
+
+ Solving for centrifugal potential...
+                                    ...done
+
+ Species densities and density gradients defined at R=R_0=R_LFS
+
+ Densities for kinetic species:
+ Species:  1 :       n / n_R0 -  Outboard MP:    1.000000 :  Flux surface average:    0.996826
+ Species:  2 :       n / n_R0 -  Outboard MP:    1.000000 :  Flux surface average:    0.981107
+ Species:  3 :       n / n_R0 -  Outboard MP:    1.000000 :  Flux surface average:    0.336262
+ Species:  4 :       n / n_R0 -  Outboard MP:    1.000000 :  Flux surface average:    0.682457
+
+ ICRH minority fraction (exact FSA):    0.034780
+ Assumption: Electrons are species 2
+
+ Effective local rln for kinetic species:
+ Species:  1 :   rln -  Outboard MP:    2.000000 :  Flux surface average:    1.994719
+ Species:  2 :   rln -  Outboard MP:    2.000000 :  Flux surface average:    2.065692
+ Species:  3 :   rln -  Outboard MP:    2.000000 :  Flux surface average:    0.275529
+ Species:  4 :   rln -  Outboard MP:    2.000000 :  Flux surface average:    4.405097
+
+ RLN of the FSA density for kinetic species: (memo transformations)
+ Species:  1 : RLN_FSA :    1.994700 : RLN_R0 :    2.000000
+ Species:  2 : RLN_FSA :    2.065258 : RLN_R0 :    2.000000
+ Species:  3 : RLN_FSA :    1.393743 : RLN_R0 :    2.000000
+ Species:  4 : RLN_FSA :    4.023384 : RLN_R0 :    2.000000
+
+ RLN of the FSA density for kinetic species (code diagnostics):
+ Species:  1 : RLN_FSA :    1.994700 : RLN_R0 :    2.000000
+ Species:  2 : RLN_FSA :    2.065258 : RLN_R0 :    2.000000
+ Species:  3 : RLN_FSA :    1.393743 : RLN_R0 :    2.000000
+ Species:  4 : RLN_FSA :    4.023384 : RLN_R0 :    2.000000
+
+ In-Out Asymmetry: 
+ Species:  1 : (n_LFS-n_HFS)/n_FSA   0.008356
+ Species:  2 : (n_LFS-n_HFS)/n_FSA   0.035283
+ Species:  3 : (n_LFS-n_HFS)/n_FSA   2.867077
+ Species:  4 : (n_LFS-n_HFS)/n_FSA   0.782572
+
+==============================================================
+ Number of code pieces tracked     3
+==============================================================
+Name                     Number of calls   time spent  percent
+==============================================================
+cf solve                               1  0.87562E-01   100.00
+qn loop                                1  0.20472E-01    23.38
+diags                                  1  0.67003E-01    76.52
+perflib / other                        -  0.86784E-04     0.10
+
+   (timing error:  0.000001s)
+==============================================================
+ GKW_ABORT -- Existing data files found.  Please remove previous run data (script gkw_clean_run)  or set read_file=.true. to restart     0

@@ -1,0 +1,97 @@
+# C compiler and compiler flags:  These will normally not give you optimal
+# performance.  You should select the optimization parameters that are best
+# for your system.  On Linux, use "CFLAGS = -O3 -fexceptions" for example.
+CC = icc
+CPLUSPLUS = icc
+
+# ranlib, and ar, for generating libraries
+RANLIB = ranlib
+AR = ar cr
+
+# delete and rename a file
+RM = rm -f
+MV = mv -f
+
+# Fortran compiler (not normally required)
+F77 = ifort 
+F77FLAGS = -O
+F77LIB =
+
+# C and Fortran libraries
+LIB = -lm
+
+# For compiling MATLAB mexFunctions (MATLAB 7.5 or later)
+MEX = mex -O -largeArrayDims -lmwlapack -lmwblas
+
+#------------------------------------------------------------------------------
+# BLAS and LAPACK configuration:
+#------------------------------------------------------------------------------
+# Using the Goto BLAS:
+# BLAS = -lgoto -lgfortran -lgfortranbegin -lg2c
+
+# This is probably slow ... it might connect to the Standard Reference BLAS:
+# BLAS =  -lgfortran -lgfortranbegin 
+# LAPACK = -llapack
+
+# Using non-optimized versions:
+# BLAS = -lblas_plain -lgfortran -lgfortranbegin -lg2c
+# LAPACK = -llapack_plain
+
+METIS_PATH = ../../metis-4.0
+METIS = ../../metis-4.0/libmetis.a
+
+#------------------------------------------------------------------------------
+# UMFPACK configuration:
+#------------------------------------------------------------------------------
+
+# Configuration flags for UMFPACK.  See UMFPACK/Source/umf_config.h for details.
+#
+# -DNBLAS	do not use the BLAS.  UMFPACK will be very slow.
+# -D'LONGBLAS=long' or -DLONGBLAS='long long' defines the integers used by
+#  		LAPACK and the BLAS (defaults to 'int')
+# -DNSUNPERF	do not use the Sun Perf. Library (default is use it on Solaris)
+# -DNPOSIX	do not use POSIX routines sysconf and times.
+# -DGETRUSAGE	use getrusage
+# -DNO_TIMER	do not use any timing routines
+# -DNRECIPROCAL	do not multiply by the reciprocal
+
+#------------------------------------------------------------------------------
+# Linux
+#------------------------------------------------------------------------------
+
+# Using default compilers:
+CC = icc
+CFLAGS = -O3 
+
+# alternatives:
+# CFLAGS = -g -fexceptions \
+   	-Wall -W -Wshadow -Wmissing-prototypes -Wstrict-prototypes \
+    	-Wredundant-decls -Wnested-externs -Wdisabled-optimization -ansi
+# CFLAGS = -O3 -fexceptions \
+   	-Wall -W -Werror -Wshadow -Wmissing-prototypes -Wstrict-prototypes \
+    	-Wredundant-decls -Wnested-externs -Wdisabled-optimization -ansi
+# CFLAGS = -O3 -fexceptions -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE
+# CFLAGS = -O3
+# CFLAGS = -O3 -g -fexceptions
+
+# consider:
+# -fforce-addr -fmove-all-movables -freduce-all-givs -ftsp-ordering
+# -frename-registers -ffast-math -funroll-loops
+
+# Using the Goto BLAS:
+# BLAS = -lgoto -lfrtbegin -lg2c $(XERBLA) -lpthread
+
+# Using Intel's icc and ifort compilers:
+#   (does not work for mexFunctions unless you add a mexopts.sh file)
+# F77 = ifort
+#CC = icc
+#CFLAGS = -O3 -xN -vec_report=0
+# CFLAGS = -g
+# old (broken): CFLAGS = -ansi -O3 -ip -tpp7 -xW -vec_report0
+
+# 64bit:
+F77FLAGS = -O3 
+CFLAGS = -O3 
+#BLAS = -lgoto64 -lfrtbegin -lg2c -lpthread $(XERBLA)
+# LAPACK = -llapack64
+

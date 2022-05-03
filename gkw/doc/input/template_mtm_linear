@@ -1,0 +1,117 @@
+! Linear microtearing template file.  FJC 14.12.12 
+! Gets the answer in about an hour on 256 processors
+&CONTROL
+ collisions= .true.,     ! Read the collisions namelist below
+ read_file= .true.,      ! Read the restart file if present 
+ !non_linear= .true.,
+ dtim=   0.00500000,     ! This value will be overridden
+ fac_dtim_est=0.8        ! Scaling factor on Courant condition
+ ntime= 4000,
+ naverage= 100,
+ nlapar= .true.,         ! Keep A||
+ nlbpar= .true.,         ! Keep compressional magnetic field
+ gamatol=1e-7            ! stop at this standard deviation of the growth rate
+ disp_x=0.0              ! don't need for linear runs
+ disp_y = 0.0            ! don't need for linear runs
+ disp_par=   0.50000000, ! No need for this to be larger than 1.0
+ disp_vp=   0.01000000,  ! This should be small since acts likes a collisionality
+ max_sec=7000
+ /
+&GRIDSIZE
+ nx= 1,
+ n_s_grid=1248           ! 32 points / turn
+ !n_procs_s= 16,         ! The code will choose a sensible decomposition
+ !n_procs_vpar=8,
+ !n_procs_mu= 4,
+ !n_procs_sp= 2,
+ n_mu_grid= 16,
+ n_vpar_grid= 32,
+ nmod= 1,
+ number_of_species= 2,
+ nperiod= 20,
+ /
+&MODE
+ chin= 0,
+ kthrho=   3.500000e-01,    ! This is not used when mode_box=.true.
+ mode_box= .false.,
+ !krhomax=   2.000000e-01,  ! This is not used for when mode_box=.false.
+ ikxspace=1
+ /
+&GEOM
+ shat=   0.4648,
+ q=      1.3,
+ eps=   0.4555,
+ geom_type='miller'
+ kappa=   1.50337781,
+ skappa=   0.05030664,
+ delta=   0.05765818,
+ sdelta=   0.04364038,
+ square= 0,
+ ssquare= 0,
+ dRmil=  -0.16771194,
+ Zmil= 0,
+ dZmil= 0,
+ gradp_type= 'beta_prime',  ! Use the value of betaprime in SPCGENERAL
+ /
+&SPCGENERAL
+ beta_ref=   0.0493,
+ betaprime_type="ref"       ! Use the ref value below for betaprime in curvature and miller
+ betaprime_ref=-0.05
+ adiabatic_electrons= .false.,
+ finit='noise',             ! grid scale noise initial condition
+ amp_init=1e-3
+ /
+&SPECIES
+ mass= 1,
+ z= 1,
+ temp= 1.0,
+ dens= 1,
+ rlt=   8.3618,
+ rln=   -1.02,
+ uprim=   0.0,
+ /
+&SPECIES
+ mass=   0.00027200,
+ z= -1,
+ temp=   8.6886e-01,
+ dens= 1,
+ rlt=   6.3348,
+ rln=   -1.02,
+ uprim= 0.0,
+ /
+&ROTATION
+ vcor=   0.0,      ! Mach number
+ coriolis=.true.
+ cf_trap=.false.   ! Use these to turn on centrifugal effects
+ cf_drift=.false.  ! Use these to turn on centrifugal effects
+ /
+&COLLISIONS
+ rref=   0.79,     ! Major radius (m)
+ tref=   0.751,    ! In keV
+ nref=   4.32,     ! In 10e19 m^-3
+ pitch_angle= .true.,
+ en_scatter=.true.
+ friction_coll=.true.
+ !mom_conservation=.true.
+ !ene_conservation= .true.,
+ freq_override= .false.,  ! set this to true to use the collision frequency below
+ coll_freq=0.001          ! ion-ion collision freiuency (Rref/vthref)
+ zeff=   1.1792,
+ /
+&DIAGNOSTIC
+! lphi_diagnostics = .true.   !Meta switch for 2-D diaganostics for nonlinear or mode_box runs      (default = T)
+                        ! The following xy_* switches produce both power spectrum and real space versions
+! xy_phi = .true.       ! Electrostatic potential in perpendicular plane at LFS midplane            (default = T)
+! xy_dens = .true.      ! Per species densities in perpendicular plane at LFS midplane              (default = F)
+! xy_temp = .true.      ! Per species temperatures in perpendicular plane at LFS midplane           (default = F)
+! xy_apar = .true.      ! Parallel vector potential in perpendicular plane at LFS midplane (default = F)
+! xy_current = .true.   ! Per species parallel currents in perp plane at LFS midplane (default = F)
+! xy_fluxes = .true.    ! Per species radial electrostatic heat fluxes in perp plane at LFS mp (default = F)
+! xy_fluxes_em = .true. ! Per species radial electromagnetic heat fluxes in perp plane at LFS mp (default = F)
+! xy_vort = .true.      ! Flux surface average vorticity spectrum in 2D (spectrum only) (default = T)
+! xy_estep = .true.     ! True for XY output at every large time step, False for only at last step (default = T)
+! phi3d = .true        ! 3d electrostatic potential in real space (binary)                         (default = F)
+! den3d = .true.       ! 3d density for all species in real space (binary) - D3d0*_* files         (default = F)
+! ene3d = .true.       ! 3d energy output for all species in real space (binary) - E3d0*_* files   (default = F)
+/
+
