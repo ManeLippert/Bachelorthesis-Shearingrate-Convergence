@@ -290,3 +290,26 @@ TSWLatexianTemp*
 #*Notes.bib
 Versuch_Chaos/42-TeilauswertungPaul/tempCodeRunnerFile.py
 *tempCodeRunnerFile.py
+
+# gkw ignore
+*.o
+*#
+*~
+*.pdf
+*.aux
+*.out
+*.toc
+*.idx
+*.ilg
+*.ind
+*.nlo
+*.nls
+*.log
+obj/
+run/
+tests/**/**/[0-9]*/**
+doc/html
+doc/latex
+*.a
+*.umf
+libs/AMD/Demo

@@ -1,0 +1,81 @@
+This file attempts to document the chronology of major enhancements to GKW, as
+identified through sometimes infrequent incrementally numbered tagged
+versions. It is only an overview, many other things have been improved / fixed /
+added which may not be captured here (feel free to expand where something is
+missed). Tagged versions from 0.3-b2 onwards should be stable and well tested.
+
+2016-02-11: gkw-0.4-b1
+   First version with the new project name:
+   GKW is now the acronym of 'Gyrokinetic Workshop'
+    - support for new SLEPc/PETSc library version
+    - an interface to read an equilibrium computed with the NEO code
+    - an interface to read experimental profiles
+    - numerous fixes and improvements, in particular of diagnostics and IO
+
+2015-04-16: gkw-0.3-b2
+   First tagged version in git (bitbucket) after transfer from googlecode SVN.  
+   The main advance is rewritten diagnostics and IO, including HDF5
+   functionality.  Most output files can still be produced in the legacy format
+   by using io_legacy = T. 
+   - HDF5 output option
+   - New diagnostics for energetics, non-linearity, linear drive and more
+   - Integrated build of UMFPACK libraries
+   - Alternative form of the conservative collision operator (Z. Lin PoP 1995)
+   - Test cases and script now test nearly all diagnostics 
+   - Use of git and branches.  After this version, the master branch should be
+     less frequently updated, and only with stable and well tested versions.
+
+2014-10-02: gkw-0.3-b1-pre-hdf5
+   Last version before a major rewrite & cleanup of IO and diagnostics. 
+   A long time since the last tagged version, includes
+   - Fully functional and benchmarked global (and radially non-spectral) version
+   - Parallelized in radial direction (non-spectral only), scales to 64k cores
+   - Miller geometry, slab geometry
+   - Eigenvalue solver
+   - Imposed islands in non spectral versions (and imposed island in 2D)
+   - Self consistent islands in global version
+   - Poloidal asymmetries from anisotropic minority species
+   - Parallel derivatives of order rho*
+   - Modulated source
+
+2012-01-20: gkw-0.2-b2-separate-geoms
+   The last version before a rewrite of the geometry to a more general form. 
+   Includes a first functional version of the non spectral scheme.
+ 
+2011-11-11: gkw-0.2-b1-flux-tube
+   The last flux-tube only version of GKW.  MANY things were added or improved
+   since the CPC version, including:
+   - Centrifugal force
+   - Compressional magnetic field
+   - Imposed magnetic islands
+   - Circular geometry (X. Lappillonne PoP 09) 
+   - OpenMP hybrid scheme (up to 4 threads, improves scaling with collisions)
+   - Fully debugged conservative collision operator
+   - Improved build, per-host configuration
+   - Improved performance and reduced memory usage
+
+The CPC branch was a cleaned up version of GKW corresponding to the 2009 CPC
+paper, without experimental features.:
+
+2010-11-23: gkw-0.1-b4
+   Released as download on googlecode. As previous with:
+   - Fix bug with non default vpmax and mumax inputs
+   - Flag more known bugs in collision operator (adiabatic_electrons, en_scatter)
+
+2010-09-30: gkw-0.1-b3
+   Released as download on googlecode. As previous with:
+   - Improve the sample linear input files to run stable converged cases
+   - Flag known bugs in collision operator (friction term, mom_conservation)
+   - Flag known bug with non zero chin in general geometry
+   - Fix bug in connect_parallel for mode_box with general geom with negative signB/J  
+
+2010-03-19:  gkw-0.1-b2
+   Released as download on googlecode. As previous with:
+   - Bug fix for growing (0,0) mode in nonlinear kinetic runs. 
+   - Fixed bug in the sort routine in matdat.  
+   - Improved vectorisation performance in exp_integration RK routines.
+   - Improved README file
+
+2009-04-28: gkw-0.1-b1 (AEES_v1_0 in CPC library)
+   First "stable" GKW release with CPC publication, cleaned up version of code.
+   (http://cpc.cs.qub.ac.uk/summaries/AEES_v1_0.html)

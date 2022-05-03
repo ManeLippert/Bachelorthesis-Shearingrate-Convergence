@@ -1,0 +1,29 @@
+The file Binaryconvertvtk.cpp is the code for converting the GKW 3D output to VTK files
+compile with:
+ [i/g]cc -lm -02 Binaryconvertvtk.cpp
+
+Then run it in the folder with your data files.  
+GKW outputs needed are 3D binary files + 3Doutputparam.dat
+Run GKW with and den3d/ene3d/phi3d=.true.  Use at least 64 s points (128 is better) 
+For nice movies, the time between output dumps should be ~0.2 in normalised units.
+
+You may then be able to open the pre-exisitng visit.session files inside visit 
+which contain some plot attrbuties 
+Copy them first to the data folder, and run visit from that folder.
+
+If that fails, open the data, plot the torusmesh (mesh plot) and toruspotential(psuedo-potential plot) 
+and apply your own clip operators.
+Adjust the lighting and annotations and mesh and potential attributes as you wish.
+
+Use the Visit inbuilt function to generate a movie when all frames are loaded in the database.
+If it fails at the final movie conversion stage, 
+Try the movie.sh script or 
+"ffmpeg -f image2 -r 20 -b 18600 -i  ./movie%04d.jpeg ./movie.mpeg"
+To make the movie file from the jpegs.
+
+Beware that producing a compressed movie that works on all players (quicktime / WMP) is nearly impossible.
+mpeg-2 made with ffmpeg are usally portable, but often not more advanced mpeg-4 codecs
+Should always be tested on a machine if used in talk.  Use VLC to be safe.
+
+
+
