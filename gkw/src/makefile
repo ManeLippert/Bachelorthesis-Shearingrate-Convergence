@@ -50,21 +50,21 @@ FPREPROCS = -D$(FFTLIB)  \
 
 ## --- FORTRAN compiler ---
 ## The default here is a wrapper provided by most MPI implementations.
-FC=mpif90
-#FC=gfortran
+#FC=mpif90
+FC=gfortran
 
 ## --- FORTRAN compiler flags ---
 ## We use double precision as the default, so please replace `-r8' with the
 ## appropriate switch for your compiler (gfortran uses -fdefault-real-8).
 ## Most compilers support `-O2' to turn on reasonable optimisation.
-FFLAGS= -r8 -O2
+FFLAGS= -fdefault-real-8 -O2 -DUSE_MPIF -fallow-invalid-boz -fallow-argument-mismatch -fno-range-check
 #FFLAGS= -fdefault-real-8 -O2 #gfortran
 
 ## --- Include PATH ---
 ## You may need to add something here if the MPI, FFTW or other library header
 ## files are installed in an unusual location.
-INC=
-#INC= -I/usr/include
+#INC=
+INC= -I/usr/include -I/usr/lib/x86_64-linux-gnu/fortran/gfortran-mod-15/openmpi
 #INC= -I/usr/local/some_directory/include/
 
 ## --- LINKER ---
