@@ -12,7 +12,7 @@
 This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D ([[1]](https://doi.org/10.1063/1.4952621), [[2]](https://doi.org/10.1063/1.4961231)).
 
 * gkw-Code [Bitbucket](https://bitbucket.org/gkw/gkw/wiki/Home) in this repository my [version of gkw](/gkw/) for this thesis with according changes
-* LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf)
+* LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf) 
 
 # Journal
 I will document my work in from of a [Journal](journal/JOURNAL.md) to keep track of all changes I will do regarding my Bachelor Thesis. In addition to that I will use Git as a tracker for changes.
