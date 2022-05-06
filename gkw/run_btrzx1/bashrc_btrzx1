@@ -1,0 +1,26 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+#--------------------------------
+# load modules
+#--------------------------------
+module load intel/20.4.304
+module load hdf5/1.12.1
+module load fftw/3.3.10
+module load mpich/3.3.1
+module load lapack/3.9.0
+module load scalapack/2.0.2
+
+#--------------------------------
+# append directories to PATH
+#--------------------------------
+export GKW_HOME="$HOME/gkw/"
+export PATH=$GKW_HOME/scripts:$PATH
+export PATH="$PATH:$HOME/scripts/bash_scripts"
