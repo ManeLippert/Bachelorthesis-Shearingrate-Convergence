@@ -4,3 +4,4 @@
 
 1) &nbsp; [24.03.2022](2022-03-24.md) Starting Meeting
 2) &nbsp; [07.04.2022](2022-04-07.md) Kurs "Schreiben einer MINT-Arbeit"
+3) &nbsp; [05.05.2022](2022-05-05.md) Start with Bachelor Work
