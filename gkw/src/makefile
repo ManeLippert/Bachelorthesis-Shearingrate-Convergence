@@ -66,7 +66,7 @@ FFLAGS= -r8 -O2
 ## --- Include PATH ---
 ## You may need to add something here if the MPI, FFTW or other library header
 ## files are installed in an unusual location.
-INC=
+INC= -I/opt/ohpc/pub/libs/intel/fftw/fftw-3.3.10/include #FFTW
 #INC= -I/usr/include
 #INC= -I/usr/local/some_directory/include/
 
@@ -82,9 +82,11 @@ LD=$(FC) $(FFLAGS)
 ## `h5pfc' or similar wrapper for FC. If you do not want to use FFTW3 you
 ## can (and should) remove the default flag here. As with the include PATH,
 ## if your library is in an unusual place, you may need to set that path here.
-LDFLAGS = -lfftw3 -lfftw3f
+#LDFLAGS = -lfftw3 -lfftw3f
 #LDFLAGS= -L/usr/local -lfftw3
 #LDFLAGS= -L/usr/local/some_directory/lib -lfftw3f
+LDFLAGS= -L/opt/ohpc/pub/libs/intel/fftw/fftw-3.3.10/lib -lfftw3
+
 
 #############################################################################
 #############################################################################
