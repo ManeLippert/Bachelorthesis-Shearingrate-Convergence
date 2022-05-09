@@ -50,7 +50,7 @@ FPREPROCS = -D$(FFTLIB)  \
 
 ## --- FORTRAN compiler ---
 ## The default here is a wrapper provided by most MPI implementations.
-FC=mpif90
+FC=mpif90 
 #FC=gfortran
 
 ## --- FORTRAN compiler flags ---
