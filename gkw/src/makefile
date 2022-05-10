@@ -50,7 +50,7 @@ FPREPROCS = -D$(FFTLIB)  \
 
 ## --- FORTRAN compiler ---
 ## The default here is a wrapper provided by most MPI implementations.
-FC=mpif90 
+FC=mpif90
 #FC=gfortran
 
 ## --- FORTRAN compiler flags ---
@@ -60,18 +60,12 @@ FC=mpif90
 FFLAGS= -r8 -O2
 #FFLAGS= -fdefault-real-8 -O2 #gfortran
 
-## Additional Flags
-#FFLAGS= -fdefault-real-8 -O2 -DUSE_MPIF -fallow-invalid-boz -fallow-argument-mismatch -fno-range-check
-
 ## --- Include PATH ---
 ## You may need to add something here if the MPI, FFTW or other library header
 ## files are installed in an unusual location.
-INC= -I/opt/ohpc/pub/libs/intel/fftw/fftw-3.3.10/include #FFTW
+INC=
 #INC= -I/usr/include
 #INC= -I/usr/local/some_directory/include/
-
-## Local Includes
-#-I/usr/lib/x86_64-linux-gnu/fortran/gfortran-mod-15/openmpi
 
 ## --- LINKER ---
 ## (usually, the FORTRAN compiler should be fine for linking)
@@ -82,11 +76,9 @@ LD=$(FC) $(FFLAGS)
 ## `h5pfc' or similar wrapper for FC. If you do not want to use FFTW3 you
 ## can (and should) remove the default flag here. As with the include PATH,
 ## if your library is in an unusual place, you may need to set that path here.
-#LDFLAGS = -lfftw3 -lfftw3f
+LDFLAGS = -lfftw3 -lfftw3f
 #LDFLAGS= -L/usr/local -lfftw3
 #LDFLAGS= -L/usr/local/some_directory/lib -lfftw3f
-LDFLAGS= -L/opt/ohpc/pub/libs/intel/fftw/fftw-3.3.10/lib -lfftw3
-
 
 #############################################################################
 #############################################################################
