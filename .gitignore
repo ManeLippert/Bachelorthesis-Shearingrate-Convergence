@@ -305,7 +305,7 @@ Versuch_Chaos/42-TeilauswertungPaul/tempCodeRunnerFile.py
 *.nls
 *.log
 obj/
-run/
+#run/
 tests/**/**/[0-9]*/**
 doc/html
 doc/latex
