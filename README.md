@@ -5,7 +5,7 @@
 
 1. [Introduction](#introduction)
 2. [Journal](journal/JOURNAL.md)
-3. [To-Do](#to-do)
+3. [ToDo](#todo)
 4. [Literature](#litarture)
 
 # Introduction 
@@ -18,7 +18,7 @@ This repository is focused on my work for my Bachelor Thesis in Zonal Flows and 
 I will document my work in from of a [Journal](journal/JOURNAL.md) to keep track of all changes I will do regarding my Bachelor Thesis. In addition to that I will use Git as a tracker for changes.
 
 
-# To-Do
+# ToDo
 The To-Dos will be handled with [GitHub-Issues](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/issues) because it is a nice and good way to keep track about problems, ideas and commits.
 
 # Litarture
@@ -29,4 +29,3 @@ The To-Dos will be handled with [GitHub-Issues](https://github.com/ManeLippert/B
 [3] [Suttrop, W. "Einführung in Plasmaphysik" (German)](/literature/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/EinfuehrungPlasma.md)
 
 [4] [Suttrop, W. "Einführung in Fusionsforschung" (German)](/literature/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/EinfuehrungFusion.md)
-
