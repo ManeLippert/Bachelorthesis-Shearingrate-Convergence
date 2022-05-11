@@ -9,7 +9,7 @@
 *.log
 *.lot
 *.fls
-*.out
+ZonalFlow.out
 *.toc
 *.fmt
 *.fot
