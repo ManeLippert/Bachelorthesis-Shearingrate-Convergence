@@ -1,0 +1,23 @@
+ !Dump filename: FDS
+ !Written with restart file version:            2
+ !Write status error code:            0
+ !Restart file written with GKW version: 
+ UNKNOWN                                                         
+ !Executable name: 
+ gkw_l1-DP_UNKNOWN.x                                             
+ !Run on            1 processor(s)
+ !Values in this file will override input.dat
+ &RESTART
+ DTIM    =  1.500000000000000E-003,
+ TIME    =   15.0000000000005     ,
+ NT_COMPLETE     =         100,
+ NT_REMAIN       =           0,
+ NX_RST  =           1,
+ NMOD_RST        =           1,
+ NUMBER_OF_SPECIES_RST   =           2,
+ FILE_COUNT      =         100
+ /
+ &KX_SHIFT
+ T_SHEAR_BEGIN   =  0.000000000000000E+000,
+ KXSHFT  = 512*0
+ /

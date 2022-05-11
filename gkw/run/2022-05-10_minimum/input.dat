@@ -1,0 +1,61 @@
+! This file provides the bare minimum input needed for a gkw run 
+! Basic kinetic linear run converges to an ITG mode
+! Some empty namelists are required.
+! All other parameters are taken to be the default values (defined in the general input example).
+! All namelist values as used are written to input.out when the code runs.
+! Full description of all other namelist variables is given in the general input file
+!----------------------------------------------------------------------------------------------------------------
+&CONTROL                      ! This namelist is CONTROL
+ NTIME  = 100                 ! Number of iterations of NAVERAGE.
+ NAVERAGE = 100               ! No. of timesteps between re-normalisation and data output.
+ DTIM = 1.5e-3                ! Size of timestep, time normalisation (v_thref / R)
+/
+!----------------------------------------------------------------------------------------------------------------
+&GRIDSIZE                     ! Namelist read in GRID
+ ! Default grids sizes of 0 will not run, hence these must be provided.
+ NX = 1                       ! Number of radial wave vectors - currently needs to be an odd number for fft
+ N_s_grid = 80                ! Number of grid points along the field line (total, NOT per turn)
+ NPERIOD = 3                  ! The field line makes 2*nperiod - 1 poloidal turns. For nonlinear, nperiod = 1.
+ N_mu_grid   = 8              ! Total number of magnetic moment grid points
+ N_vpar_grid = 32             ! Number of grid points for parallel velocity
+ NMOD = 1                     ! Total number of toroidal modes - do not interact for linear runs
+ number_of_species = 2        ! Number of species. Note: do not count the adiabatic species
+/
+!----------------------------------------------------------------------------------------------------------------
+&MODE                         ! Namelist read in MODE
+ KTHRHO  = 0.5                ! Poloidal wave vector(s) if mode_box=.false. (sqrt(2) bigger than some codes)
+/
+!----------------------------------------------------------------------------------------------------------------
+&GEOM                         ! Namelist read in GEOM
+ SHAT = 1.07                  ! Magnetic shear
+ Q    = 1.57                  ! Safety factor
+ EPS  = 0.177                 ! Radial coordinate
+/
+!----------------------------------------------------------------------------------------------------------------
+&SPCGENERAL                   ! This namelist read in COMPONENTS
+/
+!----------------------------------------------------------------------------------------------------------------
+! >>>> N.B. The species MUST satify quasi-neutrality.
+! >>>> This requires you to set ratios of densities and charge appropriately.
+&SPECIES                      ! This namelist read in COMPONENTS
+ MASS  = 1.0                  ! Mass in terms of deuterium mass (=2.013 AMU)
+ Z     = 1.0                  ! If negative, assumed to be the electrons
+ TEMP  = 1.                   ! Temperature of species scaled by reference temperature = (1/2)m_ref v_thref^2
+ DENS  = 1.                   ! Density of species scaled by reference density
+ rlt   = 8                    ! Temperature gradient gradient along minor radius
+ rln   = 3.5                  ! Density gradient along minor radius
+ uprim = 0.0                  ! Gradient of the parallel velocity R grad u_tor / v_thref, toroidal shear flow
+/ 
+&SPECIES 
+ MASS  = 2.72e-4              ! Yes, these are the electrons
+ Z     = -1.0                 ! Only electrons may have negative charge. No muons or antiprotons please.
+ TEMP  = 1.0
+ dens  = 1.0
+ rlt   = 7.9
+ rln   = 3.5
+ uprim = 0.0
+/
+!----------------------------------------------------------------------------------------------------------------
+&ROTATION                     !Namelist read in ROTATION
+/
+!Some compilers require a blank line after the last namelist
