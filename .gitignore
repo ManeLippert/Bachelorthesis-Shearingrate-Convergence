@@ -296,7 +296,7 @@ Versuch_Chaos/42-TeilauswertungPaul/tempCodeRunnerFile.py
 *#
 *~
 *.aux
-*.out
+#*.out
 *.toc
 *.idx
 *.ilg
