@@ -1,0 +1,232 @@
+ 
+ Running with          384  MPI processes
+ 
+ Number of threads requested when encountering parallel  regions (on each proces
+ s):           1
+ 
+ 
+ With mode_box input value(s) of kthrho are ignored
+ 
+ * Optional namelist eiv_integration MISSING.
+ * Optional namelist collisions MISSING.
+ * Optional namelist krook MISSING.
+ * Optional namelist gyroaverage MISSING.
+ * Optional namelist source_time MISSING.
+ * Optional namelist finite_rho_parallel MISSING.
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+  s           4
+  x           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     2
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    18
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    24
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    23
+ mu           3
+ sp           1
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     5
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    12
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    19
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    25
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     9
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    21
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     1
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     6
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    15
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    26
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    30
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     3
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     4
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     7
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !     8
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    29
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    10
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    31
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    11
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    13
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    14
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    17
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    20
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    22
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    27
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    28
+ mu           3
+ sp           1
+  s           4
+  x           1
+ vp           8
+ nn         384
+ GKW_ABORT -- check_parallel_layout: n_procs_mu*n_procs_s*n_procs_sp*n_procs_vpar /= number_of_procs !    16
