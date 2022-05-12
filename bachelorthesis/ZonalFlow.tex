@@ -5,7 +5,7 @@
 
 
 % Packages
-\documentclass[paper=a4,bibliography=totoc,BCOR=10mm,twoside,numbers=noenddot,fontsize=11pt]{scrreprt}
+\documentclass[paper=a4,bibliography=totoc,BCOR=10mm,numbers=noenddot,fontsize=11pt,headsepline]{scrreprt}
 \usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[latin1, utf8]{inputenc}        %ä, ö, ü included
@@ -17,7 +17,7 @@
 \usepackage{amsmath,amssymb,amstext}
 \usepackage{siunitx}
 \usepackage{url}
-\usepackage{natbib}
+\usepackage[numbers]{natbib}
 \usepackage{microtype}
 \usepackage[format=plain]{caption}
 \usepackage{physics}
@@ -35,6 +35,7 @@
 \usepackage{pdfpages}                      % Import of pdfs
 \usepackage{hyperref}                      % Links in document
 \usepackage{makecell}                      % New line in tables
+\usepackage[nottoc,numbib]{tocbibind}      % Bib as chapter
 
 % Paragraph changes
 \parindent 0.0cm
