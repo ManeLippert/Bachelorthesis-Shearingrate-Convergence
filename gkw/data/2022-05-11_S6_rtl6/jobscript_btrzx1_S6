@@ -7,7 +7,7 @@
 #SBATCH --ntasks-per-node=32
 
 # number of nodes
-#SBATCH --nodes=12
+#SBATCH --nodes=3
 
 # walltime
 #              d-hh:mm:ss
