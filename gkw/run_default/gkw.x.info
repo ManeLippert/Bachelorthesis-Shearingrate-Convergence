@@ -5,4 +5,4 @@ LDFLAGS =  -L/opt/ohpc/pub/libs/intel/fftw/fftw-3.3.10/lib -lfftw3  -I/opt/ohpc/
 LOADEDMODULES = intel/20.4.304:hdf5/1.12.1:fftw/3.3.10:mpich/3.3.1:lapack/3.9.0:scalapack/2.0.2
 FC = mpiifort
 CONFIG = 
-EXEC = gkw_l1-DP_UNKNOWN.x
+EXEC = gkw.x
