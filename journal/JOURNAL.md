@@ -19,4 +19,4 @@
 
 * &nbsp; [10.05.2022](2022-05-10.md) &nbsp; First Day in the Office in Bayreuth
 * &nbsp; [11.05.2022](2022-05-11.md) &nbsp; Run for Standard Resolution 6th order (S6)
-* &nbsp; [12.05.2022](2022-05-12.md) &nbsp; Discussion about Resolution & # Run for (S6) with rtl=6.3
+* &nbsp; [12.05.2022](2022-05-12.md) &nbsp; Discussion about Resolution & Run for (S6) with rtl=6.3
