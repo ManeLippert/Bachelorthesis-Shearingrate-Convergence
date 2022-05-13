@@ -292,6 +292,9 @@ Versuch_Chaos/42-TeilauswertungPaul/tempCodeRunnerFile.py
 *tempCodeRunnerFile.py
 
 # gkw ignore
+gkwdata.h5
+FDS*
+DM*
 *.o
 *#
 *~
