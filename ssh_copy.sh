@@ -6,6 +6,7 @@ DESTINPUT=false
 REMOTEINPUT=false
 LOCALINPUT=false
 
+# Connect VPN
 if [[ "$CONNECTION" = "" ]]; then
     {
     nmcli con up Universität\ Bayreuth
@@ -84,6 +85,7 @@ elif [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
     rm -rf temp
 fi
 
+# Disconnect VPN
 if [[ "$CONNECTION" = "" ]]; then
     {
     nmcli con down Universität\ Bayreuth
