@@ -23,4 +23,4 @@
 
 ### 3. Week
 * [16.05.2022](2022-05-16.md) &nbsp; Writing of useful shell scripts
-* [18.05.2022](2022-05-12.md) &nbsp; Data Structure
+* [18.05.2022](2022-05-18.md) &nbsp; Data Structure
