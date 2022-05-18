@@ -313,3 +313,6 @@ doc/latex
 *.a
 *.umf
 libs/AMD/Demo
+
+# Python
+__pycache__

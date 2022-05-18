@@ -1,21 +1,32 @@
+import gkwdata
 import h5py
-import numpy
+import numpy as np
+import matplotlib.pyplot as plt
 
-filename = "evaluation/data/S6_rtl6.3/gkwdata.h5"
+filename = 'evaluation/data/S6_rtl6.0/gkwdata.h5'
+f = h5py.File(filename,"r+")
 
-file = h5py.File(filename)
+data = gkwdata.gkw_data(f)
+print(data)
 
-keys = file.keys()
-keys_list = list(file.keys())
+# From Florian Rath
+def get_eflux_from_hdf5_file(hdf5_file):
+    
+    # find out number of time steps
+    tim = hdf5_file['diagnostic/diagnos_growth_freq/time'][()]
+    nt = tim.shape[1]
+    
+    # name of the dataset
+    node_name = 'diagnostic/diagnos_fluxes/eflux_species01'
+    
+    # load data into array
+    data = np.transpose(hdf5_file[node_name][()])
+    
+    # reshape GKW flux ordering
+    flux = np.reshape(data,(nt,2))[:,0]
+    
+    return flux
 
-group = file[keys_list[3]]
-group_list = list(file[keys_list[3]])
 
-dataset = group[group_list[0]]
-dataset_list = list(group[group_list[0]])
-
-data = dataset[dataset_list[0]]
-
-print(list(data))
-
-file.close()
+# !Important! close h5 file after usage 
+f.close()
