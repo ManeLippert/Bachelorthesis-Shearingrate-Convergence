@@ -1,6 +1,7 @@
 import h5py
+import numpy as np
 
-def gkw_data(f):
+def get_data_keys(f):
 
     # Maximum level until datasets => 3
     data = []
@@ -22,7 +23,22 @@ def gkw_data(f):
             j += 1
         i += 1
         
-    # !Important! close h5 file after usage 
-    f.close()
-    
     return data
+
+# From Florian Rath
+def get_eflux_from_hdf5_file(hdf5_file):
+    
+    # find out number of time steps
+    tim = hdf5_file['diagnostic/diagnos_growth_freq/time'][()]
+    nt = tim.shape[1]
+    
+    # name of the dataset
+    node_name = 'diagnostic/diagnos_fluxes/eflux_species01'
+    
+    # load data into array
+    data = np.transpose(hdf5_file[node_name][()])
+    
+    # reshape GKW flux ordering
+    flux = np.reshape(data,(nt,2))[:,0]
+    
+    return flux
