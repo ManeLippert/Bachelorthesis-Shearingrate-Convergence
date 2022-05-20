@@ -13,6 +13,19 @@ def finite_first_order(y, dx, method):
     else:
         raise ValueError("Method must be 'central', 'forward' or 'backward'.")
 
-def finite_second_order(y, dx):
-    ddy = np.array([y[i+1] - 2*y[i] + y[i-1] for i in range(1, len(y)-1)])
+def finite_second_order(y, dx, method):
+    if method == 'central':
+        ddy = np.array([y[i+1] - 2*y[i] + y[i-1] for i in range(1, len(y)-1)])
+    elif method == 'period':
+        ddy_list = []
+        for i in range(0, len(y)):
+            if i == 0:
+                ddy_list.append(y[i+1] - 2*y[i] + y[len(y)-1])
+            elif i == len(y)-1:
+                ddy_list.append(y[0] - 2*y[i] + y[i-1])
+            else:
+                ddy_list.append(y[i+1] - 2*y[i] + y[i-1])
+        
+        ddy = np.array(ddy_list)
+    
     return ddy/(dx*dx)
