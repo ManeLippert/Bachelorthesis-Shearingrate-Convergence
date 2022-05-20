@@ -8,40 +8,28 @@ import pandas as pd
 # Flux rlt = 6.0
 filename = 'evaluation/data/S6_rtl6.0/gkwdata.h5'
 f = h5py.File(filename,"r+")
-data = gkw.get_data_keys(f)
-eflux_data = gkw.get_eflux_from_hdf5_file(f)
+eflux_data, time = gkw.get_eflux_from_hdf5_file(f)
 
 # Elektrostatic potencial
-phi = f[data[0][0][4]]
+phi = f[gkw.find_key(f, 'phi')][()]
+nx = phi.shape[0]
 
-# Mean over n_y
-# !TODO
+# Mean over y to get a approximation for the zonal potenzial
+zonal_pot = np.mean(phi,1)
 
 # Finite Differnece for shearing rate omega_ExB
-# !TODO
 
-start = 0
-stop = 200
-# define grid
-x = np.arange(start, stop) 
-# compute function
-y = phi[0][0][start:stop]
+# Stepsize
+rad_boxsize = f[gkw.find_key(f, 'lxn')][()][0]
+dx = rad_boxsize/nx
 
-# compute vector of forward differences
-forward_diff = derivative.finite_first_order(y, 0.1, 'forward')
-backward_diff = derivative.finite_first_order(y, 0.1, 'backward')
-central_diff = derivative.finite_first_order(y, 0.1, 'central')
-# compute corresponding grid
-x_diff = x[:-1:] 
+# Zonal potenzial for a fixed time
+y = zonal_pot[:,17000]
 
-#Data:
+ddphi = derivative.finite_second_order(y, dx, 'period')
+wexb = 0.5 * ddphi
 
-# Plotting
-plt.plot(x, y)
-plt.plot(x_diff, forward_diff, '--', label = 'Finite difference approximation')
-plt.plot(x_diff, backward_diff, '--', label = 'Finite difference approximation')
-plt.plot(x[1:-1], central_diff, '--', label = 'Finite difference approximation')
-plt.legend()
+plt.plot(np.arange(0, len(ddphi)), ddphi)
 plt.show()
 
 
