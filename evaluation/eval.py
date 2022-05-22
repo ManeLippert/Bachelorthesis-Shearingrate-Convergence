@@ -23,14 +23,25 @@ zonal_pot = np.mean(phi,1)
 rad_boxsize = f[gkw.find_key(f, 'lxn')][()][0]
 dx = rad_boxsize/nx
 
-# Zonal potenzial for a fixed time
-y = zonal_pot[:,17000]
+gkw.find_keys(f, 'phi')
 
-ddphi = derivative.finite_second_order(y, dx, 'period')
-wexb = 0.5 * ddphi
+plt.plot(eflux_data)
+#plt.show()
+#plt.clear()
 
-plt.plot(np.arange(0, len(ddphi)), ddphi)
-plt.show()
+i = 4999
+while i <= zonal_pot.shape[1]:
+    # Zonal potenzial for a fixed time
+    y = zonal_pot[:,i]
+
+    ddphi = derivative.finite_second_order(y, dx, 'period')
+    wexb = 0.5 * ddphi
+
+    plt.plot(np.arange(0, len(ddphi)), ddphi)
+    
+    i += 1000
+    
+#plt.show()
 
 
 # !Important! close h5 file after usage 
