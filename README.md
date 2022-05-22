@@ -1,5 +1,5 @@
 # Bachelor Thesis about Zonal Flows
-![alt text](/bachelorthesis/Pictures/Zonal_Flow.PNG)
+![alt text](/pictures/Zonal_Flow.PNG)
 
 ## Content
 
