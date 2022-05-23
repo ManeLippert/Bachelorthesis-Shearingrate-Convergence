@@ -74,14 +74,16 @@ done
 
 # Copy files
 if [[ "$DEST" = "remote" ]] ||  [[ "$DEST" = "r" ]]; then
+    COPYDIR=$(echo $LOCALDIR | rev | cut -d "/" -f1 | rev)
     ssh btrzx1-1.rz.uni-bayreuth.de "mkdir temp"
     scp -r $LOCALDIR bt712347@btrzx1-1.rz.uni-bayreuth.de:temp
-    ssh btrzx1-1.rz.uni-bayreuth.de "mv temp/$LOCALDIR/* $REMOTEDIR/"
+    ssh btrzx1-1.rz.uni-bayreuth.de "mv -v temp/$COPYDIR/* $REMOTEDIR/"
     ssh btrzx1-1.rz.uni-bayreuth.de "rm -rf temp"
 elif [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
+    COPYDIR=$(echo $REMOTEDIR | rev | cut -d "/" -f1 | rev)
     mkdir temp
     scp -r bt712347@btrzx1-1.rz.uni-bayreuth.de:$REMOTEDIR temp
-    mv temp/$REMOTEDIR/* $LOCALDIR/
+    mv -v temp/$COPYDIR/* $LOCALDIR/
     rm -rf temp
 fi
 
