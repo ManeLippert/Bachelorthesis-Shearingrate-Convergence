@@ -1,6 +1,11 @@
 import h5py
 import numpy as np
 
+import derivative
+
+import matplotlib.pyplot as plt
+from matplotlib import rc
+
 
 # Returns a list with three levels, with all keys of gkw data
 def get_keys(f):
@@ -102,3 +107,27 @@ def find_keys(f, search):
      
     for i in key_list:
         print(i)
+
+
+def plot_shearing_rate_wexb_all(rad_coord, zonal_pot, dx, start, end):
+        
+    while end <= zonal_pot.shape[1]:
+
+        ddphi = derivative.finite_second_order(zonal_pot[:,start:end], dx, 'period')
+        wexb = 0.5 * np.mean(ddphi,1)
+
+        plt.plot(rad_coord, wexb)
+
+        start += 1000
+        end += 1000
+        
+def plot_shearing_rate_wexb_interval(rad_coord, zonal_pot, dx, start, end):
+    
+    middle = int((end - start)/2)
+
+    ddphi= derivative.finite_second_order(zonal_pot[:,start:end], dx, 'period')
+    wexb = 0.5 * np.mean(ddphi,1)
+    wexb_middle = 0.5*ddphi[:,middle]
+
+    plt.plot(rad_coord, wexb)
+    plt.plot(rad_coord, wexb_middle, 'black', linestyle='--', linewidth=1)
