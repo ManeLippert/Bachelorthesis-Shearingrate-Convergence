@@ -1,4 +1,4 @@
-##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/journal/JOURNAL.md) &nbsp; &nbsp; &nbsp; &nbsp; [Literature](/README.md#litarture)
+##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/journal/JOURNAL.md) &nbsp; &nbsp; &nbsp; &nbsp; [Literature](/README.md#litarture) &nbsp; &nbsp; &nbsp; &nbsp; [GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows)
 # Einführung in die Fusionsforschung
 
 #### Vorlesung von [Dr. Wolfgang Suttrop](https://www.ipp.mpg.de/4123258/suttrop) im Master Physik an der Universität Bayreuth
