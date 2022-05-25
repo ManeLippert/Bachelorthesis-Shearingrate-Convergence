@@ -28,11 +28,11 @@ done
 
 # Check if remote directory exist
 while [[ $REMOTEINPUT = false ]]; do
-    read -p "Remote dir: " REMOTEDIR MAKEDIR
+    read -p "Remote dir: " REMOTEDIR REMOTEADD
     if ssh btrzx1-1.rz.uni-bayreuth.de "[ -d $REMOTEDIR ]"; then
         REMOTEINPUT=true
     # Make folder if necessary
-    elif [[ "$MAKEDIR" = "m" ]]; then
+    elif [[ "$REMOTEADD" = "m" ]]; then
         if [[ "$DEST" = "remote" ]] || [[ "$DEST" = "r" ]]; then
             ssh btrzx1-1.rz.uni-bayreuth.de "mkdir $REMOTEDIR"
             REMOTEINPUT=true
@@ -51,11 +51,11 @@ done
 
 # Check if local directory exists
 while [[ $LOCALINPUT = false ]]; do
-    read -p "Local  dir: " LOCALDIR MAKEDIR   
+    read -p "Local  dir: " LOCALDIR LOCALADD  
     if [ -d "$LOCALDIR" ]; then
         LOCALINPUT=true
     # Make folder if necessary
-    elif [[ "$MAKEDIR" = "m" ]]; then
+    elif [[ "$LOCALADD" = "m" ]]; then
         if [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
             mkdir $LOCALDIR
             LOCALINPUT=true
@@ -74,17 +74,17 @@ done
 
 # Copy files
 if [[ "$DEST" = "remote" ]] ||  [[ "$DEST" = "r" ]]; then
-    COPYDIR=$(echo $LOCALDIR | rev | cut -d "/" -f1 | rev)
-    ssh btrzx1-1.rz.uni-bayreuth.de "mkdir temp"
-    scp -r $LOCALDIR bt712347@btrzx1-1.rz.uni-bayreuth.de:temp
-    ssh btrzx1-1.rz.uni-bayreuth.de "mv -v temp/$COPYDIR/* $REMOTEDIR/"
-    ssh btrzx1-1.rz.uni-bayreuth.de "rm -rf temp"
+    COPYDIR=$(echo "${REMOTEDIR%/*}")
+    scp -r $LOCALDIR bt712347@btrzx1-1.rz.uni-bayreuth.de:$COPYDIR
+    if [[ "$LOCALADD" = "j" ]]; then
+        ssh btrzx1-1.rz.uni-bayreuth.de "mv gkw/run/* $REMOTEDIR/"
+        ssh btrzx1-1.rz.uni-bayreuth.de "sbatch $REMOTEDIR/jobscript*"
+    fi
 elif [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
-    COPYDIR=$(echo $REMOTEDIR | rev | cut -d "/" -f1 | rev)
-    mkdir temp
-    scp -r bt712347@btrzx1-1.rz.uni-bayreuth.de:$REMOTEDIR temp
-    mv -v temp/$COPYDIR/* $LOCALDIR/
-    rm -rf temp
+    COPYDIR=$(echo "${LOCALDIR%/*}")
+    scp -r bt712347@btrzx1-1.rz.uni-bayreuth.de:$REMOTEDIR $COPYDIR
+    rm -rf $LOCALDIR/gkw.*
+    rm -rf $LOCALDIR/jobscript*
 fi
 
 # Disconnect VPN
@@ -93,3 +93,4 @@ if [[ "$CONNECTION" = "" ]]; then
     nmcli con down Universität\ Bayreuth
     } &> /dev/null
 fi
+
