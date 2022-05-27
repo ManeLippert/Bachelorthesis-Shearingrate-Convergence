@@ -1,7 +1,7 @@
 #!/bin/bash -l
 
 # jobname
-#SBATCH --job-name=S6_rtl6.3
+#SBATCH --job-name=Nsgrid16_Nvpargrid32_Nmugrid9
 
 # MPI tasks
 #SBATCH --ntasks-per-node=32

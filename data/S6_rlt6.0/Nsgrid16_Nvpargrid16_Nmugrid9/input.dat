@@ -39,9 +39,9 @@
  
  ! output in hdf5-format
  io_format = 'hdf5'
- 
+
  !Number of large timesteps between writing of checkpoint DMP files
- ndump_ts=500                    
+ ndump_ts=500   
  
  !!! IMPORTANT: Set this value 10-15 min smaller than walltime specified in slurm jobscript.
  !!!            GKW needs some time to close everything and to write the restart file.
@@ -50,8 +50,8 @@
 !---------------------------------------------------------------------------------------------------------------------
 &GRIDSIZE
  NX = 83
- N_s_grid = 12
- N_mu_grid = 6
+ N_s_grid = 16
+ N_mu_grid = 9
  n_vpar_grid = 16
  NMOD = 21
  nperiod = 1
