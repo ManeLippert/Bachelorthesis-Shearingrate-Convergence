@@ -29,8 +29,6 @@ done
 # Check if remote directory exist
 while [[ $REMOTEINPUT = false ]]; do
     read -p "Remote dir: " REMOTEDIR REMOTEADD
-    COUNTREMOTE=$(echo $(IFS='/'; set -f -- $REMOTEDIR; echo $#))
-
     if ssh btrzx1-1.rz.uni-bayreuth.de "[ -d $REMOTEDIR ]"; then
         REMOTEINPUT=true
     # Make folder if necessary
@@ -45,16 +43,14 @@ while [[ $REMOTEINPUT = false ]]; do
                 echo "Directory has to exist on remote machine"
             fi
         fi
+    elif [[ "$REMOTEDIR" = "s" ]]; then
+        REMOTEINPUT=true
     # Context
     else
-        if [[ "$COUNTREMOTE" = 1 ]]; then
-            REMOTEINPUT=true
+        if [[ "$DEST" = "remote" ]] || [[ "$DEST" = "r" ]]; then
+            echo -e "Directory does not exist on remote machine \n-> Create directory with 'dir m'"
         else
-            if [[ "$DEST" = "remote" ]] || [[ "$DEST" = "r" ]]; then
-                echo -e "Directory does not exist on remote machine \n-> Create directory with 'dir m'"
-            else
-                echo "Directory does not exist on remote machine"
-            fi
+            echo "Directory does not exist on remote machine"
         fi
     fi
 done
@@ -62,8 +58,6 @@ done
 # Check if local directory exists
 while [[ $LOCALINPUT = false ]]; do
     read -p "Local  dir: " LOCALDIR LOCALADD
-    COUNTLOCAL=$(echo $(IFS='/'; set -f -- $LOCALDIR; echo $#))
-
     if [ -d "$LOCALDIR" ]; then
         LOCALINPUT=true    
     # Make folder if necessary
@@ -74,6 +68,8 @@ while [[ $LOCALINPUT = false ]]; do
         else
             echo "Directory has to exist on local machine"
         fi
+    elif [[ "$LOCALDIR" = "s" ]]; then
+        LOCALINPUT=true
     # Context
     else
         if [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
@@ -83,6 +79,13 @@ while [[ $LOCALINPUT = false ]]; do
         fi
     fi
 done
+
+# If local directory should the same as remote directory
+if [[ "$LOCALDIR" = "s" ]]; then
+    LOCALDIR=REMOTEDIR
+elif [[ "$REMOTEDIR" = "s" ]]; then
+    REMOTEDIR=LOCALDIR
+fi
 
 # Copy files
 if [[ "$DEST" = "remote" ]] ||  [[ "$DEST" = "r" ]]; then
@@ -102,4 +105,3 @@ if [[ "$CONNECTION" = "" ]]; then
     nmcli con down Universität\ Bayreuth
     } &> /dev/null
 fi
-
