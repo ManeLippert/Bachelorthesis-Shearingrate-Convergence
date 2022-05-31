@@ -1,10 +1,4 @@
 import h5py
-import numpy as np
-
-import derivative
-
-import matplotlib.pyplot as plt
-from matplotlib import rc
 
 
 # Returns a list with three levels, with all keys of gkw data
@@ -31,24 +25,6 @@ def get_keys(f):
         i += 1
         
     return data
-
-# From Florian Rath
-def get_eflux_from_hdf5_file(hdf5_file):
-    
-    # find out number of time steps
-    tim = hdf5_file['diagnostic/diagnos_growth_freq/time'][()]
-    nt = tim.shape[1]
-    
-    # name of the dataset
-    node_name = 'diagnostic/diagnos_fluxes/eflux_species01'
-    
-    # load data into array
-    data = np.transpose(hdf5_file[node_name][()])
-    
-    # reshape GKW flux ordering
-    flux = np.reshape(data,(nt,2))[:,0]
-    
-    return flux, tim
 
 # Returns key if the end of the level is equal the vairable search
 def find_key(f, search):
@@ -107,14 +83,3 @@ def find_keys(f, search):
      
     for i in key_list:
         print(i)
-
-        
-def shearing_rate_wexb_interval(zonal_pot, dx, start, end):
-    
-    middle = int((end - start)/2)
-
-    ddphi= derivative.finite_second_order(zonal_pot[:,start:end], dx, 'period')
-    wexb = 0.5 * np.mean(ddphi,1)
-    wexb_middle = 0.5*ddphi[:,middle]
-    
-    return wexb, wexb_middle
