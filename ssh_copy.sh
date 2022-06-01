@@ -82,9 +82,9 @@ done
 
 # If local directory should the same as remote directory
 if [[ "$LOCALDIR" = "s" ]]; then
-    LOCALDIR=REMOTEDIR
+    LOCALDIR=$REMOTEDIR
 elif [[ "$REMOTEDIR" = "s" ]]; then
-    REMOTEDIR=LOCALDIR
+    REMOTEDIR=$LOCALDIR
 fi
 
 # Copy files

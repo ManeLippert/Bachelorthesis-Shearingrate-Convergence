@@ -10,6 +10,7 @@ if [[ "$CONNECTION" = "" ]]; then
     } &> /dev/null
 fi
 
+sleep 2
 ssh btrzx1-1.rz.uni-bayreuth.de
 
 # Disconnect VPN
