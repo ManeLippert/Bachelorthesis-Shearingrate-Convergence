@@ -85,7 +85,7 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
     savefig_subplot(fig, ax[0], '../pictures/'+data+'/'+resolution+'/'+data+'_'+resolution+'_wexb_'+str(start)+'_'+str(end)+'.pdf', 0.02)
 
     # FT{shearing rate}
-    ax[1].plot(rad_coord, wexb_rad_mean_amp)
+    ax[1].plot(rad_coord[1:], wexb_rad_mean_amp[1:])
     ax[1].set_title(r'$R/L_T =$ ' + rlt + ', time interval [' + str(start) + ' ' + str(end) + ']', pad=20)
     ax[1].set_xlabel(r'$x[\rho]$')
     ax[1].set_ylabel(r'Amplitude')
