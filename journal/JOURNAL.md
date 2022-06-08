@@ -24,7 +24,7 @@
 ### 3. Week
 * [16.05.2022](2022-05-16.md) &nbsp; Writing of useful shell scripts
 * [18.05.2022](2022-05-18.md) &nbsp; Data Structure
-* [20.03.2022](2022-05-20.md) &nbsp; Discussion about evaluation of the shearing rate $\omega_{\mathrm{E \times B}}$
+* [20.05.2022](2022-05-20.md) &nbsp; Discussion about evaluation of the shearing rate $\omega_{\mathrm{E \times B}}$
 
 ### 3. Week
 * [23.05.2022](2022-05-23.md) &nbsp; Fourier spectrum of shearing rate $\omega_{\mathrm{E \times B}}$ for $k_x$ domain in ```python```
