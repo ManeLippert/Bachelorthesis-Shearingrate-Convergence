@@ -31,25 +31,25 @@ def savefig_subplot(fig, ax, path, pad):
     bbox = bbox.expanded(1.0 + pad, 1.0 + pad)
     fig.savefig(path, bbox_inches=bbox)
 
-def eflux_time(time, eflux, figuresize, data, resolution):
+def eflux_time(time, eflux, figuresize, data, path, resolution):
     fig, ax = plt.subplots(figsize=figuresize)
     
     ax.plot(time, eflux)
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
     ax.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
     
-    plt.savefig('../pictures/'+data+'/'+resolution+'/'+data+'_'+resolution+'_eflux.pdf', bbox_inches='tight')
+    plt.savefig('../pictures/'+data+'/'+path+'/'+data+'_'+resolution+'_eflux.pdf', bbox_inches='tight')
     
-def max_shearingrate_time(time, wexb_max, figuresize, data, resolution):
+def max_shearingrate_time(time, wexb_max, figuresize, data, path, resolution):
     fig, ax = plt.subplots(figsize=figuresize)
 
     ax.plot(time,wexb_max)    
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
     ax.set_ylabel(r'$|k_x^2 \phi|$')
 
-    plt.savefig('../pictures/'+data+'/'+resolution+'/'+data+'_'+resolution+'_wexb_max.pdf', bbox_inches='tight')
+    plt.savefig('../pictures/'+data+'/'+path+'/'+data+'_'+resolution+'_wexb_max.pdf', bbox_inches='tight')
     
-def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, rlt, data, resolution):
+def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, rlt, data, path, resolution):
     fig, ax = plt.subplots(figsize=figuresize)
 
     start, end = 0, 999 
@@ -68,9 +68,10 @@ def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, rlt, data, re
     ax.set_xlabel(r'$x[\rho]$')
     ax.set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
     
-    plt.savefig('../pictures/'+data+'/'+resolution+'/'+data+'_'+resolution+'_wexb_all.pdf', bbox_inches='tight')
+    plt.savefig('../pictures/'+data+'/'+path+'/'+data+'_'+resolution+'_wexb_all.pdf', bbox_inches='tight')
     
-def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_rad_middle, wexb_rad_mean_amp, wexb_rad_mean_amp_max, figuresize, start, end, rlt, data, resolution):
+def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_rad_middle, wexb_rad_mean_amp, wexb_rad_mean_amp_max, 
+                                                 figuresize, start, end, rlt, data, path, resolution):
     fig, ax = plt.subplots(1, 2, figsize=figuresize)
 
     # Plot shearing rate
@@ -82,7 +83,7 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
     ax[0].set_xlabel(r'$x[\rho]$')
     ax[0].set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
 
-    savefig_subplot(fig, ax[0], '../pictures/'+data+'/'+resolution+'/'+data+'_'+resolution+'_wexb_'+str(start)+'_'+str(end)+'.pdf', 0.02)
+    savefig_subplot(fig, ax[0], '../pictures/'+data+'/'+path+'/'+data+'_'+resolution+'_wexb_'+str(start)+'_'+str(end)+'.pdf', 0.02)
 
     # FT{shearing rate}
     ax[1].plot(rad_coord[1:], wexb_rad_mean_amp[1:])
@@ -90,4 +91,4 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
     ax[1].set_xlabel(r'$x[\rho]$')
     ax[1].set_ylabel(r'Amplitude')
 
-    savefig_subplot(fig, ax[1],'../pictures/'+data+'/'+resolution+'/'+data+'_'+resolution+'_Amp_Rad_'+str(start)+'_'+str(end)+'.pdf', 0.02)
+    savefig_subplot(fig, ax[1],'../pictures/'+data+'/'+path+'/'+data+'_'+resolution+'_Amp_Rad_'+str(start)+'_'+str(end)+'.pdf', 0.02)
