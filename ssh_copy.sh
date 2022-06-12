@@ -118,7 +118,6 @@ else
             fi
         fi
     done
-
     # Copy files
     if [[ "$DEST" = "remote" ]] ||  [[ "$DEST" = "r" ]]; then
         scp -r $DIR/* bt712347@btrzx1-1.rz.uni-bayreuth.de:$DIR
