@@ -1,3 +1,4 @@
+from cProfile import label
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rc
@@ -40,12 +41,19 @@ def eflux_time(time, eflux, figuresize, data, path, resolution):
     
     plt.savefig('../pictures/'+data+'/'+path+'/'+data+'_'+resolution+'_eflux.pdf', bbox_inches='tight')
     
-def max_shearingrate_time(time, wexb_max, figuresize, data, path, resolution):
+def max_shearingrate_time(time, wexb_max, fourier_index, figuresize, data, path, resolution):
     fig, ax = plt.subplots(figsize=figuresize)
+    
+    if type(fourier_index) == int:
+        ax.plot(time,wexb_max[fourier_index], label = 'fourier mode' + str(fourier_index))
+    else:
+        for i in fourier_index:
+            ax.plot(time,wexb_max[i], label = 'fourier mode ' + str(i))
 
-    ax.plot(time,wexb_max)    
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
     ax.set_ylabel(r'$|k_x^2 \phi|$')
+    
+    plt.legend()
 
     plt.savefig('../pictures/'+data+'/'+path+'/'+data+'_'+resolution+'_wexb_max.pdf', bbox_inches='tight')
     

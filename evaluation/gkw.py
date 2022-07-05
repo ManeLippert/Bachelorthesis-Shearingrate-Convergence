@@ -18,9 +18,11 @@ def get_keys(f):
             # Third level
             if type(f[keys0 + '/' + keys1]) == h5py._hl.dataset.Dataset:
                 data[i][j] = keys0 + '/' + keys1
+                print('"' + keys0 + '/' + keys1 + '"')
             elif type(f[keys0 + '/' + keys1]) == h5py._hl.group.Group:
                 for keys2 in list(f[keys0 + '/' + keys1].keys()):
                     data[i][j].append(keys0 + '/' + keys1 + '/' + keys2)
+                    print('"' + keys0 + '/' + keys1 + '/' + keys2 + '"')
             j += 1
         i += 1
         

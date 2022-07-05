@@ -46,16 +46,27 @@ def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file)
     
     return wexb, rad_coord, rad_boxsize, ddphi, dx, zonal_pot
 
-def get_max_shearingrate(wexb, time):
+def get_max_shearingrate(wexb, time, fourier_index_max):
     
+    def wexb_max_data(fourier_index_max):
+            
+        data = []
+            
+        for time_point in range(len(time)):
+            
+            wexb_time_point = wexb[:,time_point]
+            wexb_fft = np.fft.fft(wexb_time_point)
+            wexb_fft_amp = 2/len(wexb_fft) * np.abs(wexb_fft)
+            data.append(wexb_fft_amp[fourier_index_max])
+        
+        return data
+        
     wexb_max = []
-
-    for time_point in range(len(time)):
-        wexb_time_point = wexb[:,time_point]
-        wexb_fft = np.fft.fft(wexb_time_point)
-        wexb_fft_amp = 2/len(wexb_fft) * np.abs(wexb_fft)
-        wexb_max.append(wexb_fft_amp[1])
-
+    
+    # Calculate wexb_max as list of list with multiple index    
+    for i in range(fourier_index_max+1):
+        wexb_max.append(wexb_max_data(i))
+    
     wexb_max = np.array(wexb_max)
     
     return wexb_max
