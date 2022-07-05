@@ -8,11 +8,11 @@ LOCALINPUT=false
 DIRINPUT=false
 
 # Connect VPN
-if [[ "$CONNECTION" = "" ]]; then
-    {
-    nmcli con up Universität\ Bayreuth
-    } &> /dev/null
-fi
+#if [[ "$CONNECTION" = "" ]]; then
+#    {
+#    nmcli con up Universität\ Bayreuth
+#    } &> /dev/null
+#fi
 
 # Check input destination
 while [[ $DESTINPUT = false ]]; do
@@ -128,12 +128,13 @@ else
     elif [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
         scp -r bt712347@btrzx1-1.rz.uni-bayreuth.de:$DIR/* $DIR
         rm -rf $DIR/gkw.*
+        rm -rf $DIR/monitor_job.py
     fi
 fi
 
 # Disconnect VPN
-if [[ "$CONNECTION" = "" ]]; then
-    {
-    nmcli con down Universität\ Bayreuth
-    } &> /dev/null
-fi
+#if [[ "$CONNECTION" = "" ]]; then
+#    {
+#    nmcli con down Universität\ Bayreuth
+#    } &> /dev/null
+#fi
