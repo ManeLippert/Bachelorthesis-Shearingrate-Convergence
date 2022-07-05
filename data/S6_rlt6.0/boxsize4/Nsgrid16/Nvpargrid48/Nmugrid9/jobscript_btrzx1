@@ -3,6 +3,12 @@
 # jobname
 #SBATCH --job-name=x4
 
+# number of repetitions
+# repeat=3
+
+# mail address
+# email=Manuel.Lippert@uni-bayreuth.de
+
 # MPI tasks
 #SBATCH --ntasks-per-node=32
 

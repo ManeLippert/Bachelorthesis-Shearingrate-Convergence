@@ -52,8 +52,8 @@
 *** WARNING *** xy_slice_ipar out of range, will use central point
  Reading restart file: FDS
  Data will be appended to existing files.
-*** WARNING *** This is a restart: ntime=     559 set to  complete remaining time of previous run
- Resuming at normalised time:    5664.31665649941     
+*** WARNING *** This is a restart: ntime=     228 set to  complete remaining time of previous run
+ Resuming at normalised time:    17862.9166567656     
  matrix "matrix of the linear terms" has format gkw-crs
  Von Neumann stability factor for linear term: I: vpar_grad_df
  at global location:  (imod,  ix,  i,  j,  k, isp)
@@ -105,5076 +105,2177 @@
  
  
  Species            1
- Particle flux :  -4.967412089158866E-017
- Energy flux   :    6.68978455822731     
- Momentum flux :   7.677505486813777E-002
+ Particle flux :   1.922024308522662E-018
+ Energy flux   :    8.47388293207927     
+ Momentum flux :   0.316911145420952     
  
-Time step :      30 Normalised time :   5.66492E+03
+Time step :      30 Normalised time :   1.78635E+04
  
  
  
  Iteration 1 completed successfully.
- Predicted runtime:          352  minutes
+ Predicted runtime:          133  minutes
  
 ==============================================================
  Number of code pieces tracked    14
 ==============================================================
 Name                     Number of calls   time spent  percent
 ==============================================================
-rk4                                   28  0.31230E+02   100.00
-Calc RHS                             112  0.30787E+02    98.58
-Calc Fields                          112  0.98808E+01    31.64
-fields - poisson mat multiply        112  0.22278E+00     0.71
-fields - MPI allreduce               112  0.70597E+01    22.61
-fields - zonal adiabatic             112  0.25824E+01     8.27
-fields - n4 renorm diag              112  0.13775E-01     0.04
-Copy fdis vector to tmp              112  0.26184E+00     0.84
-Collisions conservation              112  0.54359E-04     0.00
-Init RHS to zero                     112  0.15795E+00     0.51
-MPI radial ghost comms               112  0.11849E-03     0.00
-Non linear terms: FFT, No MPI        112  0.18326E+02    58.68
-MPI other ghost comms                112  0.51190E-01     0.16
-Linear terms matmul, No MPI          112  0.21088E+01     6.75
-perflib / other                        - -0.40223E+02  -128.80
+rk4                                   28  0.30533E+02   100.00
+Calc RHS                             112  0.30046E+02    98.40
+Calc Fields                          112  0.99306E+01    32.52
+fields - poisson mat multiply        112  0.20020E+00     0.66
+fields - MPI allreduce               112  0.91595E+01    30.00
+fields - zonal adiabatic             112  0.55926E+00     1.83
+fields - n4 renorm diag              112  0.97764E-02     0.03
+Copy fdis vector to tmp              112  0.26932E+00     0.88
+Collisions conservation              112  0.10729E-03     0.00
+Init RHS to zero                     112  0.16191E+00     0.53
+MPI radial ghost comms               112  0.10514E-03     0.00
+Non linear terms: FFT, No MPI        112  0.17456E+02    57.17
+MPI other ghost comms                112  0.79270E-01     0.26
+Linear terms matmul, No MPI          112  0.21483E+01     7.04
+perflib / other                        - -0.39486E+02  -129.32
  
    (timing error:  0.000000s)
 ==============================================================
  
  Species            1
- Particle flux :  -2.830412255849377E-017
- Energy flux   :    6.81240324591498     
- Momentum flux :   0.116842123566640     
+ Particle flux :  -1.020076921794182E-016
+ Energy flux   :    8.45301310885180     
+ Momentum flux :   0.294255107262512     
  
-Time step :      60 Normalised time :   5.66552E+03
+Time step :      60 Normalised time :   1.78641E+04
  
  
  
  Species            1
- Particle flux :  -2.512858937009371E-017
- Energy flux   :    6.93109936180017     
- Momentum flux :   0.167188751747637     
+ Particle flux :   8.916873206857558E-018
+ Energy flux   :    8.42396579130176     
+ Momentum flux :   0.257808774817775     
  
-Time step :      90 Normalised time :   5.66612E+03
+Time step :      90 Normalised time :   1.78647E+04
  
  
  
  Species            1
- Particle flux :  -1.007653328670174E-016
- Energy flux   :    7.04493127494379     
- Momentum flux :   0.219418296903615     
+ Particle flux :  -1.054578466945477E-017
+ Energy flux   :    8.41478551813011     
+ Momentum flux :   0.215369931274905     
  
-Time step :     120 Normalised time :   5.66672E+03
+Time step :     120 Normalised time :   1.78653E+04
  
  
  
  Species            1
- Particle flux :  -3.126599478787623E-017
- Energy flux   :    7.13520712860870     
- Momentum flux :   0.275064917214298     
+ Particle flux :  -7.882879439648193E-017
+ Energy flux   :    8.43227655628477     
+ Momentum flux :   0.177537343872869     
  
-Time step :     150 Normalised time :   5.66732E+03
+Time step :     150 Normalised time :   1.78659E+04
  
  
  
  Species            1
- Particle flux :   5.192623296771911E-018
- Energy flux   :    7.17128782473939     
- Momentum flux :   0.317197903528798     
+ Particle flux :  -5.252637007971435E-017
+ Energy flux   :    8.43323917587456     
+ Momentum flux :   0.158591605535127     
  
-Time step :     180 Normalised time :   5.66792E+03
+Time step :     180 Normalised time :   1.78665E+04
  
  
  
  Species            1
- Particle flux :   1.269584080427086E-017
- Energy flux   :    7.13935088792086     
- Momentum flux :   0.337439639348911     
+ Particle flux :  -6.153253526234789E-017
+ Energy flux   :    8.38260646048294     
+ Momentum flux :   0.153267687048442     
  
-Time step :     210 Normalised time :   5.66852E+03
+Time step :     210 Normalised time :   1.78671E+04
  
  
  
  Species            1
- Particle flux :  -2.564959073327146E-018
- Energy flux   :    7.05392916307465     
- Momentum flux :   0.336441168460511     
+ Particle flux :  -1.038946467700044E-016
+ Energy flux   :    8.31846679239537     
+ Momentum flux :   0.161596575525274     
  
-Time step :     240 Normalised time :   5.66912E+03
+Time step :     240 Normalised time :   1.78677E+04
  
  
  
  Species            1
- Particle flux :   3.821591516444516E-018
- Energy flux   :    6.94544112087450     
- Momentum flux :   0.307261868577939     
+ Particle flux :  -1.208523798603069E-016
+ Energy flux   :    8.27233120962809     
+ Momentum flux :   0.182329244618539     
  
-Time step :     270 Normalised time :   5.66972E+03
+Time step :     270 Normalised time :   1.78683E+04
  
  
  
  Species            1
- Particle flux :  -2.659091296457492E-017
- Energy flux   :    6.83589826840024     
- Momentum flux :   0.255433667999845     
+ Particle flux :  -1.134796378935241E-016
+ Energy flux   :    8.25769860684882     
+ Momentum flux :   0.214301749090206     
  
-Time step :     300 Normalised time :   5.67032E+03
+Time step :     300 Normalised time :   1.78689E+04
  
  
  
  Species            1
- Particle flux :  -1.207738484703244E-017
- Energy flux   :    6.70733227902090     
- Momentum flux :   0.191976378771388     
+ Particle flux :  -3.045321776793202E-019
+ Energy flux   :    8.27540918209270     
+ Momentum flux :   0.262137464522302     
  
-Time step :     330 Normalised time :   5.67092E+03
+Time step :     330 Normalised time :   1.78695E+04
  
  
  
  Species            1
- Particle flux :   8.186758516874872E-019
- Energy flux   :    6.55146212063811     
- Momentum flux :   0.136230376996718     
+ Particle flux :  -6.758616589564258E-017
+ Energy flux   :    8.33292617014034     
+ Momentum flux :   0.314735319213680     
  
-Time step :     360 Normalised time :   5.67152E+03
+Time step :     360 Normalised time :   1.78701E+04
  
  
  
  Species            1
- Particle flux :  -9.489047708951284E-017
- Energy flux   :    6.38846110491188     
- Momentum flux :   9.905549727522699E-002
+ Particle flux :  -9.150954566862102E-017
+ Energy flux   :    8.39271770751737     
+ Momentum flux :   0.351485457169651     
  
-Time step :     390 Normalised time :   5.67212E+03
+Time step :     390 Normalised time :   1.78707E+04
  
  
  
  Species            1
- Particle flux :  -4.175129332260414E-017
- Energy flux   :    6.25397170167581     
- Momentum flux :   8.468324614064984E-002
+ Particle flux :   1.555460357443130E-017
+ Energy flux   :    8.39995934540623     
+ Momentum flux :   0.360605504939688     
  
-Time step :     420 Normalised time :   5.67272E+03
+Time step :     420 Normalised time :   1.78713E+04
  
  
  
  Species            1
- Particle flux :   3.019165540002693E-017
- Energy flux   :    6.15271747793845     
- Momentum flux :   8.158006200283228E-002
+ Particle flux :  -5.988863993994217E-017
+ Energy flux   :    8.38547024390519     
+ Momentum flux :   0.350915940056764     
  
-Time step :     450 Normalised time :   5.67332E+03
+Time step :     450 Normalised time :   1.78719E+04
  
  
  
  Species            1
- Particle flux :   7.052778166089574E-019
- Energy flux   :    6.03674704535841     
- Momentum flux :   7.526267993411799E-002
+ Particle flux :  -4.592417508106315E-017
+ Energy flux   :    8.35454096113649     
+ Momentum flux :   0.329892362423872     
  
-Time step :     480 Normalised time :   5.67392E+03
+Time step :     480 Normalised time :   1.78725E+04
  
  
  
  Species            1
- Particle flux :  -1.446647012268706E-017
- Energy flux   :    5.91176624044943     
- Momentum flux :   6.768812981426675E-002
+ Particle flux :  -5.993071623955848E-017
+ Energy flux   :    8.30126432594579     
+ Momentum flux :   0.289303233327009     
  
-Time step :     510 Normalised time :   5.67452E+03
+Time step :     510 Normalised time :   1.78731E+04
  
  
  
  Species            1
- Particle flux :  -3.936564067847055E-017
- Energy flux   :    5.80412845571916     
- Momentum flux :   6.467028122191448E-002
+ Particle flux :  -5.586992913802655E-017
+ Energy flux   :    8.24924210409829     
+ Momentum flux :   0.228792555623943     
  
-Time step :     540 Normalised time :   5.67512E+03
+Time step :     540 Normalised time :   1.78737E+04
  
  
  
  Species            1
- Particle flux :   3.324143811016484E-017
- Energy flux   :    5.73892058933726     
- Momentum flux :   6.711613106005455E-002
+ Particle flux :  -9.883260512571169E-017
+ Energy flux   :    8.23218084899960     
+ Momentum flux :   0.159541134682350     
  
-Time step :     570 Normalised time :   5.67572E+03
+Time step :     570 Normalised time :   1.78743E+04
  
  
  
  Species            1
- Particle flux :  -2.660666057058276E-017
- Energy flux   :    5.71326700984602     
- Momentum flux :   7.779136203951655E-002
+ Particle flux :  -3.200235924097706E-017
+ Energy flux   :    8.24998708774154     
+ Momentum flux :   8.386570461460376E-002
  
-Time step :     600 Normalised time :   5.67632E+03
+Time step :     600 Normalised time :   1.78749E+04
  
  
  
  Species            1
- Particle flux :  -4.594510895441534E-017
- Energy flux   :    5.71254508247289     
- Momentum flux :   9.185414109369858E-002
+ Particle flux :  -3.099021411581955E-018
+ Energy flux   :    8.28562235058652     
+ Momentum flux :   1.293987568202865E-002
  
-Time step :     630 Normalised time :   5.67692E+03
+Time step :     630 Normalised time :   1.78755E+04
  
  
  
  Species            1
- Particle flux :   2.760395309915521E-017
- Energy flux   :    5.72976680453054     
- Momentum flux :   0.102428419140670     
+ Particle flux :  -7.664045044925502E-017
+ Energy flux   :    8.32090256697537     
+ Momentum flux :  -3.577239653096186E-002
  
-Time step :     660 Normalised time :   5.67752E+03
+Time step :     660 Normalised time :   1.78761E+04
  
  
  
  Species            1
- Particle flux :  -7.474259687521904E-017
- Energy flux   :    5.75511245734538     
- Momentum flux :   0.109867470114649     
+ Particle flux :  -1.149688174575555E-016
+ Energy flux   :    8.37050993055331     
+ Momentum flux :  -5.729099900639371E-002
  
-Time step :     690 Normalised time :   5.67812E+03
+Time step :     690 Normalised time :   1.78767E+04
  
  
  
  Species            1
- Particle flux :  -2.976820623822213E-017
- Energy flux   :    5.77418029319609     
- Momentum flux :   0.109187930160522     
+ Particle flux :  -3.244119804637963E-017
+ Energy flux   :    8.41802203259474     
+ Momentum flux :  -5.639271894934654E-002
  
-Time step :     720 Normalised time :   5.67872E+03
+Time step :     720 Normalised time :   1.78773E+04
  
  
  
  Species            1
- Particle flux :  -6.241111134639462E-017
- Energy flux   :    5.77730176868796     
- Momentum flux :   9.183738497867611E-002
+ Particle flux :  -3.069767135243251E-017
+ Energy flux   :    8.44560992289058     
+ Momentum flux :  -3.809085959480501E-002
  
-Time step :     750 Normalised time :   5.67932E+03
+Time step :     750 Normalised time :   1.78779E+04
  
  
  
  Species            1
- Particle flux :  -9.787629487284726E-018
- Energy flux   :    5.76169376838015     
- Momentum flux :   6.806619791811321E-002
+ Particle flux :  -8.550320624341570E-017
+ Energy flux   :    8.39268031562346     
+ Momentum flux :  -1.683534788374859E-002
  
-Time step :     780 Normalised time :   5.67992E+03
+Time step :     780 Normalised time :   1.78785E+04
  
  
  
  Species            1
- Particle flux :  -3.131313002072134E-017
- Energy flux   :    5.74766089778758     
- Momentum flux :   5.454392308187406E-002
+ Particle flux :  -4.241790535696113E-017
+ Energy flux   :    8.21034583278400     
+ Momentum flux :   2.739395049846038E-003
  
-Time step :     810 Normalised time :   5.68052E+03
+Time step :     810 Normalised time :   1.78791E+04
  
  
  
  Species            1
- Particle flux :  -4.885404498501564E-017
- Energy flux   :    5.74522851665330     
- Momentum flux :   5.194513182981216E-002
+ Particle flux :  -4.137938891254420E-017
+ Energy flux   :    7.91213760731111     
+ Momentum flux :   2.065065903190687E-002
  
-Time step :     840 Normalised time :   5.68112E+03
+Time step :     840 Normalised time :   1.78797E+04
  
  
  
  Species            1
- Particle flux :  -8.010174295133251E-017
- Energy flux   :    5.76502325761064     
- Momentum flux :   5.726393466527645E-002
+ Particle flux :   3.111106106741048E-018
+ Energy flux   :    7.55636135905844     
+ Momentum flux :   1.704211626563332E-002
  
-Time step :     870 Normalised time :   5.68172E+03
+Time step :     870 Normalised time :   1.78803E+04
  
  
  
  Species            1
- Particle flux :  -1.953418397708464E-018
- Energy flux   :    5.81463224346373     
- Momentum flux :   6.683236698320520E-002
+ Particle flux :  -2.791162659860828E-017
+ Energy flux   :    7.23640538207954     
+ Momentum flux :   3.757671784452699E-004
  
-Time step :     900 Normalised time :   5.68232E+03
+Time step :     900 Normalised time :   1.78809E+04
  
  
  
  Species            1
- Particle flux :  -1.293836447300469E-017
- Energy flux   :    5.89484644678001     
- Momentum flux :   7.254079708666700E-002
+ Particle flux :  -4.272570815508369E-017
+ Energy flux   :    7.00568119128669     
+ Momentum flux :  -1.908882885581050E-002
  
-Time step :     930 Normalised time :   5.68292E+03
+Time step :     930 Normalised time :   1.78815E+04
  
  
  
  Species            1
- Particle flux :   1.536560159325694E-018
- Energy flux   :    5.97794162218950     
- Momentum flux :   6.656632831877755E-002
+ Particle flux :  -4.625901200276033E-017
+ Energy flux   :    6.81778618826934     
+ Momentum flux :  -2.186004444502948E-002
  
-Time step :     960 Normalised time :   5.68352E+03
+Time step :     960 Normalised time :   1.78821E+04
  
  
  
  Species            1
- Particle flux :  -1.218865609735852E-017
- Energy flux   :    6.02624992170975     
- Momentum flux :   4.647571828431558E-002
+ Particle flux :   7.698886874603213E-018
+ Energy flux   :    6.65608342980966     
+ Momentum flux :  -8.597822186135936E-003
  
-Time step :     990 Normalised time :   5.68412E+03
+Time step :     990 Normalised time :   1.78827E+04
  
  
  
  Species            1
- Particle flux :  -2.930382859329850E-017
- Energy flux   :    6.03399441471830     
- Momentum flux :   2.269149707190929E-002
+ Particle flux :  -1.832207517667279E-017
+ Energy flux   :    6.55949604350251     
+ Momentum flux :   1.142596260247983E-002
  
-Time step :    1020 Normalised time :   5.68472E+03
+Time step :    1020 Normalised time :   1.78833E+04
  
  
  
  Species            1
- Particle flux :  -3.143807353259716E-017
- Energy flux   :    6.02983345481838     
- Momentum flux :   6.281803113770114E-003
+ Particle flux :  -2.788323716544940E-017
+ Energy flux   :    6.53859775888028     
+ Momentum flux :   2.214166004008211E-002
  
-Time step :    1050 Normalised time :   5.68532E+03
+Time step :    1050 Normalised time :   1.78839E+04
  
  
  
  Species            1
- Particle flux :  -3.297360442074690E-017
- Energy flux   :    6.03520463518243     
- Momentum flux :  -6.354069675975224E-003
+ Particle flux :  -3.043319513742213E-017
+ Energy flux   :    6.57929248136174     
+ Momentum flux :   1.506587278905989E-002
  
-Time step :    1080 Normalised time :   5.68592E+03
+Time step :    1080 Normalised time :   1.78845E+04
  
  
  
  Species            1
- Particle flux :  -3.747220481112993E-017
- Energy flux   :    6.06556527577599     
- Momentum flux :  -1.398259834870536E-002
+ Particle flux :  -4.464682851029320E-018
+ Energy flux   :    6.64508607185570     
+ Momentum flux :  -1.897501520037896E-003
  
-Time step :    1110 Normalised time :   5.68652E+03
+Time step :    1110 Normalised time :   1.78851E+04
  
  
  
  Species            1
- Particle flux :  -4.828911056024034E-017
- Energy flux   :    6.11364742007011     
- Momentum flux :  -1.191863618255363E-002
+ Particle flux :   4.944837208378589E-018
+ Energy flux   :    6.71341537208330     
+ Momentum flux :  -1.518250007317113E-002
  
-Time step :    1140 Normalised time :   5.68712E+03
+Time step :    1140 Normalised time :   1.78857E+04
  
  
  
  Species            1
- Particle flux :  -6.531954688102554E-017
- Energy flux   :    6.14260977949359     
- Momentum flux :  -1.189553228355122E-003
+ Particle flux :   6.619603841822985E-018
+ Energy flux   :    6.73880299868174     
+ Momentum flux :  -2.841254242447492E-002
  
-Time step :    1170 Normalised time :   5.68772E+03
+Time step :    1170 Normalised time :   1.78863E+04
  
  
  
  Species            1
- Particle flux :   5.251401613726587E-019
- Energy flux   :    6.13355215070608     
- Momentum flux :   2.006493407103373E-002
+ Particle flux :  -3.288252811299205E-017
+ Energy flux   :    6.70437630642758     
+ Momentum flux :  -4.337310515813723E-002
  
-Time step :    1200 Normalised time :   5.68832E+03
+Time step :    1200 Normalised time :   1.78869E+04
  
  
  
  Species            1
- Particle flux :   1.405161857277156E-017
- Energy flux   :    6.10944770784203     
- Momentum flux :   4.980129304753864E-002
+ Particle flux :  -6.103280091951404E-017
+ Energy flux   :    6.64390296787259     
+ Momentum flux :  -6.090172614549164E-002
  
-Time step :    1230 Normalised time :   5.68892E+03
+Time step :    1230 Normalised time :   1.78875E+04
  
  
  
  Species            1
- Particle flux :   7.587413223521000E-018
- Energy flux   :    6.08574547213605     
- Momentum flux :   8.489886735630903E-002
+ Particle flux :   2.813666532355397E-017
+ Energy flux   :    6.60093317586908     
+ Momentum flux :  -7.743054899635878E-002
  
-Time step :    1260 Normalised time :   5.68952E+03
+Time step :    1260 Normalised time :   1.78881E+04
  
  
  
  Species            1
- Particle flux :  -6.194437515105067E-017
- Energy flux   :    6.06187169104993     
- Momentum flux :   0.120125995282906     
+ Particle flux :  -1.372539704734685E-017
+ Energy flux   :    6.58913957922338     
+ Momentum flux :  -8.019671540196094E-002
  
-Time step :    1290 Normalised time :   5.69012E+03
+Time step :    1290 Normalised time :   1.78887E+04
  
  
  
  Species            1
- Particle flux :  -3.733244005152180E-017
- Energy flux   :    6.04618724938258     
- Momentum flux :   0.155512421432291     
+ Particle flux :  -3.991678715273263E-017
+ Energy flux   :    6.58768818638578     
+ Momentum flux :  -7.120070249035343E-002
  
-Time step :    1320 Normalised time :   5.69072E+03
+Time step :    1320 Normalised time :   1.78893E+04
  
  
  
  Species            1
- Particle flux :  -9.539165263623653E-017
- Energy flux   :    6.05696331572402     
- Momentum flux :   0.189132218598349     
+ Particle flux :  -9.262360047922083E-017
+ Energy flux   :    6.59080434541447     
+ Momentum flux :  -6.124517201247617E-002
  
-Time step :    1350 Normalised time :   5.69132E+03
+Time step :    1350 Normalised time :   1.78899E+04
  
  
  
  Species            1
- Particle flux :  -3.599032260215074E-017
- Energy flux   :    6.11021609592894     
- Momentum flux :   0.208714585134899     
+ Particle flux :  -5.471717447567329E-018
+ Energy flux   :    6.61084763302748     
+ Momentum flux :  -5.946993096294410E-002
  
-Time step :    1380 Normalised time :   5.69192E+03
+Time step :    1380 Normalised time :   1.78905E+04
  
  
  
  Species            1
- Particle flux :  -2.145553790741961E-018
- Energy flux   :    6.18405277656742     
- Momentum flux :   0.213724828384793     
+ Particle flux :  -2.488030692163407E-017
+ Energy flux   :    6.62277865041867     
+ Momentum flux :  -6.942054591290814E-002
  
-Time step :    1410 Normalised time :   5.69252E+03
+Time step :    1410 Normalised time :   1.78911E+04
  
  
  
  Species            1
- Particle flux :  -3.421781320559978E-017
- Energy flux   :    6.25450330649604     
- Momentum flux :   0.202834104131495     
+ Particle flux :  -4.036733568198286E-017
+ Energy flux   :    6.60427962948929     
+ Momentum flux :  -8.768690383858783E-002
  
-Time step :    1440 Normalised time :   5.69312E+03
+Time step :    1440 Normalised time :   1.78917E+04
  
  
  
  Species            1
- Particle flux :  -3.826845028402780E-017
- Energy flux   :    6.31125977021711     
- Momentum flux :   0.179595996786783     
+ Particle flux :  -5.386642929692622E-017
+ Energy flux   :    6.56342645411551     
+ Momentum flux :  -9.812714173252295E-002
  
-Time step :    1470 Normalised time :   5.69372E+03
+Time step :    1470 Normalised time :   1.78923E+04
  
  
  
  Species            1
- Particle flux :   1.111528497611500E-018
- Energy flux   :    6.34981408708147     
- Momentum flux :   0.154394695086120     
+ Particle flux :  -8.070577070733889E-018
+ Energy flux   :    6.51244552518054     
+ Momentum flux :  -9.669657698324509E-002
  
-Time step :    1500 Normalised time :   5.69432E+03
+Time step :    1500 Normalised time :   1.78929E+04
  
  
  
  Species            1
- Particle flux :  -1.994507922552788E-017
- Energy flux   :    6.38179022078805     
- Momentum flux :   0.136455578301439     
+ Particle flux :  -3.222541467115719E-017
+ Energy flux   :    6.45043001702340     
+ Momentum flux :  -8.554218502868931E-002
  
-Time step :    1530 Normalised time :   5.69492E+03
+Time step :    1530 Normalised time :   1.78935E+04
  
  
  
  Species            1
- Particle flux :  -4.500568908342439E-017
- Energy flux   :    6.44116472458957     
- Momentum flux :   0.132339369000845     
+ Particle flux :  -9.411241525660208E-018
+ Energy flux   :    6.37005674688792     
+ Momentum flux :  -7.318004956853663E-002
  
-Time step :    1560 Normalised time :   5.69552E+03
+Time step :    1560 Normalised time :   1.78941E+04
  
  
  
  Species            1
- Particle flux :   1.351071162514060E-017
- Energy flux   :    6.53152346952990     
- Momentum flux :   0.138244533908492     
+ Particle flux :  -5.171685716616605E-017
+ Energy flux   :    6.28874393430118     
+ Momentum flux :  -6.705645325635075E-002
  
-Time step :    1590 Normalised time :   5.69612E+03
+Time step :    1590 Normalised time :   1.78947E+04
  
  
  
  Species            1
- Particle flux :  -6.102211209163863E-018
- Energy flux   :    6.62483310765961     
- Momentum flux :   0.142550702095486     
+ Particle flux :  -7.953532565021284E-018
+ Energy flux   :    6.22444305744800     
+ Momentum flux :  -6.207808141769472E-002
  
-Time step :    1620 Normalised time :   5.69672E+03
+Time step :    1620 Normalised time :   1.78953E+04
  
  
  
  Species            1
- Particle flux :  -8.341042767435387E-017
- Energy flux   :    6.69482132257167     
- Momentum flux :   0.138580770574788     
+ Particle flux :  -6.761578795716114E-018
+ Energy flux   :    6.16541394359940     
+ Momentum flux :  -4.836181079006050E-002
  
-Time step :    1650 Normalised time :   5.69732E+03
+Time step :    1650 Normalised time :   1.78959E+04
  
  
  
  Species            1
- Particle flux :  -5.354851044180364E-017
- Energy flux   :    6.74650278728095     
- Momentum flux :   0.122174132347427     
+ Particle flux :  -8.372112528150295E-017
+ Energy flux   :    6.10715491071819     
+ Momentum flux :  -2.783044160545516E-002
  
-Time step :    1680 Normalised time :   5.69792E+03
+Time step :    1680 Normalised time :   1.78965E+04
  
  
  
  Species            1
- Particle flux :  -1.961515430910319E-017
- Energy flux   :    6.81703663070806     
- Momentum flux :   9.991012841621892E-002
+ Particle flux :  -6.827422682668064E-017
+ Energy flux   :    6.06237681480053     
+ Momentum flux :  -3.156766682227581E-003
  
-Time step :    1710 Normalised time :   5.69852E+03
+Time step :    1710 Normalised time :   1.78971E+04
  
  
  
  Species            1
- Particle flux :   3.654857211510691E-018
- Energy flux   :    6.89851271245956     
- Momentum flux :   8.284075810620498E-002
+ Particle flux :  -2.467557501543746E-017
+ Energy flux   :    6.03101561770175     
+ Momentum flux :   1.829754137579935E-002
  
-Time step :    1740 Normalised time :   5.69912E+03
+Time step :    1740 Normalised time :   1.78977E+04
  
  
  
  Species            1
- Particle flux :  -1.959029572223838E-017
- Energy flux   :    6.97324656721089     
- Momentum flux :   8.416819984642188E-002
+ Particle flux :  -3.004405396360721E-017
+ Energy flux   :    6.00924273066975     
+ Momentum flux :   2.871789431189789E-002
  
-Time step :    1770 Normalised time :   5.69972E+03
+Time step :    1770 Normalised time :   1.78983E+04
  
  
  
  Species            1
- Particle flux :  -2.962354423980791E-017
- Energy flux   :    7.03481874176397     
- Momentum flux :   0.101112845735825     
+ Particle flux :  -5.859972969440145E-017
+ Energy flux   :    5.99352059985142     
+ Momentum flux :   2.459005222255868E-002
  
-Time step :    1800 Normalised time :   5.70032E+03
+Time step :    1800 Normalised time :   1.78989E+04
  
  
  
  Species            1
- Particle flux :   2.607284230230744E-017
- Energy flux   :    7.07397196240654     
- Momentum flux :   0.119503468472641     
+ Particle flux :  -8.276093919633022E-018
+ Energy flux   :    5.99296011612733     
+ Momentum flux :   8.918144223010313E-003
  
-Time step :    1830 Normalised time :   5.70092E+03
+Time step :    1830 Normalised time :   1.78995E+04
  
  
  
  Species            1
- Particle flux :  -4.938818792168139E-017
- Energy flux   :    7.07574559587364     
- Momentum flux :   0.129662554942660     
+ Particle flux :  -6.537996632431552E-018
+ Energy flux   :    5.99710508029498     
+ Momentum flux :  -1.352912879475661E-002
  
-Time step :    1860 Normalised time :   5.70152E+03
+Time step :    1860 Normalised time :   1.79001E+04
  
  
  
  Species            1
- Particle flux :  -9.151733222991971E-017
- Energy flux   :    7.02815864490665     
- Momentum flux :   0.124851505013525     
+ Particle flux :  -6.698631674589808E-017
+ Energy flux   :    6.00155106491475     
+ Momentum flux :  -3.660542551222044E-002
  
-Time step :    1890 Normalised time :   5.70212E+03
+Time step :    1890 Normalised time :   1.79007E+04
  
  
  
  Species            1
- Particle flux :  -4.674298038651650E-017
- Energy flux   :    6.94467041874558     
- Momentum flux :   0.116261946611597     
+ Particle flux :   2.756057704030264E-017
+ Energy flux   :    6.00985748992231     
+ Momentum flux :  -5.738490229881820E-002
  
-Time step :    1920 Normalised time :   5.70272E+03
+Time step :    1920 Normalised time :   1.79013E+04
  
  
  
  Species            1
- Particle flux :  -2.868046528367854E-018
- Energy flux   :    6.88713499488515     
- Momentum flux :   0.110390365693803     
+ Particle flux :  -9.084223900934463E-017
+ Energy flux   :    6.02124795644413     
+ Momentum flux :  -6.911293913566925E-002
  
-Time step :    1950 Normalised time :   5.70332E+03
+Time step :    1950 Normalised time :   1.79019E+04
  
  
  
  Species            1
- Particle flux :  -5.565111505058790E-017
- Energy flux   :    6.87939818760971     
- Momentum flux :   0.108741606292798     
+ Particle flux :   5.831383539518781E-018
+ Energy flux   :    6.02181337307862     
+ Momentum flux :  -6.936131592495838E-002
  
-Time step :    1980 Normalised time :   5.70392E+03
+Time step :    1980 Normalised time :   1.79025E+04
  
  
  
  Species            1
- Particle flux :  -7.308675716816562E-017
- Energy flux   :    6.87403104959697     
- Momentum flux :   0.104433137613063     
+ Particle flux :  -2.468847664838668E-017
+ Energy flux   :    6.00106755461635     
+ Momentum flux :  -6.497479280572861E-002
  
-Time step :    2010 Normalised time :   5.70452E+03
+Time step :    2010 Normalised time :   1.79031E+04
  
  
  
  Species            1
- Particle flux :  -6.827909664574190E-017
- Energy flux   :    6.84943229088637     
- Momentum flux :   9.225419224476866E-002
+ Particle flux :   4.490626440363857E-018
+ Energy flux   :    5.96740264292404     
+ Momentum flux :  -6.450582827935684E-002
  
-Time step :    2040 Normalised time :   5.70512E+03
+Time step :    2040 Normalised time :   1.79037E+04
  
  
  
  Species            1
- Particle flux :  -1.120044942403193E-017
- Energy flux   :    6.80350431949250     
- Momentum flux :   7.436733601730611E-002
+ Particle flux :  -6.263479008301570E-017
+ Energy flux   :    5.94155390390843     
+ Momentum flux :  -7.218006419536113E-002
  
-Time step :    2070 Normalised time :   5.70572E+03
+Time step :    2070 Normalised time :   1.79043E+04
  
  
  
  Species            1
- Particle flux :  -4.197712014387844E-017
- Energy flux   :    6.74778382464724     
- Momentum flux :   5.275673892569983E-002
+ Particle flux :   2.138880268165885E-017
+ Energy flux   :    5.93513245784666     
+ Momentum flux :  -8.553402090155227E-002
  
-Time step :    2100 Normalised time :   5.70632E+03
+Time step :    2100 Normalised time :   1.79049E+04
  
  
  
  Species            1
- Particle flux :  -3.305585920916038E-017
- Energy flux   :    6.71016821320588     
- Momentum flux :   3.862811550506403E-002
+ Particle flux :  -4.861396961579860E-017
+ Energy flux   :    5.95211681175709     
+ Momentum flux :  -9.831421646226347E-002
  
-Time step :    2130 Normalised time :   5.70692E+03
+Time step :    2130 Normalised time :   1.79055E+04
  
  
  
  Species            1
- Particle flux :   8.867532296909076E-019
- Energy flux   :    6.72294039048811     
- Momentum flux :   3.433988689142185E-002
+ Particle flux :  -2.820298814808059E-017
+ Energy flux   :    5.98334192565625     
+ Momentum flux :  -0.100401365577155     
  
-Time step :    2160 Normalised time :   5.70752E+03
+Time step :    2160 Normalised time :   1.79061E+04
  
  
  
  Species            1
- Particle flux :   9.915891285886586E-018
- Energy flux   :    6.80766267792177     
- Momentum flux :   3.086090587515039E-002
+ Particle flux :  -2.678050286436965E-017
+ Energy flux   :    6.01485761251187     
+ Momentum flux :  -8.902186574683277E-002
  
-Time step :    2190 Normalised time :   5.70812E+03
+Time step :    2190 Normalised time :   1.79067E+04
  
  
  
  Species            1
- Particle flux :   2.504088480561200E-017
- Energy flux   :    6.96166001593642     
- Momentum flux :   3.079738558356005E-002
+ Particle flux :  -2.806624180283941E-018
+ Energy flux   :    6.03277259517037     
+ Momentum flux :  -7.340998588656342E-002
  
-Time step :    2220 Normalised time :   5.70872E+03
+Time step :    2220 Normalised time :   1.79073E+04
  
  
  
  Species            1
- Particle flux :  -5.387685797649898E-017
- Energy flux   :    7.13746031249528     
- Momentum flux :   3.260631593074442E-002
- 
-Time step :    2250 Normalised time :   5.70932E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.477572103273274E-017
- Energy flux   :    7.31794364297032     
- Momentum flux :   2.918790272511667E-002
- 
-Time step :    2280 Normalised time :   5.70992E+03
- 
- 
- 
- Species            1
- Particle flux :  -9.056671129945903E-017
- Energy flux   :    7.49905806391074     
- Momentum flux :   2.506559766658176E-002
- 
-Time step :    2310 Normalised time :   5.71052E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.301306671192587E-017
- Energy flux   :    7.63715328216006     
- Momentum flux :   1.536563124944325E-002
- 
-Time step :    2340 Normalised time :   5.71112E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.977241271013090E-017
- Energy flux   :    7.69135194194653     
- Momentum flux :  -2.212321005080773E-003
- 
-Time step :    2370 Normalised time :   5.71172E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.520544311294019E-017
- Energy flux   :    7.65740935687617     
- Momentum flux :  -2.286391751762419E-002
- 
-Time step :    2400 Normalised time :   5.71232E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.906800141691238E-017
- Energy flux   :    7.56552833922426     
- Momentum flux :  -4.281797307938152E-002
- 
-Time step :    2430 Normalised time :   5.71292E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.083065480576166E-017
- Energy flux   :    7.46764077993926     
- Momentum flux :  -5.615542229515167E-002
- 
-Time step :    2460 Normalised time :   5.71352E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.581020803481667E-017
- Energy flux   :    7.37650384883534     
- Momentum flux :  -6.307550858835949E-002
- 
-Time step :    2490 Normalised time :   5.71412E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.641644305465030E-017
- Energy flux   :    7.27512151634088     
- Momentum flux :  -6.931954874665323E-002
- 
-Time step :    2520 Normalised time :   5.71472E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.457423943073497E-017
- Energy flux   :    7.18732073179217     
- Momentum flux :  -6.960088061964260E-002
- 
-Time step :    2550 Normalised time :   5.71532E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.124174048669155E-017
- Energy flux   :    7.14947203757784     
- Momentum flux :  -4.631668566692110E-002
- 
-Time step :    2580 Normalised time :   5.71592E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.630085946923560E-017
- Energy flux   :    7.13868908143371     
- Momentum flux :  -1.276346867254117E-002
- 
-Time step :    2610 Normalised time :   5.71652E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.464243338950598E-017
- Energy flux   :    7.12371935373505     
- Momentum flux :   2.173569146751423E-002
- 
-Time step :    2640 Normalised time :   5.71712E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.533372241434067E-017
- Energy flux   :    7.09538935957441     
- Momentum flux :   5.899141228158086E-002
- 
-Time step :    2670 Normalised time :   5.71772E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.522299323459627E-018
- Energy flux   :    7.05518300401942     
- Momentum flux :   9.635895288288625E-002
- 
-Time step :    2700 Normalised time :   5.71832E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.331381258090085E-017
- Energy flux   :    6.99209146070510     
- Momentum flux :   0.141901711814921     
- 
-Time step :    2730 Normalised time :   5.71892E+03
- 
- 
- 
- Species            1
- Particle flux :   3.920012645201555E-018
- Energy flux   :    6.88562119296869     
- Momentum flux :   0.187784142244390     
- 
-Time step :    2760 Normalised time :   5.71952E+03
- 
- 
- 
- Species            1
- Particle flux :   4.806574439449323E-017
- Energy flux   :    6.72106535535405     
- Momentum flux :   0.227204682616032     
- 
-Time step :    2790 Normalised time :   5.72012E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.662437347026702E-017
- Energy flux   :    6.53301137317608     
- Momentum flux :   0.264776812050912     
- 
-Time step :    2820 Normalised time :   5.72072E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.108958270242009E-017
- Energy flux   :    6.36381438164727     
- Momentum flux :   0.295024310965139     
- 
-Time step :    2850 Normalised time :   5.72132E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.010070922527424E-017
- Energy flux   :    6.23459817182760     
- Momentum flux :   0.306694799010609     
- 
-Time step :    2880 Normalised time :   5.72192E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.097424948545053E-017
- Energy flux   :    6.14945492346397     
- Momentum flux :   0.295658856706011     
- 
-Time step :    2910 Normalised time :   5.72252E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.710287232023132E-017
- Energy flux   :    6.11069649521367     
- Momentum flux :   0.278918439554705     
- 
-Time step :    2940 Normalised time :   5.72312E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.684034855450725E-017
- Energy flux   :    6.10871548645647     
- Momentum flux :   0.260767871777112     
- 
-Time step :    2970 Normalised time :   5.72372E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.554327620766974E-017
- Energy flux   :    6.11797834425376     
- Momentum flux :   0.236909811352525     
- 
-Time step :    3000 Normalised time :   5.72432E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.796239837592011E-017
- Energy flux   :    6.11789147570419     
- Momentum flux :   0.214595173880026     
- 
-Time step :    3030 Normalised time :   5.72492E+03
- 
- 
- 
- Species            1
- Particle flux :   1.335656424324466E-017
- Energy flux   :    6.10816982149257     
- Momentum flux :   0.195906516648089     
- 
-Time step :    3060 Normalised time :   5.72552E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.219933207670565E-017
- Energy flux   :    6.08145389806972     
- Momentum flux :   0.174698244287674     
- 
-Time step :    3090 Normalised time :   5.72612E+03
- 
- 
- 
- Species            1
- Particle flux :   1.573387049282592E-017
- Energy flux   :    6.03439749522700     
- Momentum flux :   0.145903428824610     
- 
-Time step :    3120 Normalised time :   5.72672E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.365417584457171E-017
- Energy flux   :    5.98525417745540     
- Momentum flux :   0.115625774675815     
- 
-Time step :    3150 Normalised time :   5.72732E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.503218584540031E-017
- Energy flux   :    5.95514222192850     
- Momentum flux :   8.995704255943951E-002
- 
-Time step :    3180 Normalised time :   5.72792E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.100275550377026E-017
- Energy flux   :    5.93649527301538     
- Momentum flux :   7.083225840204746E-002
- 
-Time step :    3210 Normalised time :   5.72852E+03
- 
- 
- 
- Species            1
- Particle flux :  -8.350079393802572E-017
- Energy flux   :    5.93091771414824     
- Momentum flux :   5.463039039864444E-002
- 
-Time step :    3240 Normalised time :   5.72912E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.644043616803900E-018
- Energy flux   :    5.94947533419824     
- Momentum flux :   3.970077662785505E-002
- 
-Time step :    3270 Normalised time :   5.72972E+03
- 
- 
- 
- Species            1
- Particle flux :   2.256177555103807E-017
- Energy flux   :    5.95696629927064     
- Momentum flux :   1.439923117924450E-002
- 
-Time step :    3300 Normalised time :   5.73032E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.106146526813167E-017
- Energy flux   :    5.94375246818243     
- Momentum flux :  -1.510001539656599E-002
- 
-Time step :    3330 Normalised time :   5.73092E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.047201410318379E-017
- Energy flux   :    5.91652445584794     
- Momentum flux :  -4.595629557730227E-002
- 
-Time step :    3360 Normalised time :   5.73152E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.598622641090942E-017
- Energy flux   :    5.86632194631971     
- Momentum flux :  -7.128898004430345E-002
- 
-Time step :    3390 Normalised time :   5.73212E+03
- 
- 
- 
- Species            1
- Particle flux :   2.700187231951563E-018
- Energy flux   :    5.79256167161710     
- Momentum flux :  -8.427824602734067E-002
- 
-Time step :    3420 Normalised time :   5.73272E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.383101438178711E-017
- Energy flux   :    5.69517881762853     
- Momentum flux :  -8.524988061866778E-002
- 
-Time step :    3450 Normalised time :   5.73332E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.869427403002935E-017
- Energy flux   :    5.57683113206113     
- Momentum flux :  -7.559603498805632E-002
- 
-Time step :    3480 Normalised time :   5.73392E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.360167599786677E-017
- Energy flux   :    5.45326082049295     
- Momentum flux :  -6.723322160427529E-002
- 
-Time step :    3510 Normalised time :   5.73452E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.005750055279404E-017
- Energy flux   :    5.33692856008472     
- Momentum flux :  -6.303960634459985E-002
- 
-Time step :    3540 Normalised time :   5.73512E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.811660670353540E-018
- Energy flux   :    5.22849576014226     
- Momentum flux :  -5.237428068335915E-002
- 
-Time step :    3570 Normalised time :   5.73572E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.702476631666540E-018
- Energy flux   :    5.13724567107641     
- Momentum flux :  -4.514864147579650E-002
- 
-Time step :    3600 Normalised time :   5.73632E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.994552671593518E-017
- Energy flux   :    5.07613856622945     
- Momentum flux :  -4.585699281897591E-002
- 
-Time step :    3630 Normalised time :   5.73692E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.451329243155320E-018
- Energy flux   :    5.04842651025494     
- Momentum flux :  -4.778574819619443E-002
- 
-Time step :    3660 Normalised time :   5.73752E+03
- 
- 
- 
- Species            1
- Particle flux :   1.125017916056710E-017
- Energy flux   :    5.05063853866994     
- Momentum flux :  -4.558740598880365E-002
- 
-Time step :    3690 Normalised time :   5.73812E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.736659962659461E-017
- Energy flux   :    5.07306667779088     
- Momentum flux :  -3.165560478988101E-002
- 
-Time step :    3720 Normalised time :   5.73872E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.112242601203908E-017
- Energy flux   :    5.10020839089327     
- Momentum flux :  -6.418964116862184E-003
- 
-Time step :    3750 Normalised time :   5.73932E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.322110280538341E-017
- Energy flux   :    5.12621303296123     
- Momentum flux :   2.412380046685655E-002
- 
-Time step :    3780 Normalised time :   5.73992E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.735818001363337E-017
- Energy flux   :    5.14867634997194     
- Momentum flux :   4.967394383128703E-002
- 
-Time step :    3810 Normalised time :   5.74052E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.039275438067199E-017
- Energy flux   :    5.16500116685544     
- Momentum flux :   6.631425145617388E-002
- 
-Time step :    3840 Normalised time :   5.74112E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.429232484815143E-017
- Energy flux   :    5.17742588639681     
- Momentum flux :   7.144844499312410E-002
- 
-Time step :    3870 Normalised time :   5.74172E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.283526463415056E-017
- Energy flux   :    5.19142870018292     
- Momentum flux :   6.790376769872687E-002
- 
-Time step :    3900 Normalised time :   5.74232E+03
- 
- 
- 
- Species            1
- Particle flux :   2.956598901278647E-019
- Energy flux   :    5.20163622944951     
- Momentum flux :   6.067837853661146E-002
- 
-Time step :    3930 Normalised time :   5.74292E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.745110050625981E-017
- Energy flux   :    5.19680359216849     
- Momentum flux :   5.051770292200725E-002
- 
-Time step :    3960 Normalised time :   5.74352E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.872765868481252E-017
- Energy flux   :    5.16183225848727     
- Momentum flux :   3.734147161470844E-002
- 
-Time step :    3990 Normalised time :   5.74412E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.163974012139084E-017
- Energy flux   :    5.09099377939085     
- Momentum flux :   2.342393811599911E-002
- 
-Time step :    4020 Normalised time :   5.74472E+03
- 
- 
- 
- Species            1
- Particle flux :   5.996475348099412E-018
- Energy flux   :    4.98830762846092     
- Momentum flux :   1.356283323797268E-002
- 
-Time step :    4050 Normalised time :   5.74532E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.052776557378607E-017
- Energy flux   :    4.86426351111913     
- Momentum flux :  -1.162812345452441E-004
- 
-Time step :    4080 Normalised time :   5.74592E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.782839016075489E-017
- Energy flux   :    4.72696729368204     
- Momentum flux :  -1.812875152314137E-002
- 
-Time step :    4110 Normalised time :   5.74652E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.397819239521995E-018
- Energy flux   :    4.60597369802670     
- Momentum flux :  -3.503363851667062E-002
- 
-Time step :    4140 Normalised time :   5.74712E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.835183716535510E-017
- Energy flux   :    4.52480895672429     
- Momentum flux :  -3.996698209281947E-002
- 
-Time step :    4170 Normalised time :   5.74772E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.401006090109523E-017
- Energy flux   :    4.49586192603183     
- Momentum flux :  -2.534774777704446E-002
- 
-Time step :    4200 Normalised time :   5.74832E+03
- 
- 
- 
- Species            1
- Particle flux :   2.363755092443077E-018
- Energy flux   :    4.51025718635217     
- Momentum flux :  -4.354603280965554E-003
- 
-Time step :    4230 Normalised time :   5.74892E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.531068842565874E-017
- Energy flux   :    4.56620957418964     
- Momentum flux :   1.100333855152736E-002
- 
-Time step :    4260 Normalised time :   5.74952E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.377735018651773E-017
- Energy flux   :    4.63728773740031     
- Momentum flux :   1.756576018343054E-002
- 
-Time step :    4290 Normalised time :   5.75012E+03
- 
- 
- 
- Species            1
- Particle flux :  -9.252594702577103E-017
- Energy flux   :    4.69532655092552     
- Momentum flux :   1.548889167149328E-002
- 
-Time step :    4320 Normalised time :   5.75072E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.076297189942368E-017
- Energy flux   :    4.73010593653492     
- Momentum flux :   9.895411829461822E-003
- 
-Time step :    4350 Normalised time :   5.75132E+03
- 
- 
- 
- Species            1
- Particle flux :   6.058411065150991E-018
- Energy flux   :    4.74732596349036     
- Momentum flux :   6.546597322610754E-003
- 
-Time step :    4380 Normalised time :   5.75192E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.469711754577617E-017
- Energy flux   :    4.74530487855721     
- Momentum flux :   6.706784921080499E-003
- 
-Time step :    4410 Normalised time :   5.75252E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.469524387829116E-017
- Energy flux   :    4.72770157341422     
- Momentum flux :   1.267383000289678E-002
- 
-Time step :    4440 Normalised time :   5.75312E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.319002961057649E-017
- Energy flux   :    4.71235974531853     
- Momentum flux :   2.075208314513110E-002
- 
-Time step :    4470 Normalised time :   5.75372E+03
- 
- 
- 
- Species            1
- Particle flux :   6.124611105055434E-018
- Energy flux   :    4.70053488369706     
- Momentum flux :   3.871723794618205E-002
- 
-Time step :    4500 Normalised time :   5.75432E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.513225558251287E-017
- Energy flux   :    4.68253872961001     
- Momentum flux :   6.126465999780402E-002
- 
-Time step :    4530 Normalised time :   5.75492E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.788262241955116E-017
- Energy flux   :    4.66791063529207     
- Momentum flux :   7.743767707712108E-002
- 
-Time step :    4560 Normalised time :   5.75552E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.007127906250575E-017
- Energy flux   :    4.66261102110596     
- Momentum flux :   8.039292642544441E-002
- 
-Time step :    4590 Normalised time :   5.75612E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.003221112253176E-017
- Energy flux   :    4.65947460081877     
- Momentum flux :   7.158950523626817E-002
- 
-Time step :    4620 Normalised time :   5.75672E+03
- 
- 
- 
- Species            1
- Particle flux :   1.733914338241365E-018
- Energy flux   :    4.65729491863941     
- Momentum flux :   5.925249303027670E-002
- 
-Time step :    4650 Normalised time :   5.75732E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.848741228885178E-017
- Energy flux   :    4.66807559036285     
- Momentum flux :   4.955629720731664E-002
- 
-Time step :    4680 Normalised time :   5.75792E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.901501410672596E-017
- Energy flux   :    4.69875942016732     
- Momentum flux :   4.400757999790642E-002
- 
-Time step :    4710 Normalised time :   5.75852E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.788891991495498E-017
- Energy flux   :    4.74368944517878     
- Momentum flux :   3.885103915131068E-002
- 
-Time step :    4740 Normalised time :   5.75912E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.132823862970599E-018
- Energy flux   :    4.78930123552011     
- Momentum flux :   2.484123080838436E-002
- 
-Time step :    4770 Normalised time :   5.75972E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.753634367712721E-017
- Energy flux   :    4.82011536764005     
- Momentum flux :   3.128961933218383E-003
- 
-Time step :    4800 Normalised time :   5.76032E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.872064821857151E-017
- Energy flux   :    4.82664311565019     
- Momentum flux :  -2.221685184088488E-002
- 
-Time step :    4830 Normalised time :   5.76092E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.027889941739851E-017
- Energy flux   :    4.81358630996964     
- Momentum flux :  -4.582341500586879E-002
- 
-Time step :    4860 Normalised time :   5.76152E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.558853919913978E-017
- Energy flux   :    4.78865240308230     
- Momentum flux :  -6.573481962999167E-002
- 
-Time step :    4890 Normalised time :   5.76212E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.395846955719681E-017
- Energy flux   :    4.76025800769992     
- Momentum flux :  -8.323509419606648E-002
- 
-Time step :    4920 Normalised time :   5.76272E+03
- 
- 
- 
- Species            1
- Particle flux :   2.605705282028109E-017
- Energy flux   :    4.72470771561240     
- Momentum flux :  -9.519078621910602E-002
- 
-Time step :    4950 Normalised time :   5.76332E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.651598145470747E-017
- Energy flux   :    4.68508046425882     
- Momentum flux :  -9.365967205024625E-002
- 
-Time step :    4980 Normalised time :   5.76392E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.171616851960875E-017
- Energy flux   :    4.66366445224972     
- Momentum flux :  -7.976866171473970E-002
- 
-Time step :    5010 Normalised time :   5.76452E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.525930002259495E-017
- Energy flux   :    4.67327796872333     
- Momentum flux :  -5.962052982925780E-002
- 
-Time step :    5040 Normalised time :   5.76512E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.181164438270131E-017
- Energy flux   :    4.69983763248891     
- Momentum flux :  -4.096581033262307E-002
- 
-Time step :    5070 Normalised time :   5.76572E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.720256210425142E-018
- Energy flux   :    4.71938773321419     
- Momentum flux :  -2.839643976870719E-002
- 
-Time step :    5100 Normalised time :   5.76632E+03
- 
- 
- 
- Species            1
- Particle flux :   5.738203763165002E-018
- Energy flux   :    4.71615598752486     
- Momentum flux :  -2.173543698429966E-002
- 
-Time step :    5130 Normalised time :   5.76692E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.179698999211848E-017
- Energy flux   :    4.69985698365830     
- Momentum flux :  -1.606364288077190E-002
- 
-Time step :    5160 Normalised time :   5.76752E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.253001706294304E-017
- Energy flux   :    4.68682977997132     
- Momentum flux :  -8.097238643831666E-003
- 
-Time step :    5190 Normalised time :   5.76812E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.437382056195388E-017
- Energy flux   :    4.68670223613550     
- Momentum flux :  -2.540587909098613E-004
- 
-Time step :    5220 Normalised time :   5.76872E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.483176149103009E-018
- Energy flux   :    4.71160408834038     
- Momentum flux :   6.522703122865132E-003
- 
-Time step :    5250 Normalised time :   5.76932E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.588033514328739E-017
- Energy flux   :    4.77297870667016     
- Momentum flux :   4.397140567912204E-003
- 
-Time step :    5280 Normalised time :   5.76992E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.307455934011920E-017
- Energy flux   :    4.86400827625171     
- Momentum flux :  -5.683975672011125E-003
- 
-Time step :    5310 Normalised time :   5.77052E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.955710093702784E-017
- Energy flux   :    4.96403272085422     
- Momentum flux :  -1.430548779980212E-002
- 
-Time step :    5340 Normalised time :   5.77112E+03
- 
- 
- 
- Species            1
- Particle flux :   1.206961591502056E-017
- Energy flux   :    5.04537665843933     
- Momentum flux :  -1.716240629634134E-002
- 
-Time step :    5370 Normalised time :   5.77172E+03
- 
- 
- 
- Species            1
- Particle flux :   1.628709620187992E-017
- Energy flux   :    5.08820007444106     
- Momentum flux :  -1.330540109549759E-002
- 
-Time step :    5400 Normalised time :   5.77232E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.605519047483071E-017
- Energy flux   :    5.08433689708540     
- Momentum flux :  -1.303052514152211E-003
- 
-Time step :    5430 Normalised time :   5.77292E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.809020092427481E-017
- Energy flux   :    5.04882540736074     
- Momentum flux :   1.279094121276268E-002
- 
-Time step :    5460 Normalised time :   5.77352E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.458956315837767E-017
- Energy flux   :    5.00107149411577     
- Momentum flux :   2.511607113008945E-002
- 
-Time step :    5490 Normalised time :   5.77412E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.744527269434756E-017
- Energy flux   :    4.95733139743387     
- Momentum flux :   3.612675069548991E-002
- 
-Time step :    5520 Normalised time :   5.77472E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.905897939536596E-017
- Energy flux   :    4.92943766068843     
- Momentum flux :   4.958862018791323E-002
- 
-Time step :    5550 Normalised time :   5.77532E+03
- 
- 
- 
- Species            1
- Particle flux :  -8.265263385378924E-018
- Energy flux   :    4.91657583528501     
- Momentum flux :   6.017491896608090E-002
- 
-Time step :    5580 Normalised time :   5.77592E+03
- 
- 
- 
- Species            1
- Particle flux :   3.219573054524329E-017
- Energy flux   :    4.90836711532906     
- Momentum flux :   7.138443250589029E-002
- 
-Time step :    5610 Normalised time :   5.77652E+03
- 
- 
- 
- Species            1
- Particle flux :   1.457487028080576E-017
- Energy flux   :    4.90591588684799     
- Momentum flux :   8.851475628859382E-002
- 
-Time step :    5640 Normalised time :   5.77712E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.098936329455666E-017
- Energy flux   :    4.91722304187556     
- Momentum flux :   0.110736425448024     
- 
-Time step :    5670 Normalised time :   5.77772E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.445461978252852E-017
- Energy flux   :    4.94225106836822     
- Momentum flux :   0.132201739316090     
- 
-Time step :    5700 Normalised time :   5.77832E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.983040407967561E-017
- Energy flux   :    4.98393310940314     
- Momentum flux :   0.144902914140806     
- 
-Time step :    5730 Normalised time :   5.77892E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.181735366523059E-017
- Energy flux   :    5.04168679520871     
- Momentum flux :   0.144320314397640     
- 
-Time step :    5760 Normalised time :   5.77952E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.406477537594596E-017
- Energy flux   :    5.11237485295455     
- Momentum flux :   0.136787655129859     
- 
-Time step :    5790 Normalised time :   5.78012E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.995262549525188E-017
- Energy flux   :    5.18480317526351     
- Momentum flux :   0.120951275709165     
- 
-Time step :    5820 Normalised time :   5.78072E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.345497016540590E-017
- Energy flux   :    5.23910656882424     
- Momentum flux :   9.389022911913175E-002
- 
-Time step :    5850 Normalised time :   5.78132E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.466859439370138E-017
- Energy flux   :    5.25863012572185     
- Momentum flux :   5.987713012897253E-002
- 
-Time step :    5880 Normalised time :   5.78192E+03
- 
- 
- 
- Species            1
- Particle flux :   9.811405243028914E-018
- Energy flux   :    5.23708341846316     
- Momentum flux :   3.112120110007438E-002
- 
-Time step :    5910 Normalised time :   5.78252E+03
- 
- 
- 
- Species            1
- Particle flux :   3.501663837694722E-017
- Energy flux   :    5.17607208280557     
- Momentum flux :   1.481404096337990E-002
- 
-Time step :    5940 Normalised time :   5.78312E+03
- 
- 
- 
- Species            1
- Particle flux :   1.409004969422350E-017
- Energy flux   :    5.09310141193373     
- Momentum flux :   4.740744357896366E-003
- 
-Time step :    5970 Normalised time :   5.78372E+03
- 
- 
- 
- Species            1
- Particle flux :   2.030701194745409E-017
- Energy flux   :    5.01825381805847     
- Momentum flux :  -3.171773660711111E-003
- 
-Time step :    6000 Normalised time :   5.78432E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.850585996747536E-017
- Energy flux   :    4.96505323044294     
- Momentum flux :   4.234513490998407E-006
- 
-Time step :    6030 Normalised time :   5.78492E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.261476205989327E-017
- Energy flux   :    4.92014216974900     
- Momentum flux :   2.187449615589158E-002
- 
-Time step :    6060 Normalised time :   5.78552E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.700377761950702E-017
- Energy flux   :    4.87226834878578     
- Momentum flux :   5.661499295374112E-002
- 
-Time step :    6090 Normalised time :   5.78612E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.202387289478373E-017
- Energy flux   :    4.82632344733431     
- Momentum flux :   8.922557311382472E-002
- 
-Time step :    6120 Normalised time :   5.78672E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.729646289060397E-017
- Energy flux   :    4.79532317344844     
- Momentum flux :   0.114459659555898     
- 
-Time step :    6150 Normalised time :   5.78732E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.261881822196837E-017
- Energy flux   :    4.79076124616423     
- Momentum flux :   0.122292736661142     
- 
-Time step :    6180 Normalised time :   5.78792E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.033867115517826E-017
- Energy flux   :    4.80269997236830     
- Momentum flux :   0.115718078735824     
- 
-Time step :    6210 Normalised time :   5.78852E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.647449837559612E-017
- Energy flux   :    4.81735367960217     
- Momentum flux :   0.106382894785790     
- 
-Time step :    6240 Normalised time :   5.78912E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.801965535702520E-017
- Energy flux   :    4.82782032671311     
- Momentum flux :   0.113000690266660     
- 
-Time step :    6270 Normalised time :   5.78972E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.316359719489464E-017
- Energy flux   :    4.82883133147941     
- Momentum flux :   0.133564768749344     
- 
-Time step :    6300 Normalised time :   5.79032E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.932996245011249E-017
- Energy flux   :    4.82232007290544     
- Momentum flux :   0.154400897008395     
- 
-Time step :    6330 Normalised time :   5.79092E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.534953970316307E-017
- Energy flux   :    4.80690352151791     
- Momentum flux :   0.174872773062701     
- 
-Time step :    6360 Normalised time :   5.79152E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.307387433832647E-017
- Energy flux   :    4.77906026642958     
- Momentum flux :   0.187667862923650     
- 
-Time step :    6390 Normalised time :   5.79212E+03
- 
- 
- 
- Species            1
- Particle flux :   2.369401049903209E-017
- Energy flux   :    4.73689899691572     
- Momentum flux :   0.184615866363713     
- 
-Time step :    6420 Normalised time :   5.79272E+03
- 
- 
- 
- Species            1
- Particle flux :   2.217964085550542E-017
- Energy flux   :    4.68371523373233     
- Momentum flux :   0.167339531649061     
- 
-Time step :    6450 Normalised time :   5.79332E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.487042263030194E-017
- Energy flux   :    4.63114074437191     
- Momentum flux :   0.144613642106371     
- 
-Time step :    6480 Normalised time :   5.79392E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.031900375858798E-017
- Energy flux   :    4.59242515790146     
- Momentum flux :   0.124431337769949     
- 
-Time step :    6510 Normalised time :   5.79452E+03
- 
- 
- 
- Species            1
- Particle flux :   9.295779933447300E-018
- Energy flux   :    4.57233839792271     
- Momentum flux :   0.107250204728043     
- 
-Time step :    6540 Normalised time :   5.79512E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.832617729457741E-017
- Energy flux   :    4.55431093859991     
- Momentum flux :   9.037175014473778E-002
- 
-Time step :    6570 Normalised time :   5.79572E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.322584472879450E-017
- Energy flux   :    4.52407786899334     
- Momentum flux :   7.438780534150422E-002
- 
-Time step :    6600 Normalised time :   5.79632E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.336469770341274E-017
- Energy flux   :    4.47203857276952     
- Momentum flux :   5.295968594343962E-002
- 
-Time step :    6630 Normalised time :   5.79692E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.246523027981250E-017
- Energy flux   :    4.38961840950917     
- Momentum flux :   3.212140964341389E-002
- 
-Time step :    6660 Normalised time :   5.79752E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.910144757894951E-017
- Energy flux   :    4.28794415418557     
- Momentum flux :   2.262165141036010E-002
- 
-Time step :    6690 Normalised time :   5.79812E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.991477188226651E-017
- Energy flux   :    4.19228108975851     
- Momentum flux :   2.319297077448985E-002
- 
-Time step :    6720 Normalised time :   5.79872E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.980930698885555E-017
- Energy flux   :    4.11603470745900     
- Momentum flux :   3.055704921255099E-002
- 
-Time step :    6750 Normalised time :   5.79932E+03
- 
- 
- 
- Species            1
- Particle flux :   1.819234471889334E-017
- Energy flux   :    4.05962027412453     
- Momentum flux :   3.986919759626627E-002
- 
-Time step :    6780 Normalised time :   5.79992E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.569599509319455E-017
- Energy flux   :    4.03138322959931     
- Momentum flux :   5.037938393742015E-002
- 
-Time step :    6810 Normalised time :   5.80052E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.288728321959414E-017
- Energy flux   :    4.03521463149594     
- Momentum flux :   6.724459390473998E-002
- 
-Time step :    6840 Normalised time :   5.80112E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.374502143355914E-017
- Energy flux   :    4.06476679391958     
- Momentum flux :   8.143377731954450E-002
- 
-Time step :    6870 Normalised time :   5.80172E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.300042639558500E-018
- Energy flux   :    4.10187556581174     
- Momentum flux :   7.945081914720688E-002
- 
-Time step :    6900 Normalised time :   5.80232E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.494346330592788E-017
- Energy flux   :    4.13035348699000     
- Momentum flux :   6.407824655008816E-002
- 
-Time step :    6930 Normalised time :   5.80292E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.197810600814898E-017
- Energy flux   :    4.13914340576298     
- Momentum flux :   3.975082925185499E-002
- 
-Time step :    6960 Normalised time :   5.80352E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.630793333964718E-017
- Energy flux   :    4.12676997759896     
- Momentum flux :   2.103572281508297E-002
- 
-Time step :    6990 Normalised time :   5.80412E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.276561632522102E-017
- Energy flux   :    4.08705366226556     
- Momentum flux :   2.097590598522388E-002
- 
-Time step :    7020 Normalised time :   5.80472E+03
- 
- 
- 
- Species            1
- Particle flux :   2.857490775758428E-017
- Energy flux   :    4.03731530695214     
- Momentum flux :   3.243472076159289E-002
- 
-Time step :    7050 Normalised time :   5.80532E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.111107601551234E-017
- Energy flux   :    4.00174599052811     
- Momentum flux :   4.805981096377206E-002
- 
-Time step :    7080 Normalised time :   5.80592E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.188079684415915E-017
- Energy flux   :    3.98097442295436     
- Momentum flux :   6.063108961969910E-002
- 
-Time step :    7110 Normalised time :   5.80652E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.309553548162407E-018
- Energy flux   :    3.96973642113885     
- Momentum flux :   6.697303268322090E-002
- 
-Time step :    7140 Normalised time :   5.80712E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.329403033545240E-018
- Energy flux   :    3.96090435102883     
- Momentum flux :   6.641142873549345E-002
- 
-Time step :    7170 Normalised time :   5.80772E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.409035621633924E-017
- Energy flux   :    3.95691049497110     
- Momentum flux :   6.536261560235473E-002
- 
-Time step :    7200 Normalised time :   5.80832E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.611791628576630E-017
- Energy flux   :    3.96683492733592     
- Momentum flux :   6.091860600736392E-002
- 
-Time step :    7230 Normalised time :   5.80892E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.675449129112852E-017
- Energy flux   :    3.97967438415048     
- Momentum flux :   5.635418388184321E-002
- 
-Time step :    7260 Normalised time :   5.80952E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.986851112150054E-017
- Energy flux   :    3.97822191651769     
- Momentum flux :   5.738354024898291E-002
- 
-Time step :    7290 Normalised time :   5.81012E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.307207640241426E-017
- Energy flux   :    3.97679988594340     
- Momentum flux :   6.084777373012665E-002
- 
-Time step :    7320 Normalised time :   5.81072E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.718608158761268E-018
- Energy flux   :    3.98605116298069     
- Momentum flux :   6.107338138925888E-002
- 
-Time step :    7350 Normalised time :   5.81132E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.121097909718760E-017
- Energy flux   :    4.00214253551175     
- Momentum flux :   5.310349103129756E-002
- 
-Time step :    7380 Normalised time :   5.81192E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.785147736618731E-017
- Energy flux   :    4.02913548906755     
- Momentum flux :   4.241286691858558E-002
- 
-Time step :    7410 Normalised time :   5.81252E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.174291311842366E-017
- Energy flux   :    4.07191134750918     
- Momentum flux :   3.417552006759769E-002
- 
-Time step :    7440 Normalised time :   5.81312E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.279186162868398E-017
- Energy flux   :    4.12952724048266     
- Momentum flux :   2.513880432957928E-002
- 
-Time step :    7470 Normalised time :   5.81372E+03
- 
- 
- 
- Species            1
- Particle flux :   6.553263439708349E-020
- Energy flux   :    4.19169517794436     
- Momentum flux :   2.179812569488183E-002
- 
-Time step :    7500 Normalised time :   5.81432E+03
- 
- 
- 
- Species            1
- Particle flux :   9.793783504246967E-018
- Energy flux   :    4.23035314439743     
- Momentum flux :   3.363374389368166E-002
- 
-Time step :    7530 Normalised time :   5.81492E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.159463267727066E-017
- Energy flux   :    4.23901463046343     
- Momentum flux :   5.660335818694644E-002
- 
-Time step :    7560 Normalised time :   5.81552E+03
- 
- 
- 
- Species            1
- Particle flux :   1.511954663878933E-017
- Energy flux   :    4.22908673821385     
- Momentum flux :   8.309742459334622E-002
- 
-Time step :    7590 Normalised time :   5.81612E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.220505094634629E-017
- Energy flux   :    4.21695431030722     
- Momentum flux :   0.104280956676970     
- 
-Time step :    7620 Normalised time :   5.81672E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.628332721089027E-017
- Energy flux   :    4.19703007799902     
- Momentum flux :   0.121026527451005     
- 
-Time step :    7650 Normalised time :   5.81732E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.464149170322942E-017
- Energy flux   :    4.14670110558365     
- Momentum flux :   0.137555499915964     
- 
-Time step :    7680 Normalised time :   5.81792E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.606523134033642E-017
- Energy flux   :    4.04746812919987     
- Momentum flux :   0.144977128112458     
- 
-Time step :    7710 Normalised time :   5.81852E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.794448718854726E-017
- Energy flux   :    3.91530382695073     
- Momentum flux :   0.138724402159475     
- 
-Time step :    7740 Normalised time :   5.81912E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.355222275360339E-017
- Energy flux   :    3.79774073022552     
- Momentum flux :   0.121843939017971     
- 
-Time step :    7770 Normalised time :   5.81972E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.645842778856051E-017
- Energy flux   :    3.72464836490576     
- Momentum flux :   0.100247714196704     
- 
-Time step :    7800 Normalised time :   5.82032E+03
- 
- 
- 
- Species            1
- Particle flux :   2.576071882965278E-018
- Energy flux   :    3.70010552055447     
- Momentum flux :   8.233645484180313E-002
- 
-Time step :    7830 Normalised time :   5.82092E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.682664536277803E-018
- Energy flux   :    3.71578737035385     
- Momentum flux :   7.354758648065474E-002
- 
-Time step :    7860 Normalised time :   5.82152E+03
- 
- 
- 
- Species            1
- Particle flux :  -9.632220396460700E-018
- Energy flux   :    3.75150728915662     
- Momentum flux :   7.248364744326649E-002
- 
-Time step :    7890 Normalised time :   5.82212E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.929370741096641E-017
- Energy flux   :    3.78606915258770     
- Momentum flux :   7.797778673019380E-002
- 
-Time step :    7920 Normalised time :   5.82272E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.268509645189683E-017
- Energy flux   :    3.80888187048411     
- Momentum flux :   8.625400195919418E-002
- 
-Time step :    7950 Normalised time :   5.82332E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.937864035886145E-017
- Energy flux   :    3.81865442986846     
- Momentum flux :   9.245265455886256E-002
- 
-Time step :    7980 Normalised time :   5.82392E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.055351768235410E-017
- Energy flux   :    3.81156563645242     
- Momentum flux :   9.651006232396210E-002
- 
-Time step :    8010 Normalised time :   5.82452E+03
- 
- 
- 
- Species            1
- Particle flux :   1.240079835277148E-017
- Energy flux   :    3.79658780013485     
- Momentum flux :   9.619598994369583E-002
- 
-Time step :    8040 Normalised time :   5.82512E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.174313996555461E-017
- Energy flux   :    3.79094421064109     
- Momentum flux :   9.668917219812367E-002
- 
-Time step :    8070 Normalised time :   5.82572E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.593237257733257E-017
- Energy flux   :    3.80307367751759     
- Momentum flux :   9.867640044750257E-002
- 
-Time step :    8100 Normalised time :   5.82632E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.795702713031129E-017
- Energy flux   :    3.82720094118480     
- Momentum flux :   0.100658930543027     
- 
-Time step :    8130 Normalised time :   5.82692E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.732854249417712E-017
- Energy flux   :    3.85509284529525     
- Momentum flux :   0.103663488157447     
- 
-Time step :    8160 Normalised time :   5.82752E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.735886558411277E-017
- Energy flux   :    3.87495582750611     
- Momentum flux :   0.109990455335810     
- 
-Time step :    8190 Normalised time :   5.82812E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.210382819424924E-017
- Energy flux   :    3.87225870022254     
- Momentum flux :   0.116444158190953     
- 
-Time step :    8220 Normalised time :   5.82872E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.040221656570186E-017
- Energy flux   :    3.84810930225656     
- Momentum flux :   0.123046482333396     
- 
-Time step :    8250 Normalised time :   5.82932E+03
- 
- 
- 
- Species            1
- Particle flux :  -7.659008639443699E-018
- Energy flux   :    3.82323881898368     
- Momentum flux :   0.128932532712476     
- 
-Time step :    8280 Normalised time :   5.82992E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.863928223572621E-017
- Energy flux   :    3.81707125376470     
- Momentum flux :   0.131139251499167     
- 
-Time step :    8310 Normalised time :   5.83052E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.624581844614071E-017
- Energy flux   :    3.83214569984339     
- Momentum flux :   0.124283713239873     
- 
-Time step :    8340 Normalised time :   5.83112E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.749230958593144E-017
- Energy flux   :    3.86710108717569     
- Momentum flux :   0.111129863820121     
- 
-Time step :    8370 Normalised time :   5.83172E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.357812960956945E-017
- Energy flux   :    3.91214434072465     
- Momentum flux :   9.996942197021765E-002
- 
-Time step :    8400 Normalised time :   5.83232E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.327146679695735E-017
- Energy flux   :    3.95754542916586     
- Momentum flux :   9.439711735605560E-002
- 
-Time step :    8430 Normalised time :   5.83292E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.746468739165396E-018
- Energy flux   :    4.00808653954196     
- Momentum flux :   8.560167253756230E-002
- 
-Time step :    8460 Normalised time :   5.83352E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.452972627849022E-017
- Energy flux   :    4.06450555111212     
- Momentum flux :   7.255670324072085E-002
- 
-Time step :    8490 Normalised time :   5.83412E+03
- 
- 
- 
- Species            1
- Particle flux :  -9.475711155421978E-018
- Energy flux   :    4.11618425613767     
- Momentum flux :   6.100047313048734E-002
- 
-Time step :    8520 Normalised time :   5.83472E+03
- 
- 
- 
- Species            1
- Particle flux :   1.370483478488485E-017
- Energy flux   :    4.16381472375590     
- Momentum flux :   5.021111518861750E-002
- 
-Time step :    8550 Normalised time :   5.83532E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.917463928982664E-018
- Energy flux   :    4.20886453098545     
- Momentum flux :   3.967568334119338E-002
- 
-Time step :    8580 Normalised time :   5.83592E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.154598489228702E-017
- Energy flux   :    4.24443010517013     
- Momentum flux :   3.780887145555198E-002
- 
-Time step :    8610 Normalised time :   5.83652E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.673730291743936E-017
- Energy flux   :    4.26535814988613     
- Momentum flux :   4.746595598642018E-002
- 
-Time step :    8640 Normalised time :   5.83712E+03
- 
- 
- 
- Species            1
- Particle flux :   1.246053930116401E-017
- Energy flux   :    4.25848270279912     
- Momentum flux :   6.144151338574744E-002
- 
-Time step :    8670 Normalised time :   5.83772E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.422645900791181E-017
- Energy flux   :    4.21072485478157     
- Momentum flux :   7.476202939251571E-002
- 
-Time step :    8700 Normalised time :   5.83832E+03
- 
- 
- 
- Species            1
- Particle flux :   1.916939577598510E-018
- Energy flux   :    4.13992173355221     
- Momentum flux :   8.758173593443873E-002
- 
-Time step :    8730 Normalised time :   5.83892E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.214379420102656E-017
- Energy flux   :    4.07813588690912     
- Momentum flux :   9.890360800639850E-002
- 
-Time step :    8760 Normalised time :   5.83952E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.986527473857984E-017
- Energy flux   :    4.05706095479282     
- Momentum flux :   9.948326255851499E-002
- 
-Time step :    8790 Normalised time :   5.84012E+03
- 
- 
- 
- Species            1
- Particle flux :  -8.301829731537443E-018
- Energy flux   :    4.06513063016469     
- Momentum flux :   8.396323653772630E-002
- 
-Time step :    8820 Normalised time :   5.84072E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.432242788219475E-017
- Energy flux   :    4.06170266984558     
- Momentum flux :   5.833542432272311E-002
- 
-Time step :    8850 Normalised time :   5.84132E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.056050079993611E-017
- Energy flux   :    4.02832135610201     
- Momentum flux :   2.935482176854190E-002
- 
-Time step :    8880 Normalised time :   5.84192E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.661104892598076E-017
- Energy flux   :    3.97918247308751     
- Momentum flux :  -6.886704847531208E-004
- 
-Time step :    8910 Normalised time :   5.84252E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.007962351973291E-017
- Energy flux   :    3.93455402878881     
- Momentum flux :  -2.847384459660797E-002
- 
-Time step :    8940 Normalised time :   5.84312E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.305646293330588E-017
- Energy flux   :    3.90362167407714     
- Momentum flux :  -5.026578119074734E-002
- 
-Time step :    8970 Normalised time :   5.84372E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.112303896002503E-017
- Energy flux   :    3.89857354515802     
- Momentum flux :  -6.257791816249592E-002
- 
-Time step :    9000 Normalised time :   5.84432E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.232487298100479E-017
- Energy flux   :    3.93120035413372     
- Momentum flux :  -6.931340851474591E-002
- 
-Time step :    9030 Normalised time :   5.84492E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.960611988699963E-017
- Energy flux   :    4.00068937951921     
- Momentum flux :  -7.867213280677095E-002
- 
-Time step :    9060 Normalised time :   5.84552E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.096293892217456E-017
- Energy flux   :    4.07808564771857     
- Momentum flux :  -8.909451201606551E-002
- 
-Time step :    9090 Normalised time :   5.84612E+03
- 
- 
- 
- Species            1
- Particle flux :  -5.625964424593961E-017
- Energy flux   :    4.12114920977039     
- Momentum flux :  -9.469243789939462E-002
- 
-Time step :    9120 Normalised time :   5.84672E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.325275535688859E-017
- Energy flux   :    4.10693438827878     
- Momentum flux :  -9.212452446862923E-002
- 
-Time step :    9150 Normalised time :   5.84732E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.480300154971845E-017
- Energy flux   :    4.05009165995965     
- Momentum flux :  -8.631933728404879E-002
- 
-Time step :    9180 Normalised time :   5.84792E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.317592889531885E-017
- Energy flux   :    3.98150788465384     
- Momentum flux :  -8.671289662791254E-002
- 
-Time step :    9210 Normalised time :   5.84852E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.958402940835594E-017
- Energy flux   :    3.90750217602100     
- Momentum flux :  -9.251996341404725E-002
- 
-Time step :    9240 Normalised time :   5.84912E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.972875856349614E-017
- Energy flux   :    3.82706045585357     
- Momentum flux :  -9.634200660119292E-002
- 
-Time step :    9270 Normalised time :   5.84972E+03
- 
- 
- 
- Species            1
- Particle flux :   2.098389663444080E-017
- Energy flux   :    3.74468858982550     
- Momentum flux :  -9.562309165633666E-002
- 
-Time step :    9300 Normalised time :   5.85032E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.303127731421047E-017
- Energy flux   :    3.66880326447344     
- Momentum flux :  -8.587540521408719E-002
- 
-Time step :    9330 Normalised time :   5.85092E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.563521324139869E-018
- Energy flux   :    3.59667433052664     
- Momentum flux :  -7.316501503859024E-002
- 
-Time step :    9360 Normalised time :   5.85152E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.929920974600498E-017
- Energy flux   :    3.52601834085176     
- Momentum flux :  -6.360699799716377E-002
- 
-Time step :    9390 Normalised time :   5.85212E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.106120782962215E-017
- Energy flux   :    3.46295503656428     
- Momentum flux :  -5.745104255299903E-002
- 
-Time step :    9420 Normalised time :   5.85272E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.148308251198179E-017
- Energy flux   :    3.42118735478485     
- Momentum flux :  -5.188740203163811E-002
- 
-Time step :    9450 Normalised time :   5.85332E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.423871938270554E-017
- Energy flux   :    3.41349067291730     
- Momentum flux :  -4.520845140324704E-002
- 
-Time step :    9480 Normalised time :   5.85392E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.500716201490406E-017
- Energy flux   :    3.43449971998326     
- Momentum flux :  -3.879686476197784E-002
- 
-Time step :    9510 Normalised time :   5.85452E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.954203645433839E-017
- Energy flux   :    3.47568347985307     
- Momentum flux :  -3.651590260039506E-002
- 
-Time step :    9540 Normalised time :   5.85512E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.405396558005801E-017
- Energy flux   :    3.53646008202749     
- Momentum flux :  -3.780804874137924E-002
- 
-Time step :    9570 Normalised time :   5.85572E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.804925457043812E-017
- Energy flux   :    3.61170603977684     
- Momentum flux :  -4.040005604532582E-002
- 
-Time step :    9600 Normalised time :   5.85632E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.952812565457951E-018
- Energy flux   :    3.69426181986366     
- Momentum flux :  -4.515432890252722E-002
- 
-Time step :    9630 Normalised time :   5.85692E+03
- 
- 
- 
- Species            1
- Particle flux :   1.411371600363289E-017
- Energy flux   :    3.77726412140557     
- Momentum flux :  -4.825552218867583E-002
- 
-Time step :    9660 Normalised time :   5.85752E+03
- 
- 
- 
- Species            1
- Particle flux :   8.748162121205490E-018
- Energy flux   :    3.84596780482917     
- Momentum flux :  -5.006116256469777E-002
- 
-Time step :    9690 Normalised time :   5.85812E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.195915322659120E-017
- Energy flux   :    3.88878072364445     
- Momentum flux :  -4.860040465863324E-002
- 
-Time step :    9720 Normalised time :   5.85872E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.979236855157897E-017
- Energy flux   :    3.90476531023189     
- Momentum flux :  -4.180730224584031E-002
- 
-Time step :    9750 Normalised time :   5.85932E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.990664550621182E-017
- Energy flux   :    3.90129071246329     
- Momentum flux :  -3.831687018406825E-002
- 
-Time step :    9780 Normalised time :   5.85992E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.208739104410734E-017
- Energy flux   :    3.89333813194721     
- Momentum flux :  -3.992251410368911E-002
- 
-Time step :    9810 Normalised time :   5.86052E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.272488035546507E-017
- Energy flux   :    3.89046151306099     
- Momentum flux :  -3.969374077095338E-002
- 
-Time step :    9840 Normalised time :   5.86112E+03
- 
- 
- 
- Species            1
- Particle flux :   9.445526455990518E-018
- Energy flux   :    3.87851032368756     
- Momentum flux :  -3.274799265150898E-002
- 
-Time step :    9870 Normalised time :   5.86172E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.944143244626422E-017
- Energy flux   :    3.83363501717219     
- Momentum flux :  -1.723759631650788E-002
- 
-Time step :    9900 Normalised time :   5.86232E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.983607274402018E-017
- Energy flux   :    3.75462579393235     
- Momentum flux :   3.420275727611394E-003
- 
-Time step :    9930 Normalised time :   5.86292E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.504830265115264E-017
- Energy flux   :    3.66641658360650     
- Momentum flux :   2.567487897480858E-002
- 
-Time step :    9960 Normalised time :   5.86352E+03
- 
- 
- 
- Species            1
- Particle flux :   4.049640377488681E-018
- Energy flux   :    3.60038506237470     
- Momentum flux :   4.337593524713697E-002
- 
-Time step :    9990 Normalised time :   5.86412E+03
- 
- 
- 
- Species            1
- Particle flux :   1.041622543806212E-017
- Energy flux   :    3.57015582746718     
- Momentum flux :   6.074034640156958E-002
- 
-Time step :   10020 Normalised time :   5.86472E+03
- 
- 
- 
- Species            1
- Particle flux :   3.807685524672946E-018
- Energy flux   :    3.56501366863086     
- Momentum flux :   8.337429320833702E-002
- 
-Time step :   10050 Normalised time :   5.86532E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.001574160179636E-017
- Energy flux   :    3.58316216976470     
- Momentum flux :   0.104136251105351     
- 
-Time step :   10080 Normalised time :   5.86592E+03
- 
- 
- 
- Species            1
- Particle flux :  -6.096686017488223E-018
- Energy flux   :    3.63260376533369     
- Momentum flux :   0.114112333923872     
- 
-Time step :   10110 Normalised time :   5.86652E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.698542378133622E-017
- Energy flux   :    3.70245514642003     
- Momentum flux :   0.116338823741793     
- 
-Time step :   10140 Normalised time :   5.86712E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.697842161852339E-017
- Energy flux   :    3.76609165046117     
- Momentum flux :   0.112305020861115     
- 
-Time step :   10170 Normalised time :   5.86772E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.387504487690323E-018
- Energy flux   :    3.79986189974188     
- Momentum flux :   9.681369658997141E-002
- 
-Time step :   10200 Normalised time :   5.86832E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.557767765991680E-018
- Energy flux   :    3.79843666980264     
- Momentum flux :   7.136422799001869E-002
- 
-Time step :   10230 Normalised time :   5.86892E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.874784379746193E-017
- Energy flux   :    3.77143907366491     
- Momentum flux :   4.158259285320374E-002
- 
-Time step :   10260 Normalised time :   5.86952E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.482198291493349E-017
- Energy flux   :    3.73869239251607     
- Momentum flux :   1.380356443165994E-002
- 
-Time step :   10290 Normalised time :   5.87012E+03
- 
- 
- 
- Species            1
- Particle flux :   5.152499854259563E-018
- Energy flux   :    3.70804566982934     
- Momentum flux :  -7.725913189901516E-003
- 
-Time step :   10320 Normalised time :   5.87072E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.642432076091274E-017
- Energy flux   :    3.67559470571886     
- Momentum flux :  -2.542327989457138E-002
- 
-Time step :   10350 Normalised time :   5.87132E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.806693138135429E-017
- Energy flux   :    3.63651087164569     
- Momentum flux :  -4.269112613211506E-002
- 
-Time step :   10380 Normalised time :   5.87192E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.147206304889917E-017
- Energy flux   :    3.58992596839946     
- Momentum flux :  -5.761864648811087E-002
- 
-Time step :   10410 Normalised time :   5.87252E+03
- 
- 
- 
- Species            1
- Particle flux :   2.922841789727328E-019
- Energy flux   :    3.55044603762593     
- Momentum flux :  -6.616998765284929E-002
- 
-Time step :   10440 Normalised time :   5.87312E+03
- 
- 
- 
- Species            1
- Particle flux :   1.221546455572227E-017
- Energy flux   :    3.52096912028818     
- Momentum flux :  -7.188646600698938E-002
- 
-Time step :   10470 Normalised time :   5.87372E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.145096768283647E-017
- Energy flux   :    3.48944911545431     
- Momentum flux :  -7.456608766682558E-002
- 
-Time step :   10500 Normalised time :   5.87432E+03
- 
- 
- 
- Species            1
- Particle flux :   1.542165512557508E-017
- Energy flux   :    3.45130290855301     
- Momentum flux :  -7.718851862768485E-002
- 
-Time step :   10530 Normalised time :   5.87492E+03
- 
- 
- 
- Species            1
- Particle flux :  -9.034960787322592E-018
- Energy flux   :    3.41632177530679     
- Momentum flux :  -8.019035723686838E-002
- 
-Time step :   10560 Normalised time :   5.87552E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.435127876512347E-017
- Energy flux   :    3.39369722342399     
- Momentum flux :  -8.643270438457620E-002
- 
-Time step :   10590 Normalised time :   5.87612E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.496503356551446E-017
- Energy flux   :    3.38582608675748     
- Momentum flux :  -9.573231156847674E-002
- 
-Time step :   10620 Normalised time :   5.87672E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.526166796349739E-017
- Energy flux   :    3.40458388443411     
- Momentum flux :  -0.103756016155273     
- 
-Time step :   10650 Normalised time :   5.87732E+03
- 
- 
- 
- Species            1
- Particle flux :   1.329925220732331E-018
- Energy flux   :    3.45445501229791     
- Momentum flux :  -0.102584303243839     
- 
-Time step :   10680 Normalised time :   5.87792E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.247970774998977E-017
- Energy flux   :    3.52187267423553     
- Momentum flux :  -8.985393932826588E-002
- 
-Time step :   10710 Normalised time :   5.87852E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.709721659350852E-018
- Energy flux   :    3.59537017412862     
- Momentum flux :  -6.708126677681885E-002
- 
-Time step :   10740 Normalised time :   5.87912E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.085813617116046E-017
- Energy flux   :    3.67338575318411     
- Momentum flux :  -3.341549014912674E-002
- 
-Time step :   10770 Normalised time :   5.87972E+03
- 
- 
- 
- Species            1
- Particle flux :  -9.165221131832563E-018
- Energy flux   :    3.76150487989616     
- Momentum flux :   1.450759954587623E-003
- 
-Time step :   10800 Normalised time :   5.88032E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.866174922949293E-018
- Energy flux   :    3.85400148384239     
- Momentum flux :   2.710283663477864E-002
- 
-Time step :   10830 Normalised time :   5.88092E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.831142344267797E-017
- Energy flux   :    3.92177845574289     
- Momentum flux :   4.295226795465080E-002
- 
-Time step :   10860 Normalised time :   5.88152E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.050205643845640E-017
- Energy flux   :    3.93607876741868     
- Momentum flux :   5.360427506744350E-002
- 
-Time step :   10890 Normalised time :   5.88212E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.266080982027212E-017
- Energy flux   :    3.89423103515306     
- Momentum flux :   6.045161813568533E-002
- 
-Time step :   10920 Normalised time :   5.88272E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.838814998780791E-017
- Energy flux   :    3.82451983216451     
- Momentum flux :   6.641304752291857E-002
- 
-Time step :   10950 Normalised time :   5.88332E+03
- 
- 
- 
- Species            1
- Particle flux :   4.364036632273908E-018
- Energy flux   :    3.75684148689064     
- Momentum flux :   6.744784683130645E-002
- 
-Time step :   10980 Normalised time :   5.88392E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.067382663050475E-017
- Energy flux   :    3.70052242861613     
- Momentum flux :   6.923298212478873E-002
- 
-Time step :   11010 Normalised time :   5.88452E+03
- 
- 
- 
- Species            1
- Particle flux :   1.547797158500574E-017
- Energy flux   :    3.66332711092221     
- Momentum flux :   7.223464185123676E-002
- 
-Time step :   11040 Normalised time :   5.88512E+03
- 
- 
- 
- Species            1
- Particle flux :   1.088910122640638E-018
- Energy flux   :    3.63458678747271     
- Momentum flux :   7.823053115124630E-002
- 
-Time step :   11070 Normalised time :   5.88572E+03
- 
- 
- 
- Species            1
- Particle flux :   6.760961563882784E-018
- Energy flux   :    3.60379845826943     
- Momentum flux :   9.087514431900665E-002
- 
-Time step :   11100 Normalised time :   5.88632E+03
- 
- 
- 
- Species            1
- Particle flux :   4.157037566189959E-018
- Energy flux   :    3.57207093642536     
- Momentum flux :   9.910136357681884E-002
- 
-Time step :   11130 Normalised time :   5.88692E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.432912014239387E-017
- Energy flux   :    3.55569169235850     
- Momentum flux :   9.581624763838065E-002
- 
-Time step :   11160 Normalised time :   5.88752E+03
- 
- 
- 
- Species            1
- Particle flux :  -8.903666467046930E-018
- Energy flux   :    3.56453732166014     
- Momentum flux :   8.120546527333763E-002
- 
-Time step :   11190 Normalised time :   5.88812E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.839849465684971E-017
- Energy flux   :    3.59281403468887     
- Momentum flux :   6.122278708767882E-002
- 
-Time step :   11220 Normalised time :   5.88872E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.328567846935996E-017
- Energy flux   :    3.63475203611053     
- Momentum flux :   5.036556173216518E-002
- 
-Time step :   11250 Normalised time :   5.88932E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.001056215154002E-017
- Energy flux   :    3.69065678500892     
- Momentum flux :   4.890679503438177E-002
- 
-Time step :   11280 Normalised time :   5.88992E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.807959534851142E-017
- Energy flux   :    3.76464941216688     
- Momentum flux :   4.925378621616402E-002
- 
-Time step :   11310 Normalised time :   5.89052E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.691473531148375E-017
- Energy flux   :    3.86021896088953     
- Momentum flux :   4.510409257248091E-002
- 
-Time step :   11340 Normalised time :   5.89112E+03
- 
- 
- 
- Species            1
- Particle flux :  -1.063911408795124E-017
- Energy flux   :    3.95996173260925     
- Momentum flux :   4.628556537278403E-002
- 
-Time step :   11370 Normalised time :   5.89172E+03
- 
- 
- 
- Species            1
- Particle flux :  -8.980235241779120E-018
- Energy flux   :    4.04543501575334     
- Momentum flux :   5.852619111079570E-002
- 
-Time step :   11400 Normalised time :   5.89232E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.845916080675739E-017
- Energy flux   :    4.12543431721238     
- Momentum flux :   7.399297916575505E-002
- 
-Time step :   11430 Normalised time :   5.89292E+03
- 
- 
- 
- Species            1
- Particle flux :   4.663128675709014E-018
- Energy flux   :    4.21134019567796     
- Momentum flux :   9.087535090721817E-002
- 
-Time step :   11460 Normalised time :   5.89352E+03
- 
- 
- 
- Species            1
- Particle flux :   9.271180648317481E-018
- Energy flux   :    4.31707635124616     
- Momentum flux :   0.107633506371758     
- 
-Time step :   11490 Normalised time :   5.89412E+03
- 
- 
- 
- Species            1
- Particle flux :   1.961704374471863E-017
- Energy flux   :    4.44316187866077     
- Momentum flux :   0.114776028657312     
- 
-Time step :   11520 Normalised time :   5.89472E+03
- 
- 
- 
- Species            1
- Particle flux :   1.795324195898029E-017
- Energy flux   :    4.57099322771665     
- Momentum flux :   0.108696018986944     
- 
-Time step :   11550 Normalised time :   5.89532E+03
- 
- 
- 
- Species            1
- Particle flux :  -4.066212031162507E-017
- Energy flux   :    4.67100292599739     
- Momentum flux :   0.101377706342043     
- 
-Time step :   11580 Normalised time :   5.89592E+03
- 
- 
- 
- Species            1
- Particle flux :   4.350243886698075E-018
- Energy flux   :    4.72447585412625     
- Momentum flux :   9.711843922993385E-002
- 
-Time step :   11610 Normalised time :   5.89652E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.285402593192796E-017
- Energy flux   :    4.72849016582818     
- Momentum flux :   8.956890004312991E-002
- 
-Time step :   11640 Normalised time :   5.89712E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.016536933922145E-017
- Energy flux   :    4.68234710765807     
- Momentum flux :   8.313348189036203E-002
- 
-Time step :   11670 Normalised time :   5.89772E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.098394344769359E-017
- Energy flux   :    4.60463580886798     
- Momentum flux :   8.212309148719747E-002
- 
-Time step :   11700 Normalised time :   5.89832E+03
- 
- 
- 
- Species            1
- Particle flux :   1.410069070071975E-018
- Energy flux   :    4.52733007446781     
- Momentum flux :   8.688501131054770E-002
- 
-Time step :   11730 Normalised time :   5.89892E+03
- 
- 
- 
- Species            1
- Particle flux :   3.191398525473525E-018
- Energy flux   :    4.45356191779165     
- Momentum flux :   9.647435314915402E-002
- 
-Time step :   11760 Normalised time :   5.89952E+03
- 
- 
- 
- Species            1
- Particle flux :   2.170679789589172E-017
- Energy flux   :    4.37136253967946     
- Momentum flux :   0.108197706539904     
- 
-Time step :   11790 Normalised time :   5.90012E+03
- 
- 
- 
- Species            1
- Particle flux :  -8.695637431853383E-018
- Energy flux   :    4.28744966808152     
- Momentum flux :   0.114250135730127     
- 
-Time step :   11820 Normalised time :   5.90072E+03
- 
- 
- 
- Species            1
- Particle flux :  -2.446350356151507E-017
- Energy flux   :    4.21624528703212     
- Momentum flux :   0.117033200927001     
- 
-Time step :   11850 Normalised time :   5.90132E+03
- 
- 
- 
- Species            1
- Particle flux :  -3.432696103159465E-017
- Energy flux   :    4.15071308778856     
- Momentum flux :   0.118854277561968     
- 
-Time step :   11880 Normalised time :   5.90192E+03
- 
- 
- 
- Species            1
- Particle flux :   2.172891016557467E-017
- Energy flux   :    4.10100580945262     
- Momentum flux :   0.121023385080698     
+ Particle flux :  -3.260666100056135E-017
+ Energy flux   :    6.03070659349789     
+ Momentum flux :  -6.452918609975741E-002
  
  WARNING: Diagnostics are slow:
- Diagnostics time (last call):       4.09386E+00
- Non-diagnostics time (last step):   3.35752E+01
+ Diagnostics time (last call):       7.46535E+00
+ Non-diagnostics time (last step):   3.51863E+01
  
-Time step :   11910 Normalised time :   5.90252E+03
+Time step :    2250 Normalised time :   1.79079E+04
  
  
  
  Species            1
- Particle flux :  -3.091521954334123E-017
- Energy flux   :    4.09013588606483     
- Momentum flux :   0.125863472393881     
+ Particle flux :  -2.941016938188467E-018
+ Energy flux   :    6.01140227078068     
+ Momentum flux :  -5.540864170819595E-002
  
-Time step :   11940 Normalised time :   5.90312E+03
+Time step :    2280 Normalised time :   1.79085E+04
  
  
  
  Species            1
- Particle flux :  -2.001915216370745E-017
- Energy flux   :    4.11591053652478     
- Momentum flux :   0.124364451106874     
+ Particle flux :  -3.688457691243143E-017
+ Energy flux   :    5.98334425192592     
+ Momentum flux :  -3.661223045434803E-002
  
-Time step :   11970 Normalised time :   5.90372E+03
+Time step :    2310 Normalised time :   1.79091E+04
  
  
  
  Species            1
- Particle flux :  -3.503121112799130E-018
- Energy flux   :    4.17025741444277     
- Momentum flux :   0.113067266603897     
+ Particle flux :  -5.851213610136879E-017
+ Energy flux   :    5.93007343684697     
+ Momentum flux :  -1.067482077523927E-002
  
-Time step :   12000 Normalised time :   5.90432E+03
+Time step :    2340 Normalised time :   1.79097E+04
  
  
  
  Species            1
- Particle flux :  -1.238740061178753E-017
- Energy flux   :    4.23545963707654     
- Momentum flux :   8.678440492864722E-002
+ Particle flux :  -6.263013876888313E-017
+ Energy flux   :    5.85637736409794     
+ Momentum flux :   1.495298240224638E-002
  
-Time step :   12030 Normalised time :   5.90492E+03
+Time step :    2370 Normalised time :   1.79103E+04
  
  
  
  Species            1
- Particle flux :  -7.972979012535735E-018
- Energy flux   :    4.29372140542868     
- Momentum flux :   5.315292010677121E-002
+ Particle flux :   4.229387241584337E-018
+ Energy flux   :    5.80260175847530     
+ Momentum flux :   3.132399089336527E-002
  
-Time step :   12060 Normalised time :   5.90552E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.63723E+01
+ Non-diagnostics time (last step):   3.53276E+01
  
+Time step :    2400 Normalised time :   1.79109E+04
  
  
- Species            1
- Particle flux :  -1.614188314608138E-017
- Energy flux   :    4.32773952766352     
- Momentum flux :   1.934838397500782E-002
- 
-Time step :   12090 Normalised time :   5.90612E+03
  
- 
- 
  Species            1
- Particle flux :  -2.654459344813606E-017
- Energy flux   :    4.33511848532648     
- Momentum flux :  -5.792441392752765E-004
+ Particle flux :  -4.755875360973575E-017
+ Energy flux   :    5.78076431592706     
+ Momentum flux :   4.419795195135216E-002
  
-Time step :   12120 Normalised time :   5.90672E+03
+Time step :    2430 Normalised time :   1.79115E+04
  
  
  
  Species            1
- Particle flux :  -1.479374364090518E-017
- Energy flux   :    4.32603853074101     
- Momentum flux :  -3.934899291882657E-003
+ Particle flux :   4.604561367358721E-018
+ Energy flux   :    5.78938365890576     
+ Momentum flux :   5.076394359068059E-002
  
-Time step :   12150 Normalised time :   5.90732E+03
+Time step :    2460 Normalised time :   1.79121E+04
  
  
  
  Species            1
- Particle flux :  -2.723679285425161E-017
- Energy flux   :    4.31831913065426     
- Momentum flux :   3.484816977212359E-003
+ Particle flux :  -2.215653821798469E-017
+ Energy flux   :    5.81959220906485     
+ Momentum flux :   4.995468361294738E-002
  
-Time step :   12180 Normalised time :   5.90792E+03
+Time step :    2490 Normalised time :   1.79127E+04
  
  
  
  Species            1
- Particle flux :   5.069488622100596E-018
- Energy flux   :    4.33233148436716     
- Momentum flux :   1.258562744718688E-002
+ Particle flux :   2.640564983976930E-019
+ Energy flux   :    5.85152518100831     
+ Momentum flux :   4.966014475690064E-002
  
-Time step :   12210 Normalised time :   5.90852E+03
+Time step :    2520 Normalised time :   1.79133E+04
  
  
  
  Species            1
- Particle flux :   2.675525759641786E-017
- Energy flux   :    4.40840703808809     
- Momentum flux :   1.350088643449062E-002
+ Particle flux :   3.046145798609790E-017
+ Energy flux   :    5.87625013084100     
+ Momentum flux :   5.179470011901059E-002
  
-Time step :   12240 Normalised time :   5.90912E+03
+Time step :    2550 Normalised time :   1.79139E+04
  
  
  
  Species            1
- Particle flux :  -4.142320485053690E-018
- Energy flux   :    4.55202522164129     
- Momentum flux :  -8.044908054578316E-004
+ Particle flux :  -1.158733451442490E-017
+ Energy flux   :    5.89125869553433     
+ Momentum flux :   5.803765000716640E-002
  
-Time step :   12270 Normalised time :   5.90972E+03
+Time step :    2580 Normalised time :   1.79145E+04
  
  
  
  Species            1
- Particle flux :   3.680421192152490E-017
- Energy flux   :    4.73008319212450     
- Momentum flux :  -2.237587311231751E-002
+ Particle flux :  -5.744396512859427E-017
+ Energy flux   :    5.89648085371435     
+ Momentum flux :   6.312984439205890E-002
  
-Time step :   12300 Normalised time :   5.91032E+03
+Time step :    2610 Normalised time :   1.79151E+04
  
  
  
  Species            1
- Particle flux :  -6.195662921144018E-018
- Energy flux   :    4.85393438116939     
- Momentum flux :  -4.922892021375781E-002
+ Particle flux :  -3.236785323393426E-017
+ Energy flux   :    5.90595263591327     
+ Momentum flux :   6.473025738105304E-002
  
-Time step :   12330 Normalised time :   5.91092E+03
+Time step :    2640 Normalised time :   1.79157E+04
  
  
  
  Species            1
- Particle flux :  -4.689486553283469E-018
- Energy flux   :    4.89773524586113     
- Momentum flux :  -8.357270247466515E-002
+ Particle flux :  -2.298303899147178E-017
+ Energy flux   :    5.93282796129380     
+ Momentum flux :   6.788233878245283E-002
  
-Time step :   12360 Normalised time :   5.91152E+03
+Time step :    2670 Normalised time :   1.79163E+04
  
  
  
  Species            1
- Particle flux :  -2.804247990237048E-017
- Energy flux   :    4.90830925944326     
- Momentum flux :  -0.107721951331407     
- 
-Time step :   12390 Normalised time :   5.91212E+03
+ Particle flux :  -6.995459921143752E-017
+ Energy flux   :    5.97928935588073     
+ Momentum flux :   7.025176122602012E-002
  
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.49489E+01
+ Non-diagnostics time (last step):   3.47284E+01
  
+Time step :    2700 Normalised time :   1.79169E+04
  
- Species            1
- Particle flux :   1.293312790273935E-017
- Energy flux   :    4.90733331173727     
- Momentum flux :  -0.128777513101526     
- 
-Time step :   12420 Normalised time :   5.91272E+03
- 
  
  
  Species            1
- Particle flux :   9.559050998003980E-018
- Energy flux   :    4.90209818290464     
- Momentum flux :  -0.144873250677325     
+ Particle flux :  -3.908590893944392E-017
+ Energy flux   :    6.03660970905505     
+ Momentum flux :   6.787494725265020E-002
  
-Time step :   12450 Normalised time :   5.91332E+03
+Time step :    2730 Normalised time :   1.79175E+04
  
  
  
  Species            1
- Particle flux :   1.536652131470052E-018
- Energy flux   :    4.89201475698964     
- Momentum flux :  -0.151917334819895     
+ Particle flux :  -2.609536936106232E-017
+ Energy flux   :    6.11687035484611     
+ Momentum flux :   6.270519978228234E-002
  
-Time step :   12480 Normalised time :   5.91392E+03
+Time step :    2760 Normalised time :   1.79181E+04
  
  
  
  Species            1
- Particle flux :  -4.410866821588623E-017
- Energy flux   :    4.88402675509484     
- Momentum flux :  -0.147655679998177     
+ Particle flux :  -3.728641019046900E-017
+ Energy flux   :    6.22035565150927     
+ Momentum flux :   5.291093903574962E-002
  
-Time step :   12510 Normalised time :   5.91452E+03
+Time step :    2790 Normalised time :   1.79187E+04
  
  
  
  Species            1
- Particle flux :  -1.845439913001592E-017
- Energy flux   :    4.86390307344598     
- Momentum flux :  -0.138181267445823     
+ Particle flux :   4.152737852931575E-017
+ Energy flux   :    6.31546369735575     
+ Momentum flux :   4.453479198671479E-002
  
-Time step :   12540 Normalised time :   5.91512E+03
+Time step :    2820 Normalised time :   1.79193E+04
  
  
  
  Species            1
- Particle flux :  -1.215797793299289E-017
- Energy flux   :    4.81425777671051     
- Momentum flux :  -0.121794192140605     
+ Particle flux :  -2.286875204742748E-017
+ Energy flux   :    6.36943228425679     
+ Momentum flux :   2.758386064656062E-002
  
-Time step :   12570 Normalised time :   5.91572E+03
+Time step :    2850 Normalised time :   1.79199E+04
  
  
  
  Species            1
- Particle flux :  -9.570830980504924E-018
- Energy flux   :    4.74636161856165     
- Momentum flux :  -9.713298743294779E-002
+ Particle flux :  -4.226392630631984E-017
+ Energy flux   :    6.38205817815787     
+ Momentum flux :   4.522572766943437E-003
  
-Time step :   12600 Normalised time :   5.91632E+03
+Time step :    2880 Normalised time :   1.79205E+04
  
  
  
  Species            1
- Particle flux :  -1.381482690379119E-017
- Energy flux   :    4.68060087620175     
- Momentum flux :  -6.255296031763134E-002
+ Particle flux :  -4.060345066552337E-017
+ Energy flux   :    6.38990908981667     
+ Momentum flux :  -1.102828844213573E-002
  
-Time step :   12630 Normalised time :   5.91692E+03
+Time step :    2910 Normalised time :   1.79211E+04
  
  
  
  Species            1
- Particle flux :  -5.808950023905189E-017
- Energy flux   :    4.61683698138881     
- Momentum flux :  -2.156320732957083E-002
+ Particle flux :  -3.287361307054268E-017
+ Energy flux   :    6.42129512298649     
+ Momentum flux :  -1.809901291528370E-002
  
-Time step :   12660 Normalised time :   5.91752E+03
+Time step :    2940 Normalised time :   1.79217E+04
  
  
  
  Species            1
- Particle flux :  -7.348807056318820E-018
- Energy flux   :    4.55374674303728     
- Momentum flux :   1.608338794089768E-002
+ Particle flux :  -6.544461141976473E-017
+ Energy flux   :    6.46748557480866     
+ Momentum flux :  -2.018577938765419E-002
  
-Time step :   12690 Normalised time :   5.91812E+03
+Time step :    2970 Normalised time :   1.79223E+04
  
  
  
  Species            1
- Particle flux :  -2.970989579530142E-017
- Energy flux   :    4.49128034393671     
- Momentum flux :   4.953567947281542E-002
- 
-Time step :   12720 Normalised time :   5.91872E+03
- 
- 
+ Particle flux :  -7.814555347272260E-017
+ Energy flux   :    6.51172149347982     
+ Momentum flux :  -2.134946644100459E-002
  
- Species            1
- Particle flux :  -8.610504326326852E-018
- Energy flux   :    4.42228014210420     
- Momentum flux :   6.887445028521566E-002
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.51941E+01
+ Non-diagnostics time (last step):   3.50731E+01
  
-Time step :   12750 Normalised time :   5.91932E+03
+Time step :    3000 Normalised time :   1.79229E+04
  
  
  
  Species            1
- Particle flux :   1.918642447796664E-017
- Energy flux   :    4.35284916544653     
- Momentum flux :   6.654114823154815E-002
+ Particle flux :  -2.852971730390746E-017
+ Energy flux   :    6.55554533226608     
+ Momentum flux :  -2.451231947028143E-002
  
-Time step :   12780 Normalised time :   5.91992E+03
+Time step :    3030 Normalised time :   1.79235E+04
  
  
  
  Species            1
- Particle flux :   1.089191012497146E-017
- Energy flux   :    4.31133953471997     
- Momentum flux :   4.741686083555173E-002
+ Particle flux :  -5.293546372878344E-017
+ Energy flux   :    6.60957281373401     
+ Momentum flux :  -3.187110744977285E-002
  
-Time step :   12810 Normalised time :   5.92052E+03
+Time step :    3060 Normalised time :   1.79241E+04
  
  
  
  Species            1
- Particle flux :  -2.531998898597234E-017
- Energy flux   :    4.29246495968148     
- Momentum flux :   3.178563281942938E-002
+ Particle flux :  -7.907409625470060E-017
+ Energy flux   :    6.69046485581966     
+ Momentum flux :  -4.764860535218248E-002
  
-Time step :   12840 Normalised time :   5.92112E+03
+Time step :    3090 Normalised time :   1.79247E+04
  
  
  
  Species            1
- Particle flux :  -2.630168926339575E-017
- Energy flux   :    4.26751862439080     
- Momentum flux :   1.577727457701178E-002
+ Particle flux :  -3.677890645033416E-017
+ Energy flux   :    6.80597669228044     
+ Momentum flux :  -7.291629405503733E-002
  
-Time step :   12870 Normalised time :   5.92172E+03
+Time step :    3120 Normalised time :   1.79253E+04
  
  
  
  Species            1
- Particle flux :  -3.702409539839922E-017
- Energy flux   :    4.22480264503751     
- Momentum flux :  -6.483982656972161E-003
+ Particle flux :   5.787009177064433E-017
+ Energy flux   :    6.93548403041928     
+ Momentum flux :  -0.102850176346808     
  
-Time step :   12900 Normalised time :   5.92232E+03
+Time step :    3150 Normalised time :   1.79259E+04
  
  
  
  Species            1
- Particle flux :  -2.549204705117795E-017
- Energy flux   :    4.17761837631340     
- Momentum flux :  -2.736622378865867E-002
+ Particle flux :   2.705628167526995E-018
+ Energy flux   :    7.05403952690839     
+ Momentum flux :  -0.141475358288596     
  
-Time step :   12930 Normalised time :   5.92292E+03
+Time step :    3180 Normalised time :   1.79265E+04
  
  
  
  Species            1
- Particle flux :  -4.563416398148902E-017
- Energy flux   :    4.15014629964257     
- Momentum flux :  -3.558898947809879E-002
+ Particle flux :  -9.126562044573678E-018
+ Energy flux   :    7.15128169641736     
+ Momentum flux :  -0.181122074190693     
  
-Time step :   12960 Normalised time :   5.92352E+03
+Time step :    3210 Normalised time :   1.79271E+04
  
  
  
  Species            1
- Particle flux :  -3.245558173495495E-017
- Energy flux   :    4.14563635202170     
- Momentum flux :  -3.354116660388146E-002
+ Particle flux :  -7.410020153557152E-018
+ Energy flux   :    7.21035576367843     
+ Momentum flux :  -0.201524923965751     
  
-Time step :   12990 Normalised time :   5.92412E+03
+Time step :    3240 Normalised time :   1.79277E+04
  
  
  
  Species            1
- Particle flux :  -6.271243447688754E-019
- Energy flux   :    4.15086902227707     
- Momentum flux :  -3.405891430879798E-002
+ Particle flux :   7.348055666129892E-017
+ Energy flux   :    7.22035084646078     
+ Momentum flux :  -0.196234537860143     
  
-Time step :   13020 Normalised time :   5.92472E+03
+Time step :    3270 Normalised time :   1.79283E+04
  
  
  
  Species            1
- Particle flux :  -2.204017150923589E-017
- Energy flux   :    4.16773330902318     
- Momentum flux :  -3.476699172337912E-002
- 
-Time step :   13050 Normalised time :   5.92532E+03
- 
+ Particle flux :  -4.866305518543174E-017
+ Energy flux   :    7.20218037235662     
+ Momentum flux :  -0.172214558456853     
  
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.54745E+01
+ Non-diagnostics time (last step):   3.53502E+01
  
- Species            1
- Particle flux :  -5.825500222581877E-017
- Energy flux   :    4.20802952659459     
- Momentum flux :  -4.303597474396761E-002
+Time step :    3300 Normalised time :   1.79289E+04
  
-Time step :   13080 Normalised time :   5.92592E+03
  
  
- 
  Species            1
- Particle flux :  -3.695134646618762E-017
- Energy flux   :    4.27579199515203     
- Momentum flux :  -6.029682833487215E-002
+ Particle flux :  -4.858123089282830E-017
+ Energy flux   :    7.22152625294979     
+ Momentum flux :  -0.142996289749651     
  
-Time step :   13110 Normalised time :   5.92652E+03
+Time step :    3330 Normalised time :   1.79295E+04
  
  
  
  Species            1
- Particle flux :  -3.405902575405773E-018
- Energy flux   :    4.36232874740391     
- Momentum flux :  -7.051085148367141E-002
+ Particle flux :   9.180929007321609E-018
+ Energy flux   :    7.32455343326904     
+ Momentum flux :  -0.120632552836154     
  
-Time step :   13140 Normalised time :   5.92712E+03
+Time step :    3360 Normalised time :   1.79301E+04
  
  
  
  Species            1
- Particle flux :  -7.586704355585436E-018
- Energy flux   :    4.44233728878777     
- Momentum flux :  -7.290483413679953E-002
+ Particle flux :   1.011368040670810E-017
+ Energy flux   :    7.49960180578727     
+ Momentum flux :  -0.107581897780943     
  
-Time step :   13170 Normalised time :   5.92772E+03
+Time step :    3390 Normalised time :   1.79307E+04
  
  
  
  Species            1
- Particle flux :  -1.819054513577194E-017
- Energy flux   :    4.50801771169341     
- Momentum flux :  -7.503251735660323E-002
+ Particle flux :  -4.469898483285408E-017
+ Energy flux   :    7.70342319353892     
+ Momentum flux :  -9.522998102294797E-002
  
-Time step :   13200 Normalised time :   5.92832E+03
+Time step :    3420 Normalised time :   1.79313E+04
  
  
  
  Species            1
- Particle flux :  -1.753989222009036E-017
- Energy flux   :    4.55901702542864     
- Momentum flux :  -7.821763695489468E-002
- 
-Time step :   13230 Normalised time :   5.92892E+03
+ Particle flux :  -8.027205938775839E-017
+ Energy flux   :    7.88974076378119     
+ Momentum flux :  -8.872961733512853E-002
  
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       3.65778E+00
+ Non-diagnostics time (last step):   3.53581E+01
  
+Time step :    3450 Normalised time :   1.79319E+04
  
- Species            1
- Particle flux :  -4.851493732981585E-017
- Energy flux   :    4.59401396978937     
- Momentum flux :  -7.782100824010450E-002
- 
-Time step :   13260 Normalised time :   5.92952E+03
- 
  
  
  Species            1
- Particle flux :  -3.382417804998974E-017
- Energy flux   :    4.61653690733293     
- Momentum flux :  -6.746055647934585E-002
+ Particle flux :  -2.521984155712630E-017
+ Energy flux   :    8.05152881296449     
+ Momentum flux :  -9.204480086860631E-002
  
-Time step :   13290 Normalised time :   5.93012E+03
+Time step :    3480 Normalised time :   1.79325E+04
  
  
  
  Species            1
- Particle flux :  -7.799320507941199E-018
- Energy flux   :    4.63116864455558     
- Momentum flux :  -5.197863117641259E-002
+ Particle flux :  -9.058950968961069E-017
+ Energy flux   :    8.21670007958869     
+ Momentum flux :  -9.836199935875199E-002
  
-Time step :   13320 Normalised time :   5.93072E+03
+Time step :    3510 Normalised time :   1.79331E+04
  
  
  
  Species            1
- Particle flux :   5.607122364348891E-019
- Energy flux   :    4.64176937674815     
- Momentum flux :  -3.984231419060057E-002
+ Particle flux :  -6.347185948469543E-017
+ Energy flux   :    8.39605797868661     
+ Momentum flux :  -0.103218583943548     
  
-Time step :   13350 Normalised time :   5.93132E+03
+Time step :    3540 Normalised time :   1.79337E+04
  
  
  
  Species            1
- Particle flux :  -1.493344343452348E-017
- Energy flux   :    4.64425700079993     
- Momentum flux :  -3.744909184387133E-002
+ Particle flux :   2.626111140145908E-018
+ Energy flux   :    8.55880046090828     
+ Momentum flux :  -0.116339659101919     
  
-Time step :   13380 Normalised time :   5.93192E+03
+Time step :    3570 Normalised time :   1.79343E+04
  
  
  
  Species            1
- Particle flux :  -5.537445601611826E-017
- Energy flux   :    4.64315403059398     
- Momentum flux :  -4.458037748421657E-002
- 
-Time step :   13410 Normalised time :   5.93252E+03
- 
- 
+ Particle flux :  -4.053817949774804E-017
+ Energy flux   :    8.64786691909743     
+ Momentum flux :  -0.139656394478003     
  
- Species            1
- Particle flux :  -8.855084159268342E-018
- Energy flux   :    4.63892049167958     
- Momentum flux :  -5.582843043720642E-002
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.82375E+01
+ Non-diagnostics time (last step):   3.54272E+01
  
-Time step :   13440 Normalised time :   5.93312E+03
+Time step :    3600 Normalised time :   1.79349E+04
  
  
  
  Species            1
- Particle flux :   9.463387766957375E-018
- Energy flux   :    4.61672304420340     
- Momentum flux :  -6.639555972334533E-002
+ Particle flux :   2.410538455580303E-017
+ Energy flux   :    8.65211274021362     
+ Momentum flux :  -0.160623254559201     
  
-Time step :   13470 Normalised time :   5.93372E+03
+Time step :    3630 Normalised time :   1.79355E+04
  
  
  
  Species            1
- Particle flux :  -5.304243397596637E-017
- Energy flux   :    4.55381092479195     
- Momentum flux :  -7.823858454529357E-002
+ Particle flux :  -2.752204179749109E-017
+ Energy flux   :    8.63421507353048     
+ Momentum flux :  -0.163412888681136     
  
-Time step :   13500 Normalised time :   5.93432E+03
+Time step :    3660 Normalised time :   1.79361E+04
  
  
  
  Species            1
- Particle flux :  -4.598273977862464E-017
- Energy flux   :    4.45438612266214     
- Momentum flux :  -7.707166003474090E-002
+ Particle flux :  -2.123976706915333E-017
+ Energy flux   :    8.65576727885303     
+ Momentum flux :  -0.154562899608988     
  
-Time step :   13530 Normalised time :   5.93492E+03
+Time step :    3690 Normalised time :   1.79367E+04
  
  
  
  Species            1
- Particle flux :   9.209554212804466E-018
- Energy flux   :    4.33519154948304     
- Momentum flux :  -6.900734083064701E-002
+ Particle flux :  -2.043585949332721E-017
+ Energy flux   :    8.73216923278713     
+ Momentum flux :  -0.148807588102197     
  
-Time step :   13560 Normalised time :   5.93552E+03
+Time step :    3720 Normalised time :   1.79373E+04
  
  
  
  Species            1
- Particle flux :  -8.191794702636824E-018
- Energy flux   :    4.21707727329669     
- Momentum flux :  -6.174950223635075E-002
+ Particle flux :   7.478163085624117E-017
+ Energy flux   :    8.84255183928753     
+ Momentum flux :  -0.145277625084951     
  
-Time step :   13590 Normalised time :   5.93612E+03
+Time step :    3750 Normalised time :   1.79379E+04
  
  
  
  Species            1
- Particle flux :  -5.115528473944229E-018
- Energy flux   :    4.11437431587744     
- Momentum flux :  -4.667193173988837E-002
+ Particle flux :  -1.069375204540760E-016
+ Energy flux   :    8.91992688074994     
+ Momentum flux :  -0.133185368773792     
  
-Time step :   13620 Normalised time :   5.93672E+03
+Time step :    3780 Normalised time :   1.79385E+04
  
  
  
  Species            1
- Particle flux :   1.685161502009620E-018
- Energy flux   :    4.05109103147156     
- Momentum flux :  -2.675853586402097E-002
+ Particle flux :   1.147070225485007E-019
+ Energy flux   :    8.88390230847653     
+ Momentum flux :  -0.112471087447154     
  
-Time step :   13650 Normalised time :   5.93732E+03
+Time step :    3810 Normalised time :   1.79391E+04
  
  
  
  Species            1
- Particle flux :  -1.225456605536190E-017
- Energy flux   :    4.03990636280974     
- Momentum flux :  -2.847857050746421E-003
+ Particle flux :  -9.904926065949249E-017
+ Energy flux   :    8.75214020874166     
+ Momentum flux :  -8.724016556670154E-002
  
-Time step :   13680 Normalised time :   5.93792E+03
+Time step :    3840 Normalised time :   1.79397E+04
  
  
  
  Species            1
- Particle flux :  -1.641008162214946E-017
- Energy flux   :    4.06968000622720     
- Momentum flux :   2.691501752019190E-002
+ Particle flux :  -1.928613153653407E-017
+ Energy flux   :    8.64178246063399     
+ Momentum flux :  -8.011425641813524E-002
  
-Time step :   13710 Normalised time :   5.93852E+03
+Time step :    3870 Normalised time :   1.79403E+04
  
  
  
  Species            1
- Particle flux :  -6.779355605013520E-017
- Energy flux   :    4.11138846301740     
- Momentum flux :   5.071362554169921E-002
- 
-Time step :   13740 Normalised time :   5.93912E+03
- 
+ Particle flux :  -7.761045403092541E-017
+ Energy flux   :    8.61550193551931     
+ Momentum flux :  -8.948132059869580E-002
  
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.81353E+01
+ Non-diagnostics time (last step):   3.49419E+01
  
- Species            1
- Particle flux :  -3.260975881780476E-017
- Energy flux   :    4.13459657378182     
- Momentum flux :   6.349153327628615E-002
+Time step :    3900 Normalised time :   1.79409E+04
  
-Time step :   13770 Normalised time :   5.93972E+03
  
  
- 
  Species            1
- Particle flux :  -1.959525136128819E-017
- Energy flux   :    4.14562914338763     
- Momentum flux :   7.088879855781509E-002
+ Particle flux :  -7.231373791227952E-017
+ Energy flux   :    8.67379055264927     
+ Momentum flux :  -0.122587503467285     
  
-Time step :   13800 Normalised time :   5.94032E+03
+Time step :    3930 Normalised time :   1.79415E+04
  
  
  
  Species            1
- Particle flux :  -2.314442340239634E-017
- Energy flux   :    4.17016623456797     
- Momentum flux :   7.508449628938546E-002
+ Particle flux :  -1.436136110943056E-017
+ Energy flux   :    8.81205642456697     
+ Momentum flux :  -0.177483001944237     
  
-Time step :   13830 Normalised time :   5.94092E+03
+Time step :    3960 Normalised time :   1.79421E+04
  
  
  
  Species            1
- Particle flux :  -1.336292071266182E-017
- Energy flux   :    4.21254824138104     
- Momentum flux :   7.695450326853691E-002
+ Particle flux :  -4.543296173251436E-017
+ Energy flux   :    9.01636165089612     
+ Momentum flux :  -0.236674803129767     
  
-Time step :   13860 Normalised time :   5.94152E+03
+Time step :    3990 Normalised time :   1.79427E+04
  
  
  
  Species            1
- Particle flux :   8.611082861617150E-018
- Energy flux   :    4.25399113464960     
- Momentum flux :   7.635741508292004E-002
+ Particle flux :  -1.708952695011990E-017
+ Energy flux   :    9.23940186007032     
+ Momentum flux :  -0.286511183847412     
  
-Time step :   13890 Normalised time :   5.94212E+03
+Time step :    4020 Normalised time :   1.79433E+04
  
  
  
  Species            1
- Particle flux :  -5.413321176903258E-017
- Energy flux   :    4.27406271338847     
- Momentum flux :   7.598518862152065E-002
+ Particle flux :  -9.048742474527611E-017
+ Energy flux   :    9.42510106386240     
+ Momentum flux :  -0.306007777415638     
  
-Time step :   13920 Normalised time :   5.94272E+03
+Time step :    4050 Normalised time :   1.79439E+04
  
  
  
  Species            1
- Particle flux :  -2.760768580336815E-017
- Energy flux   :    4.26867106068218     
- Momentum flux :   7.775798413904385E-002
+ Particle flux :  -8.041413060479530E-017
+ Energy flux   :    9.51173029824975     
+ Momentum flux :  -0.283844905839993     
  
-Time step :   13950 Normalised time :   5.94332E+03
+Time step :    4080 Normalised time :   1.79445E+04
  
  
  
  Species            1
- Particle flux :  -7.331727767072949E-019
- Energy flux   :    4.25331891332458     
- Momentum flux :   7.934492691876707E-002
+ Particle flux :  -8.611382792137383E-018
+ Energy flux   :    9.44018160072028     
+ Momentum flux :  -0.228366779605607     
  
-Time step :   13980 Normalised time :   5.94392E+03
+Time step :    4110 Normalised time :   1.79451E+04
  
  
  
  Species            1
- Particle flux :   5.254470557196735E-018
- Energy flux   :    4.23525885672968     
- Momentum flux :   8.739992982348131E-002
+ Particle flux :  -4.216866250011152E-017
+ Energy flux   :    9.20664682144390     
+ Momentum flux :  -0.167413202795426     
  
-Time step :   14010 Normalised time :   5.94452E+03
+Time step :    4140 Normalised time :   1.79457E+04
  
  
  
  Species            1
- Particle flux :  -2.591421400548512E-017
- Energy flux   :    4.21538782022958     
- Momentum flux :   9.868689732686620E-002
+ Particle flux :  -6.449334006684864E-017
+ Energy flux   :    8.84156633824929     
+ Momentum flux :  -0.119232458398371     
  
-Time step :   14040 Normalised time :   5.94512E+03
+Time step :    4170 Normalised time :   1.79463E+04
  
  
  
  Species            1
- Particle flux :  -3.989626438814489E-017
- Energy flux   :    4.18977498875204     
- Momentum flux :   0.104507369353286     
- 
-Time step :   14070 Normalised time :   5.94572E+03
+ Particle flux :  -9.778142346044202E-018
+ Energy flux   :    8.43706029666088     
+ Momentum flux :  -8.888706810044127E-002
  
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.42388E+01
+ Non-diagnostics time (last step):   3.54614E+01
  
+Time step :    4200 Normalised time :   1.79469E+04
  
- Species            1
- Particle flux :  -1.623097861476310E-017
- Energy flux   :    4.15970159560963     
- Momentum flux :   0.100577220714625     
- 
-Time step :   14100 Normalised time :   5.94632E+03
- 
  
  
  Species            1
- Particle flux :  -3.509901507110348E-017
- Energy flux   :    4.13288801177955     
- Momentum flux :   8.594532557596604E-002
+ Particle flux :   1.942980445958022E-017
+ Energy flux   :    8.13123978278511     
+ Momentum flux :  -7.934437027975919E-002
  
-Time step :   14130 Normalised time :   5.94692E+03
+Time step :    4230 Normalised time :   1.79475E+04
  
  
  
  Species            1
- Particle flux :  -2.272351004030750E-017
- Energy flux   :    4.11633484929213     
- Momentum flux :   7.124722990010871E-002
+ Particle flux :   1.101232994117359E-017
+ Energy flux   :    7.99630882434149     
+ Momentum flux :  -8.033023997773273E-002
  
-Time step :   14160 Normalised time :   5.94752E+03
+Time step :    4260 Normalised time :   1.79481E+04
  
  
  
  Species            1
- Particle flux :  -3.320018035746344E-017
- Energy flux   :    4.09289907387996     
- Momentum flux :   4.936438133804825E-002
+ Particle flux :  -4.213348778193605E-017
+ Energy flux   :    7.97036994161469     
+ Momentum flux :  -8.140105172611888E-002
  
-Time step :   14190 Normalised time :   5.94812E+03
+Time step :    4290 Normalised time :   1.79487E+04
  
  
  
  Species            1
- Particle flux :  -3.700701797030973E-017
- Energy flux   :    4.03920513387990     
- Momentum flux :   2.032072176762496E-002
+ Particle flux :  -1.788785033302825E-017
+ Energy flux   :    7.95471884436257     
+ Momentum flux :  -8.323087262474541E-002
  
-Time step :   14220 Normalised time :   5.94872E+03
+Time step :    4320 Normalised time :   1.79493E+04
  
  
  
  Species            1
- Particle flux :  -3.221004146777410E-017
- Energy flux   :    3.95621241823815     
- Momentum flux :   4.419568089919421E-004
+ Particle flux :  -5.350453690005487E-017
+ Energy flux   :    7.93590158207220     
+ Momentum flux :  -7.794785528355450E-002
  
-Time step :   14250 Normalised time :   5.94932E+03
+Time step :    4350 Normalised time :   1.79499E+04
  
  
  
  Species            1
- Particle flux :  -1.300780887036794E-017
- Energy flux   :    3.87894372752205     
- Momentum flux :  -6.162506174996501E-003
+ Particle flux :  -1.804005838997807E-017
+ Energy flux   :    7.90800818775554     
+ Momentum flux :  -6.789526850146189E-002
  
-Time step :   14280 Normalised time :   5.94992E+03
+Time step :    4380 Normalised time :   1.79505E+04
  
  
  
  Species            1
- Particle flux :  -7.901658298124585E-018
- Energy flux   :    3.83387459789019     
- Momentum flux :  -2.378221195816379E-003
+ Particle flux :  -2.043837820659365E-017
+ Energy flux   :    7.86583814717859     
+ Momentum flux :  -6.510234547712417E-002
  
-Time step :   14310 Normalised time :   5.95052E+03
+Time step :    4410 Normalised time :   1.79511E+04
  
  
  
  Species            1
- Particle flux :  -1.117939845292428E-017
- Energy flux   :    3.81543136248735     
- Momentum flux :   1.431024369724493E-002
+ Particle flux :  -9.352490634912717E-018
+ Energy flux   :    7.81973539589548     
+ Momentum flux :  -7.656485349552578E-002
  
-Time step :   14340 Normalised time :   5.95112E+03
+Time step :    4440 Normalised time :   1.79517E+04
  
  
  
  Species            1
- Particle flux :  -2.937704483085741E-017
- Energy flux   :    3.81063715945821     
- Momentum flux :   4.011370796316244E-002
+ Particle flux :  -1.285471650564452E-017
+ Energy flux   :    7.78632923233560     
+ Momentum flux :  -8.646734328402933E-002
  
-Time step :   14370 Normalised time :   5.95172E+03
+Time step :    4470 Normalised time :   1.79523E+04
  
  
  
  Species            1
- Particle flux :   8.692572378717053E-018
- Energy flux   :    3.81596775908875     
- Momentum flux :   6.603709906931111E-002
+ Particle flux :  -1.552762208022316E-017
+ Energy flux   :    7.78951931020384     
+ Momentum flux :  -8.957514510661282E-002
  
-Time step :   14400 Normalised time :   5.95232E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       3.25543E+01
+ Non-diagnostics time (last step):   3.50425E+01
  
+Time step :    4500 Normalised time :   1.79529E+04
  
  
+ 
  Species            1
- Particle flux :  -3.250094473333766E-019
- Energy flux   :    3.82347145796719     
- Momentum flux :   8.660939480549153E-002
+ Particle flux :  -5.025723157634905E-017
+ Energy flux   :    7.79880810189692     
+ Momentum flux :  -7.762292823260146E-002
  
-Time step :   14430 Normalised time :   5.95292E+03
+Time step :    4530 Normalised time :   1.79535E+04
  
  
  
  Species            1
- Particle flux :  -3.099465349076955E-017
- Energy flux   :    3.81941012692226     
- Momentum flux :   9.643479744121283E-002
+ Particle flux :  -5.451218712576377E-017
+ Energy flux   :    7.79583549985753     
+ Momentum flux :  -6.595015637238162E-002
  
-Time step :   14460 Normalised time :   5.95352E+03
+Time step :    4560 Normalised time :   1.79541E+04
  
  
  
  Species            1
- Particle flux :  -1.816994549508602E-017
- Energy flux   :    3.80429620433442     
- Momentum flux :   9.668270248437520E-002
+ Particle flux :  -3.116042637918704E-017
+ Energy flux   :    7.76738291833549     
+ Momentum flux :  -4.800631996489676E-002
  
-Time step :   14490 Normalised time :   5.95412E+03
+Time step :    4590 Normalised time :   1.79547E+04
  
  
  
  Species            1
- Particle flux :  -1.042605889009832E-017
- Energy flux   :    3.79352629026641     
- Momentum flux :   9.289972351815257E-002
+ Particle flux :   5.559546554430020E-018
+ Energy flux   :    7.66433165574737     
+ Momentum flux :  -1.893121638838738E-002
  
-Time step :   14520 Normalised time :   5.95472E+03
+Time step :    4620 Normalised time :   1.79553E+04
  
  
  
  Species            1
- Particle flux :   5.542147482329215E-018
- Energy flux   :    3.80583032028680     
- Momentum flux :   9.790782914169890E-002
+ Particle flux :  -2.482105861099510E-017
+ Energy flux   :    7.48815146488466     
+ Momentum flux :   1.520916895178359E-002
  
-Time step :   14550 Normalised time :   5.95532E+03
+Time step :    4650 Normalised time :   1.79559E+04
  
  
  
  Species            1
- Particle flux :  -6.911043637411363E-018
- Energy flux   :    3.82764563836777     
- Momentum flux :   0.117886682844196     
+ Particle flux :  -3.437372113803197E-017
+ Energy flux   :    7.27935359426254     
+ Momentum flux :   4.513200463530633E-002
  
-Time step :   14580 Normalised time :   5.95592E+03
+Time step :    4680 Normalised time :   1.79565E+04
  
  
  
  Species            1
- Particle flux :   2.377387907817351E-019
- Energy flux   :    3.82151425236488     
- Momentum flux :   0.143470662645391     
+ Particle flux :   1.506173110836888E-018
+ Energy flux   :    7.08922171658027     
+ Momentum flux :   6.103952326473813E-002
  
-Time step :   14610 Normalised time :   5.95652E+03
+Time step :    4710 Normalised time :   1.79571E+04
  
  
  
  Species            1
- Particle flux :  -4.694494219408864E-017
- Energy flux   :    3.77493090830762     
- Momentum flux :   0.160114654443053     
+ Particle flux :  -7.667523463478379E-017
+ Energy flux   :    6.94096940975417     
+ Momentum flux :   6.555513166677568E-002
  
-Time step :   14640 Normalised time :   5.95712E+03
+Time step :    4740 Normalised time :   1.79577E+04
  
  
  
  Species            1
- Particle flux :  -3.023706306616272E-017
- Energy flux   :    3.71991804709820     
- Momentum flux :   0.163833532119840     
+ Particle flux :   1.296112951743792E-017
+ Energy flux   :    6.83997129795271     
+ Momentum flux :   5.277729753434419E-002
  
-Time step :   14670 Normalised time :   5.95772E+03
+Time step :    4770 Normalised time :   1.79583E+04
  
  
  
  Species            1
- Particle flux :  -3.989027580730516E-019
- Energy flux   :    3.67948519901865     
- Momentum flux :   0.154687247608603     
+ Particle flux :   2.864811331934340E-017
+ Energy flux   :    6.80470354458053     
+ Momentum flux :   3.440803884767855E-002
  
-Time step :   14700 Normalised time :   5.95832E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       2.65592E+01
+ Non-diagnostics time (last step):   3.52972E+01
  
+Time step :    4800 Normalised time :   1.79589E+04
  
  
+ 
  Species            1
- Particle flux :  -3.181649021929745E-017
- Energy flux   :    3.64346850044517     
- Momentum flux :   0.141666713558762     
+ Particle flux :  -5.102495940955544E-017
+ Energy flux   :    6.82668513404389     
+ Momentum flux :   1.742558618701288E-002
  
-Time step :   14730 Normalised time :   5.95892E+03
+Time step :    4830 Normalised time :   1.79595E+04
  
  
  
  Species            1
- Particle flux :  -2.138822287974824E-017
- Energy flux   :    3.60420507083237     
- Momentum flux :   0.124662567378639     
+ Particle flux :  -8.612886844305431E-017
+ Energy flux   :    6.88902364635465     
+ Momentum flux :  -7.112700052567072E-003
  
-Time step :   14760 Normalised time :   5.95952E+03
+Time step :    4860 Normalised time :   1.79601E+04
  
  
  
  Species            1
- Particle flux :  -1.145175506253409E-017
- Energy flux   :    3.58140752352979     
- Momentum flux :   0.101634179897849     
+ Particle flux :  -9.389234230366870E-018
+ Energy flux   :    6.98296230177046     
+ Momentum flux :  -4.311122739553604E-002
  
-Time step :   14790 Normalised time :   5.96012E+03
+Time step :    4890 Normalised time :   1.79607E+04
  
  
  
  Species            1
- Particle flux :  -2.108952598307669E-017
- Energy flux   :    3.58256081003539     
- Momentum flux :   8.075095348119894E-002
+ Particle flux :   1.754669044272872E-017
+ Energy flux   :    7.12886886757757     
+ Momentum flux :  -8.134291866452106E-002
  
-Time step :   14820 Normalised time :   5.96072E+03
+Time step :    4920 Normalised time :   1.79613E+04
  
  
  
  Species            1
- Particle flux :  -4.627344030092759E-017
- Energy flux   :    3.58334898649936     
- Momentum flux :   6.706263599022376E-002
+ Particle flux :   3.789509337066162E-017
+ Energy flux   :    7.32339157020136     
+ Momentum flux :  -0.109698587046970     
  
-Time step :   14850 Normalised time :   5.96132E+03
+Time step :    4950 Normalised time :   1.79619E+04
  
  
  
  Species            1
- Particle flux :  -2.413503699035971E-018
- Energy flux   :    3.57035734105768     
- Momentum flux :   5.276905807627346E-002
+ Particle flux :  -1.024507732322911E-017
+ Energy flux   :    7.54538416859405     
+ Momentum flux :  -0.119810932546759     
  
-Time step :   14880 Normalised time :   5.96192E+03
+Time step :    4980 Normalised time :   1.79625E+04
  
  
  
  Species            1
- Particle flux :   2.277886607842350E-017
- Energy flux   :    3.53967601911826     
- Momentum flux :   4.168265421963896E-002
+ Particle flux :  -4.389938655782664E-018
+ Energy flux   :    7.74945653833714     
+ Momentum flux :  -0.118769880618854     
  
-Time step :   14910 Normalised time :   5.96252E+03
+Time step :    5010 Normalised time :   1.79631E+04
  
  
  
  Species            1
- Particle flux :  -2.655238909549679E-019
- Energy flux   :    3.49306724323624     
- Momentum flux :   3.479944024432808E-002
+ Particle flux :   2.688223894528089E-017
+ Energy flux   :    7.89059176390174     
+ Momentum flux :  -0.118578060564931     
+ 
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       4.97357E+00
+ Non-diagnostics time (last step):   3.59324E+01
  
-Time step :   14940 Normalised time :   5.96312E+03
+Time step :    5040 Normalised time :   1.79637E+04
  
  
  
  Species            1
- Particle flux :   8.806118272330077E-018
- Energy flux   :    3.43231424414583     
- Momentum flux :   2.760881460644708E-002
+ Particle flux :  -1.161101296270978E-016
+ Energy flux   :    7.95990754635560     
+ Momentum flux :  -0.133382736715108     
  
-Time step :   14970 Normalised time :   5.96372E+03
+Time step :    5070 Normalised time :   1.79643E+04
  
  
  
  Species            1
- Particle flux :   4.324752532514057E-019
- Energy flux   :    3.35357456846710     
- Momentum flux :   2.486193430344474E-002
+ Particle flux :  -1.401323403192786E-017
+ Energy flux   :    7.95498066169256     
+ Momentum flux :  -0.154263611746997     
  
-Time step :   15000 Normalised time :   5.96432E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.41355E+01
+ Non-diagnostics time (last step):   3.58141E+01
  
+Time step :    5100 Normalised time :   1.79649E+04
  
- * wrote restart file DM1, count=      497448
- * restart_file_version=           2
- * in   1.19521E+01 seconds
  
  
  Species            1
- Particle flux :   1.814944563306148E-018
- Energy flux   :    3.25635852693134     
- Momentum flux :   2.352917984785703E-002
+ Particle flux :   3.439484991581599E-017
+ Energy flux   :    7.88066181672754     
+ Momentum flux :  -0.158632916024680     
  
-Time step :   15030 Normalised time :   5.96492E+03
+Time step :    5130 Normalised time :   1.79655E+04
  
  
  
  Species            1
- Particle flux :  -1.272647552872964E-017
- Energy flux   :    3.15635448910574     
- Momentum flux :   2.031472934112007E-002
+ Particle flux :  -2.049188903740759E-017
+ Energy flux   :    7.77427084523884     
+ Momentum flux :  -0.143483275185188     
  
-Time step :   15060 Normalised time :   5.96552E+03
+Time step :    5160 Normalised time :   1.79661E+04
  
  
  
  Species            1
- Particle flux :  -4.442107282655158E-018
- Energy flux   :    3.06990088770544     
- Momentum flux :   1.444669514176092E-002
+ Particle flux :  -3.951546266831997E-017
+ Energy flux   :    7.70914743400195     
+ Momentum flux :  -0.118507185270709     
  
-Time step :   15090 Normalised time :   5.96612E+03
+Time step :    5190 Normalised time :   1.79667E+04
  
  
  
  Species            1
- Particle flux :  -5.731733401317248E-018
- Energy flux   :    3.01287181090566     
- Momentum flux :   5.743139971305950E-003
+ Particle flux :  -7.436376516357110E-017
+ Energy flux   :    7.68965095178526     
+ Momentum flux :  -9.332134541319360E-002
  
-Time step :   15120 Normalised time :   5.96672E+03
+Time step :    5220 Normalised time :   1.79673E+04
  
  
  
  Species            1
- Particle flux :  -3.183385771636331E-017
- Energy flux   :    2.99185600603549     
- Momentum flux :  -2.062954289935954E-003
+ Particle flux :   1.056480444686951E-017
+ Energy flux   :    7.68508961840110     
+ Momentum flux :  -6.682438690529345E-002
  
-Time step :   15150 Normalised time :   5.96732E+03
+Time step :    5250 Normalised time :   1.79679E+04
  
  
  
  Species            1
- Particle flux :   9.982314328514294E-018
- Energy flux   :    3.00464552393067     
- Momentum flux :  -3.855100736791233E-003
+ Particle flux :  -2.219250516839184E-017
+ Energy flux   :    7.66456366516344     
+ Momentum flux :  -4.500461074495644E-002
  
-Time step :   15180 Normalised time :   5.96792E+03
+Time step :    5280 Normalised time :   1.79685E+04
  
  
  
  Species            1
- Particle flux :  -1.080225548865800E-017
- Energy flux   :    3.04306347060247     
- Momentum flux :  -6.317919568186320E-004
+ Particle flux :  -4.146626712359398E-017
+ Energy flux   :    7.61690084809009     
+ Momentum flux :  -3.078472675449208E-002
  
-Time step :   15210 Normalised time :   5.96852E+03
+Time step :    5310 Normalised time :   1.79691E+04
  
  
  
  Species            1
- Particle flux :  -3.168446318502013E-018
- Energy flux   :    3.09771707261695     
- Momentum flux :   7.146151144081526E-003
+ Particle flux :  -4.063090158472913E-017
+ Energy flux   :    7.52045282982760     
+ Momentum flux :  -1.641724569955405E-002
  
-Time step :   15240 Normalised time :   5.96912E+03
+Time step :    5340 Normalised time :   1.79697E+04
  
  
  
  Species            1
- Particle flux :   5.226736949016634E-018
- Energy flux   :    3.15250508976175     
- Momentum flux :   1.764069572496560E-002
+ Particle flux :  -5.381077539624152E-017
+ Energy flux   :    7.42221943833962     
+ Momentum flux :  -8.285265493751042E-003
  
-Time step :   15270 Normalised time :   5.96972E+03
+Time step :    5370 Normalised time :   1.79703E+04
  
  
  
  Species            1
- Particle flux :  -2.053562261923054E-017
- Energy flux   :    3.19264263537004     
- Momentum flux :   3.437807768495237E-002
+ Particle flux :   1.132324335198966E-018
+ Energy flux   :    7.37336283321865     
+ Momentum flux :  -1.601706112191222E-002
  
-Time step :   15300 Normalised time :   5.97032E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.85311E+01
+ Non-diagnostics time (last step):   3.52085E+01
  
+Time step :    5400 Normalised time :   1.79709E+04
  
  
- Species            1
- Particle flux :  -1.766912777829426E-017
- Energy flux   :    3.21451338860827     
- Momentum flux :   5.477498177649663E-002
- 
-Time step :   15330 Normalised time :   5.97092E+03
- 
  
- 
  Species            1
- Particle flux :  -1.739573977785817E-017
- Energy flux   :    3.22203053061088     
- Momentum flux :   6.928780451137696E-002
+ Particle flux :  -3.331822285658509E-017
+ Energy flux   :    7.36139783371390     
+ Momentum flux :  -4.501442319367176E-002
  
-Time step :   15360 Normalised time :   5.97152E+03
+Time step :    5430 Normalised time :   1.79715E+04
  
  
  
  Species            1
- Particle flux :  -4.602725527877100E-017
- Energy flux   :    3.21203674132014     
- Momentum flux :   7.500775397589823E-002
+ Particle flux :  -2.299232388705253E-017
+ Energy flux   :    7.37855617771683     
+ Momentum flux :  -8.594742547158837E-002
  
-Time step :   15390 Normalised time :   5.97212E+03
+Time step :    5460 Normalised time :   1.79721E+04
  
  
  
  Species            1
- Particle flux :  -8.446306880934150E-018
- Energy flux   :    3.18073635094977     
- Momentum flux :   7.184226460501517E-002
+ Particle flux :  -8.743687859913160E-017
+ Energy flux   :    7.41711008836823     
+ Momentum flux :  -0.133692486463977     
  
-Time step :   15420 Normalised time :   5.97272E+03
+Time step :    5490 Normalised time :   1.79727E+04
  
  
  
  Species            1
- Particle flux :  -2.806799892833093E-017
- Energy flux   :    3.12745022377527     
- Momentum flux :   6.222285344718032E-002
+ Particle flux :  -3.154742112270996E-017
+ Energy flux   :    7.44718605603334     
+ Momentum flux :  -0.168616578561882     
  
-Time step :   15450 Normalised time :   5.97332E+03
+Time step :    5520 Normalised time :   1.79733E+04
  
  
  
  Species            1
- Particle flux :  -1.516585500121461E-017
- Energy flux   :    3.05822723214277     
- Momentum flux :   4.892436633477581E-002
+ Particle flux :  -9.427911469070321E-017
+ Energy flux   :    7.46066698238484     
+ Momentum flux :  -0.170934374076431     
  
-Time step :   15480 Normalised time :   5.97392E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       3.97938E+00
+ Non-diagnostics time (last step):   3.58840E+01
  
+Time step :    5550 Normalised time :   1.79739E+04
  
  
+ 
  Species            1
- Particle flux :   2.412584417032089E-018
- Energy flux   :    2.98297217216456     
- Momentum flux :   3.505351707733113E-002
+ Particle flux :  -3.555453810946124E-017
+ Energy flux   :    7.48554546028789     
+ Momentum flux :  -0.151010426456405     
  
-Time step :   15510 Normalised time :   5.97452E+03
+Time step :    5580 Normalised time :   1.79745E+04
  
  
  
  Species            1
- Particle flux :  -1.681924886444368E-017
- Energy flux   :    2.91451445555703     
- Momentum flux :   2.252257501622513E-002
+ Particle flux :  -1.507380556716789E-017
+ Energy flux   :    7.54473517550913     
+ Momentum flux :  -0.106615832851515     
  
-Time step :   15540 Normalised time :   5.97512E+03
+Time step :    5610 Normalised time :   1.79751E+04
  
  
  
  Species            1
- Particle flux :  -1.250418093669200E-017
- Energy flux   :    2.86672843168313     
- Momentum flux :   1.021439065420814E-002
+ Particle flux :  -7.112749608359797E-017
+ Energy flux   :    7.63063819398842     
+ Momentum flux :  -5.546782505989467E-002
  
-Time step :   15570 Normalised time :   5.97572E+03
+Time step :    5640 Normalised time :   1.79757E+04
  
  
  
  Species            1
- Particle flux :  -2.588483385552164E-017
- Energy flux   :    2.85407915141881     
- Momentum flux :  -3.868224076998168E-004
+ Particle flux :  -2.347228204750026E-017
+ Energy flux   :    7.71556103106041     
+ Momentum flux :  -1.636430179169999E-002
  
-Time step :   15600 Normalised time :   5.97632E+03
+Time step :    5670 Normalised time :   1.79763E+04
  
  
  
  Species            1
- Particle flux :  -1.796168682679960E-017
- Energy flux   :    2.86975278625716     
- Momentum flux :  -2.824061152290560E-003
+ Particle flux :   1.168506476642470E-017
+ Energy flux   :    7.78655608283840     
+ Momentum flux :  -2.573528264332364E-003
+ 
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.84191E+01
+ Non-diagnostics time (last step):   3.56446E+01
  
-Time step :   15630 Normalised time :   5.97692E+03
+Time step :    5700 Normalised time :   1.79769E+04
  
  
  
  Species            1
- Particle flux :  -3.118657834048775E-017
- Energy flux   :    2.90173649482365     
- Momentum flux :   2.735658755562525E-003
+ Particle flux :  -1.325993424485713E-017
+ Energy flux   :    7.86407476543823     
+ Momentum flux :  -2.202769428114537E-003
  
-Time step :   15660 Normalised time :   5.97752E+03
+Time step :    5730 Normalised time :   1.79775E+04
  
  
  
  Species            1
- Particle flux :  -9.692995475715291E-020
- Energy flux   :    2.94127844706056     
- Momentum flux :   1.220990996276124E-002
+ Particle flux :   3.477604994895524E-017
+ Energy flux   :    7.96438215231352     
+ Momentum flux :   7.947904914015824E-003
  
-Time step :   15690 Normalised time :   5.97812E+03
+Time step :    5760 Normalised time :   1.79781E+04
  
  
  
  Species            1
- Particle flux :  -2.291444891658494E-017
- Energy flux   :    2.98136895449201     
- Momentum flux :   2.090572065887950E-002
+ Particle flux :  -1.059639648037589E-016
+ Energy flux   :    8.07273298646714     
+ Momentum flux :   1.764275423415454E-002
  
-Time step :   15720 Normalised time :   5.97872E+03
+Time step :    5790 Normalised time :   1.79787E+04
  
  
  
  Species            1
- Particle flux :  -2.447405617600804E-017
- Energy flux   :    3.02156236886717     
- Momentum flux :   2.959883411709897E-002
+ Particle flux :  -2.421188692895198E-017
+ Energy flux   :    8.17344397910659     
+ Momentum flux :   1.525997246081886E-002
  
-Time step :   15750 Normalised time :   5.97932E+03
+Time step :    5820 Normalised time :   1.79793E+04
  
  
  
  Species            1
- Particle flux :  -2.343552141729537E-017
- Energy flux   :    3.06466565748239     
- Momentum flux :   3.749643288821804E-002
+ Particle flux :  -2.145270882047771E-017
+ Energy flux   :    8.25917523649685     
+ Momentum flux :   3.585906671872298E-003
  
-Time step :   15780 Normalised time :   5.97992E+03
+Time step :    5850 Normalised time :   1.79799E+04
  
  
  
  Species            1
- Particle flux :   2.340088449576502E-017
- Energy flux   :    3.10475659143390     
- Momentum flux :   4.334828227804127E-002
+ Particle flux :  -5.711606313405637E-017
+ Energy flux   :    8.33068743453323     
+ Momentum flux :   1.744739204557711E-004
  
-Time step :   15810 Normalised time :   5.98052E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       4.47103E+00
+ Non-diagnostics time (last step):   3.59470E+01
  
+Time step :    5880 Normalised time :   1.79805E+04
  
  
+ 
  Species            1
- Particle flux :  -3.896937495926562E-017
- Energy flux   :    3.13839320662762     
- Momentum flux :   4.707561215061375E-002
+ Particle flux :   3.074963690646463E-017
+ Energy flux   :    8.37823599826935     
+ Momentum flux :   6.214102252219871E-003
  
-Time step :   15840 Normalised time :   5.98112E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       5.66607E+00
+ Non-diagnostics time (last step):   3.47708E+01
  
+Time step :    5910 Normalised time :   1.79811E+04
  
  
+ 
  Species            1
- Particle flux :  -1.184397732903440E-017
- Energy flux   :    3.17208483122692     
- Momentum flux :   4.927717412942110E-002
+ Particle flux :  -8.297213213274330E-017
+ Energy flux   :    8.40616393405737     
+ Momentum flux :   1.221359429935823E-002
+ 
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       5.18933E+00
+ Non-diagnostics time (last step):   3.52798E+01
  
-Time step :   15870 Normalised time :   5.98172E+03
+Time step :    5940 Normalised time :   1.79817E+04
  
  
  
  Species            1
- Particle flux :  -2.704662895573525E-017
- Energy flux   :    3.20316573875193     
- Momentum flux :   5.101131109543453E-002
+ Particle flux :   2.164570983217285E-018
+ Energy flux   :    8.39868394660098     
+ Momentum flux :   1.937630402848014E-002
  
-Time step :   15900 Normalised time :   5.98232E+03
+Time step :    5970 Normalised time :   1.79823E+04
  
  
  
  Species            1
- Particle flux :   1.546999514698237E-018
- Energy flux   :    3.22685576096258     
- Momentum flux :   5.307044546575992E-002
+ Particle flux :   6.577633007734774E-018
+ Energy flux   :    8.32463153513325     
+ Momentum flux :   2.640753944609171E-002
  
-Time step :   15930 Normalised time :   5.98292E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.57540E+01
+ Non-diagnostics time (last step):   3.53046E+01
  
+Time step :    6000 Normalised time :   1.79829E+04
  
  
+ 
  Species            1
- Particle flux :  -4.738203122815232E-018
- Energy flux   :    3.24002300588854     
- Momentum flux :   5.419201768971048E-002
+ Particle flux :  -6.221396210147571E-017
+ Energy flux   :    8.18258509390067     
+ Momentum flux :   3.210895603262275E-002
  
-Time step :   15960 Normalised time :   5.98352E+03
+Time step :    6030 Normalised time :   1.79835E+04
  
  
  
  Species            1
- Particle flux :  -4.630510576351545E-017
- Energy flux   :    3.24979185707496     
- Momentum flux :   5.556603426111172E-002
+ Particle flux :  -4.171309929179527E-017
+ Energy flux   :    8.03213816964655     
+ Momentum flux :   2.906555635185936E-002
  
-Time step :   15990 Normalised time :   5.98412E+03
+Time step :    6060 Normalised time :   1.79841E+04
  
  
  
  Species            1
- Particle flux :  -8.388156962751073E-018
- Energy flux   :    3.26705918192747     
- Momentum flux :   5.912037898368785E-002
+ Particle flux :  -2.659246961509016E-017
+ Energy flux   :    7.91898908604845     
+ Momentum flux :   1.516206962345965E-002
  
-Time step :   16020 Normalised time :   5.98472E+03
+Time step :    6090 Normalised time :   1.79847E+04
  
  
  
  Species            1
- Particle flux :  -2.496262566144866E-017
- Energy flux   :    3.29095669742398     
- Momentum flux :   6.399960030195552E-002
+ Particle flux :  -8.217841865323810E-017
+ Energy flux   :    7.86164708592683     
+ Momentum flux :  -1.118653997859576E-002
  
-Time step :   16050 Normalised time :   5.98532E+03
+Time step :    6120 Normalised time :   1.79853E+04
  
  
  
  Species            1
- Particle flux :   3.036234344734300E-018
- Energy flux   :    3.30451351793514     
- Momentum flux :   6.897398992567504E-002
+ Particle flux :  -5.009595756818687E-017
+ Energy flux   :    7.86509315191909     
+ Momentum flux :  -4.160521045557775E-002
  
-Time step :   16080 Normalised time :   5.98592E+03
+Time step :    6150 Normalised time :   1.79859E+04
  
  
  
  Species            1
- Particle flux :   1.809813212999660E-018
- Energy flux   :    3.29745128932735     
- Momentum flux :   7.452693312352307E-002
+ Particle flux :  -3.851936921559359E-018
+ Energy flux   :    7.93758231614795     
+ Momentum flux :  -7.184493733154772E-002
  
-Time step :   16110 Normalised time :   5.98652E+03
+Time step :    6180 Normalised time :   1.79865E+04
  
  
  
  Species            1
- Particle flux :   3.553195421758217E-019
- Energy flux   :    3.26897022243601     
- Momentum flux :   7.812123579287568E-002
+ Particle flux :  -4.922792927772112E-017
+ Energy flux   :    8.03656286186716     
+ Momentum flux :  -9.816853305603131E-002
  
-Time step :   16140 Normalised time :   5.98712E+03
+Time step :    6210 Normalised time :   1.79871E+04
  
  
  
  Species            1
- Particle flux :  -7.348270267800062E-018
- Energy flux   :    3.23195862589087     
- Momentum flux :   7.945278076942161E-002
+ Particle flux :  -9.832024655916420E-017
+ Energy flux   :    8.13117267018812     
+ Momentum flux :  -0.120673979245691     
  
-Time step :   16170 Normalised time :   5.98772E+03
+Time step :    6240 Normalised time :   1.79877E+04
  
  
  
  Species            1
- Particle flux :   3.384934451606348E-018
- Energy flux   :    3.19678596934680     
- Momentum flux :   7.887115281180393E-002
+ Particle flux :  -1.273570842825408E-017
+ Energy flux   :    8.20740735934469     
+ Momentum flux :  -0.142785756685913     
  
-Time step :   16200 Normalised time :   5.98832E+03
+Time step :    6270 Normalised time :   1.79883E+04
  
  
  
  Species            1
- Particle flux :  -2.689766974111412E-017
- Energy flux   :    3.16500141798143     
- Momentum flux :   7.653698314298452E-002
+ Particle flux :  -4.317366874638997E-017
+ Energy flux   :    8.24932026007365     
+ Momentum flux :  -0.167577405838759     
  
-Time step :   16230 Normalised time :   5.98892E+03
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.26542E+01
+ Non-diagnostics time (last step):   3.54188E+01
  
+Time step :    6300 Normalised time :   1.79889E+04
  
  
+ 
  Species            1
- Particle flux :   7.282548364139068E-018
- Energy flux   :    3.13477500731834     
- Momentum flux :   7.080572160129391E-002
+ Particle flux :  -1.986934411960617E-017
+ Energy flux   :    8.23560328373927     
+ Momentum flux :  -0.190860588140709     
  
-Time step :   16260 Normalised time :   5.98952E+03
+Time step :    6330 Normalised time :   1.79895E+04
  
  
  
  Species            1
- Particle flux :  -1.978795235199022E-017
- Energy flux   :    3.10322780241233     
- Momentum flux :   6.433315378449621E-002
+ Particle flux :  -5.878248599666194E-017
+ Energy flux   :    8.15998902463711     
+ Momentum flux :  -0.210426801387398     
  
-Time step :   16290 Normalised time :   5.99012E+03
+Time step :    6360 Normalised time :   1.79901E+04
  
  
  
  Species            1
- Particle flux :  -2.875859636994330E-018
- Energy flux   :    3.06923974469763     
- Momentum flux :   5.856111172291116E-002
+ Particle flux :  -1.212948988439535E-017
+ Energy flux   :    8.06154328196801     
+ Momentum flux :  -0.227253125861483     
  
-Time step :   16320 Normalised time :   5.99072E+03
+Time step :    6390 Normalised time :   1.79907E+04
  
  
  
  Species            1
- Particle flux :  -6.919596323053643E-018
- Energy flux   :    3.03317317523104     
- Momentum flux :   5.461279359198483E-002
+ Particle flux :   4.492783039807511E-017
+ Energy flux   :    7.98136851346083     
+ Momentum flux :  -0.224306383183312     
  
-Time step :   16350 Normalised time :   5.99132E+03
+Time step :    6420 Normalised time :   1.79913E+04
  
  
  
  Species            1
- Particle flux :  -3.325908599560896E-017
- Energy flux   :    3.00431266791910     
- Momentum flux :   5.397882399617290E-002
+ Particle flux :  -9.714621228781210E-017
+ Energy flux   :    7.91382249637887     
+ Momentum flux :  -0.193026096111803     
  
-Time step :   16380 Normalised time :   5.99192E+03
+Time step :    6450 Normalised time :   1.79919E+04
  
  
  
  Species            1
- Particle flux :  -2.282081637516806E-018
- Energy flux   :    2.99036677326763     
- Momentum flux :   5.307472457762324E-002
+ Particle flux :  -4.481865460303578E-017
+ Energy flux   :    7.86226205689009     
+ Momentum flux :  -0.157085630829159     
  
-Time step :   16410 Normalised time :   5.99252E+03
+Time step :    6480 Normalised time :   1.79925E+04
  
  
  
  Species            1
- Particle flux :  -2.715093409160802E-017
- Energy flux   :    2.99588142683493     
- Momentum flux :   5.379432341295316E-002
+ Particle flux :  -3.001242231848925E-017
+ Energy flux   :    7.81589569837507     
+ Momentum flux :  -0.119256426741550     
  
-Time step :   16440 Normalised time :   5.99312E+03
+Time step :    6510 Normalised time :   1.79931E+04
  
  
  
  Species            1
- Particle flux :  -1.545095536213657E-017
- Energy flux   :    3.01787203313274     
- Momentum flux :   5.742029614789640E-002
+ Particle flux :  -5.656282969603351E-017
+ Energy flux   :    7.76501643579574     
+ Momentum flux :  -7.676453237582570E-002
  
-Time step :   16470 Normalised time :   5.99372E+03
+Time step :    6540 Normalised time :   1.79937E+04
  
  
  
  Species            1
- Particle flux :  -2.172736917979227E-017
- Energy flux   :    3.04184863371705     
- Momentum flux :   6.128036299914779E-002
+ Particle flux :   3.851937748739972E-017
+ Energy flux   :    7.70058180971329     
+ Momentum flux :  -3.847546524622100E-002
  
-Time step :   16500 Normalised time :   5.99432E+03
+Time step :    6570 Normalised time :   1.79943E+04
  
  
  
  Species            1
- Particle flux :   1.527399121116972E-017
- Energy flux   :    3.06227742679589     
- Momentum flux :   6.163980462981340E-002
+ Particle flux :  -6.322963442816273E-017
+ Energy flux   :    7.64849082151348     
+ Momentum flux :  -4.704098360090617E-003
+ 
+ WARNING: Diagnostics are slow:
+ Diagnostics time (last call):       1.55247E+01
+ Non-diagnostics time (last step):   3.55744E+01
  
-Time step :   16530 Normalised time :   5.99492E+03
+Time step :    6600 Normalised time :   1.79949E+04
  
  
  
  Species            1
- Particle flux :  -6.361923742725339E-018
- Energy flux   :    3.08571852659867     
- Momentum flux :   6.106931244861345E-002
+ Particle flux :  -1.676056213189245E-017
+ Energy flux   :    7.63678138877555     
+ Momentum flux :   2.742636945427441E-002
  
-Time step :   16560 Normalised time :   5.99552E+03
+Time step :    6630 Normalised time :   1.79955E+04
  
  
  
  Species            1
- Particle flux :   6.375000253288278E-018
- Energy flux   :    3.12456454959960     
- Momentum flux :   6.059349587912368E-002
+ Particle flux :  -7.627116993364629E-017
+ Energy flux   :    7.64809714718006     
+ Momentum flux :   4.507755260943139E-002
  
-Time step :   16590 Normalised time :   5.99612E+03
+Time step :    6660 Normalised time :   1.79961E+04
  
  
  
  Species            1
- Particle flux :  -3.012904827081190E-018
- Energy flux   :    3.16826774402839     
- Momentum flux :   5.686203599632155E-002
+ Particle flux :  -8.937735927167428E-017
+ Energy flux   :    7.66425048002840     
+ Momentum flux :   4.358682515225635E-002
  
-Time step :   16620 Normalised time :   5.99672E+03
+Time step :    6690 Normalised time :   1.79967E+04
  
  
  
  Species            1
- Particle flux :  -4.917073563202494E-018
- Energy flux   :    3.19928332112345     
- Momentum flux :   5.192976035318251E-002
+ Particle flux :  -3.428493901570604E-017
+ Energy flux   :    7.68143841066209     
+ Momentum flux :   2.642414914430235E-002
  
-Time step :   16650 Normalised time :   5.99732E+03
+Time step :    6720 Normalised time :   1.79973E+04
  
  
  
  Species            1
- Particle flux :  -9.391291351002107E-018
- Energy flux   :    3.21290508316435     
- Momentum flux :   5.001768382490441E-002
+ Particle flux :  -6.140989653415259E-017
+ Energy flux   :    7.69624413125681     
+ Momentum flux :   6.613264645011716E-003
  
-Time step :   16680 Normalised time :   5.99792E+03
+Time step :    6750 Normalised time :   1.79979E+04
  
  
  
  Species            1
- Particle flux :  -3.754734555546977E-017
- Energy flux   :    3.21477399700915     
- Momentum flux :   5.014879933972267E-002
+ Particle flux :  -5.950295674297924E-017
+ Energy flux   :    7.69574353641946     
+ Momentum flux :  -1.210786865603252E-002
  
-Time step :   16710 Normalised time :   5.99852E+03
+Time step :    6780 Normalised time :   1.79985E+04
  
  
  
  Species            1
- Particle flux :  -1.457729694437965E-017
- Energy flux   :    3.21701927708796     
- Momentum flux :   4.805909008724478E-002
+ Particle flux :  -4.881029684998379E-017
+ Energy flux   :    7.66424985561069     
+ Momentum flux :  -2.431617418687205E-002
  
-Time step :   16740 Normalised time :   5.99912E+03
+Time step :    6810 Normalised time :   1.79991E+04
  
  
  
  Species            1
- Particle flux :  -2.275509924072029E-017
- Energy flux   :    3.22290835160869     
- Momentum flux :   4.108472402927166E-002
+ Particle flux :  -2.669018404726075E-017
+ Energy flux   :    7.60229817568306     
+ Momentum flux :  -2.112574431633100E-002
  
-Time step :   16770 Normalised time :   5.99972E+03
+Time step :    6840 Normalised time :   1.79997E+04
  
  
  * wrote restart file FDS, count=      497448
  * restart_file_version=           2
- * in   1.39627E+01 seconds
+ * in   1.01581E+01 seconds
  
- Run successfully completed, Run time :   19471.3702321053     
-                     (main loop time):   19422.4831213951     
+ Run successfully completed, Run time :   10551.4335050583     
+                     (main loop time):   8549.55447673798     
  
  Throughout the run,        1 threads were for computation of nonlinear terms.
  
@@ -5183,21 +2284,21 @@ Time step :   16770 Normalised time :   5.99972E+03
 ==============================================================
 Name                     Number of calls   time spent  percent
 ==============================================================
-rk4                                16768  0.18748E+05   100.00
-Calc RHS                           67072  0.18497E+05    98.66
-Calc Fields                        67072  0.58674E+04    31.30
-fields - poisson mat multiply      67072  0.12819E+03     0.68
-fields - MPI allreduce             67072  0.48882E+04    26.07
-fields - zonal adiabatic           67072  0.84156E+03     4.49
-fields - n4 renorm diag            67072  0.81262E+01     0.04
-Copy fdis vector to tmp            67072  0.16118E+03     0.86
-Collisions conservation            67072  0.32776E-01     0.00
-Init RHS to zero                   67072  0.90217E+02     0.48
-MPI radial ghost comms             67072  0.42418E-01     0.00
-Non linear terms: FFT, No MPI      67072  0.11069E+05    59.04
-MPI other ghost comms              67072  0.55115E+02     0.29
-Linear terms matmul, No MPI        67072  0.12536E+04     6.69
-perflib / other                        - -0.24112E+05  -128.61
+rk4                                 6838  0.79485E+04   100.00
+Calc RHS                           27352  0.78176E+04    98.35
+Calc Fields                        27352  0.18594E+04    23.39
+fields - poisson mat multiply      27352  0.62976E+02     0.79
+fields - MPI allreduce             27352  0.16134E+04    20.30
+fields - zonal adiabatic           27352  0.17956E+03     2.26
+fields - n4 renorm diag            27352  0.29858E+01     0.04
+Copy fdis vector to tmp            27352  0.66060E+02     0.83
+Collisions conservation            27352  0.18393E-01     0.00
+Init RHS to zero                   27352  0.37406E+02     0.47
+MPI radial ghost comms             27352  0.19534E-01     0.00
+Non linear terms: FFT, No MPI      27352  0.49395E+04    62.14
+MPI other ghost comms              27352  0.27931E+03     3.51
+Linear terms matmul, No MPI        27352  0.63567E+03     8.00
+perflib / other                        - -0.95453E+04  -120.09
  
    (timing error:  0.000000s)
 ==============================================================

@@ -1,0 +1,8 @@
+# some makefile variables produced building the code
+PREPROCS =  -Dreal_precision_double -DFFT_FFTW3 -Dmpi2 -Dumfpack -Dperf -DHAVE_HDF5
+FFLAGS = -I.   -I/opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/include -L/opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib /opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib/libhdf5hl_fortran.a /opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib/libhdf5_hl.a /opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib/libhdf5_fortran.a /opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib/libhdf5.a -lz -ldl -lm -Wl,-rpath -Wl,/opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib -I/opt/ohpc/pub/libs/intel/fftw/fftw-3.3.10/include   -r8 -qopt-report=4 -qopt-report-phase=vec -warn all 
+LDFLAGS =  -L/opt/ohpc/pub/libs/intel/fftw/fftw-3.3.10/lib -lfftw3  -I/opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/include -L/opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib /opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib/libhdf5hl_fortran.a /opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib/libhdf5_hl.a /opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib/libhdf5_fortran.a /opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib/libhdf5.a -lz -ldl -lm -Wl,-rpath -Wl,/opt/ohpc/pub/libs/intel/hdf5/hdf5-1.12.1/lib   -L../../libs/UMFPACK/Lib/ -lumfpack -L../../libs/AMD/Lib/ -lamd -L/home/nuss/47/bt712347/gkw/libs/UMFPACK/Lib -lumfpack -L/home/nuss/47/bt712347/gkw/libs/AMD/Lib -lamd 
+LOADEDMODULES = intel/20.4.304:hdf5/1.12.1:fftw/3.3.10:mpich/3.3.1:lapack/3.9.0:scalapack/2.0.2
+FC = mpiifort
+CONFIG = 
+EXEC = gkw.x

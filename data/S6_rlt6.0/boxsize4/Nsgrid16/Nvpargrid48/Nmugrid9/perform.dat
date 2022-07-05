@@ -1,14 +1,14 @@
-rk4                                16768  0.18748E+05   100.00
-Calc RHS                           67072  0.18497E+05    98.66
-Calc Fields                        67072  0.58674E+04    31.30
-fields - poisson mat multiply      67072  0.12819E+03     0.68
-fields - MPI allreduce             67072  0.48882E+04    26.07
-fields - zonal adiabatic           67072  0.84156E+03     4.49
-fields - n4 renorm diag            67072  0.81262E+01     0.04
-Copy fdis vector to tmp            67072  0.16118E+03     0.86
-Collisions conservation            67072  0.32776E-01     0.00
-Init RHS to zero                   67072  0.90217E+02     0.48
-MPI radial ghost comms             67072  0.42418E-01     0.00
-Non linear terms: FFT, No MPI      67072  0.11069E+05    59.04
-MPI other ghost comms              67072  0.55115E+02     0.29
-Linear terms matmul, No MPI        67072  0.12536E+04     6.69
+rk4                                 6838  0.79485E+04   100.00
+Calc RHS                           27352  0.78176E+04    98.35
+Calc Fields                        27352  0.18594E+04    23.39
+fields - poisson mat multiply      27352  0.62976E+02     0.79
+fields - MPI allreduce             27352  0.16134E+04    20.30
+fields - zonal adiabatic           27352  0.17956E+03     2.26
+fields - n4 renorm diag            27352  0.29858E+01     0.04
+Copy fdis vector to tmp            27352  0.66060E+02     0.83
+Collisions conservation            27352  0.18393E-01     0.00
+Init RHS to zero                   27352  0.37406E+02     0.47
+MPI radial ghost comms             27352  0.19534E-01     0.00
+Non linear terms: FFT, No MPI      27352  0.49395E+04    62.14
+MPI other ghost comms              27352  0.27931E+03     3.51
+Linear terms matmul, No MPI        27352  0.63567E+03     8.00
