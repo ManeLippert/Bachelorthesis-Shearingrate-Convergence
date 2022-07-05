@@ -23,7 +23,6 @@
 #
 # This will write every output in the file nohup.out that will be send as mail body to the defined mail address
 
-
 from time import sleep 
 import sys
 import os
