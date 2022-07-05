@@ -1,0 +1,11 @@
+# View all running monitors
+ps ax | grep monitor_job.py
+
+# Start monitor script
+nohup python3 -u monitor_job.py &
+
+# Cancel al Jobs
+scancel -u bt712347
+
+# Job Running
+squeue -u bt712347
