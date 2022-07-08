@@ -21,7 +21,30 @@
 #
 # >>> nohup python3 -u monitor_job.py &
 #
-# This will write every output in the file nohup.out that will be send as mail body to the defined mail address
+# Output:
+#
+# >>> [1] 10537
+# hostname@machine nohup: ignoriere Eingabe und hänge Ausgabe an „nohup.out“ an
+#
+# This will write every output in the file nohup.out that will be send as mail body to the defined mail address.
+# To coutine the use of the terminal just hit enter.
+
+# LIST PRGRESS:
+# To see which progress is in background running following command is needed:
+#
+# >>> ps ax | grep monitor_job.py
+#
+# Output:
+#
+# >>> 10537 pts/1    S      0:00 python3 -u monitor_job.py
+# >>> 23426 pts/1    S+     0:00 grep --color=auto monitor_job.py
+# 
+# This will give you the ID to kill monitoring script with the command:
+#
+# >>> kill 10537
+#
+#  This will kill the monitor script.
+
 
 from time import sleep 
 import sys
@@ -211,13 +234,39 @@ send_mail(emailAddress, 'Started Job ' + jobName, read_file_to_string('./nohup.o
 #########################################################
 '''
 
+# Output Informations
 print(job_start())
 
 # To limit repeating outputs
 outputType = set_output_type(user)
 
+# read FDS.dat (restart file) to a list of lists
+## If gkw has run requiered timesteps stop already here
 while True:
-    
+    try:
+        nTimestepsCurrent = get_value_of_variable_in_input_file('./FDS.dat', 'FILE_COUNT')
+        
+        # Check if gkw has run requiered timesteps
+        if nTimestepsCurrent >= nTimestepsRequired:
+            print('Current Timesteps greater or equals Reqired Timesteps\n'+
+                  'Stop monitoring of GKW!')
+            send_mail(emailAddress, 'Ended Job ' + jobName, read_file_to_string('./nohup.out'))
+            quit()
+        else:
+            break
+        
+    except FileNotFoundError:
+        break
+
+# Monitor Routine
+while True:
+    # Check if gkw has run requiered timesteps
+    if nTimestepsCurrent >= nTimestepsRequired:
+        print('Current Timesteps greater or equals Reqired Timesteps\n'+
+              'Stop monitoring of GKW!')
+        send_mail(emailAddress, 'Ended Job ' + jobName, read_file_to_string('./nohup.out'))
+
+        break
     # Check if no Job is running or pending and start/restart job
     ## Check running jobs status and get job running time
     ### If job is not running than wait 30min and check again
