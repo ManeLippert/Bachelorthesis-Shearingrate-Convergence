@@ -1,7 +1,7 @@
 #!/bin/bash
 
 INPUTFILE="gkwdata.h5"
-OUTPUTFILE="gkwcut.h5"
+OUTPUTFILE="data.h5"
 
 DATASETS=(
 #"diagnostic/diagnos_fields/kxspec"
