@@ -21,10 +21,6 @@
 #
 #    path to the backup location. Has to be the absoute path (example ~/$PATH)!
 #
-# 4) data-location=$PATH
-#
-#    path to the data location. Has to be the absolute path (example ~/$PATH)!
-#
 # Every flag can be modified under the variable section of this script.
 
 # START SCRIPT:
@@ -70,8 +66,11 @@ import subprocess
 #                                                       #
 #########################################################
 '''
-# Filename of jobscript to get data
+# Filenames
 jobscriptFilename = 'jobscript'
+restartFilename = 'FDS.dat'
+monitorFilename = 'nohup.out'
+inputFilename = 'input.dat'
 
 # Flags of the specific informations
 jobNameFlag = 'job-name='
@@ -79,10 +78,18 @@ jobRepetitionFlag = 'repeat='
 emailAddressFlag = 'email='
 walltimeFlag = 'time='
 backupFlag = 'backup-location='
-dataFlag = 'data-location='
+
+inputFlag = 'NTIME'
+restartFlag = 'FILE_COUNT'
 
 # Sleep time 5min (time code checks status)
 sleepTime = 5*60
+
+# Commands
+commandJobRunning = 'squeue --states=running -u '
+commandJobPending = 'squeue --states=pending -u '
+
+commandJobStarting = 'sbatch'
 
 '''
 '#########################################################'
@@ -156,8 +163,8 @@ def job_start():
     return content
 
 def get_job_status(user):
-    jobStatusRunning = subprocess.getoutput('squeue --states=running -u ' + user).strip().split()
-    jobStatusPending = subprocess.getoutput('squeue --states=pending -u ' + user).strip().split() 
+    jobStatusRunning = subprocess.getoutput(commandJobRunning + user).strip().split()
+    jobStatusPending = subprocess.getoutput(commandJobPending + user).strip().split() 
 
     return jobStatusRunning, jobStatusPending
 
@@ -172,7 +179,6 @@ def set_output_type(user):
         outputType ='no Output'
 
     return outputType
-
 
 def send_mail(recipient, subject, body):
 
@@ -215,7 +221,7 @@ except IndexError:
 
 # Timesteps GKW makes from input.dat
 try:
-    nTimesteps = get_value_of_variable_from_input_file('./input.dat', 'NTIME')
+    nTimesteps = get_value_of_variable_from_input_file('./' + inputFilename, inputFlag)
 except FileNotFoundError:
     print('! No input file found !')
     quit()
@@ -246,10 +252,8 @@ walltimeSeconds = get_time_in_seconds(walltime)
 try:
     # Backup and data location
     backupLocation = get_job_information_from_jobscript_flag(jobscriptContent, backupFlag)
-    dataLocation = get_job_information_from_jobscript_flag(jobscriptContent, dataFlag)
     
-    path = os.path.dirname(os.path.abspath(__file__)).split(dataLocation.replace('~',''))[1]
-    dataPath = dataLocation + path
+    path = os.path.dirname(os.path.abspath(__file__)).split(user)[1]
     backupPath = backupLocation + path
     
     ## Create backup directory if do not exist
@@ -267,7 +271,7 @@ print(job_informations())
 
 # Send start mail
 if emailNotification:
-    send_mail(emailAddress, 'Started Job ' + jobName, read_file_to_string('./nohup.out'))
+    send_mail(emailAddress, 'Started Job ' + jobName, read_file_to_string('./' + monitorFilename))
 
 '''
 #########################################################
@@ -289,16 +293,15 @@ outputType = set_output_type(user)
 ## If gkw has run requiered timesteps stop already here
 while True:
     try:
-        nTimestepsCurrent = get_value_of_variable_from_input_file('./FDS.dat', 'FILE_COUNT')
+        nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
         
         # Check if gkw has run requiered timesteps
         if nTimestepsCurrent >= nTimestepsRequired:
-            print('Current Timesteps greater or equals Reqired Timesteps\n'+
-                  'Stop monitoring of GKW!')
+            print('SUCCESS Stop monitoring')
             
             # Send end email
             if emailNotification:
-                send_mail(emailAddress, 'Ended Job ' + jobName, read_file_to_string('./nohup.out'))
+                send_mail(emailAddress, 'Ended Job ' + jobName, read_file_to_string('./' + monitorFilename))
 
             quit()
         else:
@@ -330,8 +333,8 @@ while True:
 
             # Set output type
             if outputType == 'running':
-                print('Job is running')
-                outputType = 'check FDS.dat'
+                print('RUNNING Job is executed')
+                outputType = 'check ' + restartFilename
 
             break
 
@@ -339,7 +342,7 @@ while True:
         elif jobName in jobStatusPending:
             # Set output type
             if outputType == 'pending':
-                print('Job is pending -> wait till job is running')
+                print('WAITING Job is pending')
                 outputType = 'running'
 
             sleep(sleepTime)
@@ -350,7 +353,7 @@ while True:
         else:
             # Making backup of data
             if backup:
-                print('Making backup of data on', backupLocation)
+                print('BACKUP' + backupLocation)
                 subprocess.run(['rsync', '-a', '', backupPath])
                 
             # check slurm output for any errors
@@ -362,10 +365,10 @@ while True:
                     if slurmContent == '0':
                         break
                     else:
-                        print('Error: GKW stopped job')
+                        print('ERROR GKW stopped job')
                         # Send fail mail
                         if emailNotification:
-                            send_mail(emailAddress, 'Failed Job ' + jobName, read_file_to_string('./nohup.out'))
+                            send_mail(emailAddress, 'Failed Job ' + jobName, read_file_to_string('./' + monitorFilename))
                         quit()
                 # If jobID is not defieed
                 except NameError:
@@ -376,13 +379,13 @@ while True:
                 
             # Timestep output
             try:
-                nTimestepsCurrent = get_value_of_variable_from_input_file('./FDS.dat', 'FILE_COUNT')
-                print('Current Timesteps:', nTimestepsCurrent)
+                nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
+                print('CONTROL Timesteps', nTimestepsCurrent)
             except FileNotFoundError:
                 pass    
             
             # Start Job
-            subprocess.run(['sbatch', jobscript])
+            subprocess.run([commandJobStarting, jobscript])
             sleep(30)
             outputType = set_output_type(user)
 
@@ -391,24 +394,23 @@ while True:
     ## If job is not existing than wait 30min time
     while True:
         try:
-            nTimestepsCurrent = get_value_of_variable_from_input_file('./FDS.dat', 'FILE_COUNT')
+            nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
             break
         except FileNotFoundError:
             # Set output type
-            if outputType == 'check FDS.dat':
-                print('FDS.dat not found -> wait until file gets generated')
+            if outputType == 'check ' + restartFilename:
+                print('WAITING' + restartFilename + ' not found')
                 outputType = 'no Output'
 
             sleep(sleepTime)
 
     # Check if gkw has run requiered timesteps
     if nTimestepsCurrent >= nTimestepsRequired:
-        print('Current Timesteps greater or equals Reqired Timesteps\n'+
-              'Stop monitoring of GKW!')
-        
+        print('SUCCESS Stop monitoring')
+
         # Send end email
         if emailNotification:
-            send_mail(emailAddress, 'Ended Job ' + jobName, read_file_to_string('./nohup.out'))
+            send_mail(emailAddress, 'Ended Job ' + jobName, read_file_to_string('./' + monitorFilename))
 
         break
     else:
