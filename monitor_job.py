@@ -26,15 +26,13 @@
 # START SCRIPT:
 # To start the script in the background following command is needed:
 #
-# >>> nohup python3 -u monitor_job.py &
+# >>> nohup python3 -u monitor_job.py &> status.txt &
 #
 # Output:
 #
 # >>> [1] 10537
-# hostname@machine nohup: ignoriere Eingabe und hänge Ausgabe an „nohup.out“ an
 #
-# This will write every output in the file nohup.out that will be send as mail body to the defined mail address.
-# To coutine the use of the terminal just hit enter.
+# This will write every output in the file jobstatus.txt that will be send as attachment to the defined mail address.
 
 # LIST PRGRESS:
 # To see which progress is in background running following command is needed:
@@ -53,8 +51,9 @@
 #  This will kill the monitor script.
 
 
+import datetime
+import time
 from time import sleep 
-import sys
 import os
 import subprocess
 
@@ -69,7 +68,7 @@ import subprocess
 # Filenames
 jobscriptFilename = 'jobscript'
 restartFilename = 'FDS.dat'
-monitorFilename = 'nohup.out'
+monitorFilename = 'status.txt'
 inputFilename = 'input.dat'
 
 # Flags of the specific informations
@@ -99,6 +98,7 @@ commandJobStarting = 'sbatch'
 '#########################################################'
 '''
 
+# Functions to get informations out of files
 def read_file_to_string(file):
     content = ''.join(open(file).readlines())
     
@@ -112,6 +112,7 @@ def get_value_of_variable_from_input_file(file, string):
         return value
     except IndexError:
         print('! String not in input file !')
+        quit()
         
 def get_job_information_from_jobscript_flag(content, flag):
     index = [idx for idx, s in enumerate(content) if flag in s][0]
@@ -119,6 +120,7 @@ def get_job_information_from_jobscript_flag(content, flag):
     
     return info
 
+# Time functions
 def get_time_in_seconds(time):
     # Check time format of time
     if len(time) < 5:
@@ -140,28 +142,88 @@ def get_time_in_seconds(time):
     
     return timeSeconds
 
-def job_informations():
-    content = ('################' +                               '\n' +
-               'JOB INFORMATIONS' +                               '\n' +
-               '################' +                               '\n' +
-                                                                  '\n' +
-               'Name: ' + jobName +                               '\n' +
-               'Repetitions: ' + str(jobRepetition) +             '\n' +
-               'E-Mail: ' + emailAddress +                        '\n' +
-               'Timesteps: ' + str(nTimesteps) +                  '\n' +
-               'Required Timesteps: ' + str(nTimestepsRequired) + '\n' +
-               'Walltime/s: ' + str(walltimeSeconds) +            '\n' +
-               'Sleep Time/s: ' + str(sleepTime) +                '\n' )
+def format_num(time):
+    if time < 10:
+        return '0' + str(time)
+    else:
+        return str(time)
 
-    return content
-
-def job_start():
-    content = ('################' +                               '\n' +
-               'RESTART JOB'      +                               '\n' +
-               '################' +                               '\n' )
+def get_time_converted(sec):
+    mins, sec  = sec // 60, sec % 60
+    hours, mins = mins // 60, mins % 60
+    days, hours = hours // 24, hours % 24
+    weeks, days = days // 7, days % 7
     
+    converted = (str(int(weeks)) + ':' + 
+                 format_num(int(days)) + ':' + format_num(int(hours)) + ':' + 
+                 format_num(int(mins)) + ':' + format_num(int(sec)))
+    
+    return converted
+
+def time_date():
+    e = datetime.datetime.now()
+    return '%s-%s-%s' % (format_num(e.year), format_num(e.month), format_num(e.day))
+
+def time_time():
+    e = datetime.datetime.now()
+    return '%s:%s:%s' % (format_num(e.hour), format_num(e.minute), format_num(e.second))
+
+def time_duration(startTime):
+    stop = time.time()
+    return get_time_converted(stop - startTime)
+
+# Table functions
+def table_row_format(content):
+    if len(content) == 5:
+        cols = [2, 10, 25, 41, 2]
+    elif len(content) == 7:
+        cols = [2, 10, 29, 13, 11, 13, 2]
+    elif len(content) == 4:
+        cols = [2, 10, 66, 2]
+    
+    row_format = "".join(["{:<" + str(col) + "}" for col in cols])
+    
+    return row_format
+
+def print_table_row(content):
+    
+    if isinstance(content[0], list):
+        row_format = table_row_format(content[0])
+        for row in content:
+            print(row_format.format(*row))
+        
+    else:
+        row_format = table_row_format(content)
+        print(row_format.format(*content))
+
+# Output Strings as function
+def job_init():
+    content = [['o-', '----------', '------------------------------------------------------------------', '-o'],
+               ['| ', 'OUTPUT', 'JOB INITIALIZE', ' |'],
+               ['o-', '----------', '------------------------------------------------------------------', '-o']]
     return content
 
+def job_informations():
+    content = [['o-', '----------', '-------------------------', '-----------------------------------------', '-o'],
+               ['| ', 'OUTPUT', 'JOB INFORMATIONS', 'VALUE', ' |'],
+               ['o-', '----------', '-------------------------', '-----------------------------------------', '-o'],
+               ['| ', 'INFO', 'Name', jobName, ' |'],
+               ['| ', 'INFO', 'Repetitions', str(jobRepetition), ' |'],
+               ['| ', 'INFO', 'E-Mail', emailAddress, ' |'],
+               ['| ', 'INFO', 'Timesteps', str(nTimesteps), ' |'],
+               ['| ', 'INFO', 'Required Timesteps', str(nTimestepsRequired), ' |'],
+               ['| ', 'INFO', 'Walltime/s', str(walltimeSeconds), ' |'],
+               ['| ', 'INFO', 'Sleep Time/s', str(sleepTime), ' |'],
+               ['o-', '----------', '-------------------------', '-----------------------------------------', '-o']]
+    return content
+
+def job_monitor():
+    content = [['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o'],
+               ['| ', 'OUTPUT', 'JOB MONITORING', 'DATE', 'TIME', 'W:DD:HH:MM:SS', ' |'],
+               ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']]
+    return content
+
+# Status functions for setting values for the job
 def get_job_status(user):
     jobStatusRunning = subprocess.getoutput(commandJobRunning + user).strip().split()
     jobStatusPending = subprocess.getoutput(commandJobPending + user).strip().split() 
@@ -180,14 +242,16 @@ def set_output_type(user):
 
     return outputType
 
+# Mail command
 def send_mail(recipient, subject, body):
 
     recipient = recipient.encode('utf_8')
     subject = '"' + subject + '"'
     subject = subject.encode('utf_8')
     body = body.encode('utf_8')
+    attachment = monitorFilename.encode('utf_8')
 
-    process = subprocess.Popen(['ssh', 'master', '/usr/bin/mailx', '-s', subject, recipient],
+    process = subprocess.Popen(['ssh', 'master', '/usr/bin/mailx', '-s', subject, '-a',  path + '/' + monitorFilename, recipient],
                                stdin=subprocess.PIPE)
     process.communicate(body)
 
@@ -198,6 +262,9 @@ def send_mail(recipient, subject, body):
 #                                                       #
 #########################################################
 '''
+# Output init header
+print('\n')
+print_table_row(job_init())
 
 # User name
 user = os.getlogin()
@@ -205,9 +272,12 @@ user = os.getlogin()
 # Job script informations
 try:
     jobscript = [filename for filename in os.listdir('.') if filename.startswith(jobscriptFilename)][0]
+    print_table_row(['| ', 'SUCCESS', 'Found ' + jobscriptFilename, ' |'])
 except IndexError:
-    print('! No jobscript found !')
+    print_table_row([['| ', 'ERROR', 'No file "' + jobscriptFilename + '" found', ' |'],
+                     ['o-', '----------', '------------------------------------------------------------------', '-o']])
     quit()
+    
 jobscriptContent = open(jobscript, 'r').read().splitlines()
 
 # Job name
@@ -222,8 +292,11 @@ except IndexError:
 # Timesteps GKW makes from input.dat
 try:
     nTimesteps = get_value_of_variable_from_input_file('./' + inputFilename, inputFlag)
+    print_table_row([['| ', 'SUCCESS', 'Found ' + inputFilename, ' |'],
+                     ['o-', '----------', '------------------------------------------------------------------', '-o']])
 except FileNotFoundError:
-    print('! No input file found !')
+    print_table_row([['| ', 'ERROR', 'No file "' + inputFilename + '" found', ' |'],
+                     ['o-', '----------', '------------------------------------------------------------------', '-o']])
     quit()
 
 # Mail address
@@ -253,7 +326,7 @@ try:
     # Backup and data location
     backupLocation = get_job_information_from_jobscript_flag(jobscriptContent, backupFlag)
     
-    path = os.path.dirname(os.path.abspath(__file__)).split(user)[1]
+    path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
     backupPath = backupLocation + path
     
     ## Create backup directory if do not exist
@@ -266,12 +339,13 @@ except IndexError:
     # BackUp switch
     backup = False
 
-
-print(job_informations())
+# Output job informations
+print('\n')
+print_table_row(job_informations())
 
 # Send start mail
 if emailNotification:
-    send_mail(emailAddress, 'Started Job ' + jobName, read_file_to_string('./' + monitorFilename))
+    send_mail(emailAddress, 'Started Job ' + jobName, 'For futher information open attachment')
 
 '''
 #########################################################
@@ -281,8 +355,14 @@ if emailNotification:
 #########################################################
 '''
 
-# Output Informations
-print(job_start())
+# Output job monitor header
+print('\n')
+print_table_row(job_monitor())
+
+# Set start time for stop watch
+startTime = time.time()
+
+print_table_row(['| ', 'STARTING', 'Start monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
 
 ####################    BEGIN    ########################
 
@@ -297,11 +377,12 @@ while True:
         
         # Check if gkw has run requiered timesteps
         if nTimestepsCurrent >= nTimestepsRequired:
-            print('SUCCESS Stop monitoring')
+            print_table_row([['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'],
+                             ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
             
             # Send end email
             if emailNotification:
-                send_mail(emailAddress, 'Ended Job ' + jobName, read_file_to_string('./' + monitorFilename))
+                send_mail(emailAddress, 'Ended Job ' + jobName, 'For futher information open attachment')
 
             quit()
         else:
@@ -333,7 +414,8 @@ while True:
 
             # Set output type
             if outputType == 'running':
-                print('RUNNING Job is executed')
+                print_table_row(['| ', 'RUNNING', 'Job is executed', time_date(), time_time(), time_duration(startTime) , ' |'])
+                
                 outputType = 'check ' + restartFilename
 
             break
@@ -342,7 +424,7 @@ while True:
         elif jobName in jobStatusPending:
             # Set output type
             if outputType == 'pending':
-                print('WAITING Job is pending')
+                print_table_row(['| ', 'WATING', 'Job is pending', time_date(), time_time(), time_duration(startTime) , ' |'])
                 outputType = 'running'
 
             sleep(sleepTime)
@@ -353,7 +435,7 @@ while True:
         else:
             # Making backup of data
             if backup:
-                print('BACKUP' + backupLocation)
+                print_table_row(['| ', 'BACKUP', backupLocation, time_date(), time_time(), time_duration(startTime) , ' |'])
                 subprocess.run(['rsync', '-a', '', backupPath])
                 
             # check slurm output for any errors
@@ -365,10 +447,12 @@ while True:
                     if slurmContent == '0':
                         break
                     else:
-                        print('ERROR GKW stopped job')
+                        print_table_row([['| ', 'ERROR', 'GKW stopped job', time_date(), time_time(), time_duration(startTime) , ' |'],
+                                         ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
+                        
                         # Send fail mail
                         if emailNotification:
-                            send_mail(emailAddress, 'Failed Job ' + jobName, read_file_to_string('./' + monitorFilename))
+                            send_mail(emailAddress, 'Failed Job ' + jobName, 'For futher information open attachment')
                         quit()
                 # If jobID is not defieed
                 except NameError:
@@ -376,16 +460,19 @@ while True:
                 # If file is not generated
                 except FileNotFoundError:
                     sleep(30)
+                except IndexError:
+                    sleep(30)
                 
             # Timestep output
             try:
                 nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
-                print('CONTROL Timesteps', nTimestepsCurrent)
+                print_table_row(['| ', 'CONTROL', 'Current Timesteps' + str(nTimestepsCurrent), time_date(), time_time(), time_duration(startTime) , ' |'])
             except FileNotFoundError:
                 pass    
             
             # Start Job
-            subprocess.run([commandJobStarting, jobscript])
+            startOutput = subprocess.check_output([commandJobStarting, jobscript]).decode('utf-8').replace('\n', '')
+            print_table_row(['| ', 'STARTING', startOutput, time_date(), time_time(), time_duration(startTime) , ' |'])
             sleep(30)
             outputType = set_output_type(user)
 
@@ -399,18 +486,19 @@ while True:
         except FileNotFoundError:
             # Set output type
             if outputType == 'check ' + restartFilename:
-                print('WAITING' + restartFilename + ' not found')
+                print_table_row(['| ', 'WAITING', restartFilename + ' not found', time_date(), time_time(), time_duration(startTime) , ' |'])
                 outputType = 'no Output'
 
             sleep(sleepTime)
 
     # Check if gkw has run requiered timesteps
     if nTimestepsCurrent >= nTimestepsRequired:
-        print('SUCCESS Stop monitoring')
+        print_table_row([['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'],
+                         ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
 
         # Send end email
         if emailNotification:
-            send_mail(emailAddress, 'Ended Job ' + jobName, read_file_to_string('./' + monitorFilename))
+            send_mail(emailAddress, 'Ended Job ' + jobName, 'For futher information open attachment')
 
         break
     else:
