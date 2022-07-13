@@ -377,6 +377,11 @@ print_table_row(job_informations())
 #########################################################
 '''
 
+################## OUTPUT MONITOR #######################
+
+print('\n')
+print_table_row(job_monitor())
+
 ####################    BEGIN    ########################
 
 # To limit repeating outputs
@@ -384,6 +389,7 @@ outputType = set_output_type(user)
 
 # Set start time for stop watch
 startTime = time.time()
+print_table_row(['| ', 'STARTING', 'Start monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
 
 # read FDS.dat (restart file) to a list of lists
 ## If gkw has run requiered timesteps stop already here
@@ -391,36 +397,37 @@ while True:
     try:
         nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
         
+        # Outpu current timesteps
+        if outputType == 'running':
+            print_table_row(['| ', 'CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent), time_date(), time_time(), time_duration(startTime) , ' |'])
+        
         # Check if gkw has run requiered timesteps
         if nTimestepsCurrent >= nTimestepsRequired:
             # Output job monitor header
             print('\n')
             print_table_row(job_monitor())
-            print_table_row([['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'],
-                             ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
+            print_table_row(['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
             
             # Send end email
             if emailNotification:
+                print_table_row([['| ', 'MAIL', 'Send ending mail', time_date(), time_time(), time_duration(startTime) , ' |'],
+                                 ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
                 send_mail(emailAddress, 'Ended Job ' + jobName, 'For futher information open attachment')
 
             quit()
         else:
             # Send continue mail
             if emailNotification:
+                print_table_row(['| ', 'MAIL', 'Send continuing mail', time_date(), time_time(), time_duration(startTime) , ' |'])
                 send_mail(emailAddress, 'Continued Job ' + jobName, 'For futher information open attachment')
             break
         
     except FileNotFoundError:
         # Send start mail
         if emailNotification:
+            print_table_row(['| ', 'MAIL', 'Send starting mail', time_date(), time_time(), time_duration(startTime) , ' |'])
             send_mail(emailAddress, 'Started Job ' + jobName, 'For futher information open attachment')
         break
-
-################## OUTPUT MONITOR #######################
-
-print('\n')
-print_table_row(job_monitor())
-print_table_row(['| ', 'STARTING', 'Start monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
 
 ################## MONITOR ROUTINE ######################
 
@@ -479,11 +486,12 @@ while True:
                     if slurmContent == '0':
                         break
                     else:
-                        print_table_row([['| ', 'ERROR', 'GKW stopped job', time_date(), time_time(), time_duration(startTime) , ' |'],
-                                         ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
+                        print_table_row(['| ', 'ERROR', 'GKW stopped job', time_date(), time_time(), time_duration(startTime) , ' |'])
                         
-                        # Send fail mail
+                        # Send error mail
                         if emailNotification:
+                            print_table_row([['| ', 'MAIL', 'Send error mail', time_date(), time_time(), time_duration(startTime) , ' |'],
+                                             ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
                             send_mail(emailAddress, 'Failed Job ' + jobName, 'For futher information open attachment')
                         quit()
                 # If jobID is not defieed
@@ -498,7 +506,7 @@ while True:
             # Timestep output
             try:
                 nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
-                print_table_row(['| ', 'CONTROL', 'Current Timesteps' + str(nTimestepsCurrent), time_date(), time_time(), time_duration(startTime) , ' |'])
+                print_table_row(['| ', 'CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent), time_date(), time_time(), time_duration(startTime) , ' |'])
             except FileNotFoundError:
                 pass    
             
@@ -525,11 +533,12 @@ while True:
 
     # Check if gkw has run requiered timesteps
     if nTimestepsCurrent >= nTimestepsRequired:
-        print_table_row([['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'],
-                         ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
+        print_table_row(['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
 
         # Send end email
         if emailNotification:
+            print_table_row([['| ', 'MAIL', 'Send ending mail', time_date(), time_time(), time_duration(startTime) , ' |'],
+                             ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
             send_mail(emailAddress, 'Ended Job ' + jobName, 'For futher information open attachment')
 
         break
