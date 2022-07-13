@@ -50,6 +50,13 @@
 #
 #  This will kill the monitor script.
 
+'''
+#########################################################
+#                                                       #
+#                        Modules                        #
+#                                                       #
+#########################################################
+'''
 
 import datetime
 import time
@@ -65,13 +72,16 @@ import subprocess
 #                                                       #
 #########################################################
 '''
-# Filenames
+
+##################### FILENAMES #########################
+
 jobscriptFilename = 'jobscript'
 restartFilename = 'FDS.dat'
 monitorFilename = 'status.txt'
 inputFilename = 'input.dat'
 
-# Flags of the specific informations
+###################### FLAGS ############################
+
 jobNameFlag = 'job-name='
 jobRepetitionFlag = 'repeat='
 emailAddressFlag = 'email='
@@ -81,24 +91,27 @@ backupFlag = 'backup-location='
 inputFlag = 'NTIME'
 restartFlag = 'FILE_COUNT'
 
-# Sleep time 5min (time code checks status)
+#################### SLEEP TIME #########################
+
 sleepTime = 5*60
 
-# Commands
+##################### COMMANDS ##########################
+
 commandJobRunning = 'squeue --states=running -u '
 commandJobPending = 'squeue --states=pending -u '
 
 commandJobStarting = 'sbatch'
 
 '''
-'#########################################################'
-'#                                                       #'
-'#                      FUNCTIONS                        #'
-'#                                                       #'
-'#########################################################'
+#########################################################
+#                                                       #
+#                      FUNCTIONS                        #
+#                                                       #
+#########################################################
 '''
 
-# Functions to get informations out of files
+#################### INFORMATIONS #######################
+
 def read_file_to_string(file):
     content = ''.join(open(file).readlines())
     
@@ -120,7 +133,8 @@ def get_job_information_from_jobscript_flag(content, flag):
     
     return info
 
-# Time functions
+######################## TIME ###########################
+
 def get_time_in_seconds(time):
     # Check time format of time
     if len(time) < 5:
@@ -154,11 +168,11 @@ def get_time_converted(sec):
     days, hours = hours // 24, hours % 24
     weeks, days = days // 7, days % 7
     
-    converted = (str(int(weeks)) + ':' + 
+    timeConverted = (str(int(weeks)) + ':' + 
                  format_num(int(days)) + ':' + format_num(int(hours)) + ':' + 
                  format_num(int(mins)) + ':' + format_num(int(sec)))
     
-    return converted
+    return timeConverted
 
 def time_date():
     e = datetime.datetime.now()
@@ -172,7 +186,8 @@ def time_duration(startTime):
     stop = time.time()
     return get_time_converted(stop - startTime)
 
-# Table functions
+####################### TABLE ###########################
+
 def table_row_format(content):
     if len(content) == 5:
         cols = [2, 10, 25, 41, 2]
@@ -196,7 +211,8 @@ def print_table_row(content):
         row_format = table_row_format(content)
         print(row_format.format(*content))
 
-# Output Strings as function
+####################### OUTPUT ##########################
+
 def job_init():
     content = [['o-', '----------', '------------------------------------------------------------------', '-o'],
                ['| ', 'OUTPUT', 'JOB INITIALIZE', ' |'],
@@ -223,7 +239,8 @@ def job_monitor():
                ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']]
     return content
 
-# Status functions for setting values for the job
+####################### STATUS ##########################
+
 def get_job_status(user):
     jobStatusRunning = subprocess.getoutput(commandJobRunning + user).strip().split()
     jobStatusPending = subprocess.getoutput(commandJobPending + user).strip().split() 
@@ -242,7 +259,8 @@ def set_output_type(user):
 
     return outputType
 
-# Mail command
+####################### MAIL ############################
+
 def send_mail(recipient, subject, body):
 
     recipient = recipient.encode('utf_8')
@@ -262,14 +280,18 @@ def send_mail(recipient, subject, body):
 #                                                       #
 #########################################################
 '''
-# Output init header
+
+#################### OUTPUT INIT ########################
+
 print('\n')
 print_table_row(job_init())
 
-# User name
+######################## USER ###########################
+
 user = os.getlogin()
 
-# Job script informations
+##################### JOB SCRIPT ########################
+
 try:
     jobscript = [filename for filename in os.listdir('.') if filename.startswith(jobscriptFilename)][0]
     print_table_row(['| ', 'SUCCESS', 'Found ' + jobscriptFilename, ' |'])
@@ -280,16 +302,19 @@ except IndexError:
     
 jobscriptContent = open(jobscript, 'r').read().splitlines()
 
-# Job name
+##################### JOB NAME ##########################
+
 jobName = get_job_information_from_jobscript_flag(jobscriptContent, jobNameFlag)
 
-# Job repetition
+################### JOB REPETITION ######################
+
 try:
     jobRepetition = float(get_job_information_from_jobscript_flag(jobscriptContent, jobRepetitionFlag))
 except IndexError:
     jobRepetition = 1.0
 
-# Timesteps GKW makes from input.dat
+##################### TIMESTEPS #########################
+
 try:
     nTimesteps = get_value_of_variable_from_input_file('./' + inputFilename, inputFlag)
     print_table_row([['| ', 'SUCCESS', 'Found ' + inputFilename, ' |'],
@@ -299,7 +324,11 @@ except FileNotFoundError:
                      ['o-', '----------', '------------------------------------------------------------------', '-o']])
     quit()
 
-# Mail address
+# Number of required timesteps        
+nTimestepsRequired = int(nTimesteps * jobRepetition)
+
+################## MAIL ADDRESS #########################
+
 try:
     emailAddress = get_job_information_from_jobscript_flag(jobscriptContent, emailAddressFlag)
     
@@ -310,20 +339,15 @@ except IndexError:
     # Email notification switch
     emailNotification = False
 
-# Number of required timesteps        
-nTimestepsRequired = int(nTimesteps * jobRepetition)
+#################### WALLTIME ###########################
 
-## Walltime
 walltime = get_job_information_from_jobscript_flag(jobscriptContent, walltimeFlag).replace('-', ':').split(':')
 walltimeSeconds = get_time_in_seconds(walltime)
 
-# Job status informations
-#jobHeader = ['JOBID', 'PARTITION', 'NAME', 'USER', 'ST', 'TIME', 'NODES', 'NODELIST(REASON)']
-#jobStatus = subprocess.getoutput("squeue -u bt712347").strip().split()
+################### BACKUP PATH #########################
 
-# Backup and data path
 try:
-    # Backup and data location
+    # Backup location
     backupLocation = get_job_information_from_jobscript_flag(jobscriptContent, backupFlag)
     
     path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
@@ -339,13 +363,11 @@ except IndexError:
     # BackUp switch
     backup = False
 
-# Output job informations
+################### OUTPUT INFO #########################
+
 print('\n')
 print_table_row(job_informations())
 
-# Send start mail
-if emailNotification:
-    send_mail(emailAddress, 'Started Job ' + jobName, 'For futher information open attachment')
 
 '''
 #########################################################
@@ -355,19 +377,13 @@ if emailNotification:
 #########################################################
 '''
 
-# Output job monitor header
-print('\n')
-print_table_row(job_monitor())
-
-# Set start time for stop watch
-startTime = time.time()
-
-print_table_row(['| ', 'STARTING', 'Start monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
-
 ####################    BEGIN    ########################
 
 # To limit repeating outputs
 outputType = set_output_type(user)
+
+# Set start time for stop watch
+startTime = time.time()
 
 # read FDS.dat (restart file) to a list of lists
 ## If gkw has run requiered timesteps stop already here
@@ -377,6 +393,9 @@ while True:
         
         # Check if gkw has run requiered timesteps
         if nTimestepsCurrent >= nTimestepsRequired:
+            # Output job monitor header
+            print('\n')
+            print_table_row(job_monitor())
             print_table_row([['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'],
                              ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
             
@@ -386,12 +405,24 @@ while True:
 
             quit()
         else:
+            # Send continue mail
+            if emailNotification:
+                send_mail(emailAddress, 'Continued Job ' + jobName, 'For futher information open attachment')
             break
         
     except FileNotFoundError:
+        # Send start mail
+        if emailNotification:
+            send_mail(emailAddress, 'Started Job ' + jobName, 'For futher information open attachment')
         break
 
-################## MONITOR ROUTINE #######################
+################## OUTPUT MONITOR #######################
+
+print('\n')
+print_table_row(job_monitor())
+print_table_row(['| ', 'STARTING', 'Start monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
+
+################## MONITOR ROUTINE ######################
 
 while True:
     
@@ -430,8 +461,9 @@ while True:
             sleep(sleepTime)
 
         # Check if no Job is running or pending and start/restart job
-        ## Check slurm output file for any errors 
-        ### Print current timesteps 
+        ## Make Backup of data
+        ### Check slurm output file for any errors 
+        #### Print current timesteps 
         else:
             # Making backup of data
             if backup:
@@ -503,3 +535,5 @@ while True:
         break
     else:
         sleep(sleepTime)
+        
+##################### RESTART ###########################
