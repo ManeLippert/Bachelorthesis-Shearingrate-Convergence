@@ -4,24 +4,10 @@
 #
 # DESCRIPTION:
 # Script that starts a given job wth GKW with slurm manager until the previous defined timesteps are completed. 
-# Everything has to be defined in the jobscript with name "jobscript*" (Can bei modified under the variable section of this script). 
 # It also sends an mail alert when the job gets started and ended.
 
-# ADDITIONAL FLAGS IN JOBSCRIPT:
-# 1) repeat=3 
-#    
-#    number how often GKW should restart its current timesteps until required timesteps are given. If flag is not given repeat=1 automatically.
-#    (Example: 10000 current timesteps and repeat=3 than required timesteps are 30000)
-#
-# 2) email=mail@email.de
-#
-#    mail address to which email the notifaction shold be sended
-#
-# 3) backup-location=$PATH
-#
-#    path to the backup location. Has to be the absoute path (example ~/$PATH)!
-#
-# Every flag can be modified under the variable section of this script.
+# IMPORTANT:
+# Take a look in the Variable Section
 
 # START SCRIPT:
 # To start the script in the background following command is needed:
@@ -73,6 +59,13 @@ import subprocess
 #########################################################
 '''
 
+##################### ADDITIONAL ########################
+
+emailAddress = 'Manuel.Lippert@uni-bayreuth.de'
+backupLocation = '/scratch/bt712347/backup'
+jobNamePathInfo = ['boxsize', '/Nsgrid']
+jobRepetition = 5
+
 ##################### FILENAMES #########################
 
 jobscriptFilename = 'jobscript'
@@ -80,13 +73,12 @@ restartFilename = 'FDS.dat'
 monitorFilename = 'status.txt'
 inputFilename = 'input.dat'
 
-###################### FLAGS ############################
+####################### FLAGS ###########################
 
-jobNameFlag = 'job-name='
-jobRepetitionFlag = 'repeat='
-emailAddressFlag = 'email='
+jobNameComment = '# jobname\n'
+jobNameFlag = '#SBATCH --job-name='
 walltimeFlag = 'time='
-backupFlag = 'backup-location='
+startOutputFlag = 'Submitted batch job '
 
 inputFlag = 'NTIME'
 restartFlag = 'FILE_COUNT'
@@ -132,6 +124,28 @@ def get_job_information_from_jobscript_flag(content, flag):
     info = content[index].split(flag, 1)[1]
     
     return info
+
+######################## FILE ###########################
+
+def write_add_string_into_file(file, substring, add, comment = None):
+    # open file
+    with open(file, 'r') as f:
+        # read a list of lines into data
+        data = f.readlines()
+
+    try:
+        index = [idx for idx, s in enumerate(data) if substring in s][0]
+        data[index] = substring + add + '\n'
+        
+    except IndexError:
+        index = [idx for idx, s in enumerate(data) if '\n' in s][1]
+        data.insert(index, '\n')
+        data.insert(index + 1, comment)
+        data.insert(index + 2, substring + add + '\n')
+        
+    # replace line
+    with open(file, 'w') as f:
+        f.writelines(data)
 
 ######################## TIME ###########################
 
@@ -189,55 +203,97 @@ def time_duration(startTime):
 ####################### TABLE ###########################
 
 def table_row_format(content):
-    if len(content) == 5:
-        cols = [2, 10, 25, 41, 2]
-    elif len(content) == 7:
+    if len(content) == 7:
         cols = [2, 10, 29, 13, 11, 13, 2]
+    elif len(content) == 6:
+        cols = [2, 10, 29, 13, 24, 2]
+    elif len(content) == 5:
+        cols = [2, 10, 25, 41, 2]
     elif len(content) == 4:
         cols = [2, 10, 66, 2]
+    else:
+        cols = [2, 76, 2]
+
+    i, sep = 0, []
     
+    while i < len(cols):
+        if i == 0:
+            sep.append('o' + (cols[i]-1)*'-')
+        elif i == (len(cols)-1):
+            sep.append((cols[i]-1)*'-' + 'o')
+        else:
+            sep.append(cols[i]*'-')
+        
+        i += 1
+
     row_format = "".join(["{:<" + str(col) + "}" for col in cols])
     
-    return row_format
+    return row_format, sep
 
-def print_table_row(content):
+def print_table_row(content, output_type = None, time_info = True):
     
     if isinstance(content[0], list):
-        row_format = table_row_format(content[0])
-        for row in content:
-            print(row_format.format(*row))
         
+        i = 0
+        while i < len(content):
+            content[i].insert(0, '| ')
+            if time_info:
+                if output_type == 'header':
+                    content[i].append('DATE')
+                    content[i].append('TIME')
+                    content[i].append('W:DD:HH:MM:SS')
+                else:
+                    content[i].append(time_date())
+                    content[i].append(time_time())
+                    content[i].append(time_duration(startTime))
+            content[i].insert(len(content[i]), ' |')
+            
+            i += 1
+        
+        row_format, sep = table_row_format(content[0])
+        
+        if output_type == 'header':
+            print('\n')
+            print(row_format.format(*sep))
+            for row in content:
+                print(row_format.format(*row))
+            print(row_format.format(*sep))
+            
+        elif output_type == 'end':
+            for row in content:
+                print(row_format.format(*row))
+            print(row_format.format(*sep))
+            
+        else:
+            for row in content:
+                print(row_format.format(*row))
     else:
-        row_format = table_row_format(content)
-        print(row_format.format(*content))
-
-####################### OUTPUT ##########################
-
-def job_init():
-    content = [['o-', '----------', '------------------------------------------------------------------', '-o'],
-               ['| ', 'OUTPUT', 'JOB INITIALIZE', ' |'],
-               ['o-', '----------', '------------------------------------------------------------------', '-o']]
-    return content
-
-def job_informations():
-    content = [['o-', '----------', '-------------------------', '-----------------------------------------', '-o'],
-               ['| ', 'OUTPUT', 'JOB INFORMATIONS', 'VALUE', ' |'],
-               ['o-', '----------', '-------------------------', '-----------------------------------------', '-o'],
-               ['| ', 'INFO', 'Name', jobName, ' |'],
-               ['| ', 'INFO', 'Repetitions', str(jobRepetition), ' |'],
-               ['| ', 'INFO', 'E-Mail', emailAddress, ' |'],
-               ['| ', 'INFO', 'Timesteps', str(nTimesteps), ' |'],
-               ['| ', 'INFO', 'Required Timesteps', str(nTimestepsRequired), ' |'],
-               ['| ', 'INFO', 'Walltime/s', str(walltimeSeconds), ' |'],
-               ['| ', 'INFO', 'Sleep Time/s', str(sleepTime), ' |'],
-               ['o-', '----------', '-------------------------', '-----------------------------------------', '-o']]
-    return content
-
-def job_monitor():
-    content = [['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o'],
-               ['| ', 'OUTPUT', 'JOB MONITORING', 'DATE', 'TIME', 'W:DD:HH:MM:SS', ' |'],
-               ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']]
-    return content
+        content.insert(0, '| ')
+        if time_info:
+            if output_type == 'header':
+                content.append('DATE')
+                content.append('TIME')
+                content.append('W:DD:HH:MM:SS')
+            else:
+                content.append(time_date())
+                content.append(time_time())
+                content.append(time_duration(startTime))
+        content.insert(len(content), ' |')
+        
+        row_format, sep = table_row_format(content)
+        
+        if output_type == 'header':
+            print('\n')
+            print(row_format.format(*sep))
+            print(row_format.format(*content))
+            print(row_format.format(*sep))
+            
+        elif output_type == 'end':
+            print(row_format.format(*content))
+            print(row_format.format(*sep))
+            
+        else:
+            print(row_format.format(*content))
 
 ####################### STATUS ##########################
 
@@ -261,15 +317,22 @@ def set_output_type(user):
 
 ####################### MAIL ############################
 
-def send_mail(recipient, subject, body):
+def send_mail(recipient, subject, body = None):
 
     recipient = recipient.encode('utf_8')
+    
     subject = '"' + subject + '"'
     subject = subject.encode('utf_8')
+    
+    if body == None:
+        body = 'For futher information open attachment'
+    
     body = body.encode('utf_8')
-    attachment = monitorFilename.encode('utf_8')
+    
+    attachmentPath = path + '/' + monitorFilename
+    attachment = attachmentPath.encode('utf_8')
 
-    process = subprocess.Popen(['ssh', 'master', '/usr/bin/mailx', '-s', subject, '-a',  path + '/' + monitorFilename, recipient],
+    process = subprocess.Popen(['ssh', 'master', '/usr/bin/mailx', '-s', subject, '-a',  attachment, recipient],
                                stdin=subprocess.PIPE)
     process.communicate(body)
 
@@ -281,92 +344,147 @@ def send_mail(recipient, subject, body):
 #########################################################
 '''
 
+################### OUTPUT STRING #######################
+
+jobInformations = []
+
+#################### START WATCH ########################
+
+startTime = time.time()
+
 #################### OUTPUT INIT ########################
 
-print('\n')
-print_table_row(job_init())
+print_table_row(['OUTPUT', 'JOB INITIALIZE'], output_type='header')
 
-######################## USER ###########################
+####################### USER ############################
 
 user = os.getlogin()
 
-##################### JOB SCRIPT ########################
+#################### FILE PATH ##########################
+
+path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
+
+################ JOB NAME FROM PATH #####################
 
 try:
-    jobscript = [filename for filename in os.listdir('.') if filename.startswith(jobscriptFilename)][0]
-    print_table_row(['| ', 'SUCCESS', 'Found ' + jobscriptFilename, ' |'])
-except IndexError:
-    print_table_row([['| ', 'ERROR', 'No file "' + jobscriptFilename + '" found', ' |'],
-                     ['o-', '----------', '------------------------------------------------------------------', '-o']])
-    quit()
+    i, jobName = 0, ''
+
+    while i < (len(jobNamePathInfo)-1):
+        jobName += path[path.find(jobNamePathInfo[i])+len(jobNamePathInfo[i]):path.rfind(jobNamePathInfo[i+1])]
+        i += 1
     
-jobscriptContent = open(jobscript, 'r').read().splitlines()
-
-##################### JOB NAME ##########################
-
-jobName = get_job_information_from_jobscript_flag(jobscriptContent, jobNameFlag)
-
-################### JOB REPETITION ######################
-
-try:
-    jobRepetition = float(get_job_information_from_jobscript_flag(jobscriptContent, jobRepetitionFlag))
-except IndexError:
-    jobRepetition = 1.0
-
-##################### TIMESTEPS #########################
-
-try:
-    nTimesteps = get_value_of_variable_from_input_file('./' + inputFilename, inputFlag)
-    print_table_row([['| ', 'SUCCESS', 'Found ' + inputFilename, ' |'],
-                     ['o-', '----------', '------------------------------------------------------------------', '-o']])
-except FileNotFoundError:
-    print_table_row([['| ', 'ERROR', 'No file "' + inputFilename + '" found', ' |'],
-                     ['o-', '----------', '------------------------------------------------------------------', '-o']])
-    quit()
-
-# Number of required timesteps        
-nTimestepsRequired = int(nTimesteps * jobRepetition)
+except NameError:
+    jobName = None
 
 ################## MAIL ADDRESS #########################
 
 try:
-    emailAddress = get_job_information_from_jobscript_flag(jobscriptContent, emailAddressFlag)
+    if emailAddress == '':
+        emailNotification = False
+    else:
+        emailNotification = True
+        jobInformations.append(['INFO', 'E-Mail', emailAddress])
+except NameError:
+    emailNotification = False
     
-    # Email notification switch
-    emailNotification = True
+#################### JOB SCRIPT #########################
+
+try:
+    jobscript = [filename for filename in os.listdir('.') if filename.startswith(jobscriptFilename)][0]
+    print_table_row(['SUCCESS', 'Found ' + jobscriptFilename])
     
 except IndexError:
-    # Email notification switch
-    emailNotification = False
+    print_table_row(['ERROR', 'No file "' + jobscriptFilename + '" found'])
+    # Send error mail
+    if emailNotification:
+        print_table_row(['MAIL', 'Send error mail'], output_type='end')
+        send_mail(emailAddress, 'Failed Job ' + jobName)
+    quit()
+
+jobscriptContent = open(jobscript, 'r').read().splitlines()
+
+####################### JOB NAME ########################
+
+try:
+    name = get_job_information_from_jobscript_flag(jobscriptContent, jobNameFlag)
+
+    # Write job name from path into jobscript
+    if name == '':
+        write_add_string_into_file(jobscript, jobNameFlag, jobName, jobNameComment)
+    else:
+        jobName = name
+
+except IndexError:
+    write_add_string_into_file(jobscript, jobNameFlag, jobName, jobNameComment)
+
+if len(jobName) > 8:
+    jobName = jobName[0:8]
+
+jobInformations.append(['INFO', 'Name', jobName])
+
+################### JOB REPETITION ######################
+
+try:
+    jobRepetition = float(jobRepetition)
+except NameError:
+    jobRepetition = 1.0
+    
+jobInformations.append(['INFO', 'Repetition', jobRepetition])
+
+##################### TIMESTEPS #########################
+
+# nTimesteps
+try:
+    nTimesteps = get_value_of_variable_from_input_file('./' + inputFilename, inputFlag)
+    print_table_row(['SUCCESS', 'Found ' + inputFilename], output_type='end', time_info=True)
+except FileNotFoundError:
+    print_table_row(['ERROR', 'No file "' + inputFilename + '" found'], output_type='end')
+    # Send error mail
+    if emailNotification:
+        print_table_row(['MAIL', 'Send error mail'], output_type='end')
+        send_mail(emailAddress, 'Failed Job ' + jobName)
+    quit()
+
+jobInformations.append(['INFO', 'Timesteps', nTimesteps])
+
+# Number of required timesteps        
+nTimestepsRequired = int(nTimesteps * jobRepetition)
+
+jobInformations.append(['INFO', 'Required Timesteps', nTimestepsRequired])
 
 #################### WALLTIME ###########################
 
 walltime = get_job_information_from_jobscript_flag(jobscriptContent, walltimeFlag).replace('-', ':').split(':')
 walltimeSeconds = get_time_in_seconds(walltime)
 
+jobInformations.append(['INFO', 'Walltime/s', walltimeSeconds])
+
 ################### BACKUP PATH #########################
 
 try:
     # Backup location
-    backupLocation = get_job_information_from_jobscript_flag(jobscriptContent, backupFlag)
-    
-    path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
+    if backupLocation[-1] != '/':
+        backupLocation += '/'
+        
     backupPath = backupLocation + path
     
-    ## Create backup directory if do not exist
+    # Create backup directory if do not exist
     if not os.path.exists(backupPath):
         os.makedirs(backupPath)
     
     # BackUp switch
     backup = True
-except IndexError:
+    
+    jobInformations.append(['INFO', 'Backup Path', backupLocation])
+    
+except NameError:
     # BackUp switch
     backup = False
 
 ################### OUTPUT INFO #########################
 
-print('\n')
-print_table_row(job_informations())
+print_table_row(['OUTPUT', 'JOB INFORMATIONS', 'VALUE'], output_type='header', time_info=False)
+print_table_row(jobInformations, output_type='end', time_info=False)
 
 
 '''
@@ -379,170 +497,132 @@ print_table_row(job_informations())
 
 ################## OUTPUT MONITOR #######################
 
-print('\n')
-print_table_row(job_monitor())
+print_table_row(['OUTPUT', 'JOB MONITORING'], output_type='header')
 
 ####################    BEGIN    ########################
 
-# To limit repeating outputs
 outputType = set_output_type(user)
 
-# Set start time for stop watch
-startTime = time.time()
-print_table_row(['| ', 'STARTING', 'Start monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
+# Start output
+print_table_row(['STARTING', 'Start monitoring'])
 
-# read FDS.dat (restart file) to a list of lists
+# read restart file 
 ## If gkw has run requiered timesteps stop already here
 while True:
     try:
         nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
         
-        # Outpu current timesteps
+        # Output current timesteps
         if outputType == 'running':
-            print_table_row(['| ', 'CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent), time_date(), time_time(), time_duration(startTime) , ' |'])
+            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)])
         
         # Check if gkw has run requiered timesteps
         if nTimestepsCurrent >= nTimestepsRequired:
-            # Output job monitor header
-            print('\n')
-            print_table_row(job_monitor())
-            print_table_row(['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
+            print_table_row(['SUCCESS', 'Stop monitoring'])
             
             # Send end email
             if emailNotification:
-                print_table_row([['| ', 'MAIL', 'Send ending mail', time_date(), time_time(), time_duration(startTime) , ' |'],
-                                 ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
-                send_mail(emailAddress, 'Ended Job ' + jobName, 'For futher information open attachment')
+                print_table_row(['MAIL', 'Send ending mail'])
+                send_mail(emailAddress, 'Ended Job ' + jobName)
 
             quit()
         else:
             # Send continue mail
             if emailNotification:
-                print_table_row(['| ', 'MAIL', 'Send continuing mail', time_date(), time_time(), time_duration(startTime) , ' |'])
-                send_mail(emailAddress, 'Continued Job ' + jobName, 'For futher information open attachment')
+                print_table_row(['MAIL', 'Send continuing mail'])
+                send_mail(emailAddress, 'Continued Job ' + jobName)
             break
         
     except FileNotFoundError:
         # Send start mail
         if emailNotification:
-            print_table_row(['| ', 'MAIL', 'Send starting mail', time_date(), time_time(), time_duration(startTime) , ' |'])
-            send_mail(emailAddress, 'Started Job ' + jobName, 'For futher information open attachment')
+            print_table_row(['MAIL', 'Send starting mail'])
+            send_mail(emailAddress, 'Started Job ' + jobName)
         break
 
 ################## MONITOR ROUTINE ######################
 
 while True:
     
-    # Check if no Job is running or pending and start/restart job
-    ## Check running jobs status and get job running time
-    ### If job is not running than wait 30min and check again
-    while True:
-        
-        jobStatusRunning, jobStatusPending = get_job_status(user)
+    jobStatusRunning, jobStatusPending = get_job_status(user)
 
-        # Check Status if job is running
-        if jobName in jobStatusRunning:
-            # Job ID Running
-            jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
-            jobID = jobStatusRunning[jobStatusRunningNameIndex - 2]
-
-            # Job time
-            jobTime = jobStatusRunning[jobStatusRunningNameIndex + 3].split(':')
-            jobTimeSeconds = get_time_in_seconds(jobTime)
-
-            # Set output type
-            if outputType == 'running':
-                print_table_row(['| ', 'RUNNING', 'Job is executed', time_date(), time_time(), time_duration(startTime) , ' |'])
-                
-                outputType = 'check ' + restartFilename
-
-            break
-
-        # Wait 30min if job is pending
-        elif jobName in jobStatusPending:
-            # Set output type
-            if outputType == 'pending':
-                print_table_row(['| ', 'WATING', 'Job is pending', time_date(), time_time(), time_duration(startTime) , ' |'])
-                outputType = 'running'
-
-            sleep(sleepTime)
-
-        # Check if no Job is running or pending and start/restart job
-        ## Make Backup of data
-        ### Check slurm output file for any errors 
-        #### Print current timesteps 
-        else:
-            # Making backup of data
-            if backup:
-                print_table_row(['| ', 'BACKUP', backupLocation, time_date(), time_time(), time_duration(startTime) , ' |'])
-                subprocess.run(['rsync', '-a', '', backupPath])
-                
-            # check slurm output for any errors
-            while True:
-                try:
-                    slurmContent = open('./slurm-' + jobID + '.out').readlines()[0].replace('\n','')
-                    
-                    # Check for any errors
-                    if slurmContent == '0':
-                        break
-                    else:
-                        print_table_row(['| ', 'ERROR', 'GKW stopped job', time_date(), time_time(), time_duration(startTime) , ' |'])
-                        
-                        # Send error mail
-                        if emailNotification:
-                            print_table_row([['| ', 'MAIL', 'Send error mail', time_date(), time_time(), time_duration(startTime) , ' |'],
-                                             ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
-                            send_mail(emailAddress, 'Failed Job ' + jobName, 'For futher information open attachment')
-                        quit()
-                # If jobID is not defieed
-                except NameError:
-                    break
-                # If file is not generated
-                except FileNotFoundError:
-                    sleep(30)
-                except IndexError:
-                    sleep(30)
-                
-            # Timestep output
-            try:
-                nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
-                print_table_row(['| ', 'CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent), time_date(), time_time(), time_duration(startTime) , ' |'])
-            except FileNotFoundError:
-                pass    
+    # Job running
+    if jobName in jobStatusRunning:
+        # Set output type
+        if outputType == 'running':
+            print_table_row(['RUNNING', 'Job is executed'])
+            outputType = 'no Output'
             
-            # Start Job
-            startOutput = subprocess.check_output([commandJobStarting, jobscript]).decode('utf-8').replace('\n', '')
-            print_table_row(['| ', 'STARTING', startOutput, time_date(), time_time(), time_duration(startTime) , ' |'])
-            sleep(30)
-            outputType = set_output_type(user)
+        sleep(sleepTime)
 
+    # Job pending
+    elif jobName in jobStatusPending:
+        # Set output type
+        if outputType == 'pending':
+            print_table_row(['WATING', 'Job is pending'])
+            outputType = 'running'
+            
+        sleep(sleepTime)
 
-    # Read FDS.dat (restart file) to a list of lists
-    ## If job is not existing than wait 30min time
-    while True:
+    # Job start/restart
+    else:
+
+        # Making backup
+        if backup:
+            print_table_row(['BACKUP', backupLocation])
+            subprocess.run(['rsync', '-a', '', backupPath])
+        
+        # Check error
+        while True:
+            try:
+                slurmContent = open('./slurm-' + jobID + '.out').readlines()[0].replace('\n','')
+                
+                if slurmContent == '0':
+                    break
+                else:
+                    print_table_row(['ERROR', 'GKW stopped job'])
+                    
+                    # Send error mail
+                    if emailNotification:
+                        print_table_row(['MAIL', 'Send error mail'], output_type='end')
+                        send_mail(emailAddress, 'Failed Job ' + jobName)
+                    quit()
+                    
+            # If jobID is not defined
+            except NameError:
+                break
+            # If file is not generated
+            except FileNotFoundError:
+                sleep(30)
+            except IndexError:
+                sleep(30)
+        
+        # Check Timesteps
         try:
             nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
-            break
+            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)])
+            
+            # Check if gkw has run requiered timesteps
+            if nTimestepsCurrent >= nTimestepsRequired:
+                print_table_row(['SUCCESS', 'Stop monitoring'])
+                
+                # Send end email
+                if emailNotification:
+                        print_table_row(['MAIL', 'Send ending mail'], output_type='end')
+                        send_mail(emailAddress, 'Ended Job ' + jobName)
+                break
+                
         except FileNotFoundError:
-            # Set output type
-            if outputType == 'check ' + restartFilename:
-                print_table_row(['| ', 'WAITING', restartFilename + ' not found', time_date(), time_time(), time_duration(startTime) , ' |'])
-                outputType = 'no Output'
-
-            sleep(sleepTime)
-
-    # Check if gkw has run requiered timesteps
-    if nTimestepsCurrent >= nTimestepsRequired:
-        print_table_row(['| ', 'SUCCESS', 'Stop monitoring', time_date(), time_time(), time_duration(startTime) , ' |'])
-
-        # Send end email
-        if emailNotification:
-            print_table_row([['| ', 'MAIL', 'Send ending mail', time_date(), time_time(), time_duration(startTime) , ' |'],
-                             ['o-', '----------', '-----------------------------', '-------------', '-----------', '-------------', '-o']])
-            send_mail(emailAddress, 'Ended Job ' + jobName, 'For futher information open attachment')
-
-        break
-    else:
-        sleep(sleepTime)
+            pass    
+        
+        # Start Job
+        startOutput = subprocess.check_output([commandJobStarting, jobscript]).decode('utf-8').replace('\n', '')
+        jobID = startOutput.split(startOutputFlag)[1]
+        
+        print_table_row(['STARTING', startOutput])
+        
+        sleep(30)
+        
+        outputType = set_output_type(user)
         
 ##################### RESTART ###########################
