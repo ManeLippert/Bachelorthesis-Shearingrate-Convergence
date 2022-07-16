@@ -6,6 +6,6 @@ try:
 	f = h5py.File('gkwdata.h5', 'r')
 	f.close()
 	print('File successfully closed!')
-except OsError:
+except OSError:
 	print('! File might be broken !')
 
