@@ -1,0 +1,22 @@
+################
+JOB INFORMATIONS
+################
+
+Name: x4
+Repetitions: 4.0
+E-Mail: Manuel.Lippert@uni-bayreuth.de
+Timesteps: 10000
+Required Timesteps: 40000
+Walltime/s: 86400
+Sleep Time/s: 300
+
+################
+RESTART JOB
+################
+
+Job is running
+Making backup of data on /scratch/bt712347/backup
+Current Timesteps: 32398
+Submitted batch job 596685
+Job is running
+Making backup of data on /scratch/bt712347/backup
