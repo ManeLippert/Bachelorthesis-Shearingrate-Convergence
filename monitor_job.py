@@ -64,7 +64,7 @@ import subprocess
 emailAddress = 'Manuel.Lippert@uni-bayreuth.de'
 backupLocation = '/scratch/bt712347/backup'
 jobNamePathInfo = ['boxsize', '/Nsgrid']
-jobRepetition = 5
+#jobRepetition = 2
 
 ##################### FILENAMES #########################
 
@@ -397,7 +397,7 @@ except IndexError:
     print_table_row(['ERROR', 'No file "' + jobscriptFilename + '" found'])
     # Send error mail
     if emailNotification:
-        print_table_row(['MAIL', 'Send error mail'], output_type='end')
+        #print_table_row(['MAIL', 'Send error mail'], output_type='end')
         send_mail(emailAddress, 'Failed Job ' + jobName)
     quit()
 
@@ -441,7 +441,7 @@ except FileNotFoundError:
     print_table_row(['ERROR', 'No file "' + inputFilename + '" found'], output_type='end')
     # Send error mail
     if emailNotification:
-        print_table_row(['MAIL', 'Send error mail'], output_type='end')
+        #print_table_row(['MAIL', 'Send error mail'], output_type='end')
         send_mail(emailAddress, 'Failed Job ' + jobName)
     quit()
 
@@ -522,21 +522,21 @@ while True:
             
             # Send end email
             if emailNotification:
-                print_table_row(['MAIL', 'Send ending mail'])
+                #print_table_row(['MAIL', 'Send ending mail'])
                 send_mail(emailAddress, 'Ended Job ' + jobName)
 
             quit()
         else:
             # Send continue mail
             if emailNotification:
-                print_table_row(['MAIL', 'Send continuing mail'])
+                #print_table_row(['MAIL', 'Send continuing mail'])
                 send_mail(emailAddress, 'Continued Job ' + jobName)
             break
         
     except FileNotFoundError:
         # Send start mail
         if emailNotification:
-            print_table_row(['MAIL', 'Send starting mail'])
+            #print_table_row(['MAIL', 'Send starting mail'])
             send_mail(emailAddress, 'Started Job ' + jobName)
         break
 
@@ -548,13 +548,17 @@ while True:
 
     # Job running
     if jobName in jobStatusRunning:
+        # Job ID Running
+        jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
+        jobID = jobStatusRunning[jobStatusRunningNameIndex - 2]
+        
         # Set output type
         if outputType == 'running':
             print_table_row(['RUNNING', 'Job is executed'])
             outputType = 'no Output'
             
         sleep(sleepTime)
-
+        
     # Job pending
     elif jobName in jobStatusPending:
         # Set output type
@@ -566,27 +570,28 @@ while True:
 
     # Job start/restart
     else:
-
-        # Making backup
-        if backup:
-            print_table_row(['BACKUP', backupLocation])
-            subprocess.run(['rsync', '-a', '', backupPath])
         
-        # Check error
+        # Check error and making Backup
         while True:
             try:
                 slurmContent = open('./slurm-' + jobID + '.out').readlines()[0].replace('\n','')
                 
-                if slurmContent == '0':
+                if slurmContent == '0': 
                     break
                 else:
-                    print_table_row(['ERROR', 'GKW stopped job'])
+                    print_table_row(['ERROR', slurmContent])
                     
                     # Send error mail
                     if emailNotification:
-                        print_table_row(['MAIL', 'Send error mail'], output_type='end')
-                        send_mail(emailAddress, 'Failed Job ' + jobName)
-                    quit()
+                        #print_table_row(['MAIL', 'Send error mail'], output_type='end')
+                        send_mail(emailAddress, 'Error occurred Job' + jobName)
+                        
+                    # Restore Files from last Backup
+                    if backup:
+                        print_table_row(['RESTORE', backupLocation])
+                        subprocess.run(['rsync', '-a', backupPath, ''])
+                    
+                    break
                     
             # If jobID is not defined
             except NameError:
@@ -597,6 +602,11 @@ while True:
             except IndexError:
                 sleep(30)
         
+        # Making backup
+        if backup:
+            print_table_row(['BACKUP', backupLocation])
+            subprocess.run(['rsync', '-a', '', backupPath])
+        
         # Check Timesteps
         try:
             nTimestepsCurrent = get_value_of_variable_from_input_file('./' + restartFilename, restartFlag)
@@ -604,16 +614,22 @@ while True:
             
             # Check if gkw has run requiered timesteps
             if nTimestepsCurrent >= nTimestepsRequired:
-                print_table_row(['SUCCESS', 'Stop monitoring'])
+                                
+                # Making backup
+                if backup:
+                    print_table_row(['BACKUP', backupLocation])
+                    subprocess.run(['rsync', '-a', '', backupPath]) 
+                    
+                print_table_row(['SUCCESS', 'Stop monitoring'], output_type='end')
                 
                 # Send end email
                 if emailNotification:
-                        print_table_row(['MAIL', 'Send ending mail'], output_type='end')
+                        #print_table_row(['MAIL', 'Send ending mail'], output_type='end')
                         send_mail(emailAddress, 'Ended Job ' + jobName)
                 break
                 
         except FileNotFoundError:
-            pass    
+            pass   
         
         # Start Job
         startOutput = subprocess.check_output([commandJobStarting, jobscript]).decode('utf-8').replace('\n', '')
