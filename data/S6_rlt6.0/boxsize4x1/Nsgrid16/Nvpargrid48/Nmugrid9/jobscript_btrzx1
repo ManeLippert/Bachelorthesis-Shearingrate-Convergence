@@ -1,17 +1,7 @@
 #!/bin/bash -l
 
 # jobname
-#SBATCH --job-name=4x/16/48/9
-
-# number of repetitions
-# repeat=4
-
-# mail address
-# email=Manuel.Lippert@uni-bayreuth.de
-
-# backup and data
-# backup-location=/scratch/bt712347/backup
-# data-location=~/data
+#SBATCH --job-name=4x1
 
 # MPI tasks
 #SBATCH --ntasks-per-node=32
