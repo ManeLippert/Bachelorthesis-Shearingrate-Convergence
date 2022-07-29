@@ -57,10 +57,10 @@ def max_shearingrate_time(time, wexb_max, fourier_index, figuresize, data, path,
 
     plt.savefig('../pictures/'+data+'/'+path+'/'+data+'_'+resolution+'_wexb_max.pdf', bbox_inches='tight')
     
-def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, rlt, data, path, resolution):
+def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, rlt, data, path, resolution, stepsize):
     fig, ax = plt.subplots(figsize=figuresize)
 
-    start, end = 0, 999 
+    start, end = 0, stepsize - 1 
     
     while end <= wexb.shape[1]:
         
@@ -68,8 +68,8 @@ def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, rlt, data, pa
     
         ax.plot(rad_coord, wexb_mean)
     
-        start += 1000
-        end += 1000
+        start += stepsize
+        end += stepsize
     
     
     ax.set_title(r'$R/L_T =$ ' + rlt + ', time interval [0 '+str(wexb.shape[1])+']', pad=20)
