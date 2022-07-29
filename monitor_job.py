@@ -504,7 +504,7 @@ print_table_row(['OUTPUT', 'JOB MONITORING'], output_type='header')
 outputType = set_output_type(user)
 
 # Start output
-print_table_row(['STARTING', 'Start monitoring'])
+print_table_row(['STARTING', 'Start monitoring'], output_type='end')
 
 # read restart file 
 ## If gkw has run requiered timesteps stop already here
@@ -518,7 +518,7 @@ while True:
         
         # Check if gkw has run requiered timesteps
         if nTimestepsCurrent >= nTimestepsRequired:
-            print_table_row(['SUCCESS', 'Stop monitoring'])
+            print_table_row(['SUCCESS', 'Stop monitoring'], output_type='end')
             
             # Send end email
             if emailNotification:
@@ -579,7 +579,7 @@ while True:
                 if slurmContent == '0': 
                     break
                 else:
-                    print_table_row(['ERROR', slurmContent])
+                    print_table_row(['ERROR', slurmContent[0:27]])
                     
                     # Send error mail
                     if emailNotification:
@@ -588,8 +588,8 @@ while True:
                         
                     # Restore Files from last Backup
                     if backup:
-                        print_table_row(['RESTORE', backupLocation])
-                        subprocess.run(['rsync', '-a', backupPath, ''])
+                        print_table_row(['RESTORE', backupLocation], output_type='end')
+                        subprocess.run(['rsync', '-a', '--exclude=status.txt', backupPath + '/', ''])
                     
                     break
                     
@@ -604,7 +604,7 @@ while True:
         
         # Making backup
         if backup:
-            print_table_row(['BACKUP', backupLocation])
+            print_table_row(['BACKUP', backupLocation], output_type='end')
             subprocess.run(['rsync', '-a', '', backupPath])
         
         # Check Timesteps
@@ -614,12 +614,6 @@ while True:
             
             # Check if gkw has run requiered timesteps
             if nTimestepsCurrent >= nTimestepsRequired:
-                                
-                # Making backup
-                if backup:
-                    print_table_row(['BACKUP', backupLocation])
-                    subprocess.run(['rsync', '-a', '', backupPath]) 
-                    
                 print_table_row(['SUCCESS', 'Stop monitoring'], output_type='end')
                 
                 # Send end email
