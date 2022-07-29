@@ -128,7 +128,7 @@ else
         # Run job
         if [[ "$DIRADD" = "j" ]] || [[ "$DIRADD" = "mj" ]] || [[ "$DIRADD" = "jm" ]]; then
             ssh btrzx1-1.rz.uni-bayreuth.de "cp -r gkw/run/* $DIR/"
-            ssh btrzx1-1.rz.uni-bayreuth.de "cd $DIR && nohup python3 -u monitor_job.py &"
+            #ssh btrzx1-1.rz.uni-bayreuth.de "cd $DIR && nohup python3 -u monitor_job.py &"
         fi
     elif [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
         # Copy files from backup folder
