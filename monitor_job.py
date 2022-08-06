@@ -64,7 +64,7 @@ import subprocess
 emailAddress = 'Manuel.Lippert@uni-bayreuth.de'
 backupLocation = '/scratch/bt712347/backup'
 jobNamePathInfo = ['boxsize', '/Nsgrid']
-#jobRepetition = 2
+jobRepetition = 4
 
 ##################### FILENAMES #########################
 
@@ -72,6 +72,8 @@ jobscriptFilename = 'jobscript'
 restartFilename = 'FDS.dat'
 monitorFilename = 'status.txt'
 inputFilename = 'input.dat'
+
+jobID = 'None'
 outputFilename = './slurm-' + jobID + '.out'
 
 ####################### FLAGS ###########################
@@ -332,7 +334,7 @@ def send_mail(recipient, subject, body = None):
     
     body = body.encode('utf_8')
     
-    attachmentPath = path + '/' + monitorFilename
+    attachmentPath = folder + '/' + monitorFilename
     attachment = attachmentPath.encode('utf_8')
 
     process = subprocess.Popen(['ssh', 'master', '/usr/bin/mailx', '-s', subject, '-a',  attachment, recipient],
@@ -365,6 +367,7 @@ user = os.getlogin()
 
 #################### FILE PATH ##########################
 
+folder = os.path.dirname(os.path.abspath(__file__))
 path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
 
 ################ JOB NAME FROM PATH #####################
@@ -526,7 +529,7 @@ while True:
         
         # Continue
         else:
-            print_table_row(['CONTINUE', 'Continue monitoring'], output_type='end')
+            print_table_row(['CONTINUE', 'Continue monitoring'])
             
             # Send continue mail
             if emailNotification:
@@ -535,17 +538,17 @@ while True:
     
     # Start    
     except FileNotFoundError:
-        print_table_row(['STARTING', 'Start monitoring'], output_type='end')
+        print_table_row(['STARTING', 'Start monitoring'])
+        
+        # Making backup
+        if backup:
+            print_table_row(['BACKUP', backupLocation], output_type='end')
+            subprocess.run(['rsync', '-a', '', backupPath])
         
         # Send start mail
         if emailNotification:
             send_mail(emailAddress, 'Started Job ' + jobName)
         break
-    
-# Making backup
-if backup:
-    print_table_row(['BACKUP', backupLocation], output_type='end')
-    subprocess.run(['rsync', '-a', '', backupPath])
 
 ################## MONITOR ROUTINE ######################
 
@@ -597,16 +600,13 @@ while True:
                     # Restore Files from last Backup
                     if backup:
                         print_table_row(['RESTORE', backupLocation], output_type='end')
-                        subprocess.run(['rsync', '-a', '--exclude=status.txt', backupPath + '/', ''])
+                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''])
                     
                     break
                     
-            # If jobID is not defined
-            except NameError:
+            # If jobID is not defined or file is not generated
+            except (NameError, FileNotFoundError):
                 break
-            # If file is not generated
-            except FileNotFoundError:
-                sleep(30)
             except IndexError:
                 sleep(30)
         
