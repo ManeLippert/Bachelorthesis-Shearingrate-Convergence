@@ -73,8 +73,9 @@ restartFilename = 'FDS.dat'
 monitorFilename = 'status.txt'
 inputFilename = 'input.dat'
 
-jobID = 'None'
-outputFilename = './slurm-' + jobID + '.out'
+# Declared as function for dynamic changes
+def outputFilename(info):
+    return './slurm-' + info + '.out'
 
 ####################### FLAGS ###########################
 
@@ -584,7 +585,7 @@ while True:
         # Check error and making Backup
         while True:
             try:
-                outputContent = open(outputFilename).readlines()[0].replace('\n','')
+                outputContent = open(outputFilename(jobID)).readlines()[0].replace('\n','')
                 
                 if outputContent == outputCriteria: 
                     
@@ -605,10 +606,10 @@ while True:
                     break
                     
             # If jobID is not defined or file is not generated
-            except (NameError, FileNotFoundError):
-                break
-            except IndexError:
+            except (IndexError, FileNotFoundError):
                 sleep(30)
+            except NameError:
+                break
         
         # Check Timesteps
         try:
