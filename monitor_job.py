@@ -34,7 +34,13 @@
 #
 # >>> kill 10537
 #
-#  This will kill the monitor script.
+# This will kill the monitor script.
+
+# OUTPUT STATUS:
+# To see all status.txt files with one command follwing command is needed:
+#
+# >>> cd $DATA && find . -name status.txt -exec tail --lines=+10 {} \;
+
 
 '''
 #########################################################
@@ -386,11 +392,8 @@ except NameError:
 ################## MAIL ADDRESS #########################
 
 try:
-    if emailAddress == '':
-        emailNotification = False
-    else:
-        emailNotification = True
-        jobInformations.append(['INFO', 'E-Mail', emailAddress])
+    emailNotification = True
+    jobInformations.append(['INFO', 'E-Mail', emailAddress])
 except NameError:
     emailNotification = False
     
