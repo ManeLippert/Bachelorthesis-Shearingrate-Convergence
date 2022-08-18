@@ -162,8 +162,9 @@ def mean_shearingrate_radialcoordinate_subplots_grid(wexb, stepsize, distance, s
     return fig, ax, grid_y, grid_x, interval
       
 def mean_shearingrate_radialcoordinate_subplot(rad_coord, rad_boxsize, wexb_rad_mean, wexb_rad_middle, wexb_rad_mean_amp_max, 
-                                               ax, x, y, start, end):
-    if y > 1:
+                                               ax, x, y, y_max, start, end):
+
+    if y_max > 0:
         axis = ax[y,x]
     else:
         axis = ax[x]
