@@ -26,7 +26,7 @@ I will document my work in from of a journal to keep track of all changes and si
 * <details><summary>March</summary>
   <p>
 
-    * [24.03.2022](2022-03-24.md) &nbsp; Starting Meeting
+    * [24.03.2022](/journal/03_march/2022-03-24.md) &nbsp; Starting Meeting
 
   </p>
   </details>
