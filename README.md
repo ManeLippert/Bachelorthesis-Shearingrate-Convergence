@@ -11,14 +11,69 @@
 4. [Literature](#litarture)
 
 ## Introduction 
-This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D ([[1]](https://doi.org/10.1063/1.4952621), [[2]](https://doi.org/10.1063/1.4961231)).
+This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D.
 
 * [gkw-Code](https://bitbucket.org/gkw/gkw/wiki/Home)
 * In this repository is my own version of [gkw](/gkw/) for this thesis with according changes
 * LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf) 
 
 ## Journal
-I will document my work in from of a [Journal](journal/JOURNAL.md) to keep track of all changes I will do regarding my Bachelor Thesis. In addition to that I will use Git as a tracker for changes.
+I will document my work in from of a journal to keep track of all changes and sicussions I will do regarding my Bachelor Thesis. In addition to that I will use Git as a tracker for changes in form form commits.
+
+<details><summary>JOURNAL</summary>
+<p>
+
+* <details><summary>March</summary>
+  <p>
+
+    * [24.03.2022](2022-03-24.md) &nbsp; Starting Meeting
+
+  </p>
+  </details>
+
+* <details><summary>April</summary>
+  <p>
+
+  * [07.04.2022](2022-04-07.md) &nbsp; Kurs "Schreiben einer MINT-Arbeit"
+
+  </p>
+  </details>
+
+* <details><summary>May</summary>
+  <p>
+
+  * [05.05.2022](2022-05-05.md) &nbsp; Start with Bachelor Work
+
+  * [10.05.2022](2022-05-10.md) &nbsp; First Day in the Office in Bayreuth
+  * [11.05.2022](2022-05-11.md) &nbsp; Run for Standard Resolution 6th order (S6)
+  * [12.05.2022](2022-05-12.md) &nbsp; Discussion about Resolution & Run for (S6) with rtl=6.3
+
+  * [16.05.2022](2022-05-16.md) &nbsp; Writing of useful shell scripts
+  * [18.05.2022](2022-05-18.md) &nbsp; Data Structure
+  * [20.05.2022](2022-05-20.md) &nbsp; Discussion about evaluation of the shearing rate $\omega_{\mathrm{E \times B}}$
+
+  * [23.05.2022](2022-05-23.md) &nbsp; Fourier spectrum of shearing rate $\omega_{\mathrm{E \times B}}$ for $k_x$ domain in ```python```
+  * [24.05.2022](2022-05-24.md) &nbsp; Fourier spectrum of shearing rate $\omega_{\mathrm{E \times B}}$ for time domain in ```python```
+  * [25.05.2022](2022-05-25.md) &nbsp; Further Evaluation of rlt=6.0 and new resolutions
+  * [26.05.2022](2022-06-26.md) &nbsp; New ```python``` modules for ploting and calculate $\omega_{\mathrm{E \times B}}$ and further evaluations
+  * [27.05.2022](2022-05-27.md) &nbsp; Further Discussion about the best Resolution for (S6) and updating shell script for server work
+
+  * [31.05.2022](2022-05-31.md) &nbsp; Evaluation of lower resolutions
+
+  </p>
+  </details>
+
+* <details><summary>June</summary>
+  <p>
+
+  * [01.06.2022](2022-06-01.md) &nbsp; Fourier spectrums for lower resolutions
+  * [04.06.2022](2022-06-04.md) &nbsp; Lowest Resolutions to set
+
+  </p>
+  </details>
+
+</p>
+</details>
 
 
 ## ToDo
