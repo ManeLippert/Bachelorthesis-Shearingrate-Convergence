@@ -326,7 +326,6 @@ def send_mail(recipient, subject, body = None):
 
 # JOB INFORMATIONS =========================================================================================================
 
-
 jobInformations = []
 startTime = time.time()
 user = os.getlogin()

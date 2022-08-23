@@ -50,6 +50,8 @@ def eflux_time(time, eflux, figuresize):
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
     ax.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
     
+    ax.set_xlim(xmin=0)
+    
     ax_ticks_subplot(ax)
     
 def max_shearingrate_time(time, wexb_max, fourier_index, figuresize):
@@ -63,6 +65,8 @@ def max_shearingrate_time(time, wexb_max, fourier_index, figuresize):
 
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
     ax.set_ylabel(r'$|k_x^2 \phi|$')
+    
+    ax.set_xlim(xmin=0)
     
     ax_ticks_subplot(ax)
     
@@ -87,6 +91,8 @@ def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, stepsize):
     ax.set_xlabel(r'$x[\rho]$')
     ax.set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
     
+    ax.set_xlim(xmin=0)
+    
     ax_ticks_subplot(ax)
     
 def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_rad_middle, wexb_rad_mean_amp, wexb_rad_mean_amp_max, 
@@ -103,6 +109,8 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
         #ax[0].set_title(r'$R/L_T =$ ' + rlt + ', time interval [' + str(start) + ' ' + str(end) + ']', pad=20)
         ax[0].set_xlabel(r'$x[\rho]$')
         ax[0].set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
+        
+        ax[0].set_xlim(xmin=0)
 
         ax_ticks_subplot(ax[0])
 
@@ -113,6 +121,8 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
         #ax[1].set_title(r'$R/L_T =$ ' + rlt + ', time interval [' + str(start) + ' ' + str(end) + ']', pad=20)
         ax[1].set_xlabel(r'$x[\rho]$')
         ax[1].set_ylabel(r'Amplitude')
+        
+        ax[1].set_xlim(xmin=0)
         
         ax_ticks_subplot(ax[1])
 
@@ -128,6 +138,8 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
         #ax.set_title(r'$R/L_T =$ ' + rlt + ', time interval [' + str(start) + ' ' + str(end) + ']', pad=20)
         ax.set_xlabel(r'$x[\rho]$')
         ax.set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
+        
+        ax.set_xlim(xmin=0)
         
         ax_ticks_subplot(ax)
 
