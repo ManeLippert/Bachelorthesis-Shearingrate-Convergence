@@ -1,13 +1,19 @@
-##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/journal/JOURNAL.md) &nbsp; &nbsp; &nbsp; &nbsp; [Literature](/README.md#litarture) &nbsp; &nbsp; &nbsp; &nbsp; [GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows)
+##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/README.md#journal) &nbsp; &nbsp; &nbsp; &nbsp; [Results](/README.md#results) &nbsp; &nbsp; &nbsp; &nbsp; [Literature](/README.md#litarture) &nbsp; &nbsp; &nbsp; &nbsp; [GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows)
 
-# Bachelor Thesis about Zonal Flows
+* * *
+
+# Convergence of Wavelength in Zonall Flow Potential
+
+##### Bachelor Thesis about Zonal Flows
+
 ![alt text](/pictures/Zonal_Flow.PNG)
 
 ## Content
 
 1. [Introduction](#introduction)
-2. [Journal](journal/JOURNAL.md)
-3. [ToDo](#todo)
+2. [Journal](#journal)
+3. [TODO](#todo)
+5. [Results](#results)
 4. [Literature](#litarture)
 
 ## Introduction 
@@ -18,10 +24,7 @@ This repository is focused on my work for my Bachelor Thesis in Zonal Flows and 
 * LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf) 
 
 ## Journal
-I will document my work in from of a journal to keep track of all changes and sicussions I will do regarding my Bachelor Thesis. In addition to that I will use Git as a tracker for changes in form form commits.
-
-<details><summary>JOURNAL</summary>
-<p>
+I will document my work in from of a journal and to keep track of all changes i will use [GitHub Commits](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/commits/main).
 
 * <details><summary>March</summary>
   <p>
@@ -49,12 +52,6 @@ I will document my work in from of a journal to keep track of all changes and si
   * [16.05.2022](/journal/05_may/2022-05-16.md) &nbsp; Writing of useful shell scripts
   * [18.05.2022](/journal/05_may/2022-05-18.md) &nbsp; Data Structure
   * [20.05.2022](/journal/05_may/2022-05-20.md) &nbsp; Discussion about evaluation of the shearing rate $\omega_{\mathrm{E \times B}}$
-  * [23.05.2022](/journal/05_may/2022-05-23.md) &nbsp; Fourier spectrum of shearing rate $\omega_{\mathrm{E \times B}}$ for $k_x$ domain in ```python```
-  * [24.05.2022](/journal/05_may/2022-05-24.md) &nbsp; Fourier spectrum of shearing rate $\omega_{\mathrm{E \times B}}$ for time domain in ```python```
-  * [25.05.2022](/journal/05_may/2022-05-25.md) &nbsp; Further Evaluation of rlt=6.0 and new resolutions
-  * [26.05.2022](/journal/05_may/2022-06-26.md) &nbsp; New ```python``` modules for ploting and calculate $\omega_{\mathrm{E \times B}}$ and further evaluations
-  * [27.05.2022](/journal/05_may/2022-05-27.md) &nbsp; Further Discussion about the best Resolution for (S6) and updating shell script for server work
-  * [31.05.2022](/journal/05_may/2022-05-31.md) &nbsp; Evaluation of lower resolutions
 
   </p>
   </details>
@@ -62,18 +59,16 @@ I will document my work in from of a journal to keep track of all changes and si
 * <details><summary>June</summary>
   <p>
 
-  * [01.06.2022](/journal/06_june/2022-06-01.md) &nbsp; Fourier spectrums for lower resolutions
-  * [04.06.2022](/journal/06_june/2022-06-04.md) &nbsp; Lowest Resolutions to set
+  * [08.06.2022](/journal/06_june/2022-06-08.md) &nbsp; Resolution, Folder Structure and Comparison of Resolution
+  * [09.06.2022](/journal/06_june/2022-06-09.md) &nbsp; Meeting to increase Boxsize
 
   </p>
   </details>
 
-</p>
-</details>
+## TODO
+The TODOs will be handled with [GitHub Issues](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/issues) because it is a nice and good way to keep track about problems, ideas and commits.
 
-
-## ToDo
-The ToDos will be handled with [GitHub-Issues](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/issues) because it is a nice and good way to keep track about problems, ideas and commits.
+## Results
 
 ## Litarture
 [1] [Peeters, A. G., Rath, F., Buchholz, R., Camenen, Y., Candy, J., Casson,F. J., Grosshauser, S. R., Hornsby, W. A., Strintzi, D. & Weikl, A. "Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf)
@@ -90,3 +85,6 @@ The ToDos will be handled with [GitHub-Issues](https://github.com/ManeLippert/Ba
 
 [7] [Garbet, X., Idomura, Y., Villard, L. & Watanabe, T.H. "Gyrokinetic simulations of turbulent transport"](/literature/Garbet%20-%20Gyrokinetic%20simulations%20of%20turbulent%20transport%20(Review%2C%202010).pdf)
 
+* * *
+
+##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/README.md#journal) &nbsp; &nbsp; &nbsp; &nbsp; [Results](/README.md#results) &nbsp; &nbsp; &nbsp; &nbsp; [Literature](/README.md#litarture) &nbsp; &nbsp; &nbsp; &nbsp; [GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows)
