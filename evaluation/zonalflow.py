@@ -25,10 +25,10 @@ def get_eflux_time(hdf5_file):
     
     return flux, time[0]
 
-def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file):
+def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file, start_index = None, end_index = None):
     
     # Elektrostatic potencial
-    phi = hdf5_file[gkw.find_key(hdf5_file, 'phi')][()]
+    phi = hdf5_file[gkw.find_key(hdf5_file, 'phi')][:,:,start_index:end_index]
     nx = phi.shape[0]
 
     # Mean over y to get a approximation for the zonal potenzial

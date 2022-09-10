@@ -50,7 +50,8 @@ def eflux_time(time, eflux, figuresize):
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
     ax.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
     
-    ax.set_xlim(xmin=0)
+    ax.set_xlim(xmin=0, xmax=time[-1])
+    ax.set_ylim(ymin=0)
     
     ax_ticks_subplot(ax)
     
@@ -66,7 +67,8 @@ def max_shearingrate_time(time, wexb_max, fourier_index, figuresize):
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
     ax.set_ylabel(r'$|k_x^2 \phi|$')
     
-    ax.set_xlim(xmin=0)
+    ax.set_xlim(xmin=0, xmax=time[-1])
+    ax.set_ylim(ymin=0)
     
     ax_ticks_subplot(ax)
     
@@ -91,7 +93,8 @@ def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, stepsize):
     ax.set_xlabel(r'$x[\rho]$')
     ax.set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
     
-    ax.set_xlim(xmin=0)
+    ax.set_xlim(xmin=0, xmax=rad_coord[-1])
+    ax.set_ylim(ymin=-0.45, ymax=0.45)
     
     ax_ticks_subplot(ax)
     
