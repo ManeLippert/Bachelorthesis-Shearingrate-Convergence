@@ -17,7 +17,8 @@ WORKDIR="/Bachelorthesis-ZonalFlows/"
 #fi
 
 # Move into Thesis Folder
-cd $HOME$WORKDIR
+
+#cd $HOME$WORKDIR
 
 # Check input destination
 while [[ $DESTINPUT = false ]]; do
