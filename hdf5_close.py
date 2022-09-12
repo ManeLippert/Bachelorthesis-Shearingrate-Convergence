@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 
 import h5py
+import os
 
-try:
-	f = h5py.File('gkwdata.h5', 'r')
-	f.close()
-	print('File successfully closed!')
-except OSError:
-	print('! File might be broken !')
+filename = [f for f in os.listdir() if f.endswith('.h5')]
 
+for file in filename:
+
+	try:
+		f = h5py.File(file, 'r')
+		f.close()
+		print(file + ' successfully closed!')
+	except OSError:
+		print('! ' + file + ' might be broken !')
