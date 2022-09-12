@@ -1,5 +1,5 @@
 import h5py
-
+import os
 
 # Returns a list with three levels, with all keys of gkw data
 def get_keys(f):
@@ -85,3 +85,31 @@ def find_keys(f, search):
      
     for i in key_list:
         print(i)
+        
+def hdf5_close():
+    filename = [f for f in os.listdir() if f.endswith('.h5')]
+    for file in filename:
+        try:
+            f = h5py.File(file, 'r')
+            f.close()
+            print(file + ' successfully closed!')
+        except OSError:
+            print('! ' + file + ' might be broken !')
+            
+def hdf5_write_data(f, data, groupname = 'added_data'):
+    
+    try:
+        if type(data) == list:
+            if type(groupname) == list:
+
+                for d, n in zip(data, groupname):
+                    f.create_dataset(n, data = d)
+
+            else:
+                print('Every data entry should have own groupname')        
+        else:
+            f.create_dataset(groupname, data = data)
+    except ValueError:
+        pass
+        
+    f.close()

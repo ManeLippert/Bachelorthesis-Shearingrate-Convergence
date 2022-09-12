@@ -1,4 +1,3 @@
-from cProfile import label
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rc
@@ -59,13 +58,13 @@ def max_shearingrate_time(time, wexb_max, fourier_index, figuresize):
     fig, ax = plt.subplots(figsize=figuresize)
     
     if type(fourier_index) == int:
-        ax.plot(time,wexb_max[fourier_index], label = 'fourier mode' + str(fourier_index))
+        ax.plot(time,wexb_max[fourier_index], label = r'$k_' + str(fourier_index) + '$')
     else:
         for i in fourier_index:
-            ax.plot(time,wexb_max[i], label = 'fourier mode ' + str(i))
+            ax.plot(time,wexb_max[i], label = r'$k_' + str(i) + '$')
 
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
-    ax.set_ylabel(r'$|k_x^2 \phi|$')
+    ax.set_ylabel(r'$|k_\psi^2 \phi|$')
     
     ax.set_xlim(xmin=0, xmax=time[-1])
     ax.set_ylim(ymin=0)
@@ -90,7 +89,7 @@ def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, stepsize):
     
     
     #ax.set_title(r'$R/L_T =$ ' + rlt + ', time interval [0 '+str(wexb.shape[1])+']', pad=20)
-    ax.set_xlabel(r'$x[\rho]$')
+    ax.set_xlabel(r'$\psi[\rho]$')
     ax.set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
     
     ax.set_xlim(xmin=0, xmax=rad_coord[-1])
@@ -110,7 +109,7 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
         ax[0].plot(rad_coord, np.repeat(wexb_rad_mean_amp_max, len(rad_coord)), 'r', linestyle='--', linewidth=1)
         ax[0].plot(rad_coord, -np.repeat(wexb_rad_mean_amp_max, len(rad_coord)), 'r', linestyle='--', linewidth=1)
         #ax[0].set_title(r'$R/L_T =$ ' + rlt + ', time interval [' + str(start) + ' ' + str(end) + ']', pad=20)
-        ax[0].set_xlabel(r'$x[\rho]$')
+        ax[0].set_xlabel(r'$\psi[\rho]$')
         ax[0].set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
         
         ax[0].set_xlim(xmin=0)
@@ -122,7 +121,7 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
         # FT{shearing rate}
         ax[1].plot(rad_coord[1:], wexb_rad_mean_amp[1:])
         #ax[1].set_title(r'$R/L_T =$ ' + rlt + ', time interval [' + str(start) + ' ' + str(end) + ']', pad=20)
-        ax[1].set_xlabel(r'$x[\rho]$')
+        ax[1].set_xlabel(r'$\psi[\rho]$')
         ax[1].set_ylabel(r'Amplitude')
         
         ax[1].set_xlim(xmin=0)
@@ -139,50 +138,23 @@ def mean_shearingrate_radialcoordinate_amplitude(rad_coord, wexb_rad_mean, wexb_
         ax.plot(rad_coord, np.repeat(wexb_rad_mean_amp_max, len(rad_coord)), 'r', linestyle='--', linewidth=1)
         ax.plot(rad_coord, -np.repeat(wexb_rad_mean_amp_max, len(rad_coord)), 'r', linestyle='--', linewidth=1)
         #ax.set_title(r'$R/L_T =$ ' + rlt + ', time interval [' + str(start) + ' ' + str(end) + ']', pad=20)
-        ax.set_xlabel(r'$x[\rho]$')
+        ax.set_xlabel(r'$\psi[\rho]$')
         ax.set_ylabel(r'$\omega_{\mathrm{E \times B}}$')
         
         ax.set_xlim(xmin=0)
         
         ax_ticks_subplot(ax)
-
-# Multisubplot for evolution of shearing rate
-def time_interval(interval, stepsize, distance, length_run, repetition):
-    while interval[1][-1] < length_run*repetition:
-    
-        if interval[1][-1] % length_run == 0:
-            interval[0].append(interval[1][-1])
-            interval[1].append(interval[0][-1]+stepsize)
-        else:
-            interval[0].append(interval[1][-1]+distance)
-            interval[1].append(interval[0][-1]+stepsize)
-    
-    return interval
-
-def mean_shearingrate_radialcoordinate_subplots_grid(wexb, stepsize, distance, share_x, share_y):
-    
-    length = len(wexb[0])
-    length_run = 10000
-    
-    x, y = 3, int(length/length_run)
-    grid_x, grid_y = np.arange(x), np.arange(y)
-    
-    interval = [[ 500, 4000,  7000],
-                [2000, 6000, 10000]]
-        
-    interval = time_interval(interval, stepsize, distance, length_run, y)
-        
-    fig, ax = plt.subplots(y, x,figsize=(12*x, 8*y), sharey=share_y, sharex=share_x, squeeze=True)
-    
-    return fig, ax, grid_y, grid_x, interval
       
 def mean_shearingrate_radialcoordinate_subplot(rad_coord, rad_boxsize, wexb_rad_mean, wexb_rad_middle, wexb_rad_mean_amp_max, 
-                                               ax, x, y, y_max, start, end):
-
-    if y_max > 0:
+                                               ax, x, y, x_max, y_max, start_time, end_time):
+    
+    if y_max > 1:
         axis = ax[y,x]
     else:
-        axis = ax[x]
+        if x_max > 1:
+            axis = ax[x]
+        else:
+            axis = ax
 
     # Plot shearing rate
     axis.plot(rad_coord, wexb_rad_mean)
@@ -207,8 +179,15 @@ def mean_shearingrate_radialcoordinate_subplot(rad_coord, rad_boxsize, wexb_rad_
     amp_label_height_pos = 1 - amp_label_height_neg
     amp_label_pos=r'$A_{\mathrm{max}}$ = ' + format(round(wexb_rad_mean_amp_max, 2), '.2f')
     
-    title = 'time interval [' + str(start) + ', ' + str(end) + ']'
+    title = 'time interval [' + str(start_time) + ', ' + str(end_time) + ']'
     
     axis.text(0.805, amp_label_height_neg, amp_label_neg, color='r', ha='center', va='center', transform=axis.transAxes)
     axis.text(0.87, amp_label_height_pos, amp_label_pos, color='r', ha='center', va='center', transform=axis.transAxes)
     axis.text(0.5, 0.95, title, ha='center', va='center', transform=axis.transAxes)
+    
+def dim_subplot(interval):
+    
+    for i in [3,2,1]:
+        if interval.shape[1] % i == 0:
+            xdim, ydim = i, int(interval[1]/i)
+            break

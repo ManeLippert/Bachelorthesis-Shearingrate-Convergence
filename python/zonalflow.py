@@ -1,6 +1,6 @@
 #Import modules
 import numpy as np
-import gkw
+import h5tools
 import derivative
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,7 +20,7 @@ def get_eflux_time(hdf5_file):
     # load data into array
     data = np.transpose(hdf5_file[node_name][()])
     
-    # reshape GKW flux ordering
+    # reshape gkw flux ordering
     flux = np.reshape(data,(nt,2))[:,0]
     
     return flux, time[0]
@@ -28,7 +28,7 @@ def get_eflux_time(hdf5_file):
 def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file, start_index = None, end_index = None):
     
     # Elektrostatic potencial
-    phi = hdf5_file[gkw.find_key(hdf5_file, 'phi')][:,:,start_index:end_index]
+    phi = hdf5_file[h5tools.find_key(hdf5_file, 'phi')][:,:,start_index:end_index]
     nx = phi.shape[0]
 
     # Mean over y to get a approximation for the zonal potenzial
@@ -37,8 +37,8 @@ def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file,
     # Finite Difference for shearing rate omega_ExB
 
     # Stepsize
-    rad_boxsize = hdf5_file[gkw.find_key(hdf5_file, 'lxn')][()][0]
-    rad_coord = hdf5_file[gkw.find_key(hdf5_file,'xphi')][0,:]
+    rad_boxsize = hdf5_file[h5tools.find_key(hdf5_file, 'lxn')][()][0]
+    rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
     dx = rad_boxsize/nx
 
     ddphi= derivative.finite_second_order(zonal_pot[:,:], dx, 'period')
@@ -70,6 +70,15 @@ def get_max_shearingrate(wexb, time, fourier_index_max):
     wexb_max = np.array(wexb_max)
     
     return wexb_max
+
+def get_index_from_value(data, value):
+    n, index = 0, None
+    for i in data:
+        if round(i) == value:
+            index = n
+        n += 1
+
+    return index
 
 def get_mean_middle_shearingrate(start, end, wexb):
     middle = int((end - start)/2 + start)
