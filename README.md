@@ -2,7 +2,7 @@
 
 * * *
 
-# Convergence of Wavelength in Zonall Flow Potential
+# Convergence of Wavelength in Zonal Flow Potential
 
 ##### Bachelor Thesis about Zonal Flows
 
