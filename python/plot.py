@@ -71,7 +71,7 @@ def max_shearingrate_time(time, wexb_max, fourier_index, figuresize):
     
     ax_ticks_subplot(ax)
     
-    plt.legend()
+    plt.legend(loc = 'center right')
     
 def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, stepsize):
     fig, ax = plt.subplots(figsize=figuresize)
