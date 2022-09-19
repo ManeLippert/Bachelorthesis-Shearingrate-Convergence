@@ -29,7 +29,25 @@ I will document my work in from of a journal and to keep track of all changes i 
 * <details><summary>March</summary>
   <p>
 
-    * [24.03.2022](/journal/03_march/2022-03-24.md) &nbsp; Starting Meeting
+    * <details><summary> 24.03.2022 &nbsp; Starting Meeting</summary>
+      <p>
+      # Starting Meeting
+      #### Thursday 24.03.2022 from 14:00 to 14:25 with Florian Rath and Arthur Peeters
+
+      ### Discussion how to begin the work for bachelor thesis:
+
+      * Start with reproduction of result in [[1]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-         tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) with help of [gkw](/gkw/)
+     * Because of the long runtime of the code firstly we will look only in one direction in the velocity space
+     * After that small steps in all directions for better understanding of the structure and to find a minimal resolution for the best results 
+     * Furthermore increase box size and search for convergence of the wavelength in zonal flows
+     * There will be interpretation needed to clarify simplification steps in code
+
+     ### Thesis
+     * Work in English or German > will do it in English
+     * Continues writing is better than everything in the end
+     
+     </p>
+     </details>
 
   </p>
   </details>
