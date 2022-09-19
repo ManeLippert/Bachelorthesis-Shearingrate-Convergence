@@ -24,7 +24,7 @@ This repository is focused on my work for my Bachelor Thesis in Zonal Flows and 
 * LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf) 
 
 ## Journal
-I will document my work in from of a journal and to keep track of all changes i will use [GitHub Commits](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/commits/main).
+I will document my work in from of a journal and to keep track of all changes i will use [Source Control from GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/commits/main).
 
 * <details><summary>March</summary>
   <p>
@@ -202,13 +202,376 @@ I will document my work in from of a journal and to keep track of all changes i 
 * <details><summary>May</summary>
   <p>
 
-  * [05.05.2022](/journal/05_may/2022-05-05.md) &nbsp; Start with Bachelor Work
-  * [10.05.2022](/journal/05_may/2022-05-10.md) &nbsp; First Day in the Office in Bayreuth
-  * [11.05.2022](/journal/05_may/2022-05-11.md) &nbsp; Run for Standard Resolution 6th order (S6)
-  * [12.05.2022](/journal/05_may/2022-05-12.md) &nbsp; Discussion about Resolution & Run for (S6) with rtl=6.3
-  * [16.05.2022](/journal/05_may/2022-05-16.md) &nbsp; Writing of useful shell scripts
-  * [18.05.2022](/journal/05_may/2022-05-18.md) &nbsp; Data Structure
-  * [20.05.2022](/journal/05_may/2022-05-20.md) &nbsp; Discussion about evaluation of the shearing rate $\omega_{\mathrm{E \times B}}$
+  * <details><summary>05.05.2022 &nbsp; Start with Bachelor Work</summary>
+    <p>
+
+    # Start with Bachelor Work
+
+    #### Thursday 24.03.2022 from 14:00 to 14:27 with Florian Rath and Arthur Peeters
+
+    ### Discussion on how to run the code:
+
+    #### Login:
+
+    * Login on local machine through ```x2go``` because ```ssh``` is too slow. 
+    * When someone uses login through ```ssh``` the command line is shrunk down to a limited amount of executables that results in no ```make``` command. To get full access to the command line one has too ```ssh``` to ```bpptx```
+
+    #### Cluster:
+
+    * ```btrzx1``` is easier to run code 
+    * ```btrzx3``` could cause problems with the nodes but is more efficient than ```btrzx1```
+
+    Run code first on ```btrzx1``` with [```bashrc_btrzx1```](/gkw/run_btrzx1/bashrc_btrzx1) (loads all modules for ```GKW```) with jobmanager ```SLURM``` (started with ```sbatch```) and jobscript [```jobscript_btrzx1_simple```](/gkw/run_btrzx1/jobscript_btrzx1_simple).
+
+    #### Sync Files:
+
+    From local to remote machine
+    ```
+    scp -r Bachelorthesis-ZonalFlows/gkw/ bt712347@btrzx1-1.rz.uni-bayreuth.de:gkw/
+    ```
+    From remote to local
+    ```
+    scp -r bt712347@btrzx1-1.rz.uni-bayreuth.de:gkw/ Bachelorthesis-ZonalFlows/gkw/ 
+    ```
+
+    on Linux account just use ```git``` protocol
+
+    ### What to do first:
+
+    * Use test cases with adiabatic electrons
+    * Work with spectral and non-spectral (cheaper, but steps in heat production not reproducible) and compare the time duration
+    * In [paper](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Comparison%20of%20gradient%20and%20flux%20driven%20gyro-%0Akinetic%20turbulent%20transport%20(Paper%2C%202016).pdf) they used spectral 
+    * Compare spectral outcome with [paper](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Comparison%20of%20gradient%20and%20flux%20driven%20gyro-%0Akinetic%20turbulent%20transport%20(Paper%2C%202016).pdf)
+    * Verify the decrease of turbulence and heat flux on work point (condition of this bachelor thesis)
+
+    </p>
+    </details>
+
+  * <details><summary>10.05.2022 &nbsp; First Day in the Office in Bayreuth</summary>
+    <p>
+
+    # First Day in the Office in Bayreuth
+
+    #### Thusday 10.05.2022 from 10:00 to 17:30
+
+    ### Setup Linux Computer
+    After some time of trying I found out that the keyboard is in **english** so this took me some time to figure out.
+
+    ### First Run with gkw
+    For the first run I used the [input.dat.minimum](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/blob/main/gkw/doc/input.dat.minimum) that gaves me the examination files in the ```~/gkw/run``` directory. For futher examination I will use ```python``` on my local machine.
+
+    ### Discussion with Florian Rath
+
+    * Run ```gkw``` with configuration (S6) from [[1]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) page 2
+
+    Use [```cyclone```](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/blob/main/gkw/doc/input/cyclone) as basis ```input.dat``` and change parameter according (S6)
+
+    * Save data as ```hdf5``` (8 times more compact than ```ASCII```). ```python``` can read files easily 
+
+    * As diagnostic run ```xy_phi``` to get data from [[1]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) page 8 pictures
+
+    ```
+    !------------------------------------------------------------------------------------------------------------------------
+    &CONTROL
+    zonal_adiabatic = .true.,               !If zonal flows corrections included for adiabiatic electrons       (default = F)
+
+    order_of_the_zf_scheme = 'sixth_order'  !Use a different finite-differences scheme for (default = order_of_the_scheme)
+
+    D      = disp_par = 1.0                 !(Hyper) dissipation coefficient for parallel derivatives.          (default=0.2)
+    D_vpar = disp_vp  = 0.2                 !(Hyper) dissipation coefficient for parallel velocity space        (default=0.2)
+    D_x    = disp_x   = 0.1                 !(Hyper) dissipation coefficient in perpendicular x direction       (default=0.0)
+    D_y    = disp_y   = 0.1                 !(Hyper) dissipation coefficient in perpendicular y direction       (default=0.0)
+
+    io_format = 'hdf5'                      ! Use 'ascii' to output all data as formatted text files      (default = 'mixed')
+                                            !     'binary' to output all data as unformatted binary files
+                                            !     'mixed' to output some binary and mostly text files
+                                            !     'hdf5' to output a single HDF5 file (needs compilation with HDF5 libraries)
+                                            !     'hdf5+ascii' to output a single HDF5 file and duplicate 1D and 2D data to
+                                            !         formatted text files.
+                                            !     'none' to output no data at all.
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &GRIDSIZE
+    N_m    = NMOD        = 21               !Number of binormal modes - do not interact for linear runs
+    N_x    = NX          = 83               !Number of radial wave vectors / points: needs to be an odd number for spectral
+    N_s    = N_s_grid    = 16               !Number of grid points along the field line
+    N_vpar = n_vpar_grid = 64               !Number of grid points for parallel velocity (must be even)
+    N_mu   = N_mu_grid   = 9                !Total number of magnetic moment grid points
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &MODE
+    mode_box = .true.,                      !Determines if there is a 2D grid of ky,kx. if true use nperiod = 1 (default = F)
+                                            !If nperiod = 1 and mode box = .true. the kx modes will be coupled.
+    krhomax = 1.4,                          !For mode_box, this is the maximum k_theta rho_i (ky) on the grid.(default = 0.0)
+                                            !For nmod>1, modes are equidistantly spaced from 0.0 to to krhomax.
+                                            !k_perp is evaluated on the low field side of the outboard midplane.
+                                            !rho_i evaluated on the flux surface at the major radius of the magnetic axis.
+                                            !Note that other codes may normalise the thermal velocity differently
+                                            !which can correspond to  gkw k_theta that are a factor sqrt(2) greater.
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &SPECIES
+    rlt = 6.0
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &GEOM
+    GEOM_TYPE = 'circ'                      !Switch for the metric: 's-alpha', 'circ', 'miller', 'fourier' or 'chease'   
+                                            !(default = 's-alpha')
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &DIAGNOSTIC
+    xy_phi = .true.                         ! Electrostatic potential in perpendicular plane at LFS midplane    (default = T)
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &LINEAR_TERM_SWITCHES                   
+    v_d = idisp = 1                         !Select between dissipation schemes in finite differences 
+    /
+    ```
+    </p>
+    </details>
+
+  * <details><summary>11.05.2022 &nbsp; Run for Standard Resolution 6th order (S6)</summary>
+    <p>
+
+    # Run for Standard Resolution 6th order (S6)
+
+    #### Wednesday 11.05.2022 9:45 to 13:30
+
+    ### New Input file
+
+    [```input_S6_rtl6.dat```](../data/S6_rlt6.0/Nsgrid16_Nvpargrid64_Nmugrid9/input.dat)
+
+    On ```btrzx1``` the maximal available processors are 32 so that you have to determine additional values. Furthermore ```gkw``` needs time to write files and the maximal runtime should be 15min less than the ```walltime```. On ```btrzx1``` the ```walltime``` is set to 24h (maximum duration). Lastly I set the parameter for the timesteps for writing checkpoint files in ```ndump_ts```.
+
+    #### Conditions:
+    * ```N_procs_mu``` < ```N_mu_grid```
+    * ```N_procs_vpar``` * ```N_procs_s``` != 32
+    * ```max_seconds``` = ```walltime``` - 900
+
+
+    ```
+    !------------------------------------------------------------------------------------------------------------------------
+    &CONTROL
+    zonal_adiabatic = .true.,               !If zonal flows corrections included for adiabiatic electrons       (default = F)
+
+    order_of_the_zf_scheme = 'sixth_order'  !Use a different finite-differences scheme for (default = order_of_the_scheme)
+
+    D      = disp_par = 1.0                 !(Hyper) dissipation coefficient for parallel derivatives.          (default=0.2)
+    D_vpar = disp_vp  = 0.2                 !(Hyper) dissipation coefficient for parallel velocity space        (default=0.2)
+    D_x    = disp_x   = 0.1                 !(Hyper) dissipation coefficient in perpendicular x direction       (default=0.0)
+    D_y    = disp_y   = 0.1                 !(Hyper) dissipation coefficient in perpendicular y direction       (default=0.0)
+
+    io_format = 'hdf5'                      ! Use 'ascii' to output all data as formatted text files      (default = 'mixed')
+                                            !     'binary' to output all data as unformatted binary files
+                                            !     'mixed' to output some binary and mostly text files
+                                            !     'hdf5' to output a single HDF5 file (needs compilation with HDF5 libraries)
+                                            !     'hdf5+ascii' to output a single HDF5 file and duplicate 1D and 2D data to
+                                            !         formatted text files.
+                                            !     'none' to output no data at all.
+
+    ndump_ts=500                   !Number of large timesteps between writing of checkpoint DMP files    
+
+    max_seconds = 85500            ! 24h = 86400s 15min = 900s -> 85500
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &GRIDSIZE
+    N_m    = NMOD        = 21               !Number of binormal modes - do not interact for linear runs
+    N_x    = NX          = 83               !Number of radial wave vectors / points: needs to be an odd number for spectral
+    N_s    = N_s_grid    = 16               !Number of grid points along the field line
+    N_vpar = n_vpar_grid = 64               !Number of grid points for parallel velocity (must be even)
+    N_mu   = N_mu_grid   = 9                !Total number of magnetic moment grid points
+
+    N_procs_mu   = 3                        !As above, but for mu                                              
+    N_procs_vpar = 8                        !As above, but for vpar (>1 only works if vp_trap = 0)             
+    N_procs_s    = 4                        !As above, but for s
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &MODE
+    mode_box = .true.,                      !Determines if there is a 2D grid of ky,kx. if true use nperiod = 1 (default = F)
+                                            !If nperiod = 1 and mode box = .true. the kx modes will be coupled.
+    krhomax = 1.4,                          !For mode_box, this is the maximum k_theta rho_i (ky) on the grid.(default = 0.0)
+                                            !For nmod>1, modes are equidistantly spaced from 0.0 to to krhomax.
+                                            !k_perp is evaluated on the low field side of the outboard midplane.
+                                            !rho_i evaluated on the flux surface at the major radius of the magnetic axis.
+                                            !Note that other codes may normalise the thermal velocity differently
+                                            !which can correspond to  gkw k_theta that are a factor sqrt(2) greater.
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &SPECIES
+    rlt = 6.0
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &GEOM
+    GEOM_TYPE = 'circ'                      !Switch for the metric: 's-alpha', 'circ', 'miller', 'fourier' or 'chease'   
+                                            !(default = 's-alpha')
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &DIAGNOSTIC
+    xy_phi = .true.                         ! Electrostatic potential in perpendicular plane at LFS midplane    (default = T)
+    /
+    !------------------------------------------------------------------------------------------------------------------------
+    &LINEAR_TERM_SWITCHES                   
+    v_d = idisp = 1                         !Select between dissipation schemes in finite differences 
+    /
+    ```
+
+    In the input file is also more options that are provided by Florian Rath. For example the option that ```gkw``` will automatically write restart files and additional DIAGNOSTICS.
+
+    ### Jobscript
+
+    #### Conditions:
+    * ```SBATCH --nodes=N_procs_mu*N_procs_vpar*N_procs_s``` = 96
+    * ```SBATCH --ntasks-per-node=32```
+    * ```SBATCH --nodes=3``` = 32 * 3 = 96
+    * ```SBATCH --time=0-24:00:00```
+
+    [```jobscript_btrzx1_S6```](../gkw/btrzx1/jobscript_btrzx1_S6)
+
+    </p>
+    </details>
+
+  * <details><summary>12.05.2022 &nbsp; Discussion about Resolution & Run for (S6) with rtl=6.3</summary>
+    <p>
+
+    # Discussion about Resolution
+
+    #### Thursday 24.03.2022 from 14:00 to 14:25 with Florian Rath and Arthur Peeters
+
+    ### Minimum Values
+
+    WIP so we will try to find the best minimum resolution
+
+    * ```N_s_grid``` = 12
+    * ```N_vpar_grid``` = 16 or 32
+    * ```N_mu_grid``` = 6
+
+    Numeric dissipation gains with smaller scales of resolution that could cause the **lost** of zonal flows
+
+    ### ```Python``` Program
+
+    * Write ```python``` program to evaluate the ```xy_phi``` diagnostics and symbolize 'Scherrrate' and heat flux
+    * Learn how to evaluate ```h5``` files
+
+    # Run for (S6) with rtl=6.3
+
+    [```input_S6_rtl6.3.dat```](../data/S6_rtl6.3/input.dat)
+
+    [```jobscript_btrzx1_S6```](../data/S6_rtl6.3/jobscript_btrzx1)
+
+    </p>
+    </details>
+
+  * <details><summary>16.05.2022 &nbsp; Writing of useful shell scripts</summary>
+    <p>
+
+    # Writing of useful shell scripts
+
+    #### Monday 16.05.2022 13:15 to 23:00
+
+    ## Shell Scripts
+    * [```ssh_btrzx1```](../ssh/ssh_btrzx1.sh) turns automatically the vpn connection on and connects to ```btrzx1-1.rz.uni-bayreuth.de```
+
+    * [```ssh_copy```](../ssh/ssh_copy.sh) useful copy script to copy files from remote to local or in the other direction
+
+    </p>
+    </details>
+
+  * <details><summary>18.05.2022 &nbsp; Data Structure</summary>
+    <p>
+
+    # Data Structure
+
+    #### Wednesday 18.05.2022 11:00 to 18.00
+
+    # Structure
+
+    The ```keys``` for every dataset will be stored in a multi list in list with three levels
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>  </th><th>Level 1        </th>
+                <th>  </th><th>Level 2        </th>
+                <th>  </th><th>Level 3        </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td rowspan=50>0</td><td rowspan=50>diagnostic</td>
+                <td rowspan=6>0</td><td rowspan=6>diagnos_fields</td>
+                <td> 0</td><td>kxspec         </td>
+            </tr>
+            <tr><td> 1</td><td>kxvort         </td></tr>
+            <tr><td> 2</td><td>kyspec         </td></tr>
+            <tr><td> 3</td><td>kyvort         </td></tr>
+            <tr><td> 4</td><td>phi            </td></tr>
+            <tr><td> 5</td><td>spc            </td></tr>
+            <tr>
+                <td rowspan=13>1</td><td rowspan=13>diagnos_ fluxes</td> 
+                <td> 0</td><td>EFlesr0001     </td>
+            </tr>
+            <tr><td> 1</td><td>eflux_species01</td></tr>
+            <tr><td> 2</td><td>eflux_spectra  </td></tr>
+            <tr><td> 3</td><td>eflux_sup      </td></tr>
+            <tr><td> 4</td><td>eflux_xspec    </td></tr>
+            <tr><td> 5</td><td>flmgr01        </td></tr>
+            <tr><td> 6</td><td>pflux_species01</td></tr>
+            <tr><td> 7</td><td>pflux_spectra  </td></tr>
+            <tr><td> 8</td><td>pflux_sup      </td></tr>
+            <tr><td> 9</td><td>pflux_xspec    </td></tr>
+            <tr><td>10</td><td>vflux_species01</td></tr>
+            <tr><td>11</td><td>vflux_spectra  </td></tr>
+            <tr><td>12</td><td>vflux_xspec    </td></tr>
+            <tr>
+                <td rowspan=10>2</td><td rowspan=10>diagnos_grid</td> 
+                <td> 0</td><td>intmu          </td>
+            </tr>
+            <tr><td> 1</td><td>intvp          </td></tr>
+            <tr><td> 2</td><td>lxn            </td></tr>
+            <tr><td> 3</td><td>lyn            </td></tr>
+            <tr><td> 4</td><td>mode_label     </td></tr>
+            <tr><td> 5</td><td>mphi           </td></tr>
+            <tr><td> 6</td><td>mphiw3         </td></tr>
+            <tr><td> 7</td><td>mrad_G         </td></tr>
+            <tr><td> 8</td><td>mrad_l         </td></tr>
+            <tr><td> 9</td><td>sgrid          </td></tr>
+        </tbody>
+    </table>
+
+    and so on...
+
+    </p>
+    </details>
+
+  * <details><summary>20.05.2022 &nbsp; Discussion about evaluation of the shearing rate $\omega_{\mathrm{E \times B}}$</summary>
+    <p>
+
+    # Discussion about evaluation of the shearing rate
+
+    #### Friday 20.05.2022 12:00 to 12:15 with Florian Rath and Arthur Peeters
+
+    ## Coordinate
+
+    The coordinate ```x``` is in the ```h5```-file marked as ```xphi``` and is the radial coordinate
+
+    ## Derivative
+
+    The derivative is periodic which means that at the start point $f_0$ the other two points for derivative would be $f_{N}$ and $f_1$ and at the end point $f_{N}$ the other two points would be $f_{N-1}$ and $f_0$.\
+    \
+    That concludes to the formula:\
+    \
+    Start: $\frac{f_1 - 2 \cdot f_0 + f_N}{h^2}$\
+    \
+    Middle: $\frac{f_{i+1} - 2 \cdot f_i + f_{i-1}}{h^2}$\
+    \
+    End: $\frac{f_{0} - 2 \cdot f_N + f_{N-1}}{h^2}$
+
+    ## Additional Diagnostic
+
+    Use fourier spetrum as additional diagnostic to evaluate the shearing rate $\omega_{\mathrm{E \times B}}$ like in Fig 5a in [[1]](../literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf)
+
+    </p>
+    </details>
 
   </p>
   </details>
@@ -216,8 +579,67 @@ I will document my work in from of a journal and to keep track of all changes i 
 * <details><summary>June</summary>
   <p>
 
-  * [08.06.2022](/journal/06_june/2022-06-08.md) &nbsp; Resolution, Folder Structure and Comparison of Resolution
-  * [09.06.2022](/journal/06_june/2022-06-09.md) &nbsp; Meeting to increase Boxsize
+  * <details><summary>08.06.2022 &nbsp; Resolution, Folder Structure and Comparison of Resolution</summary>
+    <p>
+
+    # Resolution, Folder Structure and Comparison of Resolution
+
+    #### Wednesday 08.06.2022
+
+    ## Resolution
+
+    Best resolution: 
+
+    ```Nsgrid = 16```, ```Nvpar = 48```, ```Nmugrid = 9```
+
+    Possible Variations: 
+
+    * ```krhomax = 0.70 | nmod = 11```
+    * ```krhomax = 1.05 | nmod = 16```
+    * ```nx = 63```, ```nx = 43```
+
+    ## New Folder Structure
+
+    Every change in ```input.dat``` gets it own folder and the evaluation notebook write changes in picture name. Furthermore the notebook will write with python the picture folder.
+
+    ## Comparison of Resolution
+
+    * ```Nsgrid = 12/16``` | ```Nvpargrid = 64```, ```Nmugrid = 9``` | ```Nvpargrid = 48```, ```Nmugrid = 9```
+    * ```Nvpargrid = 64/48/32/16``` | ```Nsgrid = 16```, ```Nmugrid = 9``` 
+    * ```Nmugrid = 6/9``` | ```Nvpargrid = 64```, ```Nsgrid = 16``` | ```Nvpargrid = 48```, ```Nsgrid = 16```
+
+    </p>
+    </details>
+
+  * <details><summary>09.06.2022 &nbsp; Meeting to increase Boxsize</summary>
+    <p>
+
+    # Meeting to increase Boxsize
+
+    #### Thursday 09.06.2022 14:00 to 14:30 with Florian Rath and Arthur Peeters
+
+    ## Change Timestep
+    Set ```dtim = 0.02``` to ```dtim = 0.025``` and compare outcome with $\delta t$. The graph should decrease vor ```dtim```.
+    ```dtim``` is a timestep measured with gkw.
+
+    ## Final Resolution
+
+    ```Nsgrid = 16```, ```Nvpar = 48```, ```Nmugrid = 9```
+
+    ## Increase Boxsize
+
+    Change following variables according to increase factor $N$:
+
+    * ```ikx_space_N``` $= 5 * N$
+    * ```nx_N``` $= [($ ```nx_1``` $-1 ) * N ] +1$ 
+
+    Boxsize 1x1: `nx_1` = 83, &nbsp; `ikx_space_1` = 5\
+    Boxsize 2x1: `nx_2` = 165, `ikx_space_2` = 10\
+    Boxsize 3x1: `nx_3` = 247, `ikx_space_3` = 15\
+    Boxsize 2x1: `nx_4` = 329, `ikx_space_4` = 20
+
+    </p>
+    </details>
 
   </p>
   </details>
