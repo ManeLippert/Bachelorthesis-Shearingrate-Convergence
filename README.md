@@ -90,7 +90,7 @@ The TODOs will be handled with [GitHub Issues](https://github.com/ManeLippert/Ba
 
 ## Results
 
-## Litarture
+## Literature
 [[1]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) Peeters, A. G., Rath, F., Buchholz, R., Camenen, Y., Candy, J., Casson,F. J., Grosshauser, S. R., Hornsby, W. A., Strintzi, D. & Weikl, A. "Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"
 
 [[2]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Comparison%20of%20gradient%20and%20flux%20driven%20gyro-%0Akinetic%20turbulent%20transport%20(Paper%2C%202016).pdf) Rath, F., Peeters, A. G., Buchholz, R., Grosshauser, S. R., Migliano, P.,Weikl, A. & Strintzi, D. "Comparison of gradient and flux driven gyro-kineticturbulent transport"
