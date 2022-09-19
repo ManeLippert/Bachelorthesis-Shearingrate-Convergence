@@ -654,7 +654,7 @@ The TODOs will be handled with [GitHub Issues](https://github.com/ManeLippert/Ba
 
 [[2]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Comparison%20of%20gradient%20and%20flux%20driven%20gyro-%0Akinetic%20turbulent%20transport%20(Paper%2C%202016).pdf) Rath, F., Peeters, A. G., Buchholz, R., Grosshauser, S. R., Migliano, P.,Weikl, A. & Strintzi, D. "Comparison of gradient and flux driven gyro-kineticturbulent transport"
 
-[[3]](/manual/GKW_manual_0.4-b1.pdf) Peeters, A. G., Buchholz, R., Camenen, Y., Casson, F. J., Grosshauser, S., Hornsby, W. A., Manas, P., Migliano, P., Siccinio, M., Snodin, A. P., Strintzi, D., Sung, T., Szepesi, G. & Zarzoso, D. "GKW how and why"
+[[3]](/literature/manual/GKW_manual_0.4-b1.pdf) Peeters, A. G., Buchholz, R., Camenen, Y., Casson, F. J., Grosshauser, S., Hornsby, W. A., Manas, P., Migliano, P., Siccinio, M., Snodin, A. P., Strintzi, D., Sung, T., Szepesi, G. & Zarzoso, D. "GKW how and why"
 
 [[4]](/literature/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/EinfuehrungPlasma.md) Suttrop, W. "Einführung in Plasmaphysik" (German)
 
