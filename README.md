@@ -14,7 +14,7 @@
 2. [Journal](#journal)
 3. [TODO](#todo)
 5. [Results](#results)
-4. [Literature](#litarture)
+4. [Literature](#literature)
 
 ## Introduction 
 This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D.
@@ -29,7 +29,7 @@ I will document my work in from of a journal and to keep track of all changes i 
 * <details><summary>March</summary>
   <p>
 
-    * <details><summary> 24.03.2022 &nbsp; Starting Meeting</summary>
+    * <details><summary>24.03.2022 &nbsp; Starting Meeting</summary>
       <p>
         
       # Starting Meeting
@@ -57,8 +57,145 @@ I will document my work in from of a journal and to keep track of all changes i 
 * <details><summary>April</summary>
   <p>
 
-  * [07.04.2022](/journal/04_april/2022-04-07.md) &nbsp; Kurs "Schreiben einer MINT-Arbeit"
+  * <details><summary>07.04.2022 &nbsp; Kurs "Schreiben einer MINT-Arbeit"</summary>
+    </p>
+    
+    # Kurs "Schreiben einer MINT-Arbeit"
 
+    #### Dienstag 07.04.2022 von 9:00 bis 15:00
+
+    ## Inhalt
+    * [Feststellung des Schreibtyps](#feststellung-des-schreibtyps)
+    * [Störfaktorem](#störfaktoren)
+    * [Phasen des Schreibprozesses](#phasen-des-schreibprozesses)
+    * [Fragestellung/Forschungsfrage](#fragestellungforschungsfrage)
+    * [Gliederung](#gliederung)
+    * [Materialen](#materialen)
+    * [Rohtext](#rohtext)
+    * [Wissenschaftlicher Schreibstil](#wissenschaftlicher-schreibstil)
+    * [Illustrationen](#illustrationen)
+    * [Zitieren](#zitieren)
+    * [Beleg im Text](#beleg-im-text)
+    * [Methoden der Organisation und Planung](#methoden-zur-organisation-und-planung)
+
+    ## Feststellung des Schreibtyps
+
+    ![FragenSchreibtyp1](/pictures/HowToMINT/Schreibtypentest-1.png)
+    ![FragenSchreibtyp2](/pictures/HowToMINT/Schreibtypentest-2.png)
+    ![FragenSchreibtypAuswertung1](/pictures/HowToMINT/Schreibtypentest-3.png)
+    ![FragenSchreibtypAuswertung2](/pictures/HowToMINT/Schreibtypentest-4.png)
+
+    ## Störfaktoren
+
+    * **Zeitdiebe** &rarr; Prokrastination am Handy?
+    * **Schreiborte** &rarr; Feststellen wo die besten Schreiborte für einen sind &rarr; Draußen bei schönen Wetter
+    * **Schreibzeiten** &rarr; Morgen, Nachmittags oder Abends &rarr; Nachmittags oder Abends
+
+    ## Phasen des Schreibprozesses
+    1. Orientierung und Planung
+    2. Strukturieren, gliedern, forschen/lesen
+    3. Material auswerten, Rohfassung schreiben
+    4. Überarbent und Feedback einholen
+    5. Schlusskorrektur und Abgabe
+
+    ## Fragestellung/Forschungsfrage
+
+    Grenzt Thema ein und leitet fokussiert durch die Arbeit
+
+    ![Forschungsfrage1](/pictures/HowToMINT/AB1_Forschungsfrage-1.png)
+    ![Forschungsfrage2](/pictures/HowToMINT/AB1_Forschungsfrage-2.png)
+
+    ![ForschungsfrageHandout](/pictures/HowToMINT/Handout_Forschungsfrage.png)
+
+
+    ## Gliederung
+
+    * **Einleitung** &rarr; Hinführung, Problemstellung. Fragestellung (thematisieren), Methodik, Aufbau, Hauptergebnisse
+    * **Methoden** &rarr; Zustandekommen der Ergebnisse, Grund für Glaubwürdigkeit (Auch Materialen)
+    * **Ergebnisse** &rarr; Ausformulierung und Darstellung
+    * **Diskussion** &rarr; Bezug auf Ergebnisse, dann breiter Fokus (Rückbezug zur Problemstellung)
+
+    ## Materialen
+    Quellen und Literatur frühzeitig dokumentieren (auch Anmerkungen möglich)
+
+    ## Rohtext
+    * Erstefassung eines Textes
+    * Noch ungeschliffen
+    * Macht as den Gedanken etwas Konkretes
+    * Nimmt den Druck alles beim ersten Schreiben perfekt zu machen
+    * Liefert Grundlage für weitere Schritte
+    * Mehrfache Überarbeitungen machen den Rohtext zu einen abgereiften Text
+
+    ## Wissenschaftlicher Schreibstil
+
+    * Sachlich und Neutral
+    * Logische Argumentation und Aufbau (roter Faden) &rarr; Forschungsfrage
+    * Überprüfbarkeit und Nachvollziehbarkeit (Zitation)
+    * Korrekte Verwendung von Fachbegriffen
+    * Einheitlichkeit
+       
+    <br />
+    
+    ![Schreibstil](/pictures/HowToMINT/AB2_Schreibstil_%C3%9Cbung.png)
+
+    ## Illustrationen
+    ![Illu](/pictures/HowToMINT/Handout_Illustrations.png)
+
+    ## Zitieren
+
+    ### Faustregel
+    1. Überhaupt zitieren
+    2. Einheitlich zitieren
+    3. Vorgaben beachten
+    
+    <br />
+    
+    Es gibt aber nicht den einen Zitierstil. Dieser kann sich von Fach zu Fach ändern.
+
+    ### **WICHTIG**
+    * Nachprüfbarkeit und Nachvollziehbarkeit
+    * Einwandfreies zitieren &rarr; Ausdruck für wissenschaftliche Sorgfalt
+    * Nachweis über über eigenständige Leitung &rarr; Trennung der Aussagen
+    * Lesbarkeit &rarr; Mehr wissenschaftliche Form
+
+    ### 1. Wörtliches/Direktes Zitat
+    * Wörtliche Übernahme von Textpassagen, Sätzen, Satzteilen und Ausdrücken
+    * Beginnt und endet mit Anführungszeichen
+    * Längere Zitate werden i.d.R. eingerückt
+    * Buchstabliche Genauigkeit 
+    * Evtl. kursive Schrift, kleinere Schriftart, Absatz mit Einrückung und einzeiliger Abstand
+
+    ### 2. Paraphrase/Indirektes Zitat
+    * Sinngemäße Übernahme fremder Gedanken/Aussagen mit eigenen Worten
+    * Ohne Anführungszeichen
+    * Umfang muss eindeutig erkennbar sein 
+    * Eventuell Zusatz "vgl."
+
+    ### Beleg im Text
+    &rarr; Verweis wird in Klammern hinter dem Zitat angefügt, gefolgt von einem Punkt: 
+
+    &nbsp;  &nbsp; &nbsp;.....(Vgl. Eco, 2010, S.204). (**Vor dem Punkt**)
+
+    &rarr; Wenn Autoren explizit erwähnt wurden, folgt die Quelle direkt hinter dem Namen: 
+
+    &nbsp;  &nbsp; &nbsp;.....Eco (2010, S.204)
+
+    &rarr; Verweis mit Fußnote. Jede Fußnote beginnt mit einem Großbuchstaben und endet mit einem Punkt. Zahl der Fußnote folgt hinter dem Punkt
+
+    &nbsp;  &nbsp; &nbsp;.....xyz.³
+
+    ___
+    &nbsp;  &nbsp; &nbsp;³Vgl. Eco, 2010, S.204.
+
+    ## Methoden zur Organisation und Planung
+
+    ![Orga1](/pictures/HowToMINT/Methodenhandout_WS%20Orga%20und%20Planen-1.png)
+    ![Orga2](/pictures/HowToMINT/Methodenhandout_WS%20Orga%20und%20Planen-2.png)
+    ![Orga3](/pictures/HowToMINT/Methodenhandout_WS%20Orga%20und%20Planen-3.png)
+
+    </p>
+    </details>
+    
   </p>
   </details>
 
