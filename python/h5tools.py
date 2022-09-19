@@ -28,6 +28,7 @@ def get_keys(f):
         
     return data
 
+
 # Returns key if the end of the level is equal the vairable search
 def find_key(f, search):
 
@@ -85,7 +86,9 @@ def find_keys(f, search):
      
     for i in key_list:
         print(i)
-        
+  
+  
+# Checks if .h5 file es broken or not      
 def hdf5_close():
     filename = [f for f in os.listdir() if f.endswith('.h5')]
     for file in filename:
@@ -96,6 +99,8 @@ def hdf5_close():
         except OSError:
             print('! ' + file + ' might be broken !')
             
+            
+# Write data in .h5 File 
 def hdf5_write_data(f, data, groupname = 'added_data'):
     
     try:
