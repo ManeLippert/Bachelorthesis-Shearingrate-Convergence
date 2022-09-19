@@ -31,7 +31,9 @@ I will document my work in from of a journal and to keep track of all changes i 
 
     * <details><summary> 24.03.2022 &nbsp; Starting Meeting</summary>
       <p>
+        
       # Starting Meeting
+        
       #### Thursday 24.03.2022 from 14:00 to 14:25 with Florian Rath and Arthur Peeters
 
       ### Discussion how to begin the work for bachelor thesis:
