@@ -1,0 +1,97 @@
+% AUTHOR ==============================================================================================================
+% Manuel Lippert (GitHub: ManeLippert (https://github.com/ManeLippert))
+% =====================================================================================================================
+
+\usepackage{xparse}
+\usepackage{booktabs}
+\usepackage{ifthen}
+
+% COUNTER, WORD COUNT =================================================================================================
+
+\newcounter{totalwordcounter}
+\newcounter{wordcounter}
+
+% Figures
+\newcounter{figOneCol}      \newcommand{\numberforafigOneCol}{200}
+\newcounter{figTwoCol}      \newcommand{\numberforafigTwoCol}{400}
+
+% Tables
+\newcounter{tableOneCol}    \newcommand{\numberforatableOneCol}{13}
+\newcounter{tableOneColRow} \newcommand{\numberforatableOneColRow}{5}
+\newcounter{tableTwoCol}    \newcommand{\numberforatableTwoCol}{26}
+\newcounter{tableTwoColRow} \newcommand{\numberforatableTwoColRow}{13}
+
+% Equations
+\newcounter{eqOneColRow}    \newcommand{\numberforaeqOneColRow}{7}
+\newcounter{eqTwoColRow}    \newcommand{\numberforaeqTwoColRow}{13}
+
+% FUNCTIONS ===========================================================================================================
+
+% Count words in document
+\newread\somefile
+\makeatletter
+\NewDocumentCommand{\wordcount}{s}{%
+  \immediate\write18{texcount -sum -1 \jobname.tex > wordcount.txt}%
+  \immediate\openin\somefile=wordcount.txt%
+  \read\somefile to \@@localdummy%
+  \immediate\closein\somefile%
+  \setcounter{wordcounter}{\@@localdummy}%
+  \IfBooleanF{#1}{%
+  \@@localdummy%   print only if not starred version
+  }%
+}
+\makeatother
+
+% Total word count
+\newcommand{\totalwordcount}{
+    % Words
+    \addtocounter{totalwordcounter}{\value{wordcounter}}
+    % Figures
+    \addtocounter{totalwordcounter}{\number\numexpr\numberforafigOneCol*\value{figOneCol}}
+    \addtocounter{totalwordcounter}{\number\numexpr\numberforafigTwoCol*\value{figTwoCol}}
+    % Tables
+    \addtocounter{totalwordcounter}{\number\numexpr\numberforatableOneColRow*\value{tableOneColRow}}
+    \addtocounter{totalwordcounter}{\number\numexpr\numberforatableOneCol*\value{tableOneCol}}
+    \addtocounter{totalwordcounter}{\number\numexpr\numberforatableTwoColRow*\value{tableTwoColRow}}
+    \addtocounter{totalwordcounter}{\number\numexpr\numberforatableTwoCol*\value{tableTwoCol}}
+    % Equations
+    \addtocounter{totalwordcounter}{\number\numexpr\numberforaeqOneColRow*\value{eqOneColRow}}
+    \addtocounter{totalwordcounter}{\number\numexpr\numberforaeqTwoColRow*\value{eqTwoColRow}}
+
+    \number\value{totalwordcounter}
+    \renewcommand{\totalwordcount}{\number\value{totalwordcounter}}
+}
+
+% Display value of counter
+\newcommand{\showcounter}[1]{\number\value{#1}}
+
+\newcommand{\increasecounter}[3]{
+    \ifthenelse{\equal{#2}{1}}{\def\col{OneCol}}{\def\col{TwoCol}}
+
+    \ifthenelse{\equal{#1}{fig}}{\addtocounter{#1\col}{1}}
+        {\ifthenelse{\equal{#1}{eq}}{\addtocounter{#1\col Row}{#3}}
+            {\addtocounter{#1\col}{1} \addtocounter{#1\col Row}{#3}}
+        }
+}
+
+% Display word count message
+\newcommand{\wordcountmessage}{
+    \begin{center}
+        \begin{tabular}{| l | c  c | c  c |}
+            \hline
+                           & \multicolumn{2}{ c |}{\textbf{Counter}}                     & \multicolumn{2}{ c |}{\textbf{Words}}                 \\
+                           & 1 Col & 2 Col                                               & 1 Col & 2 Col                                         \\
+            \hline
+            Words          & \multicolumn{2}{ c |}{------------}                         & \multicolumn{2}{ c |}{\wordcount}                     \\
+            Figure         & \showcounter{figOneCol}      & \showcounter{figTwoCol}      & \numberforafigOneCol      & \numberforafigTwoCol      \\
+            Table          & \showcounter{tableOneCol}    & \showcounter{tableTwoCol}    & \numberforatableOneCol    & \numberforatableTwoCol    \\
+            Table Row      & \showcounter{tableOneColRow} & \showcounter{tableTwoColRow} & \numberforatableOneColRow & \numberforatableTwoColRow \\
+            Eq Row         & \showcounter{eqOneColRow}    & \showcounter{eqTwoColRow}    & \numberforaeqOneColRow    & \numberforaeqTwoColRow    \\
+            \hline
+            \textbf{Total} & \multicolumn{2}{ c |}{------------}                         & \multicolumn{2}{ c |}{\textbf{\totalwordcount}}              \\
+            \hline
+        \end{tabular}
+    \end{center}
+}
+
+% END =================================================================================================================

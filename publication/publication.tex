@@ -19,19 +19,7 @@
 %
 % Use this file as a source of example code for your aip document.
 % Use the file aiptemplate.tex as a template for your document.
-\documentclass[%
- aip,
-% jmp,
-% bmf,
-% sd,
-% rsi,
- amsmath,amssymb,
-%preprint,%
- reprint,%
-%author-year,%
-%author-numerical,%
-% Conference Proceedings
-]{revtex4-1}
+\documentclass[aip, amsmath, amssymb, reprint]{revtex4-1}
 
 \usepackage{graphicx}% Include figure files
 \usepackage{dcolumn}% Align table columns on decimal point
@@ -43,6 +31,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{mathptmx}
 \usepackage{etoolbox}
+
+% Word count
+\input{wordcount.tex}
 
 %% Apr 2021: AIP requests that the corresponding 
 %% email to be moved after the affiliations
@@ -547,6 +538,8 @@ Tl& 0.480 & 18.90 & 3.550 & & & & \\
 \footnotetext[4]{Here's the fourth.}
 \footnotetext[5]{And etc.}
 \end{table}
+\increasecounter{table}{1}{11}
+
 for an illustration. 
 
 All AIP journals require that the initial citation of
@@ -647,6 +640,7 @@ Note the equation number in an appendix:
 \begin{equation}
 E=mc^2.
 \end{equation}
+\increasecounter{eq}{1}{1}
 
 \subsection{\label{app:subsec}A subsection in an appendix}
 
@@ -665,7 +659,11 @@ E&=&mc^2, \label{appb}
 E&\agt& mc^3. \label{appc}
 \end{eqnarray}
 \end{subequations}
+\increasecounter{eq}{1}{3}
+
 They turn out to be Eqs.~(\ref{appa}), (\ref{appb}), and (\ref{appc}).
+
+\wordcountmessage
 
 \nocite{*}
 \bibliography{aipsamp}% Produces the bibliography via BibTeX.
