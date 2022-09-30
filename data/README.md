@@ -7,9 +7,10 @@ The data is sorted by changed parameters in specific Folders.
 
 Each Folder contains: 
 
-***Important: (*) marks files that are not included on GitHub and are only included on the NAS of TPV in Bayreuth***
+***Important: ( * ) marks files that are not included on GitHub and are only included on the NAS of TPV in Bayreuth***
 
-* `gkwdata.h5`: raw data of the simulation (*)
+* <details><summary>`gkwdata.h5`: raw data of the simulation ( * )</summary>
+  <p>
 
     Contains:
 
@@ -97,6 +98,9 @@ Each Folder contains:
 
         * restart:
             * dtim, nt_complete, nt_remain, time_complete
+
+  </p>
+  </details>
         
 * `data.h5`: trimmed down version of `gkwdata.h5` for lower space consumption with added evaluated data (*)
 * `data.csv`: calculated data for bachelorthesis 
