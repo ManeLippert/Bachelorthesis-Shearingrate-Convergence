@@ -656,9 +656,9 @@ The TODOs will be handled with [GitHub Issues](https://github.com/ManeLippert/Ba
 
 [[3]](/literature/manual/GKW_manual_0.4-b1.pdf) Peeters, A. G., Buchholz, R., Camenen, Y., Casson, F. J., Grosshauser, S., Hornsby, W. A., Manas, P., Migliano, P., Siccinio, M., Snodin, A. P., Strintzi, D., Sung, T., Szepesi, G. & Zarzoso, D. "GKW how and why"
 
-[[4]](/literature/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/EinfuehrungPlasma.md) Suttrop, W. "Einführung in Plasmaphysik" (German)
+[[4]](/literature/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/) Suttrop, W. "Einführung in Plasmaphysik" (German)
 
-[[5]](/literature/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/EinfuehrungFusion.md) Suttrop, W. "Einführung in Fusionsforschung" (German)
+[[5]](/literature/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/) Suttrop, W. "Einführung in Fusionsforschung" (German)
 
 [[6]](/literature/Diamond%20-%20Zonal%20flows%20in%20plasma%20-%20a%20review%20(Review%2C%202005).pdf) Diamond, P. H., Itoh, S-I., Itoh, K. & Hahm, T. S. "Zonal flows in plasma—a review"
 
