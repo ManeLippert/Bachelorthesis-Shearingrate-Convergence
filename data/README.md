@@ -114,9 +114,9 @@ Each Folder contains:
     │  │     lve_grad_fm_rhostar, s_average
     │  │
     │  ├─ geom:
-    │  │  ╰─ N_shape, R0_loc, Zmil, beta_rota_miller, beta_rota_miller_type, c, c_prime, curv_effect, dRmil, dZmil, delta,
-    │  │     eps, eps_type, eqfile, geom_type, gradp, gradp_type, kappa, prof_type, q, qprof_coef, s, s_prime, sdelta, 
-    │  │     shat, signB, signJ, skappa, square, ssquare
+    │  │  ╰─ N_shape, R0_loc, Zmil, beta_rota_miller, beta_rota_miller_type, c, c_prime, curv_effect, dRmil, dZmil, 
+    │  │     delta, eps, eps_type, eqfile, geom_type, gradp, gradp_type, kappa, prof_type, q, qprof_coef, s, s_prime, 
+    │  │     sdelta, shat, signB, signJ, skappa, square, ssquare
     │  │
     │  ├─ grid:
     │  │  ╰─ lx, mumax, n_mu_grid, n_procs_mu, n_procs_s, n_procs_sp, n_procs_vpar, n_procs_x, n_s_grid, n_trapped, 
@@ -150,10 +150,11 @@ Each Folder contains:
     │  │     source_wave_number
     │  │
     │  ├─ spcgeneral:
-    │  │  ╰─ Ls, adiabatic_electrons, amp_imod, amp_imod_imag, amp_init, amp_zon, amp_zon_imag, beta, beta_ref, beta_type,
-    │  │     betaprime_ref, betaprime_type, energetic_particles, finit, finit_imod, icrh_params, imod_init, init_coef, 
-    │  │     isl_mode, isl_rot_freq, isl_shear, lfinit_radial_dirichlet, mode_persist, n_quench, psi_0, quench_modes, 
-    │  │     quench_switch, rhostar, tear_zero_epar, tearingmode, tm_start, vpar_mean, wstar
+    │  │  ╰─ Ls, adiabatic_electrons, amp_imod, amp_imod_imag, amp_init, amp_zon, amp_zon_imag, beta, beta_ref, 
+    │  │     beta_type, betaprime_ref, betaprime_type, energetic_particles, finit, finit_imod, icrh_params, 
+    │  │     imod_init, init_coef, isl_mode, isl_rot_freq, isl_shear, lfinit_radial_dirichlet, mode_persist, 
+    │  │     n_quench, psi_0, quench_modes, quench_switch, rhostar, tear_zero_epar, tearingmode, tm_start, 
+    │  │     vpar_mean, wstar
     │  │
     │  ├─ species01:
     │  │  ╰─ background, dens, dens_prof_coef, dens_prof_type, mass, param, rln, rlt, rlt_gauss, temp, temp_prof_coef, 
