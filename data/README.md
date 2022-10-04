@@ -33,7 +33,7 @@ Each Folder contains:
     ╰─ evaluation:
        ╰─ second_derivative_phi, zonalflow_potential, shearing_rate, shearing_rate_maximum
     ```
-    
+
 * `data.csv`: `csv` - file of `data.h5` - section 'evaluation  
 
 * `gkwdata.h5`: raw data of the simulation ( * )
@@ -46,7 +46,7 @@ Each Folder contains:
     │  │  ╰─ kxspec, kxvort, kyspec, kyvort, phi, spc
     │  │
     │  ├─ diagnos_fluxes: 
-    │  │  ╰─ EFlesr0001, eflux_species01, eflux_spectra, eflux_sup, eflux_xspec, flmgr01, pflux_species01, pflux_spectra, 
+    │  │  ╰─ EFlesr0001, eflux_species01, eflux_spectra, eflux_sup, eflux_xspec, flmgr01, pflux_species01, pflux_spectra,
     │  │     pflux_sup, pflux_xspec, vflux_species01, vflux_spectra, vflux_xspec
     │  │
     │  ├─ diagnos_grid: 
@@ -66,7 +66,7 @@ Each Folder contains:
     │  
     ├─ geom:
     │  ╰─ Bref, Bt_frac, D_eps, D_s, D_zeta, E_eps_s, E_eps_zeta, E_zeta_s, F, G, H_eps, H_s, H_zeta, I_eps, I_s, I_zeta,
-    │     J, Jacobian, K, NS, R, R0, Rref, Z, beta_eq, betaprime_eq, bmax, bmin, bn, eps, g_eps_eps, g_eps_s, g_eps_zeta, 
+    │     J, Jacobian, K, NS, R, R0, Rref, Z, beta_eq, betaprime_eq, bmax, bmin, bn, eps, g_eps_eps, g_eps_s, g_eps_zeta,
     │     g_s_s, g_zeta_s, g_zeta_zeta, jfunh, jfunl, krnorm, kthnorm, lfun, poloidal_angle, q, s_grid, shat
     │
     ├─ grid:
@@ -83,7 +83,7 @@ Each Folder contains:
     │  │     gamatol, ifluxtol, io_format, io_legacy, io_testdata, iperform_set, irun, laverage_dist_over_time, lflapv, 
     │  │     lpar_vel_nl, lrestart_new_grid, ltrapping_arakawa, lverbose, matrix_format, max_gr, max_sec, max_seconds, 
     │  │     meth, method, min_gr, naverage, ncqtol, ndump_ts, neoclassics, nl_dtim_est, nlapar, nlbpar, nlphi, 
-    │  │     non_linear, normalize_per_toroidal_mode, normalized, ntime, order_of_the_radial_scheme, order_of_the_scheme, 
+    │  │     non_linear, normalize_per_toroidal_mode, normalized, ntime, order_of_the_radial_scheme, order_of_the_scheme,
     │  │     order_of_the_zf_scheme, parallel_boundary_conditions, radial_boundary_conditions, read_file, 
     │  │     restart_file_version, shift_metric, silent, spectral_radius, testing, uniform_mu_grid, vp_trap, 
     │  │     zonal_adiabatic
@@ -99,7 +99,7 @@ Each Folder contains:
     │  │     lphi_diagnostics, lrad_entropy, lrad_field, lrad_kpar, lrad_moment, lrad_tint, lradial_entropy, 
     │  │     lradial_profile, lrotate_parallel, lvelspace_output, lwrite_output1, nflush_ts, 
     │  │     nmodepoints, nonlin_transfer_interval, npointsvel, out3d_interval, parallel_output_timestamps, phi3d, 
-    │  │     psi_velspace, screen_output, spc3d, xs_kyzero_current, xs_kyzero_current2, xs_kyzero_dens, xs_kyzero_ene, 
+    │  │     psi_velspace, screen_output, spc3d, xs_kyzero_current, xs_kyzero_current2, xs_kyzero_dens, xs_kyzero_ene,
     │  │     xs_kyzero_ene_par, xs_kyzero_ene_perp, xs_kyzero_phi_ga_deltaf, xs_kyzero_phi_ga_fm, xs_phi, xy_apar, 
     │  │     xy_bpar, xy_current, xy_current2, xy_dens, xy_estep, xy_fluxes, xy_fluxes_bi, xy_fluxes_bpar, 
     │  │     xy_fluxes_em, xy_fluxes_fsa, xy_fluxes_k, xy_fluxes_p, xy_fluxes_v, xy_phi, xy_slice_ipar, xy_spec, 
