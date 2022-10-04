@@ -46,8 +46,8 @@ Each Folder contains:
     │  │  ╰─ kxspec, kxvort, kyspec, kyvort, phi, spc
     │  │
     │  ├─ diagnos_fluxes: 
-    │  │  ╰─ EFlesr0001, eflux_species01, eflux_spectra, eflux_sup, eflux_xspec, flmgr01, pflux_species01, pflux_spectra,
-    │  │     pflux_sup, pflux_xspec, vflux_species01, vflux_spectra, vflux_xspec
+    │  │  ╰─ EFlesr0001, eflux_species01, eflux_spectra, eflux_sup, eflux_xspec, flmgr01, pflux_species01, 
+    │  │     pflux_spectra, pflux_sup, pflux_xspec, vflux_species01, vflux_spectra, vflux_xspec
     │  │
     │  ├─ diagnos_grid: 
     │  │  ╰─ intmu, intvp, lxn, lyn, mode_label, mphi, mphiw3, mrad_G, mrad_l, sgrid
@@ -65,9 +65,10 @@ Each Folder contains:
     │     ╰─ prof_back
     │  
     ├─ geom:
-    │  ╰─ Bref, Bt_frac, D_eps, D_s, D_zeta, E_eps_s, E_eps_zeta, E_zeta_s, F, G, H_eps, H_s, H_zeta, I_eps, I_s, I_zeta,
-    │     J, Jacobian, K, NS, R, R0, Rref, Z, beta_eq, betaprime_eq, bmax, bmin, bn, eps, g_eps_eps, g_eps_s, g_eps_zeta,
-    │     g_s_s, g_zeta_s, g_zeta_zeta, jfunh, jfunl, krnorm, kthnorm, lfun, poloidal_angle, q, s_grid, shat
+    │  ╰─ Bref, Bt_frac, D_eps, D_s, D_zeta, E_eps_s, E_eps_zeta, E_zeta_s, F, G, H_eps, H_s, H_zeta, I_eps, I_s, 
+    │     I_zeta, J, Jacobian, K, NS, R, R0, Rref, Z, beta_eq, betaprime_eq, bmax, bmin, bn, eps, g_eps_eps,
+    │     g_eps_s, g_eps_zeta, g_s_s, g_zeta_s, g_zeta_zeta, jfunh, jfunl, krnorm, kthnorm, lfun, poloidal_angle,
+    │     q, s_grid, shat
     │
     ├─ grid:
     │  ╰─ file_count, krho, krho_extended, krloc, kxrh, kzeta, time_fine, vperp, vpgr, xgr, xphi, yphi
@@ -79,13 +80,13 @@ Each Folder contains:
     │  │     mom_conservation, nref, pitch_angle, rref, selfcollcon, tref, zeff
     │  │
     │  ├─ control:
-    │  │  ╰─ auto_restart, collisions, disp_par, disp_vp, disp_x, disp_y, dt_min, dtim, fac_dtim_est, flux_tube, fluxtol,
-    │  │     gamatol, ifluxtol, io_format, io_legacy, io_testdata, iperform_set, irun, laverage_dist_over_time, lflapv, 
-    │  │     lpar_vel_nl, lrestart_new_grid, ltrapping_arakawa, lverbose, matrix_format, max_gr, max_sec, max_seconds, 
-    │  │     meth, method, min_gr, naverage, ncqtol, ndump_ts, neoclassics, nl_dtim_est, nlapar, nlbpar, nlphi, 
-    │  │     non_linear, normalize_per_toroidal_mode, normalized, ntime, order_of_the_radial_scheme, order_of_the_scheme,
-    │  │     order_of_the_zf_scheme, parallel_boundary_conditions, radial_boundary_conditions, read_file, 
-    │  │     restart_file_version, shift_metric, silent, spectral_radius, testing, uniform_mu_grid, vp_trap, 
+    │  │  ╰─ auto_restart, collisions, disp_par, disp_vp, disp_x, disp_y, dt_min, dtim, fac_dtim_est, flux_tube, 
+    │  │     fluxtol, gamatol, ifluxtol, io_format, io_legacy, io_testdata, iperform_set, irun, laverage_dist_over_time,
+    │  │     lflapv, lpar_vel_nl, lrestart_new_grid, ltrapping_arakawa, lverbose, matrix_format, max_gr, max_sec, 
+    │  │     max_seconds, meth, method, min_gr, naverage, ncqtol, ndump_ts, neoclassics, nl_dtim_est, nlapar, nlbpar, 
+    │  │     nlphi, non_linear, normalize_per_toroidal_mode, normalized, ntime, order_of_the_radial_scheme, 
+    │  │     order_of_the_scheme, order_of_the_zf_scheme, parallel_boundary_conditions, radial_boundary_conditions, 
+    │  │     read_file, restart_file_version, shift_metric, silent, spectral_radius, testing, uniform_mu_grid, vp_trap,
     │  │     zonal_adiabatic
     │  │
     │  ├─ diagnostic:
@@ -157,7 +158,7 @@ Each Folder contains:
     │  │     vpar_mean, wstar
     │  │
     │  ├─ species01:
-    │  │  ╰─ background, dens, dens_prof_coef, dens_prof_type, mass, param, rln, rlt, rlt_gauss, temp, temp_prof_coef, 
+    │  │  ╰─ background, dens, dens_prof_coef, dens_prof_type, mass, param, rln, rlt, rlt_gauss, temp, temp_prof_coef,
     │  │     temp_prof_type, uprim, z
     │  │
     │  ╰─ species02:
