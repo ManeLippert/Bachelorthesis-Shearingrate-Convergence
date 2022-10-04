@@ -9,20 +9,16 @@ Each Folder contains:
 
 ***Important: ( * ) marks files that are not included on GitHub and are only included on the NAS of TPV in Bayreuth***
 
-* <details><summary>`gkwdata.h5`: raw data of the simulation ( * )</summary>
-  <p>
+* `gkwdata.h5`: raw data of the simulation ( * )
 
-    Contains:
-
-    * diagnostics:
-    
-        * diagnos_fields: 
-            * kxspec, kxvort, kyspec, kyvort, phi, spc
-
-        * diagnos_fluxes: 
-            * EFlesr0001, eflux_species01, eflux_spectra, eflux_sup, eflux_xspec, flmgr01, pflux_species01, pflux_spectra, pflux_sup, pflux_xspec, vflux_species01, vflux_spectra, vflux_xspec
-
-        * diagnos_grid: 
+    ```
+    gkwdata.h5:
+    ├─ diagnostics:
+    |  ├─ diagnos_fields: 
+    |  |  ╰─ kxspec, kxvort, kyspec, kyvort, phi, spc
+    |  ├─ diagnos_fluxes: 
+    |  |  ╰─ EFlesr0001, eflux_species01, eflux_spectra, eflux_sup, eflux_xspec, flmgr01, pflux_species01, pflux_spectra, pflux_sup, pflux_xspec, vflux_species01, vflux_spectra, vflux_xspec
+    |  ├─ diagnos_grid: 
             * intmu, intvp, lxn, lyn, mode_label, mphi, mphiw3, mrad_G, mrad_l, sgrid
 
         * diagnos_growth_freq: 
@@ -98,9 +94,7 @@ Each Folder contains:
 
         * restart:
             * dtim, nt_complete, nt_remain, time_complete
-
-  </p>
-  </details>
         
+        ``` 
 * `data.h5`: trimmed down version of `gkwdata.h5` for lower space consumption with added evaluated data (*)
 * `data.csv`: calculated data for bachelorthesis 
