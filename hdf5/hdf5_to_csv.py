@@ -5,7 +5,7 @@ filename = [f for f in os.listdir() if f.endswith('.h5')]
 dataset = {'evaluation':['second_derivative_phi', 'zonalflow_potential', 'shearing_rate', 'shearing_rate_maximum']}
 
 for dirpath, dirnames, filenames in os.walk("."):
-    for filename in [f for f in filenames if f.endswith(".csv")]:
+    for filename in [f for f in filenames if f.endswith(".h5")]:
         
         dirpath = dirpath.replace('./', '')
         
@@ -13,7 +13,7 @@ for dirpath, dirnames, filenames in os.walk("."):
 
         print(file)
         
-        subprocess.run(['rm', '-rf', file])
+        #subprocess.run(['rm', '-rf', file])
         
         #f = h5py.File(file, 'r')
 
