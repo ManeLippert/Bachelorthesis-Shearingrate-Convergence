@@ -649,123 +649,64 @@ I will document my work in from of a journal and to keep track of all changes i 
 
 ## Results
 
-### Boxsize 1x1
-
-[Juypter Notebook (6.0/1x1/12/16/6)]
-
-[Juypter Notebook (6.0/1x1/12/32/6)](/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar32/Nmu6/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/12/48/9)](/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar48/Nmu9/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/12/64/9)](/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar64/Nmu9/eval.ipynb)
-
-
-
-[Juypter Notebook (6.0/1x1/16/16/9)](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar16/Nmu9/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/32/9)](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar32/Nmu9/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/48/6](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu6/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/48/9](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/48/9/0.025](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/dtim0.025/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/48/9/0.70/11](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/krhomax0.70/Nmod11/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/48/9/43](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx43/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/48/9/63](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx63/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/64/6](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6/eval.ipynb)
-
-[Juypter Notebook (6.0/1x1/16/64/9](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb)
-
-
-
-[Juypter Notebook (6.3/1x1/16/48/9](/data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb)
-
-### Boxsize 2x1
-
-(/data/S6_rlt6.0/boxsize2x1/Ns16/Nvpar48/Nmu9/eval.ipynb)
-
-
-### Boxsize 2x2
-(/data/S6_rlt6.0/boxsize2x2/Ns16/Nvpar48/Nmu9/eval.ipynb)
-(/data/S6_rlt6.2/boxsize2x2/Ns16/Nvpar64/Nmu9/eval.ipynb)
-
-
-### Boxsize 3x1
-(/data/S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9/eval.ipynb)
-
-### Boxsize 3x3
-(/data/S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/eval.ipynb)
-
-
-### Boxsize 4x1
-
-[`test`](/data/S6_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9/eval.ipynb)
-
-
 <pre>
-
 S6_rlt6.0
 ├── boxsize1x1
 │   ├── Ns12
 │   │   ├── Nvpar16
 │   │   │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar16/Nmu6/eval.ipynb">Nmu6</a>
 │   │   ├── Nvpar32
-│   │   │   └── Nmu6
+│   │   │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar32/Nmu6/eval.ipynb">Nmu6</a>
 │   │   ├── Nvpar48
-│   │   │   └── Nmu9
+│   │   │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
 │   │   └── Nvpar64
-│   │       └── Nmu9
+│   │       └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
 │   └── Ns16
 │       ├── Nvpar16
-│       │   └── Nmu9
+│       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar16/Nmu9/eval.ipynb">Nmu9</a>
 │       ├── Nvpar32
-│       │   └── Nmu9
+│       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar32/Nmu9/eval.ipynb">Nmu9</a>
 │       ├── Nvpar48
-│       │   ├── Nmu6
-│       │   └── Nmu9
-│       │       ├── dtim0.025
+│       │   ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu6/eval.ipynb">Nmu6</a>
+│       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
+│       │       ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/dtim0.025/eval.ipynb">dtim0.025</a>
 │       │       ├── krhomax0.70
-│       │       │   └── Nmod11
-│       │       ├── nx43
-│       │       └── nx63
+│       │       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/krhomax0.70/Nmod11/eval.ipynb">Nmod11</a>
+│       │       ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx43/eval.ipynb">nx43</a>
+│       │       └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx63/eval.ipynb">nx63</a>
 │       └── Nvpar64
-│           ├── Nmu6
-│           └── Nmu9
+│           ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6/eval.ipynb">Nmu9</a>
+│           └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
 ├── boxsize2x1
 │   └── Ns16
 │       └── Nvpar48
-│           └── Nmu9
+│           └── <a href="/data/S6_rlt6.0/boxsize2x1/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
 ├── boxsize2x2
 │   └── Ns16
 │       └── Nvpar48
-│           └── Nmu9
+│           └── <a href="/data/S6_rlt6.0/boxsize2x2/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
 ├── boxsize3x1
 │   └── Ns16
 │       └── Nvpar48
-│           └── Nmu9
+│           └── <a href="/data/S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
 ├── boxsize3x3
 │   └── Ns16
 │       └── Nvpar48
-│           └── Nmu9
+│           └── <a href="/data/S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
 └── boxsize4x1
     └── Ns16
         └── Nvpar48
-            └── Nmu9
+            └── <a href="/data/S6_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
 S6_rlt6.2
 └── boxsize2x2
     └── Ns16
         └── Nvpar64
-            └── Nmu9
+            └── <a href="/data/S6_rlt6.2/boxsize2x2/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
 S6_rlt6.3
 └── boxsize1x1
     └── Ns16
         └── Nvpar64
-            └── Nmu9
+            └── <a href="/data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
 </pre>
 
 * * *
