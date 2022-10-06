@@ -87,52 +87,54 @@ data:
             ╰─ Nmu9
 ```
 
-Each Folder contains: 
+### Important
 
-***Important: ( * ) marks files that are not included on GitHub and are only included on the NAS of TPV in Bayreuth***
+* (*) marks files that are not included on GitHub and are only included on the NAS of TPV in Bayreuth
+* (#) marks files that can be deleted to free space
+   
+### Files 
+
 * `eval.ipynb`: jupyter notebook of evaluation
 * `FDS`: restart file needed to restart run with gkw from current timestep ( * )
 * `FDS.dat`: database file of `FDS` with current status of the simulation after run with gkw
 * `input.dat`: input database for simultaion with all parameters
-* `input.out`: input output file
+* `input.out`: input output file (#)
 * `kx_connect.dat`: parallel boundary connections database
 * `output.dat`: output database of gkw
 * `par.dat`: curvature and Coriolis functions database
 * `perfloop.dat`: (no description found)
 * `perform.dat`: performance database
-* `status.txt`: status file of specific run generated with python script `\python\monitor_job.py` (not in every folder included)
-* `data.h5`: trimmed down version of `gkwdata.h5` for lower space consumption generated with shell script `\hdf5\hdf5_extract.sh` with added evaluated data ( * )
-    ```
-    data.h5:
-    │
-    ├─ diagnostics:
-    │  │
-    │  ├─ diagnos_fields: 
-    │  │  ╰─ phi
-    │  │
-    │  ├─ diagnos_fluxes: 
-    │  │  ╰─ eflux_species01
-    │  │
-    │  ├─ diagnos_grid: 
-    │  │  ╰─ lxn
-    │  │
-    │  ╰─ diagnos_growth_freq: 
-    │     ╰─ time
-    │
-    ├─ grid:
-    │  ╰─ xphi
-    │
-    ╰─ evaluation:
-       ╰─ second_derivative_phi, zonalflow_potential, shearing_rate, shearing_rate_maximum
-    ```
+* `status.txt`: status file of specific run generated with python script `\python\monitor_job.py` (not in every folder included)(#)
+* `data.h5`: trimmed down version of `gkwdata.h5` for lower space consumption generated with shell script `\hdf5\hdf5_extract.sh` with added evaluated data (*)
+   ```
+   data.h5:
+   │
+   ├─ diagnostic:
+   │  │
+   │  ├─ diagnos_fields: 
+   │  │  ╰─ phi
+   │  │
+   │  ├─ diagnos_fluxes: 
+   │  │  ╰─ eflux_species01
+   │  │
+   │  ├─ diagnos_grid: 
+   │  │  ╰─ lxn
+   │  │
+   │  ╰─ diagnos_growth_freq: 
+   │     ╰─ time
+   │
+   ├─ grid:
+   │  ╰─ xphi
+   │
+   ╰─ evaluation:
+      ╰─ second_derivative_phi, zonalflow_potential, shearing_rate, shearing_rate_maximum
+   ```
 
-* `data.csv`: `csv` - file of `data.h5` - section 'evaluation' 
-
-* `gkwdata.h5`: raw data of the simulation ( * )
+* `gkwdata.h5`: raw data of the simulation (*) (#)
     ```
     gkwdata.h5:
     │
-    ├─ diagnostics:
+    ├─ diagnostic:
     │  │
     │  ├─ diagnos_fields: 
     │  │  ╰─ kxspec, kxvort, kyspec, kyvort, phi, spc
