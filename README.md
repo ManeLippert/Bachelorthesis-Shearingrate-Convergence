@@ -675,7 +675,7 @@ S6_rlt6.0
 │       │       ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx43/eval.ipynb">nx43</a>
 │       │       └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx63/eval.ipynb">nx63</a>
 │       └── Nvpar64
-│           ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6/eval.ipynb">Nmu9</a>
+│           ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6/eval.ipynb">Nmu6</a>
 │           └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
 ├── boxsize2x1
 │   └── Ns16
