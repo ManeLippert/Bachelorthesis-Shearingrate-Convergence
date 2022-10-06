@@ -1,20 +1,19 @@
-##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/README.md#journal) &nbsp; &nbsp; &nbsp; &nbsp; [Results](/README.md#results) &nbsp; &nbsp; &nbsp; &nbsp; [Literature](/README.md#literature) &nbsp; &nbsp; &nbsp; &nbsp; [GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows)
-
-* * *
-
 # Convergence of Wavelength in Zonal Flow Potential
 
 ##### Bachelor Thesis about Zonal Flows
 
 ![alt text](/pictures/Zonal_Flow.PNG)
 
+* * *
+
 ## Content
 
 1. [Introduction](#introduction)
 2. [Journal](#journal)
-3. [TODO](#todo)
 5. [Results](#results)
 4. [Literature](#literature)
+
+* * *
 
 ## Introduction 
 This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D.
@@ -22,6 +21,8 @@ This repository is focused on my work for my Bachelor Thesis in Zonal Flows and 
 * [gkw-Code](https://bitbucket.org/gkw/gkw/wiki/Home)
 * In this repository is my own version of [gkw](/gkw/) for this thesis with according changes
 * LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf) 
+
+* * *
 
 ## Journal
 I will document my work in from of a journal and to keep track of all changes i will use [Source Control from GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/commits/main).
@@ -644,10 +645,130 @@ I will document my work in from of a journal and to keep track of all changes i 
   </p>
   </details>
 
-## TODO
-The TODOs will be handled with [GitHub Issues](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/issues) because it is a nice and good way to keep track about problems, ideas and commits.
+* * *
 
 ## Results
+
+### Boxsize 1x1
+
+[Juypter Notebook (6.0/1x1/12/16/6)]
+
+[Juypter Notebook (6.0/1x1/12/32/6)](/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar32/Nmu6/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/12/48/9)](/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar48/Nmu9/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/12/64/9)](/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar64/Nmu9/eval.ipynb)
+
+
+
+[Juypter Notebook (6.0/1x1/16/16/9)](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar16/Nmu9/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/32/9)](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar32/Nmu9/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/48/6](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu6/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/48/9](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/48/9/0.025](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/dtim0.025/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/48/9/0.70/11](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/krhomax0.70/Nmod11/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/48/9/43](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx43/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/48/9/63](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx63/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/64/6](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6/eval.ipynb)
+
+[Juypter Notebook (6.0/1x1/16/64/9](/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb)
+
+
+
+[Juypter Notebook (6.3/1x1/16/48/9](/data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb)
+
+### Boxsize 2x1
+
+(/data/S6_rlt6.0/boxsize2x1/Ns16/Nvpar48/Nmu9/eval.ipynb)
+
+
+### Boxsize 2x2
+(/data/S6_rlt6.0/boxsize2x2/Ns16/Nvpar48/Nmu9/eval.ipynb)
+(/data/S6_rlt6.2/boxsize2x2/Ns16/Nvpar64/Nmu9/eval.ipynb)
+
+
+### Boxsize 3x1
+(/data/S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9/eval.ipynb)
+
+### Boxsize 3x3
+(/data/S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/eval.ipynb)
+
+
+### Boxsize 4x1
+
+[`test`](/data/S6_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9/eval.ipynb)
+
+
+<pre>
+
+S6_rlt6.0
+├── boxsize1x1
+│   ├── Ns12
+│   │   ├── Nvpar16
+│   │   │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar16/Nmu6/eval.ipynb">Nmu6</a>
+│   │   ├── Nvpar32
+│   │   │   └── Nmu6
+│   │   ├── Nvpar48
+│   │   │   └── Nmu9
+│   │   └── Nvpar64
+│   │       └── Nmu9
+│   └── Ns16
+│       ├── Nvpar16
+│       │   └── Nmu9
+│       ├── Nvpar32
+│       │   └── Nmu9
+│       ├── Nvpar48
+│       │   ├── Nmu6
+│       │   └── Nmu9
+│       │       ├── dtim0.025
+│       │       ├── krhomax0.70
+│       │       │   └── Nmod11
+│       │       ├── nx43
+│       │       └── nx63
+│       └── Nvpar64
+│           ├── Nmu6
+│           └── Nmu9
+├── boxsize2x1
+│   └── Ns16
+│       └── Nvpar48
+│           └── Nmu9
+├── boxsize2x2
+│   └── Ns16
+│       └── Nvpar48
+│           └── Nmu9
+├── boxsize3x1
+│   └── Ns16
+│       └── Nvpar48
+│           └── Nmu9
+├── boxsize3x3
+│   └── Ns16
+│       └── Nvpar48
+│           └── Nmu9
+└── boxsize4x1
+    └── Ns16
+        └── Nvpar48
+            └── Nmu9
+S6_rlt6.2
+└── boxsize2x2
+    └── Ns16
+        └── Nvpar64
+            └── Nmu9
+S6_rlt6.3
+└── boxsize1x1
+    └── Ns16
+        └── Nvpar64
+            └── Nmu9
+</pre>
+
+* * *
 
 ## Literature
 [[1]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) Peeters, A. G., Rath, F., Buchholz, R., Camenen, Y., Candy, J., Casson,F. J., Grosshauser, S. R., Hornsby, W. A., Strintzi, D. & Weikl, A. "Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"
@@ -663,7 +784,3 @@ The TODOs will be handled with [GitHub Issues](https://github.com/ManeLippert/Ba
 [[6]](/literature/Diamond%20-%20Zonal%20flows%20in%20plasma%20-%20a%20review%20(Review%2C%202005).pdf) Diamond, P. H., Itoh, S-I., Itoh, K. & Hahm, T. S. "Zonal flows in plasma—a review"
 
 [[7]](/literature/Garbet%20-%20Gyrokinetic%20simulations%20of%20turbulent%20transport%20(Review%2C%202010).pdf) Garbet, X., Idomura, Y., Villard, L. & Watanabe, T.H. "Gyrokinetic simulations of turbulent transport"
-
-* * *
-
-##### [Startpage](/README.md) &nbsp; &nbsp; &nbsp; &nbsp; [Journal](/README.md#journal) &nbsp; &nbsp; &nbsp; &nbsp; [Results](/README.md#results) &nbsp; &nbsp; &nbsp; &nbsp; [Literature](/README.md#litarture) &nbsp; &nbsp; &nbsp; &nbsp; [GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows)
