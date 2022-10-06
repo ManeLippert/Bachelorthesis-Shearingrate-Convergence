@@ -1,14 +1,14 @@
 #!/bin/bash
 
-INPUTFILE="gkwdata.h5"
-OUTPUTFILE="data.h5"
+INPUTFILE="data.h5"
+OUTPUTFILE="test.h5"
 
 DATASETS=(
 #"diagnostic/diagnos_fields/kxspec"
 #"diagnostic/diagnos_fields/kxvort"
 #"diagnostic/diagnos_fields/kyspec"
 #"diagnostic/diagnos_fields/kyvort"
-"diagnostic/diagnos_fields/phi"
+#"diagnostic/diagnos_fields/phi"
 #"diagnostic/diagnos_fields/spc"
 #"diagnostic/diagnos_fluxes/EFlesr0001"
 "diagnostic/diagnos_fluxes/eflux_species01"
@@ -474,6 +474,10 @@ DATASETS=(
 #"restart/nt_complete"
 #"restart/nt_remain"
 #"restart/time_complete"
+#"evaluation/second_derivative_phi"
+#"evaluation/zonalflow_potential"
+#"evaluation/shearing_rate"
+"evaluation/shearing_rate_maximum"
 )
 
 for VAL in ${DATASETS[@]}; do
