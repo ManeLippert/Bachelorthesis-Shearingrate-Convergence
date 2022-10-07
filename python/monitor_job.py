@@ -43,22 +43,22 @@
 
 # MODULES ==================================================================================================================
 
-import datetime
-import time
-from time import sleep 
-import os
-import subprocess
+import datetime, time, os, subprocess
 
 # VARIABLES ================================================================================================================
 
 emailAddress = 'Manuel.Lippert@uni-bayreuth.de'
 backupLocation = '/scratch/bt712347/backup'
 jobName = 'Name'
+
 nTimestepsRequired = 20000
+outputCriteria = '0'
+
+sleepTime = 5*60
 
 restartMail = False
 
-## FILENAMES 
+## FILENAMES ===============================================================================================================
 
 jobscriptFilename = 'jobscript'
 restartFilename = 'FDS.dat'
@@ -68,19 +68,13 @@ inputFilename = 'input.dat'
 def outputFilename(info):
     return './slurm-' + info + '.out'
 
-## FLAGS 
+## FLAGS ===================================================================================================================
 
 jobNameFlag = '#SBATCH --job-name='
-walltimeFlag = 'time='
 startOutputFlag = 'Submitted batch job '
-inputFlag = 'NTIME'
 restartFlag = 'FILE_COUNT'
 
-outputCriteria = '0'
-
-sleepTime = 5*60
-
-## COMMANDS
+## COMMANDS ================================================================================================================
 
 commandJobRunning = 'squeue --states=running -u '
 commandJobPending = 'squeue --states=pending -u '
@@ -89,7 +83,7 @@ commandJobStarting = 'sbatch'
 
 # FUNCTIONS ================================================================================================================
 
-## OUTPUT TABLE
+## OUTPUT TABLE ============================================================================================================
 
 def print_table_row(content, output_type = None, time_info = True):
     
@@ -184,12 +178,7 @@ def print_table_row(content, output_type = None, time_info = True):
         else:
             print(row_format.format(*content))
 
-## INFORMATIONS
-
-def read_file_to_string(file):
-    content = ''.join(open(file).readlines())
-    
-    return content
+## INFORMATIONS ============================================================================================================
 
 def get_value_of_variable_from_file(file, file_index, relative_index, string):
     try:
@@ -200,14 +189,8 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
     except IndexError:
         print_table_row(['ERROR', 'String not found in file'], output_type='end')
         quit()
-        
-def get_information_of_flag_from_file(content, file_index, flag):
-    index = [idx for idx, s in enumerate(content) if flag in s][file_index]
-    info = content[index].split(flag, 1)[1]
-    
-    return info
 
-## FILE 
+## FILE ====================================================================================================================
 
 def write_add_string_into_file(file, substring, add, comment = None):
 
@@ -227,35 +210,14 @@ def write_add_string_into_file(file, substring, add, comment = None):
     with open(file, 'w') as f:
         f.writelines(data)
 
-## TIME
+## TIME ====================================================================================================================
 
 def format_num(time):
     if time < 10:
         return '0' + str(time)
     else:
         return str(time)
-
-def get_time_in_seconds(time):
     
-    if len(time) < 5:
-        ## d:hh:mm:ss
-        if len(time) == 4:
-            timeSeconds = int(time[0])*24*60*60 + int(time[1])*60*60 + int(time[2])*60 + int(time[3])
-        ## hh:mm:ss
-        elif len(time) == 3:
-            timeSeconds = int(time[0])*60*60 + int(time[1])*60 + int(time[2])
-        ## mm:ss
-        elif len(time) == 2:
-            timeSeconds = int(time[0])*60 + int(time[1])
-        ## ss
-        elif len(time) == 1:
-            timeSeconds = int(time[0])
-    else:
-        print_table_row(['ERROR', 'Time format not supported'], output_type='end')
-        quit()
-    
-    return timeSeconds
-
 def get_time_as_string(sec):
     
     mins,  sec   = sec   // 60, sec   % 60
@@ -281,7 +243,7 @@ def time_duration(startTime):
     stop = time.time()
     return get_time_as_string(stop - startTime)
 
-## STATUS
+## STATUS ==================================================================================================================
 
 def get_job_status(command, user):
     
@@ -302,7 +264,7 @@ def set_output_type(user):
 
     return outputType
 
-## MAIL 
+## MAIL ====================================================================================================================
 
 def send_mail(recipient, subject, body = None):
 
@@ -336,7 +298,7 @@ print_table_row(['OUTPUT', 'JOB INITIALIZE'], output_type='header')
 folder = os.path.dirname(os.path.abspath(__file__))
 path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
 
-## MAIL SWITCH
+## MAIL SWITCH =============================================================================================================
 
 try:
     emailNotification = True
@@ -344,7 +306,7 @@ try:
 except NameError:
     emailNotification = False
 
-## JOB SCRIPT
+## JOB SCRIPT ==============================================================================================================
 
 if os.path.exists(jobscriptFilename):    
     print_table_row(['SUCCESS', 'Found ' + jobscriptFilename])
@@ -357,36 +319,20 @@ else:
 
 jobscriptContent = open(jobscriptFilename, 'r').read().splitlines()
 
-## JOB NAME
+## JOB NAME ================================================================================================================
 
-try:
-    name = get_information_of_flag_from_file(jobscriptContent, 0, jobNameFlag)
-
-    if name == '':
-        write_add_string_into_file(jobscriptFilename, jobNameFlag, jobName)
-    else:
-        jobName = name
-
-except IndexError:
-    write_add_string_into_file(jobscriptFilename, jobNameFlag, jobName)
+write_add_string_into_file(jobscriptFilename, jobNameFlag, jobName)
 
 if len(jobName) > 8:
     jobName = jobName[0:8]
 
 jobInformations.append(['INFO', 'Name', jobName])
 
-## TIMESTEPS
+## TIMESTEPS ===============================================================================================================
 
 jobInformations.append(['INFO', 'Required Timesteps', nTimestepsRequired])
 
-## WALLTIME
-
-walltime = get_information_of_flag_from_file(jobscriptContent, 0, walltimeFlag).replace('-', ':').split(':')
-walltimeSeconds = get_time_in_seconds(walltime)
-
-jobInformations.append(['INFO', 'Walltime/s', walltimeSeconds])
-
-## BACKUP PATH/SWITCH 
+## BACKUP PATH/SWITCH ======================================================================================================
 
 try:
     
