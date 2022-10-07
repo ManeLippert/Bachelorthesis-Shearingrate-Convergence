@@ -4,7 +4,7 @@
 
 ![alt text](/pictures/Zonal_Flow.PNG)
 
-* * *
+
 
 ## Content
 
@@ -13,7 +13,7 @@
 5. [Results](#results)
 4. [Literature](#literature)
 
-* * *
+
 
 ## Introduction 
 This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D.
@@ -22,7 +22,7 @@ This repository is focused on my work for my Bachelor Thesis in Zonal Flows and 
 * In this repository is my own version of [gkw](/gkw/) for this thesis with according changes
 * LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf) 
 
-* * *
+
 
 ## Journal
 I will document my work in from of a journal and to keep track of all changes i will use [Source Control from GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/commits/main).
@@ -645,10 +645,12 @@ I will document my work in from of a journal and to keep track of all changes i 
   </p>
   </details>
 
-* * *
+
 
 ## Results
 
+<details><summary>Juypter Notebooks</summary>
+<p>
 <pre>
 S6_rlt6.0
 ├── boxsize1x1
@@ -708,8 +710,10 @@ S6_rlt6.3
         └── Nvpar64
             └── <a href="/data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
 </pre>
+</p>
+</details>
 
-* * *
+
 
 ## Literature
 [[1]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) Peeters, A. G., Rath, F., Buchholz, R., Camenen, Y., Candy, J., Casson,F. J., Grosshauser, S. R., Hornsby, W. A., Strintzi, D. & Weikl, A. "Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"
