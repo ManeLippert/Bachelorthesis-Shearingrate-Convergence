@@ -10,7 +10,10 @@
 
 1. [Introduction](#introduction)
 2. [Journal](#journal)
-5. [Results](#results)
+3. [Results](#results)
+
+    3.1 [Juypter Notebooks](#juypter-notebooks)
+
 4. [Literature](#literature)
 
 
@@ -228,11 +231,11 @@ I will document my work in from of a journal and to keep track of all changes i 
 
     From local to remote machine
     ```
-    scp -r Bachelorthesis-ZonalFlows/gkw/ bt712347@btrzx1-1.rz.uni-bayreuth.de:gkw/
+    scp -r Bachelorthesis-ZonalFlows/gkw/ user@btrzx1-1.rz.uni-bayreuth.de:gkw/
     ```
     From remote to local
     ```
-    scp -r bt712347@btrzx1-1.rz.uni-bayreuth.de:gkw/ Bachelorthesis-ZonalFlows/gkw/ 
+    scp -r user@btrzx1-1.rz.uni-bayreuth.de:gkw/ Bachelorthesis-ZonalFlows/gkw/ 
     ```
 
     on Linux account just use ```git``` protocol
@@ -254,9 +257,6 @@ I will document my work in from of a journal and to keep track of all changes i 
     # First Day in the Office in Bayreuth
 
     #### Thusday 10.05.2022 from 10:00 to 17:30
-
-    ### Setup Linux Computer
-    After some time of trying I found out that the keyboard is in **english** so this took me some time to figure out.
 
     ### First Run with gkw
     For the first run I used the [input.dat.minimum](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/blob/main/gkw/doc/input.dat.minimum) that gaves me the examination files in the ```~/gkw/run``` directory. For futher examination I will use ```python``` on my local machine.
@@ -477,73 +477,6 @@ I will document my work in from of a journal and to keep track of all changes i 
     </p>
     </details>
 
-  * <details><summary>18.05.2022 &nbsp; Data Structure</summary>
-    <p>
-
-    # Data Structure
-
-    #### Wednesday 18.05.2022 11:00 to 18.00
-
-    # Structure
-
-    The ```keys``` for every dataset will be stored in a multi list in list with three levels
-
-
-    <table>
-        <thead>
-            <tr>
-                <th>  </th><th>Level 1        </th>
-                <th>  </th><th>Level 2        </th>
-                <th>  </th><th>Level 3        </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td rowspan=50>0</td><td rowspan=50>diagnostic</td>
-                <td rowspan=6>0</td><td rowspan=6>diagnos_fields</td>
-                <td> 0</td><td>kxspec         </td>
-            </tr>
-            <tr><td> 1</td><td>kxvort         </td></tr>
-            <tr><td> 2</td><td>kyspec         </td></tr>
-            <tr><td> 3</td><td>kyvort         </td></tr>
-            <tr><td> 4</td><td>phi            </td></tr>
-            <tr><td> 5</td><td>spc            </td></tr>
-            <tr>
-                <td rowspan=13>1</td><td rowspan=13>diagnos_ fluxes</td> 
-                <td> 0</td><td>EFlesr0001     </td>
-            </tr>
-            <tr><td> 1</td><td>eflux_species01</td></tr>
-            <tr><td> 2</td><td>eflux_spectra  </td></tr>
-            <tr><td> 3</td><td>eflux_sup      </td></tr>
-            <tr><td> 4</td><td>eflux_xspec    </td></tr>
-            <tr><td> 5</td><td>flmgr01        </td></tr>
-            <tr><td> 6</td><td>pflux_species01</td></tr>
-            <tr><td> 7</td><td>pflux_spectra  </td></tr>
-            <tr><td> 8</td><td>pflux_sup      </td></tr>
-            <tr><td> 9</td><td>pflux_xspec    </td></tr>
-            <tr><td>10</td><td>vflux_species01</td></tr>
-            <tr><td>11</td><td>vflux_spectra  </td></tr>
-            <tr><td>12</td><td>vflux_xspec    </td></tr>
-            <tr>
-                <td rowspan=10>2</td><td rowspan=10>diagnos_grid</td> 
-                <td> 0</td><td>intmu          </td>
-            </tr>
-            <tr><td> 1</td><td>intvp          </td></tr>
-            <tr><td> 2</td><td>lxn            </td></tr>
-            <tr><td> 3</td><td>lyn            </td></tr>
-            <tr><td> 4</td><td>mode_label     </td></tr>
-            <tr><td> 5</td><td>mphi           </td></tr>
-            <tr><td> 6</td><td>mphiw3         </td></tr>
-            <tr><td> 7</td><td>mrad_G         </td></tr>
-            <tr><td> 8</td><td>mrad_l         </td></tr>
-            <tr><td> 9</td><td>sgrid          </td></tr>
-        </tbody>
-    </table>
-
-    and so on...
-
-    </p>
-    </details>
-
   * <details><summary>20.05.2022 &nbsp; Discussion about evaluation of the shearing rate $\omega_{\mathrm{E \times B}}$</summary>
     <p>
 
@@ -649,8 +582,8 @@ I will document my work in from of a journal and to keep track of all changes i 
 
 ## Results
 
-<details><summary>Juypter Notebooks</summary>
-<p>
+### Juypter Notebooks
+
 <pre>
 S6_rlt6.0
 ├── boxsize1x1
@@ -711,10 +644,6 @@ S6_rlt6.3
             └── <a href="/data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
 <a href="/data/eval_comparison.ipynb">Comparison</a>
 </pre>
-</p>
-</details>
-
-
 
 ## Literature
 [[1]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) Peeters, A. G., Rath, F., Buchholz, R., Camenen, Y., Candy, J., Casson,F. J., Grosshauser, S. R., Hornsby, W. A., Strintzi, D. & Weikl, A. "Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"
