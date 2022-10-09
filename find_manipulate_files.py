@@ -61,7 +61,7 @@ def hdf5_combine(input_file, combined_file, groupname):
                     print('Every data entry should have own groupname')        
             else:
                 f.create_dataset(groupname, data = data)
-        except ValueError:
+        except (ValueError,OSError):
             pass
 
         f.close()
@@ -91,9 +91,17 @@ def hdf5_close(file):
 data = file_loop('data.h5')
 stepsize = file_loop('stepsize.h5')
 
+data_data = []
+
+for i in data:
+    if "/data.h5" in i:
+        data_data.append(i)
+
 #print(data[0], stepsize[0])
 
 #hdf5_extract(data[0], "./test.h5", "evaluation/shearing_rate_maximum")
 
-for i, o in zip(stepsize, data):
+for i, o in zip(stepsize, data_data):
     hdf5_combine(i, o, "evaluation/derivative_stepsize")
+    #hdf5_close(i)
+    #hdf5_close(o)
