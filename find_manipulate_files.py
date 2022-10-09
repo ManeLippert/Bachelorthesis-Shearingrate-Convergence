@@ -75,13 +75,23 @@ def hdf5_combine(input_file, combined_file, groupname):
     
 def delete_file(file):
     subprocess.run(['rm', '-rf', file])
+    
+def hdf5_close(file):
+    
+    try:
+        f = h5py.File(file, 'r')
+        f.close()
+        print(file + ' successfully closed!')
+    
+    except OSError:
+        print('! ' + file + ' might be broken !')
 
 # MANIPULATION ================================================================================================================
 
 data = file_loop('data.h5')
 stepsize = file_loop('stepsize.h5')
 
-print(data[0], stepsize[0])
+#print(data[0], stepsize[0])
 
 #hdf5_extract(data[0], "./test.h5", "evaluation/shearing_rate_maximum")
 
