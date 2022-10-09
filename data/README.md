@@ -127,7 +127,7 @@ data
    │  ╰─ xphi
    │
    ╰─ evaluation
-      ╰─ second_derivative_phi, zonalflow_potential, shearing_rate, shearing_rate_maximum
+      ╰─ derivative_stepsize, second_derivative_phi, zonalflow_potential, shearing_rate, shearing_rate_maximum
    ```
 
 * `gkwdata.h5`: raw data of the simulation (*) (#)
