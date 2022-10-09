@@ -14,10 +14,6 @@ def parameters(usetex, fontsize, figsize, dpi):
     plt.rcParams['font.size'] = fontsize
     plt.rcParams['figure.figsize'] = figsize
     plt.rcParams['figure.dpi'] = dpi
-    #plt.rcParams['image.cmap'] = 
-    
-    #sns.set_palette('colorblind')
-    
     plt.rcParams['axes.prop_cycle'] = cycler('color', sns.color_palette("colorblind", as_cmap=True))
     
 def ax_ticks_subplot(ax):

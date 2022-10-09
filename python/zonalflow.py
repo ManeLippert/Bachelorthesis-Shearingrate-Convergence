@@ -36,7 +36,7 @@ def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file,
         zonal_pot = hdf5_file[h5tools.find_key(hdf5_file, 'zonalflow_potential')][()]
         ddphi = hdf5_file[h5tools.find_key(hdf5_file, 'second_derivative_phi')][()]
         dx = hdf5_file[h5tools.find_key(hdf5_file, 'derivative_stepsize')][()]
-        print('Loaded from data')
+        #print('Loaded from data')
         
     except TypeError:
         print('Calculation...')
@@ -60,7 +60,7 @@ def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file,
 def get_max_shearingrate(hdf5_file, wexb, time, fourier_index_max):
     
     try:
-        print('Loaded from data')
+        #print('Loaded from data')
         wexb_max =  hdf5_file[h5tools.find_key(hdf5_file, 'shearing_rate_maximum')][()]
         
     except TypeError:
