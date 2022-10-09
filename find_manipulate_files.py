@@ -101,7 +101,5 @@ for i in data:
 
 #hdf5_extract(data[0], "./test.h5", "evaluation/shearing_rate_maximum")
 
-for i, o in zip(stepsize, data_data):
-    hdf5_combine(i, o, "evaluation/derivative_stepsize")
-    #hdf5_close(i)
-    #hdf5_close(o)
+for i in stepsize:
+    delete_file(i)
