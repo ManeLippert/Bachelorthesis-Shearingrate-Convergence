@@ -2,6 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import rc
 from matplotlib.transforms import Bbox
+import seaborn as sns
+from cycler import cycler
+
 
 # Plot parameters
 def parameters(usetex, fontsize, figsize, dpi):
@@ -11,6 +14,11 @@ def parameters(usetex, fontsize, figsize, dpi):
     plt.rcParams['font.size'] = fontsize
     plt.rcParams['figure.figsize'] = figsize
     plt.rcParams['figure.dpi'] = dpi
+    #plt.rcParams['image.cmap'] = 
+    
+    #sns.set_palette('colorblind')
+    
+    plt.rcParams['axes.prop_cycle'] = cycler('color', sns.color_palette("colorblind", as_cmap=True))
     
 def ax_ticks_subplot(ax):
     ax.tick_params(direction = "in")

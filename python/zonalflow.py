@@ -27,47 +27,64 @@ def get_eflux_time(hdf5_file):
 
 def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file, start_index = None, end_index = None):
     
-    # Elektrostatic potencial
-    phi = hdf5_file[h5tools.find_key(hdf5_file, 'phi')][:,:,start_index:end_index]
-    nx = phi.shape[0]
-
-    # Mean over y to get a approximation for the zonal potenzial
-    zonal_pot = np.mean(phi,1)
-
-    # Finite Difference for shearing rate omega_ExB
-
     # Stepsize
     rad_boxsize = hdf5_file[h5tools.find_key(hdf5_file, 'lxn')][()][0]
     rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
-    dx = rad_boxsize/nx
+    
+    try:
+        wexb =  hdf5_file[h5tools.find_key(hdf5_file, 'shearing_rate')][()]
+        zonal_pot = hdf5_file[h5tools.find_key(hdf5_file, 'zonalflow_potential')][()]
+        ddphi = hdf5_file[h5tools.find_key(hdf5_file, 'second_derivative_phi')][()]
+        dx = hdf5_file[h5tools.find_key(hdf5_file, 'derivative_stepsize')][()]
+        print('Loaded from data')
+        
+    except TypeError:
+        print('Calculation...')
+        
+        # Elektrostatic potencial
+        phi = hdf5_file[h5tools.find_key(hdf5_file, 'phi')][:,:,start_index:end_index]
+        nx = phi.shape[0]
+    
+        dx = rad_boxsize/nx
+        
+        # Mean over y to get a approximation for the zonal potenzial
+        zonal_pot = np.mean(phi,1)
 
-    ddphi= derivative.finite_second_order(zonal_pot[:,:], dx, 'period')
-    wexb = 0.5 * ddphi
+        # Finite Difference for shearing rate omega_ExB
+
+        ddphi= derivative.finite_second_order(zonal_pot[:,:], dx, 'period')
+        wexb = 0.5 * ddphi
     
     return wexb, rad_coord, rad_boxsize, ddphi, dx, zonal_pot
 
-def get_max_shearingrate(wexb, time, fourier_index_max):
+def get_max_shearingrate(hdf5_file, wexb, time, fourier_index_max):
     
-    def wexb_max_data(fourier_index_max):
-            
-        data = []
-            
-        for time_point in range(len(time)):
-            
-            wexb_time_point = wexb[:,time_point]
-            wexb_fft = np.fft.fft(wexb_time_point)
-            wexb_fft_amp = 2/len(wexb_fft) * np.abs(wexb_fft)
-            data.append(wexb_fft_amp[fourier_index_max])
+    try:
+        print('Loaded from data')
+        wexb_max =  hdf5_file[h5tools.find_key(hdf5_file, 'shearing_rate_maximum')][()]
         
-        return data
-        
-    wexb_max = []
-    
-    # Calculate wexb_max as list of list with multiple index    
-    for i in range(fourier_index_max+1):
-        wexb_max.append(wexb_max_data(i))
-    
-    wexb_max = np.array(wexb_max)
+    except TypeError:
+        print('Calculation...')
+        def wexb_max_data(fourier_index_max):
+
+            data = []
+
+            for time_point in range(len(time)):
+
+                wexb_time_point = wexb[:,time_point]
+                wexb_fft = np.fft.fft(wexb_time_point)
+                wexb_fft_amp = 2/len(wexb_fft) * np.abs(wexb_fft)
+                data.append(wexb_fft_amp[fourier_index_max])
+
+            return data
+
+        wexb_max = []
+
+        # Calculate wexb_max as list of list with multiple index    
+        for i in range(fourier_index_max+1):
+            wexb_max.append(wexb_max_data(i))
+
+        wexb_max = np.array(wexb_max)
     
     return wexb_max
 
