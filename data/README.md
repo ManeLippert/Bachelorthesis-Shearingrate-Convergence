@@ -108,6 +108,7 @@ data
 * `data.h5`: trimmed down version of `gkwdata.h5` for lower space consumption generated with shell script `\hdf5\hdf5_extract.sh` with added evaluated data (*)
    <details><summary>Containing</summary>
    <p>
+
    ```
    data.h5
    │
@@ -131,12 +132,14 @@ data
    └── evaluation
       └── derivative_stepsize, second_derivative_phi, zonalflow_potential, shearing_rate, shearing_rate_maximum
    ```
+
    </p>
    </details>
 
 * `gkwdata.h5`: raw data of the simulation (*) (#)
    <details><summary>Containing</summary>
    <p>
+
    ```
    gkwdata.h5
    │
@@ -268,5 +271,6 @@ data
    └── restart
       └── dtim, nt_complete, nt_remain, time_complete
    ``` 
+   
    </p>
    </details>
