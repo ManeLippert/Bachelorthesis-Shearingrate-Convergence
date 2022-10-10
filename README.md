@@ -596,22 +596,23 @@ S6_rlt6.0
 │   │   │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
 │   │   └── Nvpar64
 │   │       └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
-│   └── Ns16
-│       ├── Nvpar16
-│       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar16/Nmu9/eval.ipynb">Nmu9</a>
-│       ├── Nvpar32
-│       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar32/Nmu9/eval.ipynb">Nmu9</a>
-│       ├── Nvpar48
-│       │   ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu6/eval.ipynb">Nmu6</a>
-│       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
-│       │       ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/dtim0.025/eval.ipynb">dtim0.025</a>
-│       │       ├── krhomax0.70
-│       │       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/krhomax0.70/Nmod11/eval.ipynb">Nmod11</a>
-│       │       ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx43/eval.ipynb">nx43</a>
-│       │       └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx63/eval.ipynb">nx63</a>
-│       └── Nvpar64
-│           ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6/eval.ipynb">Nmu6</a>
-│           └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
+│   ├── Ns16
+│   │   ├── Nvpar16
+│   │   │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar16/Nmu9/eval.ipynb">Nmu9</a>
+│   │   ├── Nvpar32
+│   │   │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar32/Nmu9/eval.ipynb">Nmu9</a>
+│   │   ├── Nvpar48
+│   │   │   ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu6/eval.ipynb">Nmu6</a>
+│   │   │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
+│   │   │       ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/dtim0.025/eval.ipynb">dtim0.025</a>
+│   │   │       ├── krhomax0.70
+│   │   │       │   └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/krhomax0.70/Nmod11/eval.ipynb">Nmod11</a>
+│   │   │       ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx43/eval.ipynb">nx43</a>
+│   │   │       └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/nx63/eval.ipynb">nx63</a>
+│   │   └── Nvpar64
+│   │       ├── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6/eval.ipynb">Nmu6</a>
+│   │       └── <a href="/data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
+│   └── <a href="/data/S6_rlt6.0/boxsize1x1/compare_resolution.ipynb">Comparison of Resolution</a>
 ├── boxsize2x1
 │   └── Ns16
 │       └── Nvpar48
@@ -642,7 +643,7 @@ S6_rlt6.3
     └── Ns16
         └── Nvpar64
             └── <a href="/data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
-<a href="/data/eval_comparison.ipynb">Comparison</a>
+<a href="/data/compare_heatflux_threshold.ipynb">Comparison of Finite Heat Flux Threshold</a>
 </pre>
 
 ## Literature
