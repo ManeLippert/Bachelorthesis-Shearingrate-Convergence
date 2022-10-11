@@ -630,10 +630,11 @@ data
 │   │   └── Ns16
 │   │       └── Nvpar48
 │   │           └── <a href="/data/S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
-│   └── boxsize4x1
-│       └── Ns16
-│           └── Nvpar48
-│               └── <a href="/data/S6_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
+│   ├── boxsize4x1
+│   │   └── Ns16
+│   │       └── Nvpar48
+│   │           └── <a href="/data/S6_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9/eval.ipynb">Nmu9</a>
+│   └── <a href="/data/S6_rlt6.0/compare_boxsize.ipynb">Comparison of Boxsize</a>
 ├── S6_rlt6.2
 │   └── boxsize2x2
 │       └── Ns16
