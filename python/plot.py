@@ -7,7 +7,7 @@ from cycler import cycler
 
 
 # Plot parameters
-def parameters(usetex, fontsize, figsize, dpi, linewidth = 1.5, ticklength = 8):
+def parameters(usetex, fontsize, figsize, dpi, linewidth = 1.5, ticklength = 10):
     
     plt.rcParams['text.usetex'] = usetex
     plt.rcParams['font.family'] = 'serif'
