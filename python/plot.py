@@ -7,14 +7,30 @@ from cycler import cycler
 
 
 # Plot parameters
-def parameters(usetex, fontsize, figsize, dpi):
+def parameters(usetex, fontsize, figsize, dpi, linewidth = 1.5, ticklength = 8):
     
     plt.rcParams['text.usetex'] = usetex
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.size'] = fontsize
+    
     plt.rcParams['figure.figsize'] = figsize
     plt.rcParams['figure.dpi'] = dpi
+    
     plt.rcParams['axes.prop_cycle'] = cycler('color', sns.color_palette("colorblind", as_cmap=True))
+    
+    plt.rcParams['axes.linewidth'] = linewidth
+    
+    plt.rcParams['xtick.major.size'] = ticklength
+    plt.rcParams['xtick.major.width'] = linewidth
+    
+    plt.rcParams['ytick.major.size'] = ticklength
+    plt.rcParams['ytick.major.width'] = linewidth
+    
+    plt.rcParams['xtick.minor.size'] = ticklength/2
+    plt.rcParams['xtick.minor.width'] = linewidth
+    
+    plt.rcParams['ytick.minor.size'] = ticklength/2    
+    plt.rcParams['ytick.minor.width'] = linewidth
     
 def ax_ticks_subplot(ax):
     ax.tick_params(direction = "in")
