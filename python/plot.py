@@ -56,10 +56,18 @@ def full_extent(ax, pad):
     
     return bbox.expanded(1.0 + pad, 1.0 + pad)
 
-def savefig_subplot(fig, ax, path, pad):
+def savefig_subplot(fig, ax, path, pad, bbox_input = None):
     #extent = full_extent(ax, pad).transformed(fig.dpi_scale_trans.inverted())
-    bbox = ax.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
-    bbox = bbox.expanded(1.0 + pad, 1.0 + pad)
+    if bbox_input == None:
+        bbox = ax.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
+    else:
+        bbox = bbox_input
+        
+    try:
+        bbox = bbox.expanded(1.0 + pad[1], 1.0 + pad[0])
+    except TypeError:
+        bbox = bbox.expanded(1.0 + pad, 1.0 + pad)
+        
     fig.savefig(path, bbox_inches=bbox)
 
 def eflux_time(time, eflux, figuresize):
