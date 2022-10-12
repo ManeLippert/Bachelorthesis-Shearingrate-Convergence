@@ -5,8 +5,11 @@
 \usepackage{xparse}
 \usepackage{booktabs}
 \usepackage{ifthen}
+\usepackage{xcolor}
 
-% COUNTER, WORD COUNT =================================================================================================
+% COUNTER, WORD COUNT, VARIABLE =======================================================================================
+
+\def\wordlimit{3500}
 
 \newcounter{totalwordcounter}
 \newcounter{wordcounter}
@@ -58,8 +61,14 @@
     \addtocounter{totalwordcounter}{\number\numexpr\numberforaeqOneColRow*\value{eqOneColRow}}
     \addtocounter{totalwordcounter}{\number\numexpr\numberforaeqTwoColRow*\value{eqTwoColRow}}
 
-    \number\value{totalwordcounter}
-    \renewcommand{\totalwordcount}{\number\value{totalwordcounter}}
+    %\number\value{totalwordcounter}
+    %\renewcommand{\totalwordcount}{\number\value{totalwordcounter}}
+
+    \ifnum\value{totalwordcounter}>\wordlimit
+        \textcolor{red}{\showcounter{totalwordcounter}}
+    \else
+        \textcolor{teal}{\showcounter{totalwordcounter}}
+    \fi
 }
 
 % Display value of counter
@@ -72,6 +81,18 @@
         {\ifthenelse{\equal{#1}{eq}}{\addtocounter{#1\col Row}{#3}}
             {\addtocounter{#1\col}{1} \addtocounter{#1\col Row}{#3}}
         }
+}
+
+\newcommand{\fmtnum}[1]{%
+  \ifnum\fpeval{#1 < 0} = 1
+    \textcolor{red}{#1}%
+  \else
+    \ifnum\fpeval{#1 < 0.5} = 1
+      \textcolor{green}{#1}%
+    \else
+      \textcolor{blue}{#1}%
+    \fi
+  \fi
 }
 
 % Display word count message
