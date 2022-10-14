@@ -6,10 +6,12 @@
 \usepackage{booktabs}
 \usepackage{ifthen}
 \usepackage{xcolor}
+\usepackage{refcount}
 
 % COUNTER, WORD COUNT, VARIABLE =======================================================================================
 
 \def\wordlimit{3500}
+\def\pagelimit{4}
 
 \newcounter{totalwordcounter}
 \newcounter{wordcounter}
@@ -45,7 +47,7 @@
 }
 \makeatother
 
-% Total word count
+% Total word count and colors output
 \newcommand{\totalwordcount}{
     % Words
     \addtocounter{totalwordcounter}{\value{wordcounter}}
@@ -83,16 +85,13 @@
         }
 }
 
-\newcommand{\fmtnum}[1]{%
-  \ifnum\fpeval{#1 < 0} = 1
-    \textcolor{red}{#1}%
-  \else
-    \ifnum\fpeval{#1 < 0.5} = 1
-      \textcolor{green}{#1}%
+% Color output for page numbers
+\newcommand{\totalpagecount}{
+    \ifnum\getpagerefnumber{LastPage}>\pagelimit
+        \textcolor{red}{\pageref{LastPage}}
     \else
-      \textcolor{blue}{#1}%
+        \textcolor{teal}{\pageref{LastPage}}
     \fi
-  \fi
 }
 
 % Display word count message
@@ -109,6 +108,7 @@
             Table Row      & \showcounter{tableOneColRow} & \showcounter{tableTwoColRow} & \numberforatableOneColRow & \numberforatableTwoColRow \\
             Eq Row         & \showcounter{eqOneColRow}    & \showcounter{eqTwoColRow}    & \numberforaeqOneColRow    & \numberforaeqTwoColRow    \\
             \hline
+            \textbf{Pages} & \multicolumn{2}{ c |}{------------}                         & \multicolumn{2}{ c |}{\textbf{\totalpagecount}}              \\
             \textbf{Total} & \multicolumn{2}{ c |}{------------}                         & \multicolumn{2}{ c |}{\textbf{\totalwordcount}}              \\
             \hline
         \end{tabular}

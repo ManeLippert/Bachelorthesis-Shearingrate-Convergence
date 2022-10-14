@@ -298,7 +298,7 @@ DM*
 *#
 *~
 *.aux
-#*.out
+*.out
 *.toc
 *.idx
 *.ilg
