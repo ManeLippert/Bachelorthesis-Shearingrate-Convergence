@@ -645,7 +645,7 @@ data
 │       └── Ns16
 │           └── Nvpar64
 │               └── <a href="/data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9/eval.ipynb">Nmu9</a>
-└── <a href="/data/compare_heatflux_threshold.ipynb">Comparison of Finite Heat Flux Threshold</a>
+└── <a href="/data/compare_gradient_length.ipynb">Comparison of Gradient Length</a>
 </pre>
 
 ## Literature
