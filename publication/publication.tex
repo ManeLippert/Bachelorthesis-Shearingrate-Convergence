@@ -82,7 +82,7 @@
 %% Include graphic for one column with specific place 
 \newcommand{\includegraphicsOneCol}[3]{
 	\begin{figure}[h]
-		\includegraphics[width=\linewidth]{#1}
+		\includegraphics[width=0.9\linewidth]{#1}
 		\caption{#2}
   	\end{figure}
 	\label{#3}
@@ -108,8 +108,8 @@
 
 %% TITLE, INFO =============================================================================================================
 
-%\title[Convergence of shearingrate $\omega_{\mathrm{E}\times\mathrm{B}}$ with boxsize]{
-%	Convergence of shearingrate $\omega_{\mathrm{E}\times\mathrm{B}}$ with boxsize
+%\title[Convergence of shearing rate $\omega_{\mathrm{E}\times\mathrm{B}}$ with boxsize]{
+%	Convergence of shearing rate $\omega_{\mathrm{E}\times\mathrm{B}}$ with boxsize
 %}
 
 %\author{M. Lippert}
@@ -140,7 +140,22 @@
 
 \includegraphicsOneCol{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{Test}{fig:eflux}
 
+\includegraphicsOneCol{Comparison/Gradient-Length/S6_rlt6.0-6.3_boxsize1x1_Ns16_Nvpar64_Nmu9_eflux_comparison.pdf}{Test}{fig:eflux}
+
+\includegraphicsOneCol{S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x1_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{Test}{fig:eflux}
+
+\includegraphicsOneCol{Comparison/Gradient-Length/S6_rlt6.0-6.2_boxsize2x2_Ns16_Nvpar48-64_Nmu9_eflux_comparison.pdf}{Test}{fig:eflux}
+
 \includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize2x1-2-3x1-3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{Test}{fig:test}
+
+\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}{Test}{fig:test}
+
+%\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{Test}{fig:test}
+
+\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison.pdf}{Test}{fig:test}
+
+\increasecounter{fig}{2}
+
 
 \ref{fig:test}
 
@@ -151,7 +166,7 @@ The data that support the findings of this study are available from the correspo
 
 \wordcountmessage
 
-% BIBLOGRAPHY ==============================================================================================================
+% BIBLIOGRAPHY ==============================================================================================================
 
 \nocite{*}
 \bibliography{aipsamp}% Produces the bibliography via BibTeX.
