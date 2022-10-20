@@ -7,7 +7,9 @@ from cycler import cycler
 
 
 # Plot parameters
-def parameters(usetex, fontsize, figsize, dpi, linewidth = 1.5, ticklength = 10):
+def parameters(usetex, fontsize, figsize, dpi, 
+               linewidth = 1.5, ticklength = 10, ticksadditional = True, ticksdirc = 'in', tickspad = 10,
+               colorpalette = sns.color_palette("colorblind", as_cmap=True)):
     
     plt.rcParams['text.usetex'] = usetex
     plt.rcParams['font.family'] = 'serif'
@@ -16,9 +18,15 @@ def parameters(usetex, fontsize, figsize, dpi, linewidth = 1.5, ticklength = 10)
     plt.rcParams['figure.figsize'] = figsize
     plt.rcParams['figure.dpi'] = dpi
     
-    plt.rcParams['axes.prop_cycle'] = cycler('color', sns.color_palette("colorblind", as_cmap=True))
+    plt.rcParams['axes.prop_cycle'] = cycler('color', colorpalette)
     
     plt.rcParams['axes.linewidth'] = linewidth
+    
+    plt.rcParams['xtick.top'] = ticksadditional
+    plt.rcParams['xtick.bottom'] = ticksadditional
+    
+    plt.rcParams['ytick.left'] = ticksadditional
+    plt.rcParams['ytick.right'] = ticksadditional
     
     plt.rcParams['xtick.major.size'] = ticklength
     plt.rcParams['xtick.major.width'] = linewidth
@@ -31,6 +39,12 @@ def parameters(usetex, fontsize, figsize, dpi, linewidth = 1.5, ticklength = 10)
     
     plt.rcParams['ytick.minor.size'] = ticklength/2    
     plt.rcParams['ytick.minor.width'] = linewidth
+    
+    plt.rcParams['xtick.direction'] = ticksdirc
+    plt.rcParams['ytick.direction'] = ticksdirc
+    
+    plt.rcParams['xtick.major.pad'] = tickspad
+    plt.rcParams['ytick.major.pad'] = tickspad
     
 def ax_ticks_subplot(ax):
     ax.tick_params(direction = "in")
