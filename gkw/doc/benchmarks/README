@@ -1,5 +1,0 @@
-Most of the GKW benchmarks are described in the manual doc.tex, 
-(in the benchmarks section) or the references therein.
- 
-This folder contains GKW input files needed to recreate these benchmarks,
-(and inputs for GS2 where possible / applicable).

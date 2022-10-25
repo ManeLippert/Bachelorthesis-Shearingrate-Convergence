@@ -1,4 +1,0 @@
-The input files and matlab script here were used to create the figure with r2645 of the code.
-Better agreement might be obtained with larger gridsizes and less dissipation, perhaps using the arakawa scheme
-
-Could also be rerun to see if the matrix conditioning fix of r2904 makes any difference to this result

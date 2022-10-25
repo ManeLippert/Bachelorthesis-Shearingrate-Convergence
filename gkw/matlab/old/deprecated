@@ -1,9 +1,0 @@
-./old (superceeded by spectra.m)
-
-  sum_kxspec.m takes data from the spc00000x spectrum files (for mode_box=.true.) and creates an equivalent to the kyspec file for the radial wavevectors.  Run from the directory that contains the files.
-
-  k(y/x)spec plot time averaged potential spectra on a log plot, useful for nonlinear runs. Self documenting.
-
-  kyspec_label.m defines a function which plots kyspec and reads the information in the krho file to attach a legend to the plot of kyspec.  Run from the directory that contains the files. Self documenting: 'help kyspec_label' for usage.
-
-  fluxes_(x)spec.m defines a matlab function that extracts the time AVERAGE fluxes (x) spectrum information, averages the last n_av data points, and plots. Self documenting: 'help fluxes_spec' for usage. Necessary because for non linear runs the fluxes fluctuate.  Self documenting: 'help fluxes_spec' for usage. 
