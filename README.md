@@ -649,12 +649,12 @@ data
 </pre>
 
 ## Literature
-[[1]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf) Peeters, A. G., Rath, F., Buchholz, R., Camenen, Y., Candy, J., Casson,F. J., Grosshauser, S. R., Hornsby, W. A., Strintzi, D. & Weikl, A. "Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"
+[[1]](https://doi.org/10.1063/1.4961231) Peeters,A. G. and  Rath,F. and Buchholz,R. and  Camenen,Y. and Candy,J. and Casson,F. J. and Grosshauser,S. R. and Hornsby,W. A. and Strintzi,D. and Weikl,A. "Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"
 
-[[2]](/literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Comparison%20of%20gradient%20and%20flux%20driven%20gyro-%0Akinetic%20turbulent%20transport%20(Paper%2C%202016).pdf) Rath, F., Peeters, A. G., Buchholz, R., Grosshauser, S. R., Migliano, P.,Weikl, A. & Strintzi, D. "Comparison of gradient and flux driven gyro-kineticturbulent transport"
+[[2]](https://doi.org/10.1063/1.4952621) Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D. "Comparison of gradient and flux driven gyro-kineticturbulent transport"
 
-[[3]](/literature/manual/GKW_manual_0.4-b1.pdf) Peeters, A. G., Buchholz, R., Camenen, Y., Casson, F. J., Grosshauser, S., Hornsby, W. A., Manas, P., Migliano, P., Siccinio, M., Snodin, A. P., Strintzi, D., Sung, T., Szepesi, G. & Zarzoso, D. "GKW how and why"
+[[3]](https://doi.org/10.1016/j.cpc.2009.07.001) Peeters,A. G. and Camenen,Y. and Casson,F. J. and Hornsby,W. A. and Snodin,A. P. and Strintzi,D. and Szepesi, G. "The nonlinear gyro-kinetic flux tube code GKW"
 
-[[4]](/literature/Diamond%20-%20Zonal%20flows%20in%20plasma%20-%20a%20review%20(Review%2C%202005).pdf) Diamond, P. H., Itoh, S-I., Itoh, K. & Hahm, T. S. "Zonal flows in plasma—a review"
+[[4]](https://doi.org/10.1088/0741-3335/47/5/r01) Diamond,P. H. and Itoh,S.-I. and Itoh,K. and Hahm,T. S. "Zonal flows in plasma—a review"
 
-[[5]](/literature/Garbet%20-%20Gyrokinetic%20simulations%20of%20turbulent%20transport%20(Review%2C%202010).pdf) Garbet, X., Idomura, Y., Villard, L. & Watanabe, T.H. "Gyrokinetic simulations of turbulent transport"
+[[5]](https://doi.org/10.1088/0029-5515/50/4/043002) Garbet,X. and Idomura,Y. and Villard,L. and Watanabe, T. H. "Gyrokinetic simulations of turbulent transport"
