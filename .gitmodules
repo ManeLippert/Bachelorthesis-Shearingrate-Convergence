@@ -1,3 +1,12 @@
 [submodule "GKW"]
 	path = gkw
 	url = https://bitbucket.org/gkw/gkw.git
+
+[submodule "Plasmaphysik"]
+	path = literature/Einfuehrung-Plasmaphysik
+	url = https://github.com/Phi-Laboratorys/Einfuehrung-Plasmaphysik.git
+
+
+[submodule "Fusionsforschung"]
+	path = literature/Einfuehrung-Fusionsforschung
+	url = https://github.com/Phi-Laboratorys/Einfuehrung-Fusionsforschung.git
