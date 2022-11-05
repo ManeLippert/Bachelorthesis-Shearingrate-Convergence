@@ -655,10 +655,6 @@ data
 
 [[3]](/literature/manual/GKW_manual_0.4-b1.pdf) Peeters, A. G., Buchholz, R., Camenen, Y., Casson, F. J., Grosshauser, S., Hornsby, W. A., Manas, P., Migliano, P., Siccinio, M., Snodin, A. P., Strintzi, D., Sung, T., Szepesi, G. & Zarzoso, D. "GKW how and why"
 
-[[4]](/literature/Suttrop%20-%20Einfuehrung%20in%20Plasmaphysik/) Suttrop, W. "Einführung in Plasmaphysik" (German)
+[[4]](/literature/Diamond%20-%20Zonal%20flows%20in%20plasma%20-%20a%20review%20(Review%2C%202005).pdf) Diamond, P. H., Itoh, S-I., Itoh, K. & Hahm, T. S. "Zonal flows in plasma—a review"
 
-[[5]](/literature/Suttrop%20-%20Einfuehrung%20in%20Fusionsforschung/) Suttrop, W. "Einführung in Fusionsforschung" (German)
-
-[[6]](/literature/Diamond%20-%20Zonal%20flows%20in%20plasma%20-%20a%20review%20(Review%2C%202005).pdf) Diamond, P. H., Itoh, S-I., Itoh, K. & Hahm, T. S. "Zonal flows in plasma—a review"
-
-[[7]](/literature/Garbet%20-%20Gyrokinetic%20simulations%20of%20turbulent%20transport%20(Review%2C%202010).pdf) Garbet, X., Idomura, Y., Villard, L. & Watanabe, T.H. "Gyrokinetic simulations of turbulent transport"
+[[5]](/literature/Garbet%20-%20Gyrokinetic%20simulations%20of%20turbulent%20transport%20(Review%2C%202010).pdf) Garbet, X., Idomura, Y., Villard, L. & Watanabe, T.H. "Gyrokinetic simulations of turbulent transport"

@@ -1,4 +1,0 @@
-Bmaxwell 90: Magnetized Hydrogen Discharge with L=10*ai=5 cm, Te=Ti=3.5eV,
-and wci=wpi=4e6.
-
-psi = 90 degrees.
