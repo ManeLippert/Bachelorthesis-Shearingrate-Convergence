@@ -649,12 +649,12 @@ data
 </pre>
 
 ## Literature
-[[1]](https://doi.org/10.1063/1.4961231) Peeters,A. G. and  Rath,F. and Buchholz,R. and  Camenen,Y. and Candy,J. and Casson,F. J. and Grosshauser,S. R. and Hornsby,W. A. and Strintzi,D. and Weikl,A. "Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"
+[[1]](https://doi.org/10.1063/1.4961231) Peeters,A. G. and  Rath,F. and Buchholz,R. and  Camenen,Y. and Candy,J. and Casson,F. J. and Grosshauser,S. R. and Hornsby,W. A. and Strintzi,D. and Weikl,A. ["Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"](https://doi.org/10.1063/1.4961231)
 
-[[2]](https://doi.org/10.1063/1.4952621) Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D. "Comparison of gradient and flux driven gyro-kineticturbulent transport"
+[[2]](https://doi.org/10.1063/1.4952621) Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D. ["Comparison of gradient and flux driven gyro-kineticturbulent transport"](https://doi.org/10.1063/1.4952621)
 
-[[3]](https://doi.org/10.1016/j.cpc.2009.07.001) Peeters,A. G. and Camenen,Y. and Casson,F. J. and Hornsby,W. A. and Snodin,A. P. and Strintzi,D. and Szepesi, G. "The nonlinear gyro-kinetic flux tube code GKW"
+[[3]](https://doi.org/10.1016/j.cpc.2009.07.001) Peeters,A. G. and Camenen,Y. and Casson,F. J. and Hornsby,W. A. and Snodin,A. P. and Strintzi,D. and Szepesi, G. ["The nonlinear gyro-kinetic flux tube code GKW"](https://doi.org/10.1016/j.cpc.2009.07.001)
 
-[[4]](https://doi.org/10.1088/0741-3335/47/5/r01) Diamond,P. H. and Itoh,S.-I. and Itoh,K. and Hahm,T. S. "Zonal flows in plasma—a review"
+[[4]](https://doi.org/10.1088/0741-3335/47/5/r01) Diamond,P. H. and Itoh,S.-I. and Itoh,K. and Hahm,T. S. ["Zonal flows in plasma—a review"](https://doi.org/10.1088/0741-3335/47/5/r01)
 
-[[5]](https://doi.org/10.1088/0029-5515/50/4/043002) Garbet,X. and Idomura,Y. and Villard,L. and Watanabe, T. H. "Gyrokinetic simulations of turbulent transport"
+[[5]](https://doi.org/10.1088/0029-5515/50/4/043002) Garbet,X. and Idomura,Y. and Villard,L. and Watanabe, T. H. ["Gyrokinetic simulations of turbulent transport"](https://doi.org/10.1088/0029-5515/50/4/043002)
