@@ -14,6 +14,8 @@
 \def\pagelimit{4}
 
 \newcounter{totalwordcounter}
+\newcounter{remainwordcounter}
+\addtocounter{remainwordcounter}{\wordlimit}
 \newcounter{wordcounter}
 
 % Figures
@@ -66,6 +68,7 @@
     %\number\value{totalwordcounter}
     %\renewcommand{\totalwordcount}{\number\value{totalwordcounter}}
 
+    % Color Output
     \ifnum\value{totalwordcounter}>\wordlimit
         \textcolor{red}{\showcounter{totalwordcounter}}
     \else
@@ -75,6 +78,9 @@
 
 % Display value of counter
 \newcommand{\showcounter}[1]{\number\value{#1}}
+
+% Subtract counters
+\newcommand{\subtocounter}[2]{\setcounter{#1}{\numexpr\value{#1}-\value{#2}}}
 
 \newcommand{\increasecounter}[3]{
     \ifthenelse{\equal{#2}{1}}{\def\col{OneCol}}{\def\col{TwoCol}}
@@ -94,6 +100,18 @@
     \fi
 }
 
+% Color output for remain counter
+\newcommand{\remainwordcount}{
+
+    \subtocounter{remainwordcounter}{totalwordcounter}
+
+    \ifnum\value{remainwordcounter}<0
+        \textcolor{red}{\showcounter{remainwordcounter}}
+    \else
+        \textcolor{teal}{\showcounter{remainwordcounter}}
+    \fi
+}
+
 % Display word count message
 \newcommand{\wordcountmessage}{
     \begin{center}
@@ -108,8 +126,10 @@
             Table Row      & \showcounter{tableOneColRow} & \showcounter{tableTwoColRow} & \numberforatableOneColRow & \numberforatableTwoColRow \\
             Eq Row         & \showcounter{eqOneColRow}    & \showcounter{eqTwoColRow}    & \numberforaeqOneColRow    & \numberforaeqTwoColRow    \\
             \hline
-            \textbf{Pages} & \multicolumn{2}{ c |}{------------}                         & \multicolumn{2}{ c |}{\textbf{\totalpagecount}}              \\
-            \textbf{Total} & \multicolumn{2}{ c |}{------------}                         & \multicolumn{2}{ c |}{\textbf{\totalwordcount}}              \\
+            \textbf{Pages} & \multicolumn{2}{ c |}{------------}                         & \multicolumn{2}{ c |}{\textbf{\totalpagecount}}       \\
+            \textbf{Total} & \multicolumn{2}{ c |}{------------}                         & \multicolumn{2}{ c |}{\textbf{\totalwordcount}}       \\
+            \hline
+            \textbf{Remain} & \multicolumn{2}{ c |}{------------}                        & \multicolumn{2}{ c |}{\textbf{\remainwordcount}}       \\
             \hline
         \end{tabular}
     \end{center}
