@@ -14,7 +14,7 @@
 
 # START SCRIPT =============================================================================================================
 # Command (Script runs in the background):
-# >>> nohup python3 -u monitor_job.py &> status.txt &
+# >>> nohup python3 -u slurm_monitor.py &> status.txt &
 #
 # Output:
 # >>> [1] 10537
@@ -24,11 +24,11 @@
 
 # LIST PROCESS =============================================================================================================
 # Command:
-# >>> ps ax | grep monitor_job.py
+# >>> ps ax | grep slurm_monitor.py
 #
 # Output:
-# >>> 10537 pts/1    S      0:00 python3 -u monitor_job.py
-# >>> 23426 pts/1    S+     0:00 grep --color=auto monitor_job.py
+# >>> 10537 pts/1    S      0:00 python3 -u slurm_monitor.py
+# >>> 23426 pts/1    S+     0:00 grep --color=auto slurm_monitor.py
 # 
 # KILL PROCESS =============================================================================================================
 # Command:
@@ -38,7 +38,7 @@
 
 # OUTPUT STATUS ============================================================================================================
 # Command:
-# >>> cd $DATA && find . -name status.txt -exec tail --lines=+10 {} \;
+# >>> cd $DATA && find . -name status.txt -exec tail --lines=+3 {} \;
 # ==========================================================================================================================
 
 
