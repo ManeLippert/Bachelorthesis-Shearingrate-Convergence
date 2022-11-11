@@ -128,7 +128,7 @@ def print_table_row(content, output_type = None, time_info = True):
     sep_mid = '├─' + 76*'─' + '─┤'
     sep_end = '╰─' + 76*'─' + '─╯'
     
-    content.insert(0, '| ')
+    content.insert(0, '│ ')
     if time_info:
         if output_type == 'header':
             content.append('DATE')
@@ -139,7 +139,7 @@ def print_table_row(content, output_type = None, time_info = True):
             content.append(time_time())
             content.append(time_duration(startTime))
             
-    content.insert(len(content), ' |')
+    content.insert(len(content), ' │')
     
     if output_type == 'header':
         print('\n')
