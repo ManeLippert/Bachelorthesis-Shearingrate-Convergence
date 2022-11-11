@@ -5,9 +5,11 @@
 # ==========================================================================================================================
 
 # FEATURES =================================================================================================================
+# o Creats jobscript file with defined content
 # o Restarts job until criteria is suffused 
 # o Makes backup after each run before Restart
 # o Sends mail at the beginning, end and restart with status file as attachment
+# o creates status file with current status
 # ==========================================================================================================================
 
 # START SCRIPT =============================================================================================================
@@ -56,7 +58,10 @@ outputCriteria = '0'
 
 sleepTime = 5*60
 
+emailNotification = True
 restartMail = False
+
+backup = True
 
 ## FILENAMES ===============================================================================================================
 
@@ -68,9 +73,38 @@ inputFilename = 'input.dat'
 def outputFilename(info):
     return './slurm-' + info + '.out'
 
+## JOBSCRIPT CONTENT =======================================================================================================
+
+jobscriptContent = '''#!/bin/bash -l
+
+# jobname
+#SBATCH --job-name=''' + jobName + '''
+
+# MPI tasks
+#SBATCH --ntasks-per-node=32
+
+# number of nodes
+#SBATCH --nodes=12
+
+# walltime
+#              d-hh:mm:ss
+#SBATCH --time=0-24:00:00
+
+# execute the job
+time mpirun -np $SLURM_NTASKS ./gkw.x > output.dat
+
+# end
+exit 0
+'''
+
+f = open(jobscriptFilename, 'w+')
+f.write(jobscriptContent)
+f.close()
+
+jobName = jobName[0:8]
+
 ## FLAGS ===================================================================================================================
 
-jobNameFlag = '#SBATCH --job-name='
 startOutputFlag = 'Submitted batch job '
 restartFlag = 'FILE_COUNT'
 
@@ -87,96 +121,39 @@ commandJobStarting = 'sbatch'
 
 def print_table_row(content, output_type = None, time_info = True):
     
-    def table_row_format(content):
-        if len(content) == 7:
-            cols = [2, 10, 29, 13, 11, 13, 2]
-        elif len(content) == 6:
-            cols = [2, 10, 29, 13, 24, 2]
-        elif len(content) == 5:
-            cols = [2, 10, 25, 41, 2]
-        elif len(content) == 4:
-            cols = [2, 10, 66, 2]
-        else:
-            cols = [2, 76, 2]
-
-        i, sep = 0, []
-        
-        while i < len(cols):
-            if i == 0:
-                sep.append('o' + (cols[i]-1)*'-')
-            elif i == (len(cols)-1):
-                sep.append((cols[i]-1)*'-' + 'o')
-            else:
-                sep.append(cols[i]*'-')
-            
-            i += 1
+    cols = [2, 10, 29, 13, 11, 13, 2]
+    row_format = "".join(["{:<" + str(col) + "}" for col in cols])
     
-        row_format = "".join(["{:<" + str(col) + "}" for col in cols])
-        
-        return row_format, sep
+    sep_top = '╭─' + 76*'─' + '─╮'
+    sep_mid = '├─' + 76*'─' + '─┤'
+    sep_end = '╰─' + 76*'─' + '─╯'
     
-    if isinstance(content[0], list):
-        
-        i = 0
-        while i < len(content):
-            content[i].insert(0, '| ')
-            if time_info:
-                if output_type == 'header':
-                    content[i].append('DATE')
-                    content[i].append('TIME')
-                    content[i].append('W:DD:HH:MM:SS')
-                else:
-                    content[i].append(time_date())
-                    content[i].append(time_time())
-                    content[i].append(time_duration(startTime))
-            content[i].insert(len(content[i]), ' |')
-            
-            i += 1
-        
-        row_format, sep = table_row_format(content[0])
-        
+    content.insert(0, '| ')
+    if time_info:
         if output_type == 'header':
-            print('\n')
-            print(row_format.format(*sep))
-            for row in content:
-                print(row_format.format(*row))
-            print(row_format.format(*sep))
-            
-        elif output_type == 'end':
-            for row in content:
-                print(row_format.format(*row))
-            print(row_format.format(*sep))
-            
+            content.append('DATE')
+            content.append('TIME')
+            content.append('W:DD:HH:MM:SS')
         else:
-            for row in content:
-                print(row_format.format(*row))
+            content.append(time_date())
+            content.append(time_time())
+            content.append(time_duration(startTime))
+            
+    content.insert(len(content), ' |')
+    
+    if output_type == 'header':
+        print('\n')
+        print(sep_top)
+        print(row_format.format(*content))
+        print(sep_mid)
+    elif output_type == 'middle':
+        print(row_format.format(*content))
+        print(sep_mid)
+    elif output_type == 'end':
+        print(row_format.format(*content))
+        print(sep_end)
     else:
-        content.insert(0, '| ')
-        if time_info:
-            if output_type == 'header':
-                content.append('DATE')
-                content.append('TIME')
-                content.append('W:DD:HH:MM:SS')
-            else:
-                content.append(time_date())
-                content.append(time_time())
-                content.append(time_duration(startTime))
-        content.insert(len(content), ' |')
-        
-        row_format, sep = table_row_format(content)
-        
-        if output_type == 'header':
-            print('\n')
-            print(row_format.format(*sep))
-            print(row_format.format(*content))
-            print(row_format.format(*sep))
-            
-        elif output_type == 'end':
-            print(row_format.format(*content))
-            print(row_format.format(*sep))
-            
-        else:
-            print(row_format.format(*content))
+        print(row_format.format(*content))
 
 ## INFORMATIONS ============================================================================================================
 
@@ -245,7 +222,7 @@ def time_duration(startTime):
 
 ## STATUS ==================================================================================================================
 
-def get_job_status(command, user):
+def get_job_status(user):
     
     jobStatusRunning = subprocess.getoutput(commandJobRunning + user).strip().split()
     jobStatusPending = subprocess.getoutput(commandJobPending + user).strip().split()
@@ -286,75 +263,28 @@ def send_mail(recipient, subject, body = None):
     process.communicate(body)
 
 
-# JOB INFORMATIONS =========================================================================================================
+# JOB INIT =================================================================================================================
 
-jobInformations = []
 startTime = time.time()
 user = os.getlogin()
 
-print_table_row(['OUTPUT', 'JOB INITIALIZE'], output_type='header')
+print_table_row(['OUTPUT', 'INFO'], output_type='header')
 
 
 folder = os.path.dirname(os.path.abspath(__file__))
 path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
 
-## MAIL SWITCH =============================================================================================================
+## BACKUP PATH =============================================================================================================
 
-try:
-    emailNotification = True
-    jobInformations.append(['INFO', 'E-Mail', emailAddress])
-except NameError:
-    emailNotification = False
-
-## JOB SCRIPT ==============================================================================================================
-
-if os.path.exists(jobscriptFilename):    
-    print_table_row(['SUCCESS', 'Found ' + jobscriptFilename])
-else:
-    print_table_row(['ERROR', 'No file "' + jobscriptFilename + '" found'])
-    
-    if emailNotification:
-        send_mail(emailAddress, 'Failed Job ' + jobName)
-    quit()
-
-jobscriptContent = open(jobscriptFilename, 'r').read().splitlines()
-
-## JOB NAME ================================================================================================================
-
-write_add_string_into_file(jobscriptFilename, jobNameFlag, jobName)
-
-if len(jobName) > 8:
-    jobName = jobName[0:8]
-
-jobInformations.append(['INFO', 'Name', jobName])
-
-## TIMESTEPS ===============================================================================================================
-
-jobInformations.append(['INFO', 'Required Timesteps', nTimestepsRequired])
-
-## BACKUP PATH/SWITCH ======================================================================================================
-
-try:
-    
+if backup:
     if backupLocation[-1] != '/':
         backupLocation += '/'
     backupPath = backupLocation + path
     
     if not os.path.exists(backupPath):
         os.makedirs(backupPath)
-    
-    backup = True
-    jobInformations.append(['INFO', 'Backup Path', backupLocation])
-    
-except NameError:
-    backup = False
-
-print_table_row(['OUTPUT', 'JOB INFORMATIONS', 'VALUE'], output_type='header', time_info=False)
-print_table_row(jobInformations, output_type='end', time_info=False)
 
 # START/RESTART JOB ========================================================================================================
-
-print_table_row(['OUTPUT', 'JOB MONITORING'], output_type='header')
 
 outputType = set_output_type(user)
 
@@ -388,7 +318,7 @@ while True:
         print_table_row(['STARTING', 'Start monitoring'])
         
         if backup:
-            print_table_row(['BACKUP', backupLocation], output_type='end')
+            print_table_row(['BACKUP', backupLocation], output_type='middle')
             subprocess.run(['rsync', '-a', '', backupPath])
             
         if emailNotification:
@@ -433,7 +363,7 @@ while True:
                 if outputContent == outputCriteria: 
                     
                     if backup:
-                        print_table_row(['BACKUP', backupLocation], output_type='end')
+                        print_table_row(['BACKUP', backupLocation], output_type='middle')
                         subprocess.run(['rsync', '-a', '', backupPath])
                     
                     break
@@ -441,7 +371,7 @@ while True:
                     print_table_row(['ERROR', outputContent[0:27]])
                         
                     if backup:
-                        print_table_row(['RESTORE', backupLocation], output_type='end')
+                        print_table_row(['RESTORE', backupLocation], output_type='middle')
                         subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''])
                     
                     break
