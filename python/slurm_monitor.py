@@ -51,9 +51,9 @@ import datetime, time, os, subprocess
 
 emailAddress = 'Manuel.Lippert@uni-bayreuth.de'
 backupLocation = '/scratch/bt712347/backup'
-jobName = 'Name'
+jobName = '4x1'
 
-nTimestepsRequired = 20000
+nTimestepsRequired = 70000
 outputCriteria = '0'
 
 sleepTime = 5*60
@@ -84,7 +84,7 @@ jobscriptContent = '''#!/bin/bash -l
 #SBATCH --ntasks-per-node=32
 
 # number of nodes
-#SBATCH --nodes=12
+#SBATCH --nodes=3
 
 # walltime
 #              d-hh:mm:ss
@@ -121,8 +121,10 @@ commandJobStarting = 'sbatch'
 
 def print_table_row(content, output_type = None, time_info = True):
     
+    delete_last_line_in_file(monitorFilename)
+    
     cols = [2, 10, 29, 13, 11, 13, 2]
-    row_format = "".join(["{:<" + str(col) + "}" for col in cols])
+    row_format = ''.join(['{:<' + str(col) + '}' for col in cols])
     
     sep_top = '╭─' + 76*'─' + '─╮'
     sep_mid = '├─' + 76*'─' + '─┤'
@@ -145,15 +147,14 @@ def print_table_row(content, output_type = None, time_info = True):
         print('\n')
         print(sep_top)
         print(row_format.format(*content))
-        print(sep_mid)
+        print(sep_end)
     elif output_type == 'middle':
-        print(row_format.format(*content))
         print(sep_mid)
-    elif output_type == 'end':
         print(row_format.format(*content))
         print(sep_end)
     else:
         print(row_format.format(*content))
+        print(sep_end)
 
 ## INFORMATIONS ============================================================================================================
 
@@ -164,7 +165,7 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
         value = content[index][relative_index]
         return value
     except IndexError:
-        print_table_row(['ERROR', 'String not found in file'], output_type='end')
+        print_table_row(['ERROR', 'String not found in file'])
         quit()
 
 ## FILE ====================================================================================================================
@@ -186,6 +187,22 @@ def write_add_string_into_file(file, substring, add, comment = None):
         
     with open(file, 'w') as f:
         f.writelines(data)
+        
+def delete_last_line_in_file(file):
+    f = open(file)
+
+    lines = f.readlines()[:-1]
+    
+    try:
+        #lines[-1] = lines[-1].split('\n')[0]
+
+        content = ''.join(lines)
+
+        f = open(file, 'w+')
+        f.write(content)
+        f.close()
+    except IndexError:
+        pass
 
 ## TIME ====================================================================================================================
 
@@ -295,10 +312,10 @@ while True:
         nTimestepsCurrent = int(get_value_of_variable_from_file('./' + restartFilename, 0, 2, restartFlag))
         
         if outputType == 'running':
-            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)])
+            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], output_type='middle')
         
         if nTimestepsCurrent >= nTimestepsRequired:
-            print_table_row(['SUCCESS', 'Stop monitoring'], output_type='end')
+            print_table_row(['SUCCESS', 'Stop monitoring'], output_type='middle')
             
             if emailNotification:
                 send_mail(emailAddress, 'Ended Job ' + jobName)
@@ -307,7 +324,7 @@ while True:
         
         # Continue
         else:
-            print_table_row(['CONTINUE', 'Continue monitoring'])
+            print_table_row(['CONTINUE', 'Continue monitoring'], output_type='middle')
             
             if emailNotification:
                 send_mail(emailAddress, 'Continued Job ' + jobName)
@@ -315,10 +332,10 @@ while True:
     
     # Start    
     except FileNotFoundError:
-        print_table_row(['STARTING', 'Start monitoring'])
+        print_table_row(['STARTING', 'Start monitoring'], output_type='middle')
         
         if backup:
-            print_table_row(['BACKUP', backupLocation], output_type='middle')
+            print_table_row(['BACKUP', backupLocation])
             subprocess.run(['rsync', '-a', '', backupPath])
             
         if emailNotification:
@@ -363,7 +380,7 @@ while True:
                 if outputContent == outputCriteria: 
                     
                     if backup:
-                        print_table_row(['BACKUP', backupLocation], output_type='middle')
+                        print_table_row(['BACKUP', backupLocation])
                         subprocess.run(['rsync', '-a', '', backupPath])
                     
                     break
@@ -371,8 +388,8 @@ while True:
                     print_table_row(['ERROR', outputContent[0:27]])
                         
                     if backup:
-                        print_table_row(['RESTORE', backupLocation], output_type='middle')
-                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''])
+                        print_table_row(['RESTORE', backupLocation])
+                        subprocess.run(['rsync', '-a', '-I', '--exclude={status.txt, slurm_monitor.py}', backupPath + '/', ''])
                     
                     break
                     
@@ -386,7 +403,7 @@ while True:
             print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)])
             
             if nTimestepsCurrent >= nTimestepsRequired:
-                print_table_row(['SUCCESS', 'Stop monitoring'], output_type='end')
+                print_table_row(['SUCCESS', 'Stop monitoring'])
                 
                 if emailNotification:
                     send_mail(emailAddress, 'Ended Job ' + jobName)
@@ -399,7 +416,7 @@ while True:
         startOutput = subprocess.check_output([commandJobStarting, jobscriptFilename]).decode('utf-8').replace('\n', '')
         jobID = startOutput.split(startOutputFlag)[1]
         
-        print_table_row(['STARTING', startOutput])
+        print_table_row(['STARTING', startOutput], output_type='middle')
         
         try:
             if restartMail and emailNotification:
