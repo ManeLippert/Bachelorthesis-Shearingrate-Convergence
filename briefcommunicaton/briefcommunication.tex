@@ -136,7 +136,20 @@
 
 %% TEXT ====================================================================================================================
 
-\section{\label{sec:level1}Introduction}
+%%% INTRODUCTION ===========================================================================================================
+
+It is known that radially sheared zonal flows plays a significant role in nonlinear stabilization in tokamak plasmas. \cite{WACooper1988,doi:10.1063/1.859529,doi:10.1063/1.873896}. 
+Through advection on the sheared zonal flows the turbulent structure in plasma gets deformed and tilted that causes an $E \times B$ nonlinearty. \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}
+Zonal flows mediate spectral energy transfer to larger radial wave vectors. \cite{doi:10.1063/1.3033206, doi:10.1063/1.3675855, PhysRevLett.120.175002}
+The strength of the shearing process is the $E \times B$ shearing rate $\omega_{\mathrm{E \times B}}$ which is the radial derivative of the advecting zonal flow velocity. \cite{doi:10.1063/1.871313, doi:10.1063/1.872847}
+The shearing rate $\omega_{\mathrm{E \times B}}$ is defined as 
+\begin{equation}
+	\omega_{\mathrm{E \times B}} = \frac{1}{2} \frac{\partial^2 \langle \Phi \rangle}{\partial \psi^2}
+	\label{eq:shearingrate}
+\end{equation}
+where $\langle \Phi \rangle$ is the zonal electrostatic potential and $\psi$ the radial coordinate that labels the flux surfaces. \cite{doi:10.1063/1.4952621, doi:10.1063/1.5035184, doi:10.1063/1.3005380}
+It was shown that the nonlinear threshold for turbulence is directly related to shear stabilization. \cite{doi:10.1063/1.873896} 
+Often the shear stabilization is expressed in the empirical Waltz rule $\omega_{\mathrm{E \times B}} \sim \gamma$, \cite{doi:10.1063/1.870934, doi:10.1063/1.872847} where $\gamma$ is defined as the maximum linear growth rate in the unstable mode. In the discovered zonal flows, also known as $E \times B$ staircase \cite{PhysRevE.82.025401}, exhibit amplitudes in terms of the $E \times B$ shearing rate satisfying the stabilization criteria. \cite{doi:10.1063/1.4952621, doi:10.1063/1.4961231}
 
 \includegraphicsOneCol{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{Test}{fig:eflux}
 
@@ -158,9 +171,6 @@
 
 \increasecounter{fig}{2}
 
-
-\ref{fig:test}
-
 \section*{Data Availability}
 The data that support the findings of this study are available from the corresponding author upon reasonable request.
 
@@ -168,9 +178,9 @@ The data that support the findings of this study are available from the correspo
 
 \wordcountmessage
 
-% BIBLIOGRAPHY ==============================================================================================================
+% BIBLIOGRAPHY =============================================================================================================
 
-\nocite{*}
+%\nocite{*}
 \bibliography{references.bib}% Produces the bibliography via BibTeX.
 
 \end{document}
