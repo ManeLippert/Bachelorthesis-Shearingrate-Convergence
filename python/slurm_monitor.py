@@ -91,30 +91,21 @@ args = parser.parse_args()
 
 # VARIABLES ================================================================================================================
 
-emailAddress = args.mail
-backupLocation = args.backup
-jobName = args.jobname
-
-nTimestepsCurrent = 0 #just an start value
-nTimestepsRequired = args.timesteps
-
 outputCriteria = '0'
 
 sleepTime = 5*60
 
-if emailAddress==None:
-    emailNotification = False
-else:
-    emailNotification = True
+# PARSER VARIABLES =========================================================================================================
 
+emailAddress = args.mail
 restartMail = args.bool
 
-if backupLocation==None:
-    backup = False
-else:
-    backup = True
 
-## FILENAMES ===============================================================================================================
+backupLocation = args.backup
+
+jobName = args.jobname
+
+nTimestepsRequired = args.timesteps
 
 jobscriptFilename = args.jobscriptFile
 restartFilename = args.restartFile
@@ -161,11 +152,23 @@ commandJobPending = 'squeue --states=pending -u '
 
 commandJobStarting = 'sbatch'
 
+# SWITCHES =================================================================================================================
+
+if emailAddress==None:
+    emailNotification = False
+else:
+    emailNotification = True
+
+if backupLocation==None:
+    backup = False
+else:
+    backup = True
+
 # FUNCTIONS ================================================================================================================
 
 ## PROGRESSBAR =============================================================================================================
 
-def progressbar(required_value, current_value=0, barsize=42,
+def progressbar(required_value, current_value, barsize=42,
                 prefix='Progress:', 
                 progress_fill='=', progress_fill_top='', progress_fill_bot='',
                 progress_unfill='.', 
@@ -192,7 +195,7 @@ def progressbar(required_value, current_value=0, barsize=42,
 
 ## OUTPUT TABLE ============================================================================================================
 
-def print_table_row(content, progress_content = [nTimestepsCurrent, nTimestepsRequired],
+def print_table_row(content, current_value, required_value,
                     output_type = None, time_info = True,
                     table_outline = ['╭─', '─╮', '╰─', '─╯', '├─', '─┤', '│ ', ' │', '─'],):
     
@@ -211,9 +214,9 @@ def print_table_row(content, progress_content = [nTimestepsCurrent, nTimestepsRe
     progress_cols = [2, 76, 2]
     progress_format = ''.join(['{:<' + str(col) + '}' for col in progress_cols])
     
-    progressbar_content = [progressbar(progress_content[1], progress_content[0])]
+    progressbar_content = [progressbar(required_value, current_value)]
     progressbar_content.insert(0, table_outline[6])
-    progressbar_content.insert(len(progress_content), table_outline[7])
+    progressbar_content.insert(len(progressbar_content), table_outline[7])
     
     content.insert(0, table_outline[6])
     if time_info:
@@ -255,7 +258,7 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
         value = content[index][relative_index]
         return value
     except IndexError:
-        print_table_row(['ERROR', 'String not found in file'])
+        print_table_row(['ERROR', 'String not found in file'], nTimestepsRequired, nTimestepsRequired)
         quit()
 
 ## FILE ====================================================================================================================
@@ -376,7 +379,7 @@ def send_mail(recipient, subject, body = None):
 startTime = time.time()
 user = os.getlogin()
 
-print_table_row(['OUTPUT', 'INFO'], output_type='header')
+print_table_row(['OUTPUT', 'INFO'], 0, nTimestepsRequired, output_type='header')
 
 folder = os.path.dirname(os.path.abspath(__file__))
 path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
@@ -401,11 +404,10 @@ while True:
     try:
         nTimestepsCurrent = int(get_value_of_variable_from_file('./' + restartFilename, 0, 2, restartFlag))
         
-        if outputType == 'running':
-            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], output_type='middle')
-        
         if nTimestepsCurrent >= nTimestepsRequired:
-            print_table_row(['SUCCESS', 'Stop monitoring'], output_type='middle')
+            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], nTimestepsCurrent, nTimestepsRequired)
+            
+            print_table_row(['SUCCESS', 'Stop monitoring'], nTimestepsRequired, nTimestepsRequired, output_type='middle')
             
             if emailNotification:
                 send_mail(emailAddress, 'Ended Job ' + jobName)
@@ -414,7 +416,10 @@ while True:
         
         # Continue
         else:
-            print_table_row(['CONTINUE', 'Continue monitoring'], output_type='middle')
+            print_table_row(['CONTINUE', 'Continue monitoring'], nTimestepsCurrent, nTimestepsRequired, output_type='middle')
+            
+            if outputType == 'running':
+                print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], nTimestepsCurrent, nTimestepsRequired)
             
             if emailNotification:
                 send_mail(emailAddress, 'Continued Job ' + jobName)
@@ -422,7 +427,9 @@ while True:
     
     # Start    
     except FileNotFoundError:
-        print_table_row(['STARTING', 'Start monitoring'], output_type='middle')
+        nTimestepsCurrent = 0
+        
+        print_table_row(['STARTING', 'Start monitoring'], nTimestepsCurrent, nTimestepsRequired, output_type='middle')
         
         if backup:
             print_table_row(['BACKUP', backupLocation])
@@ -445,7 +452,7 @@ while True:
         jobID = jobStatusRunning[jobStatusRunningNameIndex - 2]
         
         if outputType == 'running':
-            print_table_row(['RUNNING', 'Job is executed'])
+            print_table_row(['RUNNING', 'Job is executed'], nTimestepsCurrent, nTimestepsRequired)
             outputType = 'no Output'
             
         time.sleep(sleepTime)
@@ -454,7 +461,7 @@ while True:
     elif jobName in jobStatusPending:
 
         if outputType == 'pending':
-            print_table_row(['WAITING', 'Job is pending'])
+            print_table_row(['WAITING', 'Job is pending'], nTimestepsCurrent, nTimestepsRequired)
             outputType = 'running'
             
         time.sleep(sleepTime)
@@ -471,7 +478,7 @@ while True:
                     
                     if backup:
                         print_table_row(['BACKUP', backupLocation])
-                        subprocess.run(['rsync', '-a', '', backupPath])
+                        subprocess.run(['rsync', '-a', '', backupPath], nTimestepsCurrent, nTimestepsRequired)
                     
                     break
                 else:
@@ -479,7 +486,7 @@ while True:
                         
                     if backup:
                         print_table_row(['RESTORE', backupLocation])
-                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''])
+                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''], nTimestepsCurrent, nTimestepsRequired)
                     
                     break
                     
@@ -490,10 +497,10 @@ while True:
         
         try:
             nTimestepsCurrent = int(get_value_of_variable_from_file('./' + restartFilename, 0, 2, restartFlag))
-            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)])
+            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], nTimestepsCurrent, nTimestepsRequired)
             
             if nTimestepsCurrent >= nTimestepsRequired:
-                print_table_row(['SUCCESS', 'Stop monitoring'])
+                print_table_row(['SUCCESS', 'Stop monitoring'], nTimestepsRequired, nTimestepsRequired)
                 
                 if emailNotification:
                     send_mail(emailAddress, 'Ended Job ' + jobName)
@@ -509,7 +516,7 @@ while True:
         startOutput = subprocess.check_output([commandJobStarting, jobscriptFilename]).decode('utf-8').replace('\n', '')
         jobID = startOutput.split(startOutputFlag)[1]
         
-        print_table_row(['STARTING', startOutput], output_type='middle')
+        print_table_row(['STARTING', startOutput], nTimestepsCurrent, nTimestepsRequired, output_type='middle')
         
         try:
             if restartMail and emailNotification:
