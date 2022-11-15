@@ -32,7 +32,7 @@ timestep_req = 70000
 
 while i <= timestep_req:
     print(progressbar(i, timestep_req, barsize=100, 
-                      progress_fill='█', progress_unfill=' ', progress_bracket=['[',']']), flush=True, file=sys.stdout, end='\r')
+                      progress_fill='=', progress_unfill=' ', progress_bracket=['','']), flush=True, file=sys.stdout, end='\r')
     time.sleep(0.001)
     i += 10
 

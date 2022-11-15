@@ -45,7 +45,7 @@
 
 # MODULES ==================================================================================================================
 
-import datetime, time, os, subprocess
+import datetime, time, os, subprocess, math
 
 # VARIABLES ================================================================================================================
 
@@ -53,6 +53,7 @@ emailAddress = 'Manuel.Lippert@uni-bayreuth.de'
 backupLocation = '/scratch/bt712347/backup'
 jobName = '4x1'
 
+nTimestepsCurrent = 0 #just an start value
 nTimestepsRequired = 70000
 outputCriteria = '0'
 
@@ -97,10 +98,6 @@ time mpirun -np $SLURM_NTASKS ./gkw.x > output.dat
 exit 0
 '''
 
-f = open(jobscriptFilename, 'w+')
-f.write(jobscriptContent)
-f.close()
-
 jobName = jobName[0:8]
 
 ## FLAGS ===================================================================================================================
@@ -117,20 +114,63 @@ commandJobStarting = 'sbatch'
 
 # FUNCTIONS ================================================================================================================
 
+## PROGRESSBAR =============================================================================================================
+
+def progressbar(required_value, current_value=0, barsize=42,
+                prefix='Progress:', 
+                progress_fill='=', progress_fill_top='', progress_fill_bot='',
+                progress_unfill='.', 
+                progress_bracket=['[',']']):
+    
+    x = int(barsize*current_value/required_value)
+    percent = int(100*current_value/required_value)
+    
+    try:
+        percent_format = '  (' + (int(math.log10(100)) - int(math.log10(percent)))*' ' + '{}%)'
+    except ValueError:
+        percent_format = '  (' + int(math.log10(100))*' ' + '{}%)'
+        
+    try:
+        ratio_format = '  ' + (int(math.log10(required_value)) - int(math.log10(current_value)))*' ' + '{}/{}'
+    except ValueError:
+        ratio_format = '  ' + int(math.log10(required_value))*' ' + '{}/{}'
+
+        
+    bar_format =  '{}  ' + progress_bracket[0] + progress_fill_bot + '{}' + progress_fill_top + '{}' + progress_bracket[1] + percent_format + ratio_format
+    bar = bar_format.format(prefix, progress_fill*x, progress_unfill*(barsize-x), percent, current_value, required_value)
+        
+    return bar
+
 ## OUTPUT TABLE ============================================================================================================
 
-def print_table_row(content, output_type = None, time_info = True):
+def print_table_row(content, progress_content = [nTimestepsCurrent, nTimestepsRequired],
+                    output_type = None, time_info = True,
+                    table_outline = ['╭─', '─╮', '╰─', '─╯', '├─', '─┤', '│ ', ' │', '─'],):
     
-    delete_last_line_in_file(monitorFilename)
+    # for better format across plattforms
+    # table_outline = ['o-', '-o', 'o-', '-o', 'o-', '-o', '| ', ' |', '-']
     
-    cols = [2, 10, 29, 13, 11, 13, 2]
-    row_format = ''.join(['{:<' + str(col) + '}' for col in cols])
+    delete_line_in_file(monitorFilename, end=-4)
     
-    sep_top = '╭─' + 76*'─' + '─╮'
-    sep_mid = '├─' + 76*'─' + '─┤'
-    sep_end = '╰─' + 76*'─' + '─╯'
+    sep_top = table_outline[0] + 76*table_outline[8] + table_outline[1]
+    sep_mid = table_outline[4] + 76*table_outline[8] + table_outline[5]
+    sep_end = table_outline[2] + 76*table_outline[8] + table_outline[3]
     
-    content.insert(0, '│ ')
+    row_cols = [2, 10, 29, 13, 11, 13, 2]
+    row_format = ''.join(['{:<' + str(col) + '}' for col in row_cols])
+    
+    progress_cols = [2, 76, 2]
+    progress_format = ''.join(['{:<' + str(col) + '}' for col in progress_cols])
+    
+    progressbar_content = [progressbar(progress_content[1], progress_content[0])]
+    progressbar_content.insert(0, table_outline[6])
+    progressbar_content.insert(len(progress_content), table_outline[7])
+    
+    print(len(progressbar_content[1]))
+    print(progressbar_content)
+    print(row_format)
+    
+    content.insert(0, table_outline[6])
     if time_info:
         if output_type == 'header':
             content.append('DATE')
@@ -141,13 +181,14 @@ def print_table_row(content, output_type = None, time_info = True):
             content.append(time_time())
             content.append(time_duration(startTime))
             
-    content.insert(len(content), ' │')
+    content.insert(len(content), table_outline[7])
     
     if output_type == 'header':
         print('\n')
         print(sep_top)
         print(row_format.format(*content))
         print(sep_end)
+        
     elif output_type == 'middle':
         print(sep_mid)
         print(row_format.format(*content))
@@ -155,6 +196,10 @@ def print_table_row(content, output_type = None, time_info = True):
     else:
         print(row_format.format(*content))
         print(sep_end)
+    
+    print(sep_top)
+    print(progress_format.format(*progressbar_content))
+    print(sep_end)
 
 ## INFORMATIONS ============================================================================================================
 
@@ -188,16 +233,17 @@ def write_add_string_into_file(file, substring, add, comment = None):
     with open(file, 'w') as f:
         f.writelines(data)
         
-def delete_last_line_in_file(file):
+def write_file(filename, content):
+    file = open(filename, 'w+')
+    file.write(content)
+    file.close()
+        
+def delete_line_in_file(file, start=None, end=None):
     f = open(file)
-
-    lines = f.readlines()[:-1]
+    lines = f.readlines()[start:end]
     
     try:
-        #lines[-1] = lines[-1].split('\n')[0]
-
         content = ''.join(lines)
-
         f = open(file, 'w+')
         f.write(content)
         f.close()
@@ -286,7 +332,6 @@ startTime = time.time()
 user = os.getlogin()
 
 print_table_row(['OUTPUT', 'INFO'], output_type='header')
-
 
 folder = os.path.dirname(os.path.abspath(__file__))
 path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
@@ -389,7 +434,7 @@ while True:
                         
                     if backup:
                         print_table_row(['RESTORE', backupLocation])
-                        subprocess.run(['rsync', '-a', '-I', '--exclude={status.txt, slurm_monitor.py}', backupPath + '/', ''])
+                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''])
                     
                     break
                     
@@ -411,6 +456,9 @@ while True:
                 
         except FileNotFoundError:
             pass   
+        
+        # Write jobscript
+        write_file(jobscriptFilename, jobscriptContent)
         
         # Start Job
         startOutput = subprocess.check_output([commandJobStarting, jobscriptFilename]).decode('utf-8').replace('\n', '')
