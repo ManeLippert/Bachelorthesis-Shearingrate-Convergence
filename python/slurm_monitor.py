@@ -100,10 +100,12 @@ sleepTime = 5*60
 emailAddress = args.mail
 restartMail = args.bool
 
-
 backupLocation = args.backup
 
 jobName = args.jobname
+tasks = args.tasks
+nodes = args.nodes
+walltime = args.walltime
 
 nTimestepsRequired = args.timesteps
 
@@ -122,14 +124,14 @@ jobscriptContent = '''#!/bin/bash -l
 #SBATCH --job-name=''' + jobName + '''
 
 # MPI tasks
-#SBATCH --ntasks-per-node=''' + args.tasks + '''
+#SBATCH --ntasks-per-node=''' + tasks + '''
 
 # number of nodes
-#SBATCH --nodes=''' + args.nodes + '''
+#SBATCH --nodes=''' + nodes + '''
 
 # walltime
 #              d-hh:mm:ss
-#SBATCH --time=''' + args.walltime + '''
+#SBATCH --time=''' + walltime + '''
 
 # execute the job
 time mpirun -np $SLURM_NTASKS ./gkw.x > output.dat
@@ -318,6 +320,32 @@ def get_time_as_string(sec):
                      format_num(int(mins)) + ':' + format_num(int(sec)))
     
     return timeConvertedString
+
+def get_time_in_seconds(time):
+    
+    # Format D-HH:MM:SS or HH:MM:SS
+    
+    try:
+        day_split = time.split('-')
+        time_split = day_split[1].split(':')
+
+        day_sec = int(day_split[0])*24*60*60
+        hour_sec = int(time_split[0])*60*60
+        min_sec = int(time_split[1])*60
+        sec = int(time_split[2])
+
+        time_sec = day_sec + hour_sec + min_sec + sec
+        
+    except IndexError:
+        time_split = time.split(':')
+        
+        hour_sec = int(time_split[0])*60*60
+        min_sec = int(time_split[1])*60
+        sec = int(time_split[2])
+
+        time_sec = hour_sec + min_sec + sec
+
+    return time_sec
 
 def time_date():
     e = datetime.datetime.now()
