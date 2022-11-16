@@ -6,7 +6,7 @@
 
 # MODULES ==================================================================================================================
 
-import datetime, time, os, subprocess, math, argparse
+import datetime, time, os, sys, subprocess, math, argparse
 
 # PARSER ===================================================================================================================
 
@@ -256,15 +256,25 @@ def print_table_row(content,
     content.insert(len(content), table_outline[7])
     
     if output_type == 'header':
+        sys.stdout.write("\x1b[1A"*(1))
+        
         write_line_to_monitorfile(sep_top)
         write_line_to_monitorfile(row_format.format(*content))
         write_line_to_monitorfile(sep_end)
         
     elif output_type == 'middle':
+        sys.stdout.write("\x1b[1A"*(-delete_line_index))
+        
         write_line_to_monitorfile(sep_mid)
         write_line_to_monitorfile(row_format.format(*content))
         write_line_to_monitorfile(sep_end)
+    elif output_type == 'update':
+        sys.stdout.write("\x1b[1A"*(-delete_line_index))
+        
+        write_line_to_monitorfile(sep_end)
     else:
+        sys.stdout.write("\x1b[1A"*(-delete_line_index))
+        
         write_line_to_monitorfile(row_format.format(*content))
         write_line_to_monitorfile(sep_end)
     
@@ -327,6 +337,7 @@ def write_line_to_monitorfile(content, mode = 'a'):
     with open(monitorFilename, mode) as f:
         f.write(content + '\n')
         f.close()
+    print(content)
 
 ## TIME ====================================================================================================================
 
@@ -434,7 +445,7 @@ def send_mail(recipient, subject, body = None):
 
 startTime = time.time()
 user = os.getlogin()
-write_line_to_monitorfile('Init monitor file', 'w+')
+write_line_to_monitorfile('STATUS OF RUN', 'w+')
 
 print_table_row(['OUTPUT', 'INFO'], 
                 0, nTimestepsRequired, runCounter, currentTime, output_type='header')
@@ -528,7 +539,7 @@ while True:
             outputType = 'no Output'
         else:
             print_table_row(['RUNNING', 'Job is executed'], 
-                            nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime, delete_line_index=-6)
+                            nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime, output_type='update')
             
         time.sleep(sleepTime)
         
@@ -559,7 +570,8 @@ while True:
                     
                     break
                 else:
-                    print_table_row(['ERROR', outputContent[0:27]])
+                    print_table_row(['ERROR', outputContent[0:27]], 
+                                    nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
                         
                     if backup:
                         print_table_row(['RESTORE', backupLocation])
