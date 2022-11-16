@@ -12,20 +12,22 @@ import datetime, time, os, subprocess, math, argparse
 
 description_text = '''
 
-================================== DESCRIPTION ==================================
+===================================== DESCRIPTION =====================================
 
 FEATURES:
-o Creats jobscript file with defined content
-o Restarts job until criteria is suffused
-o Makes backup after each run before Restart
-o Sends mail at the beginning, end and restart with status file 
+o Creats jobscript file with defined content (look into file itself for that)
+o Start/Restarts job until criteria is suffused (default=0)
+o Makes backup after each run before Restart amd Restore files after fail
+o Sends mail at the beginning, end and restart (default=False) with status file 
   as attachment (mailx has to be defined)
-o Creates status file with current status and progress bar
+o Creates status file with current status and progress bars
+  Progress: Total progress of simulation
+  Run X:    Progress of current run
 
 START SCRIPT IN BACKGROUND:
 >>> nohup python3 -u slurm_monitor.py &> status.txt &
 
-With arguments (example):
+With arguments (example for 30000 timesteps):
 >>> nohup python3 -u slurm_monitor.py -n 30000 &> status.txt &
 
 Output:
@@ -45,7 +47,7 @@ KILL PROCESS:
 OUTPUT STATUS:
 >>> cd $DATA && find . -name status.txt -exec tail --lines=+2 {} \;
 
-=================================== ARGUMENTS ===================================
+====================================== ARGUMENTS ======================================
 '''
 
 parser = argparse.ArgumentParser(description=description_text, formatter_class=argparse.RawTextHelpFormatter)
@@ -73,7 +75,7 @@ additional.add_argument('-r', '--restartfile', dest='restartFile', nargs='?', ty
                     help='restart file with data               (default=FDS.dat)')
 
 additional.add_argument('-j', '--job', dest='jobscriptFile', nargs='?', type=str, default='jobscript',
-                    help='jobscript to run SLURM job           (default=jobscript)')
+                    help='jobscript to run SLURM job           (default=jobscript-create)')
 
 additional.add_argument('--job-name', dest='jobname', nargs='?', type=str, default='Name',
                     help='job name not longer than 8 character (default=Name)')
@@ -93,7 +95,10 @@ args = parser.parse_args()
 
 outputCriteria = '0'
 
-sleepTime = 5*60
+sleepTime = 5
+
+runCounter = 0
+currentTime = '00:00:00'
 
 # PARSER VARIABLES =========================================================================================================
 
@@ -111,6 +116,7 @@ nTimestepsRequired = args.timesteps
 
 jobscriptFilename = args.jobscriptFile
 restartFilename = args.restartFile
+
 monitorFilename = args.monitorFile
 
 def outputFilename(info):
@@ -171,7 +177,7 @@ else:
 ## PROGRESSBAR =============================================================================================================
 
 def progressbar(required_value, current_value, barsize=42,
-                prefix='Progress:', 
+                prefix='', 
                 progress_fill='=', progress_fill_top='', progress_fill_bot='',
                 progress_unfill='.', 
                 progress_bracket=['[',']']):
@@ -197,14 +203,17 @@ def progressbar(required_value, current_value, barsize=42,
 
 ## OUTPUT TABLE ============================================================================================================
 
-def print_table_row(content, current_value, required_value,
+def print_table_row(content,
+                    current_value, required_value,
+                    run_conter, current_time, required_time = walltime,
+                    delete_line_index = -5,
                     output_type = None, time_info = True,
                     table_outline = ['╭─', '─╮', '╰─', '─╯', '├─', '─┤', '│ ', ' │', '─'],):
     
     # for better format across plattforms
     # table_outline = ['o-', '-o', 'o-', '-o', 'o-', '-o', '| ', ' |', '-']
     
-    delete_line_in_file(monitorFilename, end=-4)
+    delete_line_in_file(monitorFilename, end=delete_line_index)
     
     sep_top = table_outline[0] + 76*table_outline[8] + table_outline[1]
     sep_mid = table_outline[4] + 76*table_outline[8] + table_outline[5]
@@ -216,9 +225,22 @@ def print_table_row(content, current_value, required_value,
     progress_cols = [2, 76, 2]
     progress_format = ''.join(['{:<' + str(col) + '}' for col in progress_cols])
     
-    progressbar_content = [progressbar(required_value, current_value)]
+    progressbar_content = [progressbar(required_value, current_value, progress_fill_top='>',
+                                       prefix='PROGRESS')]
     progressbar_content.insert(0, table_outline[6])
     progressbar_content.insert(len(progressbar_content), table_outline[7])
+    
+    required_time = get_time_in_seconds(required_time)
+    current_time = get_time_in_seconds(current_time)
+    
+    try:
+        progressbartime_content = [progressbar(required_time, current_time, progress_fill_top='>',
+                                               prefix='RUN ' + str(run_conter) + (2 - int(math.log10(run_conter)))*' ' + ' ')]
+    except ValueError:
+        progressbartime_content = [progressbar(required_time, current_time, progress_fill_top='>',
+                                               prefix='RUN ' + str(run_conter) + 2*' ' + ' ')]
+    progressbartime_content.insert(0, table_outline[6])
+    progressbartime_content.insert(len(progressbartime_content), table_outline[7])
     
     content.insert(0, table_outline[6])
     if time_info:
@@ -234,22 +256,22 @@ def print_table_row(content, current_value, required_value,
     content.insert(len(content), table_outline[7])
     
     if output_type == 'header':
-        print('\n')
-        print(sep_top)
-        print(row_format.format(*content))
-        print(sep_end)
+        write_line_to_monitorfile(sep_top)
+        write_line_to_monitorfile(row_format.format(*content))
+        write_line_to_monitorfile(sep_end)
         
     elif output_type == 'middle':
-        print(sep_mid)
-        print(row_format.format(*content))
-        print(sep_end)
+        write_line_to_monitorfile(sep_mid)
+        write_line_to_monitorfile(row_format.format(*content))
+        write_line_to_monitorfile(sep_end)
     else:
-        print(row_format.format(*content))
-        print(sep_end)
+        write_line_to_monitorfile(row_format.format(*content))
+        write_line_to_monitorfile(sep_end)
     
-    print(sep_top)
-    print(progress_format.format(*progressbar_content))
-    print(sep_end)
+    write_line_to_monitorfile(sep_top)
+    write_line_to_monitorfile(progress_format.format(*progressbar_content))
+    write_line_to_monitorfile(progress_format.format(*progressbartime_content))
+    write_line_to_monitorfile(sep_end)
 
 ## INFORMATIONS ============================================================================================================
 
@@ -260,7 +282,8 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
         value = content[index][relative_index]
         return value
     except IndexError:
-        print_table_row(['ERROR', 'String not found in file'], nTimestepsRequired, nTimestepsRequired)
+        print_table_row(['ERROR', 'String not found in file'], 
+                        nTimestepsRequired, nTimestepsRequired, runCounter, currentTime)
         quit()
 
 ## FILE ====================================================================================================================
@@ -289,7 +312,7 @@ def write_file(filename, content):
     file.close()
         
 def delete_line_in_file(file, start=None, end=None):
-    f = open(file)
+    f = open(file, )
     lines = f.readlines()[start:end]
     
     try:
@@ -299,6 +322,11 @@ def delete_line_in_file(file, start=None, end=None):
         f.close()
     except IndexError:
         pass
+    
+def write_line_to_monitorfile(content, mode = 'a'):
+    with open(monitorFilename, mode) as f:
+        f.write(content + '\n')
+        f.close()
 
 ## TIME ====================================================================================================================
 
@@ -406,8 +434,10 @@ def send_mail(recipient, subject, body = None):
 
 startTime = time.time()
 user = os.getlogin()
+write_line_to_monitorfile('Init monitor file', 'w+')
 
-print_table_row(['OUTPUT', 'INFO'], 0, nTimestepsRequired, output_type='header')
+print_table_row(['OUTPUT', 'INFO'], 
+                0, nTimestepsRequired, runCounter, currentTime, output_type='header')
 
 folder = os.path.dirname(os.path.abspath(__file__))
 path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
@@ -433,9 +463,11 @@ while True:
         nTimestepsCurrent = int(get_value_of_variable_from_file('./' + restartFilename, 0, 2, restartFlag))
         
         if nTimestepsCurrent >= nTimestepsRequired:
-            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], nTimestepsCurrent, nTimestepsRequired)
+            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], 
+                            nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
             
-            print_table_row(['SUCCESS', 'Stop monitoring'], nTimestepsRequired, nTimestepsRequired, output_type='middle')
+            print_table_row(['SUCCESS', 'Stop monitoring ' + jobName], 
+                            nTimestepsRequired, nTimestepsRequired, runCounter, walltime, output_type='middle')
             
             if emailNotification:
                 send_mail(emailAddress, 'Ended Job ' + jobName)
@@ -444,10 +476,18 @@ while True:
         
         # Continue
         else:
-            print_table_row(['CONTINUE', 'Continue monitoring'], nTimestepsCurrent, nTimestepsRequired, output_type='middle')
+            print_table_row(['CONTINUE', 'Continue monitoring ' + jobName], 
+                            nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime, output_type='middle')
             
             if outputType == 'running':
-                print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], nTimestepsCurrent, nTimestepsRequired)
+                runCounter += 1
+                
+                jobStatusRunning, jobStatusPending = get_job_status(user)
+                jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
+                currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
+                
+                print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], 
+                                nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
             
             if emailNotification:
                 send_mail(emailAddress, 'Continued Job ' + jobName)
@@ -457,7 +497,8 @@ while True:
     except FileNotFoundError:
         nTimestepsCurrent = 0
         
-        print_table_row(['STARTING', 'Start monitoring'], nTimestepsCurrent, nTimestepsRequired, output_type='middle')
+        print_table_row(['STARTING', 'Start monitoring ' + jobName], 
+                        nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime, output_type='middle')
         
         if backup:
             print_table_row(['BACKUP', backupLocation])
@@ -479,9 +520,15 @@ while True:
         jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
         jobID = jobStatusRunning[jobStatusRunningNameIndex - 2]
         
+        currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
+        
         if outputType == 'running':
-            print_table_row(['RUNNING', 'Job is executed'], nTimestepsCurrent, nTimestepsRequired)
+            print_table_row(['RUNNING', 'Job is executed'], 
+                            nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
             outputType = 'no Output'
+        else:
+            print_table_row(['RUNNING', 'Job is executed'], 
+                            nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime, delete_line_index=-6)
             
         time.sleep(sleepTime)
         
@@ -489,7 +536,8 @@ while True:
     elif jobName in jobStatusPending:
 
         if outputType == 'pending':
-            print_table_row(['WAITING', 'Job is pending'], nTimestepsCurrent, nTimestepsRequired)
+            print_table_row(['WAITING', 'Job is pending'], 
+                            nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
             outputType = 'running'
             
         time.sleep(sleepTime)
@@ -506,7 +554,8 @@ while True:
                     
                     if backup:
                         print_table_row(['BACKUP', backupLocation])
-                        subprocess.run(['rsync', '-a', '', backupPath], nTimestepsCurrent, nTimestepsRequired)
+                        subprocess.run(['rsync', '-a', '', backupPath], 
+                                       nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
                     
                     break
                 else:
@@ -514,7 +563,8 @@ while True:
                         
                     if backup:
                         print_table_row(['RESTORE', backupLocation])
-                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''], nTimestepsCurrent, nTimestepsRequired)
+                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''], 
+                                       nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
                     
                     break
                     
@@ -525,10 +575,12 @@ while True:
         
         try:
             nTimestepsCurrent = int(get_value_of_variable_from_file('./' + restartFilename, 0, 2, restartFlag))
-            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], nTimestepsCurrent, nTimestepsRequired)
+            print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], 
+                            nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
             
             if nTimestepsCurrent >= nTimestepsRequired:
-                print_table_row(['SUCCESS', 'Stop monitoring'], nTimestepsRequired, nTimestepsRequired)
+                print_table_row(['SUCCESS', 'Stop monitoring ' + jobName], 
+                                nTimestepsRequired, nTimestepsRequired, runCounter, walltime)
                 
                 if emailNotification:
                     send_mail(emailAddress, 'Ended Job ' + jobName)
@@ -537,14 +589,19 @@ while True:
         except FileNotFoundError:
             pass   
         
-        # Write jobscript
-        write_file(jobscriptFilename, jobscriptContent)
+        # Create jobscript
+        if jobscriptFilename == 'jobscript-create':
+            jobscriptFilename = 'jobscript'
+            write_file(jobscriptFilename, jobscriptContent)
         
         # Start Job
         startOutput = subprocess.check_output([commandJobStarting, jobscriptFilename]).decode('utf-8').replace('\n', '')
         jobID = startOutput.split(startOutputFlag)[1]
         
-        print_table_row(['STARTING', startOutput], nTimestepsCurrent, nTimestepsRequired, output_type='middle')
+        runCounter += 1
+        
+        print_table_row(['STARTING', startOutput], 
+                        nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime, output_type='middle')
         
         try:
             if restartMail and emailNotification:

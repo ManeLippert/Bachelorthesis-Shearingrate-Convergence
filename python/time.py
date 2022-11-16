@@ -26,4 +26,4 @@ def get_time_in_seconds(time):
     
 print(get_time_in_seconds('12:23:49'))
 
-print(get_time_in_seconds('1-12:23:49'))
+print(get_time_in_seconds('0-24:00:00'))
