@@ -74,6 +74,7 @@ START SCRIPT IN BACKGROUND:
     >>> (Strg + d) (kill Screen itself)
 
 OUTPUT STATUS:
+Just run the file will create an dynamic output (recommended with using screen) or
 >>> cd $DATA && find . -name status.txt -exec cat {} \;
 
 ====================================== ARGUMENTS ======================================
