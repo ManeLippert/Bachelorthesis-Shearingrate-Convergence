@@ -185,8 +185,8 @@ restartFlag = 'FILE_COUNT'
 
 ## COMMANDS ================================================================================================================
 
-commandJobRunning = 'squeue --states=running -u '
-commandJobPending = 'squeue --states=pending -u '
+commandJobRunning = 'squeue --states=running --name ' + jobName
+commandJobPending = 'squeue --states=pending --name ' + jobName
 
 commandJobStarting = 'sbatch'
 
@@ -261,7 +261,9 @@ def print_table_row(content,
     required_time = get_time_in_seconds(required_time)
     current_time = get_time_in_seconds(current_time)
     
-    jobStatus = subprocess.getoutput('squeue -u bt712347').strip().split('\n')
+    jobStatus = subprocess.getoutput('squeue --name ' + jobName).strip().split('\n')
+    
+    jobStatus = [jobStatus[0], ]
         
     jobStatusHeader = [' ' + jobStatus[0]]
     jobStatusHeader.insert(0, table_outline[6])
@@ -438,15 +440,15 @@ def time_duration(startTime):
 
 ## STATUS ==================================================================================================================
 
-def get_job_status(user):
+def get_job_status():
     
-    jobStatusRunning = subprocess.getoutput(commandJobRunning + user).strip().split()
-    jobStatusPending = subprocess.getoutput(commandJobPending + user).strip().split()
+    jobStatusRunning = subprocess.getoutput(commandJobRunning).strip().split()
+    jobStatusPending = subprocess.getoutput(commandJobPending).strip().split()
 
     return jobStatusRunning, jobStatusPending
 
-def set_output_type(user):
-    jobStatusRunning, jobStatusPending = get_job_status(user)
+def set_output_type():
+    jobStatusRunning, jobStatusPending = get_job_status()
 
     if jobName in jobStatusRunning:
         outputType = 'running'
@@ -504,7 +506,7 @@ if backup:
 
 # START/RESTART JOB ========================================================================================================
 
-outputType = set_output_type(user)
+outputType = set_output_type()
 
 ## BEGIN ===================================================================================================================
 
@@ -534,7 +536,7 @@ while True:
             if outputType == 'running':
                 runCounter += 1
                 
-                jobStatusRunning, jobStatusPending = get_job_status(user)
+                jobStatusRunning, jobStatusPending = get_job_status()
                 jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
                 currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
                 
@@ -566,7 +568,7 @@ while True:
 
 while True:
     
-    jobStatusRunning, jobStatusPending = get_job_status(user)
+    jobStatusRunning, jobStatusPending = get_job_status()
 
     # Job running
     if jobName in jobStatusRunning:
@@ -672,6 +674,6 @@ while True:
         
         time.sleep(30)
         
-        outputType = set_output_type(user)
+        outputType = set_output_type()
         
 ## RESTART =================================================================================================================
