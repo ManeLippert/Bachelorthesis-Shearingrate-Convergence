@@ -21,8 +21,7 @@
 ## Introduction 
 This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D.
 
-* [gkw-Code](https://bitbucket.org/gkw/gkw/wiki/Home)
-* In this repository is my own version of [gkw](/gkw/) for this thesis with according changes
+* [GKW-Code](https://bitbucket.org/gkw/gkw/wiki/Home)
 * LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf) 
 
 
@@ -502,7 +501,7 @@ I will document my work in from of a journal and to keep track of all changes i 
 
     ## Additional Diagnostic
 
-    Use fourier spetrum as additional diagnostic to evaluate the shearing rate $\omega_{\mathrm{E \times B}}$ like in Fig 5a in [[1]](../literature/Peeters%2C%20Rath%2C%20Buchholz%20-%20Gradient-driven%20flux-tube%20simulations%20of%20ion%20temperature%20gradient%20turbulence%20close%20to%20the%20non-linear%20threshold%20(Paper%2C%202016).pdf)
+    Use fourier spetrum as additional diagnostic to evaluate the shearing rate $\omega_{\mathrm{E \times B}}$ like in Fig 5a in [[1]](https://doi.org/10.1063/1.4961231)
 
     </p>
     </details>
@@ -513,7 +512,7 @@ I will document my work in from of a journal and to keep track of all changes i 
 * <details><summary>June</summary>
   <p>
 
-  * <details><summary>08.06.2022 &nbsp; Resolution, Folder Structure and Comparison of Resolution</summary>
+  * <details><summary>08.06.2022 &nbsp; Resolution, Folder Structure & Comparison of Resolution</summary>
     <p>
 
     # Resolution, Folder Structure and Comparison of Resolution
@@ -545,10 +544,10 @@ I will document my work in from of a journal and to keep track of all changes i 
     </p>
     </details>
 
-  * <details><summary>09.06.2022 &nbsp; Meeting to increase Boxsize</summary>
+  * <details><summary>09.06.2022 &nbsp; Meeting to increase Boxsize radially</summary>
     <p>
 
-    # Meeting to increase Boxsize
+    # Meeting to increase Boxsize radially
 
     #### Thursday 09.06.2022 14:00 to 14:30 with Florian Rath and Arthur Peeters
 
@@ -560,7 +559,7 @@ I will document my work in from of a journal and to keep track of all changes i 
 
     ```Nsgrid = 16```, ```Nvpar = 48```, ```Nmugrid = 9```
 
-    ## Increase Boxsize
+    ## Increase Boxsize radially
 
     Change following variables according to increase factor $N$:
 
@@ -570,16 +569,113 @@ I will document my work in from of a journal and to keep track of all changes i 
     Boxsize 1x1: `nx_1` = 83, &nbsp; `ikx_space_1` = 5\
     Boxsize 2x1: `nx_2` = 165, `ikx_space_2` = 10\
     Boxsize 3x1: `nx_3` = 247, `ikx_space_3` = 15\
-    Boxsize 2x1: `nx_4` = 329, `ikx_space_4` = 20
+    Boxsize 4x1: `nx_4` = 329, `ikx_space_4` = 20
 
     </p>
     </details>
+  * <details><summary>15.06.2022 - 29.07.2022 &nbsp; Work on Restart Script & Run for increased Boxsize</summary>
+    </p>
+      
+    # Work on Restart Script
+    
+    Lots of work for the rest of the month gone into the development of the restart script [`slurm_monitor.py`](/python/slurm_monitor.py) to 
+    tackle the problem of dealing everyday with restarts of the code due to some wall time of the cluster btrzx1.
+    For that the script is developed as python3 script that only needs built in python modules to ensure running on every system. 
+    The script itself looks in a specific time interval if the job is running, pending or needs to be started und das this routine until a defined
+    timestep is reached all by load the output of SLURM Job Manager with `squeue` and analyse the output.
+    The Core build could be adopted for diffent jobmanager as well the script is build variable enough to ensure the changing of the inportant values.
+      
+    # Run of increased boxsize
+      
+    The Rest of the time was waiting for the simulation for Boxsize 4x1 to be complete
+    </p>
+    </details>
+  </p>
+  </details>
+* <details><summary>July</summary>
+  <p>
+      
+  * <details><summary>05.07.2022 &nbsp; Meeting to increase Boxsize binormal </summary>
+    <p>
 
+    # Meeting to increase Boxsize binormal
+
+    #### Thursday 05.07.2022 14:00 to 14:30 with Florian Rath and Arthur Peeters
+        
+    ## Increase Boxsize binormal
+
+    Change following variables according to increase factor $N$:
+    * ```ikx_space_N``` $= 5$
+    * ```nx_N``` $= [($ ```nx_1``` $-1 ) * N ] +1$ 
+    * ```nmod_N``` $= [($ ```nmod_1```$ -1) * N ] +1$
+        
+    Boxsize 1x1: `nx_1` = 83, &nbsp; `nmod_1` = 21\
+    Boxsize 2x2: `nx_2` = 165, `nmod_2` = 41\
+    Boxsize 3x3: `nx_3` = 247, `nmod_3` = 61\
+    Boxsize 4x4: `nx_4` = 329, `nmod_4` = 81
+    
+    </p>
+    </details>
+      
+  * <details><summary>06.07.2022 - 29.07.2022 &nbsp; Problems with hdf5-file & Further work on restart script</summary>
+    <p>
+        
+    ## Problems with hdf5-file
+    
+    hdf5 files have to be closed every time you are done with processing data. Otherwise the file gets curupted and the data gets lost because
+    only the programm that opens the hdf5 file can close it. This behaviour results in lots of problems on the server because of the storage limit
+    on btrzx1 GKW got stopped and the file remained open.
+    
+    ## Further Work on restart script
+    
+    Because of that the restart script now features a backup option to safe data between successful runs und can restore it after error.
+    As additonal the restart script now can write the job name into the jobscript file, has timestaps for each new status update, 
+    writes outputs in `status.txt` and sends mails at the start and the end of on total run.
+        
+    </p>
+    </details>
+    
   </p>
   </details>
 
-
-
+* <details><summary>August</summary>
+  <p>
+  
+  * <details><summary>06.08.2022 - 16.08.2022 &nbsp; Evaluate Data</summary>
+    <p> 
+    
+    ## Evaluate Data
+    To make sure every simulations has no turbulence a fourier plot of fourer mode 1 to 5 (in Plots $k_1$ to $k_5$) will in the time domain be made. 
+    It has shown that the mode with a value of $\omega_{\mathrm{E \times B}, max} \sim 0.20$ is also the wavelength thats convergences 
+    with the boxsize. So if the mode $k_3$ is at $\omega_{\mathrm{E \times B}, max} \sim 0.20$ we know when the other modes are nearly zero
+    that in the boxsize the 3 times wavelength convergences with the boxsize.
+    
+    ## Results
+        
+    Boxsize 1x1: $k_1$
+    Boxsize 2x1: $k_2$
+    Boxsize 2x2: $k_2$
+    Boxsize 3x1: $k_3$
+    Boxsize 3x3: $k_4$
+    Boxsize 4x1: $k_4$
+        
+    Note that the boxsize 3x3 the fourier mode is $k_4$ has the value $0.20$. So this could be inconsitent with the other results for the Xx1
+    boxsizes
+    
+    </p>
+    </details>
+     
+    
+  * <details><summary>17.08.2022 &nbsp; Meeting about Boxsize 3x3</summary>
+    <p> 
+        
+        
+    </p>
+    </details> 
+      
+  </p>
+  </details>
+  
 ## Results
 
 ### Juypter Notebooks
