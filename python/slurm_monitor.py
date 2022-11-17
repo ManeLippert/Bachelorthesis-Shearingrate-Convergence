@@ -74,7 +74,7 @@ START SCRIPT IN BACKGROUND:
     >>> (Strg + d) (kill Screen itself)
 
 OUTPUT STATUS:
->>> cd $DATA && find . -name status.txt -exec tail --lines=+2 {} \;
+>>> cd $DATA && find . -name status.txt -exec cat {} \;
 
 ====================================== ARGUMENTS ======================================
 '''
