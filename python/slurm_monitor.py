@@ -262,8 +262,6 @@ def print_table_row(content,
     current_time = get_time_in_seconds(current_time)
     
     jobStatus = subprocess.getoutput('squeue --name ' + jobName).strip().split('\n')
-    
-    jobStatus = [jobStatus[0], ]
         
     jobStatusHeader = [' ' + jobStatus[0]]
     jobStatusHeader.insert(0, table_outline[6])
@@ -614,9 +612,9 @@ while True:
                 if outputContent == outputCriteria: 
                     
                     if backup:
-                        print_table_row(['BACKUP', backupLocation])
-                        subprocess.run(['rsync', '-a', '', backupPath], 
-                                       nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
+                        print_table_row(['BACKUP', backupLocation],
+                                        nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
+                        subprocess.run(['rsync', '-a', '', backupPath])
                     
                     break
                 else:
@@ -624,9 +622,9 @@ while True:
                                     nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
                         
                     if backup:
-                        print_table_row(['RESTORE', backupLocation])
-                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''], 
-                                       nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
+                        print_table_row(['RESTORE', backupLocation], 
+                                        nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
+                        subprocess.run(['rsync', '-a', '-I', '--exclude=status.txt', backupPath + '/', ''])
                     
                     break
                     
