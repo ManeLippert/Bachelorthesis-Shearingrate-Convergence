@@ -11,8 +11,8 @@
 #fi
 
 #sleep 2
-ssh btrzx1-1.rz.uni-bayreuth.de "squeue -u bt712347"
-ssh btrzx1-1.rz.uni-bayreuth.de "cd /scratch/bt712347/data && find . -name status.txt -exec tail --lines=+2 {} \;"
+#ssh btrzx1-1.rz.uni-bayreuth.de "squeue -u bt712347"
+ssh btrzx1-1.rz.uni-bayreuth.de "cd /scratch/bt712347/data && find . -name status.txt -exec cat {} \;"
 
 # Disconnect VPN
 #if [[ "$CONNECTION" = "" ]]; then
