@@ -800,7 +800,7 @@ I will document my work in from of a journal and to keep track of all changes i 
     # Reading Paper [1] & Search References
         
     Read paper [[1]](https://doi.org/10.1063/1.4961231) again and extract references from the important section and import them to 
-    (/briefcommunication/refernces.bib). Briefcommunication will reference paper [[1]](https://doi.org/10.1063/1.4961231) as the basis work.
+    [references.bib](/briefcommunication/refernces.bib). Briefcommunication will reference paper [[1]](https://doi.org/10.1063/1.4961231) as the basis work.
     
     </p>
     </details>
