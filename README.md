@@ -646,9 +646,9 @@ I will document my work in from of a journal and to keep track of all changes i 
     
     ## Evaluate Data
     To make sure every simulations has no turbulence a fourier plot of fourer mode 1 to 5 (in Plots $k_1$ to $k_5$) will in the time domain be made. 
-    It has shown that the mode with a value of $\omega_{\mathrm{E \times B}, max} \sim 0.20$ is also the wavelength thats convergences 
+    It has shown that the mode with a value of $\omega_{\mathrm{E \times B}, max} \sim 0.20$ is also the wavelength thats converges 
     with the boxsize. So if the mode $k_3$ is at $\omega_{\mathrm{E \times B}, max} \sim 0.20$ we know when the other modes are nearly zero
-    that in the boxsize the 3 times wavelength convergences with the boxsize.
+    that in the boxsize the 3 times wavelength converges with the boxsize.
     
     ## Results
         
@@ -666,16 +666,106 @@ I will document my work in from of a journal and to keep track of all changes i 
     </details>
      
     
-  * <details><summary>17.08.2022 &nbsp; Meeting about Boxsize 3x3</summary>
+  * <details><summary>17.08.2022 &nbsp; Meeting about Boxsize 3x3 & Further Work</summary>
     <p> 
+    
+    # Meeting about Boxsize 3x3
+
+    #### Thursday 17.08.2022 14:15 to 14:45 with Florian Rath and Arthur Peeters
+    
+    The wavelength is not well defined (in german 'scharf') so because of the results of boxsize 3x3 with the fourier mode $k_4$ the actually result is
+    not cruial because the question of the thesis is if the wavelength does converge at all so if $k_4$ or $k_3$ is the stabilizing fourier mode
+    is not from intrested. However it would be consistent with the results of Xx1 if 3x3 have had the mode $k_4$. 
+    
+    Although the runs are very long the result that the stairscase structure fully developes is remarkable so the underlying process of 
+    turbulence that gets stablize through zonal flows holds for even longer runs and hint to a mechanism of toridial plasma.
         
+    The results are very good because boxsize was chosen really well that gets confirmed with the formation of the staircase structure and
+    the convergence of the wavelength.
+        
+    # Further Work
+     
+    To determined the results even more Florian suggests to run more nearby the finite heatflux threshold. To recall all simulations were run with an 
+    gradient length $R/L_T$ of $6.0$ because of the run at $6.3$ was not stabilize quick enough as $6.0$. The last simulations sould bei run with an
+    gradient length of $6.2$ and a boxsize of 2x2.
         
     </p>
     </details> 
+    
+  * <details><summary>18.08.2022 - 24.08.2022 &nbsp; Result for $R/L_T = 6.2$ & Plots for Thesis </summary>
+    <p>
+    
+    # Result for $R/L_T = 6.2$
+        
+    The simulation for $R/L_T = 6.2$ does stabilize very quick like 1x1, 2x2 and 3x3 so the wavelength does indeed converge with the boxsize. As an 
+    view in the future maybe long simulations can even converge even faster if the boxsize in radially and binormal is suitable chosen.
+        
+    # Plots for Thesis
+        
+    When displaying plots of the wavelength over a time interval it is enough to only display the intresting time intervals e.g. instabil, semi-stabil
+    and stabil in addition to that show time intervals where it seems the turbulence is stabilized but the staircase structure is not fully 
+    developed.
+        
+    </p>
+    </details>
       
+  * <details><summary>25.08.2022 - 31.08.2022 &nbsp; Saving data to NAS tp5-peeters </summary>
+    <p>
+        
+    # Saving data to NAS tp5-peeters
+        
+    Cloned repository and copied data to NAS of tp5-peeters. For more informations read [README-DATA](/data/README.md).
+    
+    </p>
+    </details>
+  
+* <details><summary>September</summary>
+  <p>      
+      
+  * <details><summary>01.09.2022 &nbsp; Meeting about Publication in Physiccs of Plasma & Layout Bachelor Thesis</summary>
+    <p>   
+    
+    # Meeting about Publication in Physiccs of Plasma & Layout Bachelor Thesis
+    
+    #### Thursday 01.09.2022 14:00 to 14:30 with Florian Rath and Arthur Peeters
+  
+    # Layout Bachelor Thesis
+        
+    For the bachelor thesis is no other regulation than that of the examination office of the MPI in Bayreuth.
+        
+    # Publication in Physiccs of Plasma
+    
+    Results of the bachelor thesis should be publicated as brief communication in physics of plasma for that it is cruial to know the
+    layout und the rules of the journal.
+        
+    </p>
+    </details>  
+       
+  * <details><summary>02.09.2022 - 30.09.2022 &nbsp; Work on Publication (1) </summary>
+    <p>
+        
+    # Work on Publication (1)
+    
+    Publication should not be longer than $3500$ words and not longer than 4 Pages to ensure that [wordcount.tex](/breifcommunication/wordcount.tex)
+    count the words and pages. 
+        
+    For Plots only include the necessary plots that are comparison in of the boxsizes in Xx1, XxY, $R/L_T$ and 2x1 between 2x2 and 3x1 between 3x3
+    with plots of the turbulence to show simulation is stabil and one example plot with $\omega_{\mathrm{E \times B, max}}$ and
+    the corresponding fourier modes.
+    No Plots needed for instabil and semi-stabil of wavelength plots in publication only stabil and intresting semi-stabil wavelength plots. 
+      
+    </p>
+    </details>
+    
   </p>
   </details>
-  
+
+* <details><summary>October</summary>
+  <p>
+   
+  </p>
+  </details>
+      
 ## Results
 
 ### Juypter Notebooks
