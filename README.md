@@ -741,10 +741,10 @@ I will document my work in from of a journal and to keep track of all changes i 
     </p>
     </details>  
        
-  * <details><summary>02.09.2022 - 30.09.2022 &nbsp; Work on Publication (1) </summary>
+  * <details><summary>02.09.2022 - 30.09.2022 &nbsp; Work on Publication Layout </summary>
     <p>
         
-    # Work on Publication (1)
+    # Work on Publication Layout
     
     Publication should not be longer than $3500$ words and not longer than 4 Pages to ensure that [wordcount.tex](/breifcommunication/wordcount.tex)
     count the words and pages. 
@@ -762,7 +762,41 @@ I will document my work in from of a journal and to keep track of all changes i 
 
 * <details><summary>October</summary>
   <p>
-   
+  
+  * <details><summary>01.10.2022 - 19.10.2022 &nbsp; Work on Publication Plots </summary>
+    <p>
+        
+    # Work on Publication Plots
+    
+    The plots are mostly generated with subplots in matplotlib. To achive a clean look most of work the work gone into programming this plots.
+    Especially the plots for the different wavelength took the longest time because it is a overlay off four subplots an idea of myself but not easy 
+    to realise. For better visibility the staircase structure of got shifted to achive an overlay of every staircase.
+    
+    </p>
+    </details>
+      
+  * <details><summary>20.10.2022 &nbsp; Meeting about Publication Plots </summary>
+    <p>
+    
+    # Meeting about Publication Plots
+    
+    #### Thursday 20.09.2022 14:00 to 14:30 with Arthur Peeters
+     
+    # Feedback of Wavelength Plot
+    
+    The plot itself is beautiful the only thig that should get added are the linar growth rate $\gamma$ from [[2]](https://doi.org/10.1063/1.4952621).
+    The shift of the staircase structure is physically possible because toridial plasma has it symmetry in the rotation so such shift will not 
+    affect the nature of the plasma but should certainly be addressed in publication.
+    For more space the comparison of gradient length $R/L_T$ will be excluded from publication
+        
+    From now on the start of the writing porcess can start. 
+        
+    </p>
+    </details>
+  
+  * <details><summary>21.10.2022 - 31.10.2022 &nbsp; Reading Paper [[1]](https://doi.org/10.1063/1.4961231) </summary>
+    <p>
+    
   </p>
   </details>
       
