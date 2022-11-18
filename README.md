@@ -794,11 +794,56 @@ I will document my work in from of a journal and to keep track of all changes i 
     </p>
     </details>
   
-  * <details><summary>21.10.2022 - 31.10.2022 &nbsp; Reading Paper [[1]](https://doi.org/10.1063/1.4961231) </summary>
+  * <details><summary>21.10.2022 - 31.10.2022 &nbsp; Reading Paper [1] & Search References </summary>
     <p>
     
+    # Reading Paper [1] & Search References
+        
+    Read paper [[1]](https://doi.org/10.1063/1.4961231) again and extract references from the important section and import them to 
+    (/briefcommunication/refernces.bib). Briefcommunication will reference paper [[1]](https://doi.org/10.1063/1.4961231) as the basis work.
+    
+    </p>
+    </details>
+      
   </p>
   </details>
+   
+* <details><summary>November</summary>
+  <p>
+  
+  * <details><summary>01.11.2022 - 10.10.2022 &nbsp; Reading Paper [...] </summary>
+    <p>
+        
+    Additional paper found with references
+        
+    </p>
+    </details>
+      
+  * <details><summary>11.10.2022 &nbsp; Meeting about progess in Publication </summary>
+    <p>
+        
+    # Meeting about progress in Publication
+    
+    #### Friday 11.11.2022 10:15 to 10:45 with Florian Rath
+    
+    The shift of wavelength is possible but could get in trouble at the surface of the plasma and at the point the 
+    plasma gets connected after one complete round because of the boundary condition. But it will be enough to tell for better 
+    visibility the staircase sturcture gets shifted maybe later a explaination would be needed.
+        
+    Plan to write publication in the next two weeks.
+        
+  * <details><summary>12.10.2022 - 18.11.2022 &nbsp; Restart Script Professonial </summary>
+    <p>
+        
+    # Restart Script Professonial
+        
+    Restart script got overwrite. Now the script creates the jobscript and the status file by itself. Included a parser to give arguments directly
+    through the command line and a progressbar with job info that gets updated every 5 seconds. 
+    The script can now be run with `nohup` or `screen` ducumentation is included in helpers message.
+        
+  </p>
+  </details>
+    
       
 ## Results
 
