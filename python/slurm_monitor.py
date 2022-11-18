@@ -531,15 +531,31 @@ while True:
                             nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime, 
                             output_type='middle')
             
+            jobStatusRunning, jobStatusPending = get_job_status()
+            
             if outputType == 'running':
                 runCounter += 1
                 
-                jobStatusRunning, jobStatusPending = get_job_status()
                 jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
                 currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
                 
                 print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], 
                                 nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
+            
+            elif outputType == 'pending':
+                runCounter += 1
+                
+                jobStatusPendingNameIndex = [idx for idx, s in enumerate(jobStatusPending) if jobName in s][0]
+                currentTime = jobStatusPending[jobStatusPendingNameIndex + 3]
+                
+                print_table_row(['CONTROL', 'Current Timesteps ' + str(nTimestepsCurrent)], 
+                                nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
+            
+            else:
+                if backup:
+                    print_table_row(['BACKUP', backupLocation],
+                                    nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
+                    subprocess.run(['rsync', '-a', '', backupPath])
             
             if emailNotification:
                 send_mail(emailAddress, 'Continued Job ' + jobName)
