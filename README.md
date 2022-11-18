@@ -652,11 +652,11 @@ I will document my work in from of a journal and to keep track of all changes i 
     
     ## Results
         
-    Boxsize 1x1: $k_1$
-    Boxsize 2x1: $k_2$
-    Boxsize 2x2: $k_2$
-    Boxsize 3x1: $k_3$
-    Boxsize 3x3: $k_4$
+    Boxsize 1x1: $k_1$\
+    Boxsize 2x1: $k_2$\
+    Boxsize 2x2: $k_2$\
+    Boxsize 3x1: $k_3$\
+    Boxsize 3x3: $k_4$\
     Boxsize 4x1: $k_4$
         
     Note that the boxsize 3x3 the fourier mode is $k_4$ has the value $0.20$. So this could be inconsitent with the other results for the Xx1
