@@ -50,7 +50,7 @@ START SCRIPT IN BACKGROUND:
     Output after Enter or next Command:
     [1]+ Beendet               nohup python3 slurm_monitor.py &> /dev/null  
     
-  o WITH SCREEN (has to be installed):
+  o WITH SCREEN (has to be installed, does not perform as good as nohup):
     Create Screen:
     >>> screen -S $SESSION
     
