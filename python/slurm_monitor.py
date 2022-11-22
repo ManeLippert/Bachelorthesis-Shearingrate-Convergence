@@ -50,7 +50,7 @@ START SCRIPT IN BACKGROUND:
     Output after Enter or next Command:
     [1]+ Beendet               nohup python3 slurm_monitor.py &> /dev/null  
     
-  o WITH SCREEN (has to be installed, does not perform as good as nohup):
+  o WITH SCREEN (has to be installed):
     Create Screen:
     >>> screen -S $SESSION
     
@@ -125,7 +125,8 @@ args = parser.parse_args()
 
 outputCriteria = '0'
 
-sleepTime = 5
+# Changing this value can cause problems in writing status file
+sleepTime = 30
 
 runCounter = 0
 currentTime = '00:00:00'
