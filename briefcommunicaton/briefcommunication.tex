@@ -90,14 +90,23 @@
 }
 
 %% Include graphic for two column with specific place, figrue* places graphic anywhere...
+%\newcommand{\includegraphicsTwoCol}[3]{
+%	\onecolumngrid
+%	\begin{center}
+%		\captionsetup{type=figure}
+%    	\includegraphics[width=\textwidth]{#1}
+%		\captionof{figure}{#2}
+%	\end{center}
+%	\twocolumngrid
+%	\label{#3}
+%	\increasecounter{fig}{2}
+%}
+
 \newcommand{\includegraphicsTwoCol}[3]{
-	\onecolumngrid
-	\begin{center}
-		\captionsetup{type=figure}
+	\begin{figure*}
     	\includegraphics[width=\textwidth]{#1}
-		\captionof{figure}{#2}
-	\end{center}
-	\twocolumngrid
+		\caption{#2}
+	\end{figure*}
 	\label{#3}
 	\increasecounter{fig}{2}
 }
@@ -108,66 +117,89 @@
 
 %% TITLE, INFO =============================================================================================================
 
-\title[Convergence of shearing rate $\omega_{\mathrm{E}\times\mathrm{B}}$ with boxsize in gradient driven simulation]{
-	Convergence of shearing rate $\omega_{\mathrm{E}\times\mathrm{B}}$ with boxsize in gradient driven simulation
-}
+%\title[Convergence of shearing rate $\omega_{\mathrm{E}\times\mathrm{B}}$ with boxsize in gradient driven simulation]{
+%	Convergence of shearing rate $\omega_{\mathrm{E}\times\mathrm{B}}$ with boxsize in gradient driven simulation
+%}
 
-\author{M. Lippert}
-	\altaffiliation{GitHub Repository of this work: \\ 
-					https://github.com/ManeLippert/Bachelorthesis-Shearingrate-Wavelength}
-\author{F. Rath}
-	\altaffiliation{Author to whom correspondence should be addressed: \\ 
-					Florian.Rath1@uni-bayreuth.de}
-	\email{Florian.Rath1@uni-bayreuth.de}
-\author{A. G. Peeters}
-\affiliation{Physics Department, University of Bayreuth, 95440 Bayreuth, Germany}
+%\author{M. Lippert}
+%	\altaffiliation{Repository of this work: \\ 
+%					https://github.com/ManeLippert/Bachelorthesis-Shearingrate-Wavelength}
+%\author{F. Rath}
+%	\altaffiliation{Author to whom correspondence should be addressed: \\ 
+%					Florian.Rath1@uni-bayreuth.de}
+%	\email{Florian.Rath1@uni-bayreuth.de}
+%\author{A. G. Peeters}
+%\affiliation{Physics Department, University of Bayreuth, 95440 Bayreuth, Germany}
 
-\date{\today}
+%\date{\today}
 
 %% ABSTRACT ================================================================================================================
 
-\begin{abstract}
-	An article usually includes an abstract, a concise summary of the work
-	covered at length in the main body of the article. It is used for
-	secondary publications and for information retrieval purposes. 
-\end{abstract}
+%\begin{abstract}
+%	An article usually includes an abstract, a concise summary of the work
+%	covered at length in the main body of the article. It is used for
+%	secondary publications and for information retrieval purposes. 
+%\end{abstract}
 
-\maketitle
+%\maketitle
 
 %% TEXT ====================================================================================================================
 
 %%% INTRODUCTION ===========================================================================================================
 
+\section{Introduction}
+\label{sec:intro}
+
+This brief communication focused on continuing the work Rath et. al \cite{doi:10.1063/1.4961231}. At the end Section IV it was 
+discussed that the circumstances for which the staircase can fully develop are beyond the scope of the paper. To gain more
+knowledge if the staircase can develop with the chosen box size from Ref 1.
+This paper will focus on the effects of the box size on the E$\times$B staircase structure and if the wavelength converges with the box size. 
+
+%%% THEORY =================================================================================================================
+
+\section{Theory}
+\label{sec:theory}
+
 It is known that radially sheared zonal flows plays a significant role in nonlinear stabilization in tokamak plasmas. \cite{WACooper1988,doi:10.1063/1.859529,doi:10.1063/1.873896}. 
-Through advection on the sheared zonal flows the turbulent structure in plasma gets deformed and tilted that causes an $E \times B$ nonlinearty. \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}
+Through advection on the sheared zonal flows the turbulent structure in plasma gets deformed and tilted that causes an E$\times$B nonlinearty. \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}
 Zonal flows mediate spectral energy transfer to larger radial wave vectors. \cite{doi:10.1063/1.3033206, doi:10.1063/1.3675855, PhysRevLett.120.175002}
-The strength of the shearing process is the $E \times B$ shearing rate $\omega_{\mathrm{E \times B}}$ which is the radial derivative of the advecting zonal flow velocity. \cite{doi:10.1063/1.871313, doi:10.1063/1.872847}
+The strength of the shearing process is the E$\times$B shearing rate $\omega_{\mathrm{E \times B}}$ which is the radial derivative of the advecting zonal flow velocity. \cite{doi:10.1063/1.871313, doi:10.1063/1.872847}
 The shearing rate $\omega_{\mathrm{E \times B}}$ is defined as 
 \begin{equation}
-	\omega_{\mathrm{E \times B}} = \frac{1}{2} \frac{\partial^2 \langle \Phi \rangle}{\partial \psi^2}
+	\omega_{\mathrm{E \times B}} = \frac{1}{2B} \frac{\partial^2 \langle \Phi \rangle}{\partial \psi^2}
 	\label{eq:shearingrate}
 \end{equation}
-where $\langle \Phi \rangle$ is the zonal electrostatic potential and $\psi$ the radial coordinate that labels the flux surfaces. \cite{doi:10.1063/1.4952621, doi:10.1063/1.5035184, doi:10.1063/1.3005380}
+where $\langle \Phi \rangle$ is the zonal electrostatic potential and $\psi$ the radial coordinate that labels the flux surfaces. \cite{doi:10.1063/1.4952621, doi:10.1063/1.3005380}
 It was shown that the nonlinear threshold for turbulence is directly related to shear stabilization. \cite{doi:10.1063/1.873896} 
-Often the shear stabilization is expressed in the empirical Waltz rule $\omega_{\mathrm{E \times B}} \sim \gamma$, \cite{doi:10.1063/1.870934, doi:10.1063/1.872847} where $\gamma$ is defined as the maximum linear growth rate in the unstable mode. In the discovered zonal flows, also known as $E \times B$ staircase \cite{PhysRevE.82.025401}, exhibit amplitudes in terms of the $E \times B$ shearing rate satisfying the stabilization criteria. \cite{doi:10.1063/1.4952621, doi:10.1063/1.4961231}
+Often the shear stabilization is expressed in the empirical Waltz rule $\omega_{\mathrm{E \times B}} \sim \gamma$, \cite{doi:10.1063/1.870934, doi:10.1063/1.872847} where $\gamma$ is defined as the maximum linear growth rate in the unstable mode. In the discovered zonal flows, also known as E$\times$B staircase \cite{PhysRevE.82.025401}, exhibit amplitudes in terms of the E$\times$B shearing rate satisfying the stabilization criteria. \cite{doi:10.1063/1.4952621, doi:10.1063/1.4961231}
 
-\includegraphicsOneCol{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{Test}{fig:eflux}
 
-%\includegraphicsOneCol{Comparison/Gradient-Length/S6_rlt6.0-6.3_boxsize1x1_Ns16_Nvpar64_Nmu9_eflux_comparison.pdf}{Test}{fig:eflux}
 
-\includegraphicsOneCol{S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x1_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{Test}{fig:eflux}
+\includegraphicsOneCol{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{
+	Time traces of the heat conduction coefficient $\chi$ for $R/L_T = 6.0$ for radial and binormal increased boxsizes
+}{fig:eflux-1x1-2x2-3x3-comparison}
 
-\includegraphicsOneCol{S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{Test}{fig:eflux}
+\includegraphicsOneCol{S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x1_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{
+	Shearing rate $\omega_{\mathrm{ExB}}$ for different time intervals in which heat conduction is almost zero but staircase has not fully developed for boxsize 3$\times$1
+}{fig:wexb-3x1-selection}
 
-%\includegraphicsOneCol{Comparison/Gradient-Length/S6_rlt6.0-6.2_boxsize2x2_Ns16_Nvpar48-64_Nmu9_eflux_comparison.pdf}{Test}{fig:eflux}
+\includegraphicsOneCol{S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{
+	Stablized shearing rate $\omega_{\mathrm{ExB}}$ for boxsize 3$\times$3
+}{fig:wexb-3x3-stable}
 
-\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize2x1-2-3x1-3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{Test}{fig:test}
+\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize2x1-2-3x1-3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{
+	Comparison of time traces of the heat conduction coefficient $\chi$ for $R/L_T = 6.0$ for boxsize 2$\times$1 compared to 2$\times$2 and 3$\times$1 compared to 3$\times$3
+}{fig:eflux-2x1-2-3x1-3-comparison}
 
-\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}{Test}{fig:test}
+\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}{
+	Comparison of shearing rate $\omega_{\mathrm{ExB}}$ for radial increased boxsizes. The staircase structure got 
+	shifted for better visibility.
+}{fig:wexb-1-2-3-4x1-stable-comparison}
 
-%\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{Test}{fig:test}
-
-\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison.pdf}{Test}{fig:test}
+\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison.pdf}{
+	\textbf{(a)} Time traces of the heat conduction coefficient $\chi$ for $R/L_T = 6.0$ for radial increased boxsizes \linebreak
+	\textbf{(b)} Time traces of $\omega_{\mathrm{ExB}}^{\mathrm{max}}$ for radial increased boxsizes
+}{fig:wexb-eflux-1-2-3-4x1-comparison}
 
 \increasecounter{fig}{2}
 
