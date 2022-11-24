@@ -1,4 +1,4 @@
-# Convergence of Wavelength with Boxsize in Gradient Driven Simulations
+# Convergence of Wavelength with Box Size in Gradient Driven Simulations
 
 ##### Bachelor Thesis about Zonal Flows
 
