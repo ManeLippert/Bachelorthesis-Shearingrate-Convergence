@@ -2,7 +2,7 @@
 
 ##### Bachelor Thesis about Zonal Flows
 
-![alt text](/pictures/Zonal_Flow.PNG)
+![alt text](/pictures/Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.png)
 
 
 
