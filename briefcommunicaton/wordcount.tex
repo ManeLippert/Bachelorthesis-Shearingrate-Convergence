@@ -94,9 +94,9 @@
 % Color output for page numbers
 \newcommand{\totalpagecount}{
     \ifnum\getpagerefnumber{LastPage}>\pagelimit
-        \textcolor{red}{\pageref{LastPage}}
+        \textcolor{red}{\pageref*{LastPage}}
     \else
-        \textcolor{teal}{\pageref{LastPage}}
+        \textcolor{teal}{\pageref*{LastPage}}
     \fi
 }
 
