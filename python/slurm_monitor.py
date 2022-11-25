@@ -126,7 +126,7 @@ args = parser.parse_args()
 outputCriteria = '0'
 
 # Changing this value can cause problems in writing status file
-sleepTime = 30
+sleepTime = 60
 
 runCounter = 0
 currentTime = '00:00:00'
@@ -607,6 +607,11 @@ while True:
     # Job pending
     elif jobName in jobStatusPending:
 
+        jobStatusPendingNameIndex = [idx for idx, s in enumerate(jobStatusPending) if jobName in s][0]
+        jobID = jobStatusPending[jobStatusPendingNameIndex - 2]
+        
+        currentTime = jobStatusPending[jobStatusPendingNameIndex + 3]
+        
         if outputType == 'pending':
             print_table_row(['WAITING', 'Job is pending'], 
                             nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
