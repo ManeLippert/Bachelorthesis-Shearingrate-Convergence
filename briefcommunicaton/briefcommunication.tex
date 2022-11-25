@@ -175,9 +175,7 @@ Often the shear stabilization is expressed in the empirical Waltz rule $\omega_{
 \section{Simulation Setup}
 \label{sec:setup}
 
-The plasma parameters are nearly the same as in Ref \onlinecite{doi:10.1063/1.4961231} with the cyclone base case: safety factor $q = 1.4$, magnetic shear $\hat{s} = 0.78$, inverse aspect ratio $\epsilon = 0.19$, density gradient $R/L_n = 2.2$ and electron to ion temperature ratio $T_e/T_i = 1$. The maximum of the velocity grid is three times the thermal velocity for both the parallel and the perpendicular velocities and adiabatic electrons with neglected collisions were investigated.
-
-For this paper the resolution "Standard resolution with 6th order (S6)" from Ref \onlinecite{doi:10.1063/1.4961231} was used and is given in Table \ref{tab:resolution} with changes in $N_{\nu_\parallel}$ from 64 grid points to 48 to reduces the runtime of simulations. Simulations showed that this correction in grid points does not affect the simulation itself.
+The plasma parameters are nearly the same as in Ref \onlinecite{doi:10.1063/1.4961231} with the cyclone base case: safety factor $q = 1.4$, magnetic shear $\hat{s} = 0.78$, inverse aspect ratio $\epsilon = 0.19$, density gradient $R/L_n = 2.2$ and electron to ion temperature ratio $T_e/T_i = 1$. The maximum of the velocity grid is three times the thermal velocity for both the parallel and the perpendicular velocities and adiabatic electrons with neglected collisions were investigated. For this paper the resolution "Standard resolution with 6th order (S6)" from Ref \onlinecite{doi:10.1063/1.4961231} was used and is given in Table \ref{tab:resolution} with changes in $N_{\nu_\parallel}$ from 64 grid points to 48 to reduces the runtime of simulations. Simulations showed that this correction in grid points does not affect the simulation itself.
 
 The simulations are performed with the flux tube version of the non-linear gyro-kinetic code GKW.\cite{Peeters20092650}
 Futher informations regarding the simulation can be found in Ref \onlinecite{doi:10.1063/1.4961231}.
@@ -192,7 +190,7 @@ Futher informations regarding the simulation can be found in Ref \onlinecite{doi
 		\end{tabular}
 	\end{ruledtabular}
 	\captionof{table}{
-		Resolution used in this paper (for more informations about the parameter read Ref \onlinecite{doi:10.1063/1.4961231}) %: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient oftoroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
+		Resolution used in this paper (for more informations about the parameter read Ref \onlinecite{doi:10.1063/1.4961231}) %: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
 	}
 	\label{tab:resolution}
 \end{center}
