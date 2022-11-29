@@ -15,12 +15,12 @@ description_text = '''
 ===================================== DESCRIPTION =====================================
 
 FEATURES:
-o Creats jobscript file with defined content (look into file itself for that)
+o Creats jobscript file with defined content (look into file itself for the jobscript)
 o Start/Restarts job until criteria is suffused (default=0)
-o Makes backup after each run before Restart amd Restore files after fail
+o Makes backup after each run before Restart and Restore files after fail
 o Sends mail at the beginning, end and restart (default=False) with status file 
-  as attachment (mailx has to be defined)
-o Creates status file with current status and progress bars
+  as attachment (mailx has to be installed and working)
+o Creates status file with current status and progress bars and updates it dynamically
   Progress: Total progress of simulation
   Run X:    Progress of current run
 
