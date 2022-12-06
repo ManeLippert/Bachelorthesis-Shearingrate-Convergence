@@ -1,20 +1,12 @@
 #!/bin/bash
 
 # Variables
-CONNECTION="$(nmcli con show --active | grep -i eduroam)"
 DESTINPUT=false
 REMOTEINPUT=false
 LOCALINPUT=false
 DIRINPUT=false
 ADDREMOTEDIR="/scratch/bt712347"
 WORKDIR="/Bachelorthesis-ZonalFlows/"
-
-# Connect VPN
-#if [[ "$CONNECTION" = "" ]]; then
-#    {
-#    nmcli con up Universität\ Bayreuth
-#    } &> /dev/null
-#fi
 
 # Move into Thesis Folder
 
@@ -145,10 +137,3 @@ else
         fi
     fi
 fi
-
-# Disconnect VPN
-#if [[ "$CONNECTION" = "" ]]; then
-#    {
-#    nmcli con down Universität\ Bayreuth
-#    } &> /dev/null
-#fi
