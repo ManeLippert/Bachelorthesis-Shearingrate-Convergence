@@ -119,6 +119,11 @@ additional.add_argument('--nodes', dest='nodes', nargs='?', type=str, default='3
 additional.add_argument('--time', dest='walltime', nargs='?', type=str, default='0-24:00:00',
                     help='walltime of server (d-hh:mm:ss)      (default=0-24:00:00)')
 
+
+additional.add_argument('--format', dest='formattable', nargs='?', type=str, default='fancy',
+                    help='format of output table               (default=fancy)\n'+
+                         'options: fancy (round box), universal (crossplattform)')
+
 args = parser.parse_args()
 
 # VARIABLES ================================================================================================================
@@ -150,6 +155,8 @@ restartFilename = args.restartFile
 
 statusFilename = args.statusFile
 statusFile = open(statusFilename, 'w+')
+
+formatTable = args.formattable
 
 def outputFilename(info):
     return './slurm-' + info + '.out'
@@ -239,11 +246,13 @@ def print_table_row(content,
                     current_value, required_value,
                     run_conter, current_time, required_time = walltime,
                     delete_line_index = -8, table_width = 76,
-                    output_type = None, time_info = True,
-                    table_outline = ['╭─', '─╮', '╰─', '─╯', '├─', '─┤', '│ ', ' │', '─'],):
+                    output_type = None, time_info = True):
     
-    # for better format across plattforms
-    # table_outline = ['o-', '-o', 'o-', '-o', 'o-', '-o', '| ', ' |', '-']
+    if formatTable == 'fancy':
+        table_outline = ['╭─', '─╮', '╰─', '─╯', '├─', '─┤', '│ ', ' │', '─']
+    
+    if formatTable == 'universal':
+        table_outline = ['o-', '-o', 'o-', '-o', 'o-', '-o', '| ', ' |', '-']
     
     sep_top = table_outline[0] + table_width*table_outline[8] + table_outline[1]
     sep_mid = table_outline[4] + table_width*table_outline[8] + table_outline[5]
