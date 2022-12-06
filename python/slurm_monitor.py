@@ -15,6 +15,7 @@ description_text = '''
 ===================================== DESCRIPTION =====================================
 
 FEATURES:
+o NO REQUIREMENTS, runs with standard python3 libary
 o Creats jobscript file with defined content (look into file itself for the jobscript)
 o Start/Restarts job until criteria is suffused (default=0)
 o Makes backup after each run before Restart and Restore files after fail
