@@ -28,10 +28,10 @@ START SCRIPT IN BACKGROUND:
 
   o WITH NOHUP:
     Command:
-    >>> nohup python3 slurm_monitor.py &> /dev/null &
+    >>> nohup python3 -u slurm_monitor.py &> /dev/null &
 
     With arguments (example for 30000 timesteps):
-    >>> nohup python3 slurm_monitor.py -n 30000 &> /dev/null &
+    >>> nohup python3 -u slurm_monitor.py -n 30000 &> /dev/null &
 
     Output:
     >>> [1] 10537
@@ -40,7 +40,7 @@ START SCRIPT IN BACKGROUND:
     >>> ps ax | grep python3
 
     Output:
-    >>> 10537 pts/1    S      0:00 python3 slurm_monitor.py
+    >>> 10537 pts/1    S      0:00 python3 -u slurm_monitor.py
     >>> 23426 pts/1    S+     0:00 grep --color=auto slurm_monitor.py
 
     Kill Process:
@@ -86,8 +86,8 @@ parser = argparse.ArgumentParser(description=description_text, formatter_class=a
 required = parser.add_argument_group('required arguments')
 additional = parser.add_argument_group('additional arguments')
 
-required.add_argument('-n', dest='timesteps', nargs='?', type=int, required=True,
-                    help='required timesteps                   (REQUIRED)')
+additional.add_argument('-n', dest='timesteps', nargs='?', type=int, default=10000,
+                    help='required timesteps                   (default=10000)')
 
 additional.add_argument('--mail', dest='mail', nargs='?', type=str,
                     help='mail address (mail@server.de)        (default=None)')
@@ -149,6 +149,7 @@ jobscriptFilename = args.jobscriptFile
 restartFilename = args.restartFile
 
 statusFilename = args.statusFile
+statusFile = open(statusFilename, 'w+')
 
 def outputFilename(info):
     return './slurm-' + info + '.out'
@@ -301,38 +302,38 @@ def print_table_row(content,
         sys.stdout.write("\x1b[1A"*(1))
         delete_line_in_file(statusFilename, end=-1)
         
-        write_line_to_statusFile(sep_top)
-        write_line_to_statusFile(row_format.format(*content))
-        write_line_to_statusFile(sep_end)
+        write_line_to_file(statusFilename,sep_top)
+        write_line_to_file(statusFilename,row_format.format(*content))
+        write_line_to_file(statusFilename,sep_end)
         
     elif output_type == 'middle':
         sys.stdout.write("\x1b[1A"*(-delete_line_index))
         delete_line_in_file(statusFilename, end=delete_line_index)
         
-        write_line_to_statusFile(sep_mid)
-        write_line_to_statusFile(row_format.format(*content))
-        write_line_to_statusFile(sep_end)
+        write_line_to_file(statusFilename,sep_mid)
+        write_line_to_file(statusFilename,row_format.format(*content))
+        write_line_to_file(statusFilename,sep_end)
         
     elif output_type == 'update':
         sys.stdout.write("\x1b[1A"*(-delete_line_index))
         delete_line_in_file(statusFilename, end=delete_line_index)
         
-        write_line_to_statusFile(sep_end)
+        write_line_to_file(statusFilename,sep_end)
         
     else:
         sys.stdout.write("\x1b[1A"*(-delete_line_index))
         delete_line_in_file(statusFilename, end=delete_line_index)
         
-        write_line_to_statusFile(row_format.format(*content))
-        write_line_to_statusFile(sep_end)
+        write_line_to_file(statusFilename,row_format.format(*content))
+        write_line_to_file(statusFilename,sep_end)
     
-    write_line_to_statusFile(sep_top)
-    write_line_to_statusFile(progress_format.format(*jobStatusHeader))
-    write_line_to_statusFile(progress_format.format(*jobStatusInfo))   
-    write_line_to_statusFile(sep_mid)
-    write_line_to_statusFile(progress_format.format(*progressbar_content))
-    write_line_to_statusFile(progress_format.format(*progressbartime_content))
-    write_line_to_statusFile(sep_end)
+    write_line_to_file(statusFilename,sep_top)
+    write_line_to_file(statusFilename,progress_format.format(*jobStatusHeader))
+    write_line_to_file(statusFilename,progress_format.format(*jobStatusInfo))   
+    write_line_to_file(statusFilename,sep_mid)
+    write_line_to_file(statusFilename,progress_format.format(*progressbar_content))
+    write_line_to_file(statusFilename,progress_format.format(*progressbartime_content))
+    write_line_to_file(statusFilename,sep_end)
 
 ## INFORMATIONS ============================================================================================================
 
@@ -366,29 +367,41 @@ def write_add_string_into_file(file, substring, add, comment = None):
         
     with open(file, 'w') as f:
         f.writelines(data)
+        f.flush()
         
-def write_file(filename, content):
-    file = open(filename, 'w+')
+def write_file(file, content):
     file.write(content)
-    file.close()
+    file.flush()
         
-def delete_line_in_file(file, start=None, end=None):
-    f = open(file, )
-    lines = f.readlines()[start:end]
+def delete_line_in_file(filename, start=None, end=None):
+    
+    file = open(filename, 'r')
     
     try:
+        lines = file.readlines()[start:end]
         content = ''.join(lines)
-        f = open(file, 'w+')
-        f.write(content)
-        f.close()
+        
+        file = open(filename, 'w+')
+    
+        file.write(content)
+        file.flush()
+
     except IndexError:
         pass
     
-def write_line_to_statusFile(content, mode = 'a'):
-    with open(statusFilename, mode) as f:
-        f.write(content + '\n')
-        f.close()
-    print(content)
+def write_line_to_file(filename, content):
+    
+    file = open(filename, 'r')
+    
+    lines = file.readlines()
+    lines.append(content + '\n')
+    
+    file = open(filename, 'w+')
+    
+    file.writelines(lines)
+    file.flush()
+
+    print(content, flush=True)
 
 ## TIME ====================================================================================================================
 
@@ -484,7 +497,6 @@ def send_mail(recipient, subject, body = None):
 
 startTime = time.time()
 user = os.getlogin()
-write_line_to_statusFile('STATUS OF RUN', 'w+')
 
 print_table_row(['OUTPUT', 'INFO'], 
                 0, nTimestepsRequired, runCounter, currentTime, 
@@ -697,3 +709,7 @@ while True:
         outputType = set_output_type()
         
 ## RESTART =================================================================================================================
+
+statusFile.close()
+
+# END ======================================================================================================================
