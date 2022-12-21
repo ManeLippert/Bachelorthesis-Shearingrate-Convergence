@@ -1,0 +1,14 @@
+rk4                                15298  0.18009E+05   100.00
+Calc RHS                           61192  0.17709E+05    98.33
+Calc Fields                        61192  0.48991E+04    27.20
+fields - poisson mat multiply      61192  0.14902E+03     0.83
+fields - MPI allreduce             61192  0.38097E+04    21.15
+fields - zonal adiabatic           61192  0.93278E+03     5.18
+fields - n4 renorm diag            61192  0.61382E+01     0.03
+Copy fdis vector to tmp            61192  0.14662E+03     0.81
+Collisions conservation            61192  0.42844E-01     0.00
+Init RHS to zero                   61192  0.86347E+02     0.48
+MPI radial ghost comms             61192  0.45033E-01     0.00
+Non linear terms: FFT, No MPI      61192  0.11204E+05    62.21
+MPI other ghost comms              61192  0.50194E+02     0.28
+Linear terms matmul, No MPI        61192  0.13227E+04     7.34

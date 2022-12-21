@@ -1,17 +1,17 @@
 #!/bin/bash
 
-INPUTFILE="data.h5"
-OUTPUTFILE="test.h5"
+INPUTFILE="gkwdata.h5"
+OUTPUTFILE="data.h5"
 
 DATASETS=(
 #"diagnostic/diagnos_fields/kxspec"
 #"diagnostic/diagnos_fields/kxvort"
 #"diagnostic/diagnos_fields/kyspec"
 #"diagnostic/diagnos_fields/kyvort"
-#"diagnostic/diagnos_fields/phi"
+"diagnostic/diagnos_fields/phi"
 #"diagnostic/diagnos_fields/spc"
 #"diagnostic/diagnos_fluxes/EFlesr0001"
-#"diagnostic/diagnos_fluxes/eflux_species01"
+"diagnostic/diagnos_fluxes/eflux_species01"
 #"diagnostic/diagnos_fluxes/eflux_spectra"
 #"diagnostic/diagnos_fluxes/eflux_sup"
 #"diagnostic/diagnos_fluxes/eflux_xspec"
@@ -25,7 +25,7 @@ DATASETS=(
 #"diagnostic/diagnos_fluxes/vflux_xspec"
 #"diagnostic/diagnos_grid/intmu"
 #"diagnostic/diagnos_grid/intvp"
-#"diagnostic/diagnos_grid/lxn"
+"diagnostic/diagnos_grid/lxn"
 #"diagnostic/diagnos_grid/lyn"
 #"diagnostic/diagnos_grid/mode_label"
 #"diagnostic/diagnos_grid/mphi"
@@ -37,7 +37,7 @@ DATASETS=(
 #"diagnostic/diagnos_growth_freq/frequencies_all_modes"
 #"diagnostic/diagnos_growth_freq/growth"
 #"diagnostic/diagnos_growth_freq/growth_rates_all_modes"
-#"diagnostic/diagnos_growth_freq/time"
+"diagnostic/diagnos_growth_freq/time"
 #"diagnostic/diagnos_mode_struct/parallel"
 #"diagnostic/diagnos_moments/den01"
 #"diagnostic/diagnos_moments/den_spectra"
@@ -99,7 +99,7 @@ DATASETS=(
 #"grid/vperp"
 #"grid/vpgr"
 #"grid/xgr"
-#"grid/xphi"
+"grid/xphi"
 #"grid/yphi"
 #"input/collisions/coll_freq"
 #"input/collisions/cons_type"
@@ -478,7 +478,7 @@ DATASETS=(
 #"evaluation/zonalflow_potential"
 #"evaluation/shearing_rate"
 #"evaluation/shearing_rate_maximum"
-"evaluation/derivative_stepsize"
+#"evaluation/derivative_stepsize"
 )
 
 for VAL in ${DATASETS[@]}; do
