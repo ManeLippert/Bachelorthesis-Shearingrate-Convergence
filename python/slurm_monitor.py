@@ -20,7 +20,7 @@ o Creats jobscript file with defined content (look into file itself for the jobs
 o Start/Restarts job until criteria is suffused (default=0)
 o Makes backup after each run before Restart and Restore files after fail
 o Sends mail at the beginning, end and restart (default=False) with status file 
-  as attachment (mailx has to be installed and working)
+  as attachment (mailx has to be installed and working look into file for more info)
 o Creates status file with current status and progress bars and updates it dynamically
   Progress: Total progress of simulation
   Run X:    Progress of current run
@@ -29,10 +29,10 @@ START SCRIPT IN BACKGROUND:
 
   o WITH NOHUP:
     Command:
-    >>> nohup python3 -u slurm_monitor.py &> /dev/null &
+    >>> nohup python3 -u slurm_monitor.py &> status.txt &
 
     With arguments (example for 30000 timesteps):
-    >>> nohup python3 -u slurm_monitor.py -n 30000 &> /dev/null &
+    >>> nohup python3 -u slurm_monitor.py -n 30000 &> status.txt &
 
     Output:
     >>> [1] 10537
@@ -49,17 +49,17 @@ START SCRIPT IN BACKGROUND:
     >>> kill 10537
     
     Output after Enter or next Command:
-    [1]+ Beendet               nohup python3 slurm_monitor.py &> /dev/null  
+    [1]+ Beendet               nohup python3 slurm_monitor.py &> status.txt  
     
   o WITH SCREEN (has to be installed):
     Create Screen:
     >>> screen -S $SESSION
     
     Command:
-    >>> python3 -u slurm_monitor.py
+    >>> python3 -u slurm_monitor.py --screen True
 
     With arguments (example for 30000 timesteps):
-    >>> python3 -u slurm_monitor.py -n 30000
+    >>> python3 -u slurm_monitor.py -n 30000 --screen True
     
     Leave Screen:
     >>> ((Strg + a) + d)
@@ -88,42 +88,46 @@ required = parser.add_argument_group('required arguments')
 additional = parser.add_argument_group('additional arguments')
 
 additional.add_argument('-n', dest='timesteps', nargs='?', type=int, default=10000,
-                    help='required timesteps                   (default=10000)')
+                        help='required timesteps                   (default=10000)')
 
 additional.add_argument('--mail', dest='mail', nargs='?', type=str,
-                    help='mail address (mail@server.de)        (default=None)')
+                        help='mail address (mail@server.de)        (default=None)')
 
 additional.add_argument('--restart-mail', dest='bool', nargs='?', type=bool, default=False,
-                    help='mail after every restart             (default=False)')
+                        help='mail after every restart             (default=False)')
 
 additional.add_argument('-b', '--backup', dest='backup', nargs='?', type=str,
-                    help='backup location for files            (default=None)')
+                        help='backup location for files            (default=None)')
 
 additional.add_argument('-s', '--statusfile', dest='statusFile', nargs='?', type=str, default='status.txt',
-                    help='file with output from nohup command  (default=status.txt)')
+                        help='file with output from nohup command  (default=status.txt)')
 
 additional.add_argument('-r', '--restartfile', dest='restartFile', nargs='?', type=str, default='FDS.dat',
-                    help='restart file with data               (default=FDS.dat)')
+                        help='restart file with data               (default=FDS.dat)')
 
 additional.add_argument('-j', '--job', dest='jobscriptFile', nargs='?', type=str, default='jobscript-create',
-                    help='jobscript to run SLURM job           (default=jobscript-create)')
+                        help='jobscript to run SLURM job           (default=jobscript-create)')
 
 additional.add_argument('--job-name', dest='jobname', nargs='?', type=str, default='Name',
-                    help='job name not longer than 8 character (default=Name)')
+                        help='job name not longer than 8 character (default=Name)')
 
 additional.add_argument('--ntask-per-node', dest='tasks', nargs='?', type=str, default='32',
-                    help='MPI task per node                    (default=32)')
+                        help='MPI task per node                    (default=32)')
 
 additional.add_argument('--nodes', dest='nodes', nargs='?', type=str, default='3',
-                    help='number of nodes                      (default=3)')
+                        help='number of nodes                      (default=3)')
 
 additional.add_argument('--time', dest='walltime', nargs='?', type=str, default='0-24:00:00',
-                    help='walltime of server (d-hh:mm:ss)      (default=0-24:00:00)')
+                        help='walltime of server (d-hh:mm:ss)      (default=0-24:00:00)')
 
 
-additional.add_argument('--format', dest='formattable', nargs='?', type=str, default='fancy',
-                    help='format of output table               (default=fancy)\n'+
-                         'options: fancy (round box), universal (crossplattform)')
+additional.add_argument('--format', dest='formattable', nargs='?', type=str, default='universal',
+                        help='format of output table               (default=universal)\n'+
+                             '- fancy (round box)\n'+
+                             '- universal (crossplattform)')
+
+additional.add_argument('--screen', dest='screen', nargs='?', type=bool, default=False,
+                        help='activate if you use screen           (default=False)')
 
 args = parser.parse_args()
 
@@ -134,7 +138,9 @@ outputCriteria = '0'
 # Changing this value can cause problems in writing status file
 sleepTime = 60
 
-runCounter = 0
+slurmFiles = [f for f in os.listdir() if 'slurm-' in f]
+
+runCounter = len(slurmFiles)
 currentTime = '00:00:00'
 
 # PARSER VARIABLES =========================================================================================================
@@ -155,9 +161,11 @@ jobscriptFilename = args.jobscriptFile
 restartFilename = args.restartFile
 
 statusFilename = args.statusFile
-statusFile = open(statusFilename, 'w+')
+#statusFile = open(statusFilename, 'w+')
 
 formatTable = args.formattable
+
+screen = args.screen
 
 def outputFilename(info):
     return './slurm-' + info + '.out'
@@ -246,14 +254,14 @@ def progressbar(required_value, current_value, barsize=42,
 def print_table_row(content,
                     current_value, required_value,
                     run_conter, current_time, required_time = walltime,
-                    delete_line_index = -8, table_width = 76,
+                    delete_line_index = -10, table_width = 76,
                     output_type = None, time_info = True):
     
     if formatTable == 'fancy':
         table_outline = ['╭─', '─╮', '╰─', '─╯', '├─', '─┤', '│ ', ' │', '─']
     
     if formatTable == 'universal':
-        table_outline = ['o-', '-o', 'o-', '-o', 'o-', '-o', '| ', ' |', '-']
+        table_outline = ['+-', '-+', '+-', '-+', '+-', '-+', '| ', ' |', '-']
     
     sep_top = table_outline[0] + table_width*table_outline[8] + table_outline[1]
     sep_mid = table_outline[4] + table_width*table_outline[8] + table_outline[5]
@@ -309,41 +317,47 @@ def print_table_row(content,
     content.insert(len(content), table_outline[7])
     
     if output_type == 'header':
-        sys.stdout.write("\x1b[1A"*(1))
+        if screen:
+            sys.stdout.write("\x1b[1A"*(1))
         delete_line_in_file(statusFilename, end=-1)
         
-        write_line_to_file(statusFilename,sep_top)
-        write_line_to_file(statusFilename,row_format.format(*content))
-        write_line_to_file(statusFilename,sep_end)
+        print(sep_top)
+        print(row_format.format(*content))
+        print(sep_end)
         
     elif output_type == 'middle':
-        sys.stdout.write("\x1b[1A"*(-delete_line_index))
+        if screen:
+            sys.stdout.write("\x1b[1A"*(-delete_line_index))
         delete_line_in_file(statusFilename, end=delete_line_index)
         
-        write_line_to_file(statusFilename,sep_mid)
-        write_line_to_file(statusFilename,row_format.format(*content))
-        write_line_to_file(statusFilename,sep_end)
+        print(sep_mid)
+        print(row_format.format(*content))
+        print(sep_end)
         
     elif output_type == 'update':
-        sys.stdout.write("\x1b[1A"*(-delete_line_index))
+        if screen:
+            sys.stdout.write("\x1b[1A"*(-delete_line_index))
         delete_line_in_file(statusFilename, end=delete_line_index)
         
-        write_line_to_file(statusFilename,sep_end)
+        print(sep_end)
         
     else:
-        sys.stdout.write("\x1b[1A"*(-delete_line_index))
+        if screen:
+            sys.stdout.write("\x1b[1A"*(-delete_line_index))
         delete_line_in_file(statusFilename, end=delete_line_index)
         
-        write_line_to_file(statusFilename,row_format.format(*content))
-        write_line_to_file(statusFilename,sep_end)
+        print(row_format.format(*content))
+        print(sep_end)
+        
+    print('\n')
     
-    write_line_to_file(statusFilename,sep_top)
-    write_line_to_file(statusFilename,progress_format.format(*jobStatusHeader))
-    write_line_to_file(statusFilename,progress_format.format(*jobStatusInfo))   
-    write_line_to_file(statusFilename,sep_mid)
-    write_line_to_file(statusFilename,progress_format.format(*progressbar_content))
-    write_line_to_file(statusFilename,progress_format.format(*progressbartime_content))
-    write_line_to_file(statusFilename,sep_end)
+    print(sep_top)
+    print(progress_format.format(*jobStatusHeader))
+    print(progress_format.format(*jobStatusInfo))   
+    print(sep_mid)
+    print(progress_format.format(*progressbar_content))
+    print(progress_format.format(*progressbartime_content))
+    print(sep_end)
 
 ## INFORMATIONS ============================================================================================================
 
@@ -360,10 +374,10 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
 
 ## FILE ====================================================================================================================
 
-def write_add_string_into_file(file, substring, add, comment = None):
+def write_add_string_into_file(filename, substring, add, comment = None):
 
-    with open(file, 'r') as f:
-        data = f.readlines()
+    with open(filename, 'r') as file:
+        data = file.readlines()
 
     try:
         index = [idx for idx, s in enumerate(data) if substring in s][0]
@@ -375,13 +389,15 @@ def write_add_string_into_file(file, substring, add, comment = None):
         data.insert(index + 1, comment)
         data.insert(index + 2, substring + add + '\n')
         
-    with open(file, 'w') as f:
-        f.writelines(data)
-        f.flush()
+    with open(filename, 'w') as file:
+        file.writelines(data)
+        file.flush()
         
-def write_file(file, content):
-    file.write(content)
-    file.flush()
+def write_file(filename, content):
+    
+    with open(filename, 'w') as file:
+        file.write(content)
+        file.flush()
         
 def delete_line_in_file(filename, start=None, end=None):
     
@@ -557,7 +573,7 @@ while True:
             jobStatusRunning, jobStatusPending = get_job_status()
             
             if outputType == 'running':
-                runCounter += 1
+                #runCounter += 1
                 
                 jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
                 currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
@@ -566,7 +582,7 @@ while True:
                                 nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
             
             elif outputType == 'pending':
-                runCounter += 1
+                #runCounter += 1
                 
                 jobStatusPendingNameIndex = [idx for idx, s in enumerate(jobStatusPending) if jobName in s][0]
                 currentTime = jobStatusPending[jobStatusPendingNameIndex + 3]
@@ -720,6 +736,6 @@ while True:
         
 ## RESTART =================================================================================================================
 
-statusFile.close()
+#statusFile.close()
 
 # END ======================================================================================================================
