@@ -1,139 +1,189 @@
 #!/bin/bash
 
-# Variables
-DESTINPUT=false
-REMOTEINPUT=false
-LOCALINPUT=false
-DIRINPUT=false
-ADDREMOTEDIR="/scratch/bt712347"
-WORKDIR="/Bachelorthesis-ZonalFlows/"
+# Messages ========================================================================================
 
-# Move into Thesis Folder
+help()
+{
+echo -e "\n
+<--------------------- $(basename $0) --------------------->
+\n
+ -l, --local      : Set destination to local machine
+ -r, --remote     : Set destination to remote machine
+ -d, --dir        : Set directory 
+                    (Same at local and remote machine)
+ -rd, --remotedir : Set remote directory
+ -ld, --localdir  : Set local directory
+ -b               : Copy files from backup folder
+ -m               : Create directory (also subfolders)
+ -h, --help       : Outpu helper message      
+\n"
+}
+
+# VARIABLES =======================================================================================
+
+REMOTEBASE="/scratch/bt712347/"
+#LOCALBASE="~/Bachelorthesis-Shearingrate-Wavelength"
+LOCALBASE=""
+SERVER="btrzx1-1.rz.uni-bayreuth.de"
+
+MAKEDIR=false
+
+# PARSER ==========================================================================================
+
+PARAMS=""
+
+if [[ "$#" -eq 0 ]]; then
+    echo -e "\nERROR: Arguments needed."
+    help
+    exit 1;
+fi
+
+while (( "$#" )); do
+
+    case "$1" in
+
+        -m|--mkdir)
+            MAKEDIR=true
+            shift
+            ;;
+
+        -b|--backup)
+            BACKUPDIR=true
+            shift
+            ;;
+
+        -l|--local|-r|--remote)
+            DEST="$1"
+            shift
+            ;;
+
+        -d|--dir)
+            if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
+                LOCALDIR="$2"
+                REMOTEDIR="$2"
+                DIREQUAL=true
+                shift 2
+            else
+                echo -e "\nERROR: Argument for $1 is missing." >&2
+                exit 1
+            fi
+            ;;
+
+        -ld|--localdir)
+            if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
+                LOCALDIR="$2"
+                DIREQUAL=false
+                shift 2
+            else
+                echo -e "\nERROR: Argument for $1 is missing." >&2
+                exit 1
+            fi
+            ;;
+
+        -rd|--remotedir)
+            if [ -n "$2" ] && [ ${2:0:1} != "-" ]; then
+                REMOTEDIR="$2"
+                DIREQUAL=false
+                shift 2
+            else
+                echo -e "\nERROR:   Argument for $1 is missing." >&2
+                exit 1
+            fi
+            ;;
+
+        -h|--help)
+            help
+            exit 0
+            ;;
+
+        -*|--*=)
+            echo -e "\nERROR: Invalid command option."
+            help
+            exit 1
+            ;;
+    esac
+done
+
+eval set -- "$PARAMS"
+
+# Check if local dir is defined
+if [ -z ${LOCALDIR+x} ]; then
+    echo -e "\nERROR: Directory for local machine has to be defined" 
+    help
+    exit 1
+fi
+
+# Check if remote dir is defined
+if [ -z ${REMOTEDIR+x} ]; then 
+    echo -e "\nERROR: Directory for remote machine has to be defined" 
+    help
+    exit 1
+fi
+
+# FOLDER ==========================================================================================
 
 #cd $HOME$WORKDIR
 
-# Check input destination
-while [[ $DESTINPUT = false ]]; do
-    read -p "Destination: " DEST DESTADD
-    if [[ "$DEST" = "remote" ]] ||  [[ "$DEST" = "r" ]]; then
-        DESTINPUT=true
-    elif [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
-        DESTINPUT=true
-    # Context
-    else
-        echo "Two options available: remote or local"
-    fi
-done
+# REOMOTE =========================================================================================
 
-# When directories are different
-if [[ "$DESTADD" = "d" ]];then
-    # Check if remote directory exist
-    while [[ $REMOTEINPUT = false ]]; do
-        read -p "Remote dir: " REMOTEDIR REMOTEADD
-        if ssh btrzx1-1.rz.uni-bayreuth.de "[ -d $ADDREMOTEDIR/$REMOTEDIR ]"; then
-            REMOTEINPUT=true
-        # Make folder if necessary
-        elif [[ "$REMOTEADD" = "m" ]] || [[ "$REMOTEADD" = "mj" ]] || [[ "$REMOTEADD" = "jm" ]]; then
-            if [[ "$DEST" = "remote" ]] || [[ "$DEST" = "r" ]]; then
-                ssh btrzx1-1.rz.uni-bayreuth.de "mkdir -p $ADDREMOTEDIR/$REMOTEDIR"
-                REMOTEINPUT=true
-            else
-                echo "Directory has to exist on remote machine"
-            fi
-        # Context
-        else
-            if [[ "$DEST" = "remote" ]] || [[ "$DEST" = "r" ]]; then
-                echo -e "Directory does not exist on remote machine \n-> Create directory with 'dir m'"
-            else
-                echo "Directory does not exist on remote machine"
-            fi
-        fi
-    done
-    # Check if local directory exists
-    while [[ $LOCALINPUT = false ]]; do
-        read -p "Local  dir: " -e LOCALDIR LOCALADD
-        if [ -d "$LOCALDIR" ]; then
-            LOCALINPUT=true    
-        # Make folder if necessary
-        elif [[ "$LOCALADD" = "m" ]]; then
-            if [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
-                mkdir -p $LOCALDIR
-                LOCALINPUT=true
-            else
-                echo "Directory has to exist on local machine"
-            fi
-        # Context
-        else
-            if [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
-                echo -e "Directory does not exist on local machine \n-> Create directory with 'dir m'"
-            else
-                echo "Directory does not exist on local machine"
-            fi
-        fi
-    done
-    # Copy files
-    if [[ "$DEST" = "remote" ]] ||  [[ "$DEST" = "r" ]]; then
-        rsync -a -P --exclude='data.h5' $LOCALDIR/* bt712347@btrzx1-1.rz.uni-bayreuth.de:$REMOTEDIR
-        if [[ "$LOCALADD" = "j" ]] || [[ "$REMOTEADD" = "mj" ]] || [[ "$REMOTEADD" = "jm" ]]; then
-            ssh btrzx1-1.rz.uni-bayreuth.de "cd $ADDREMOTEDIR && cp -r gkw/run/* $ADDREMOTEDIR/$REMOTEDIR/"
-            ssh btrzx1-1.rz.uni-bayreuth.de "cd $ADDREMOTEDIR/$REMOTEDIR && nohup python3 -u monitor_job.py &> status.txt &"
-        fi
-    elif [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
-        rsync -a -P --exclude={'gkw.*','DM*','FDS','slurm*','monitor_job.py'} bt712347@btrzx1-1.rz.uni-bayreuth.de:$ADDREMOTEDIR/$REMOTEDIR/* $LOCALDIR
+# Check folder exists
+if ssh btrzx1-1.rz.uni-bayreuth.de "[ -d $REMOTEBASE$REMOTEDIR ]"; then
+    :
+# Make folder if necessary
+elif [[ "$MAKEDIR" = true ]]; then
+    if [[ "$DEST" = "--remote" ]] || [[ "$DEST" = "-r" ]]; then
+        ssh btrzx1-1.rz.uni-bayreuth.de "mkdir -p $REMOTEBASE$REMOTEDIR"
+    else
+        echo -e "\nERROR: Directory has to exist on remote machine"
     fi
-#When directories are equal
+# Context
 else
-    # Check if directory exists
-    while [[ $DIRINPUT = false ]]; do
-        read -p "Dir: " -e DIR DIRADD
-        
-        if [ -d "$DIR" ] && ssh btrzx1-1.rz.uni-bayreuth.de "[ -d $ADDREMOTEDIR/$DIR ]"; then
-            DIRINPUT=true
-        # Make folder if necessary on local machine
-        elif [[ "$DIRADD" = "m" ]] || [[ "$DIRADD" = "mj" ]] || [[ "$DIRADD" = "jm" ]]; then
-            # Local
-            if [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
-                mkdir -p $DIR
-                DIRINPUT=true
-            # Remote
-            elif [[ "$DEST" = "remote" ]] || [[ "$DEST" = "r" ]]; then
-                ssh btrzx1-1.rz.uni-bayreuth.de "mkdir -p $ADDREMOTEDIR/$DIR"
-                DIRINPUT=true
-            else
-                echo "Directory has to exist on machine"
-            fi
-        # Context
-        else
-            # Local
-            if [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
-                echo -e "Directory does not exist on local machine \n-> Create directory with 'dir m'"
-            # Remote
-            elif [[ "$DEST" = "remote" ]] || [[ "$DEST" = "r" ]]; then
-                echo -e "Directory does not exist on remote machine \n-> Create directory with 'dir m'"
-            else
-                echo "Directory does not exist"
-            fi
-        fi
-    done
-    # Copy files
-    if [[ "$DEST" = "remote" ]] ||  [[ "$DEST" = "r" ]]; then
-        # Copy files in backup folder
-        if [[ "$DIRADD" = "b" ]]; then
-            rsync -a -P $DIR/* bt712347@btrzx1-1.rz.uni-bayreuth.de:$ADDREMOTEDIR/backup/$DIR
-        else
-            rsync -a -P --exclude='data.h5' $DIR/* bt712347@btrzx1-1.rz.uni-bayreuth.de:$ADDREMOTEDIR/$DIR
-        fi
-        # Run job
-        if [[ "$DIRADD" = "j" ]] || [[ "$DIRADD" = "mj" ]] || [[ "$DIRADD" = "jm" ]]; then
-            ssh btrzx1-1.rz.uni-bayreuth.de "cd $ADDREMOTEDIR && cp -r gkw/run/* $ADDREMOTEDIR/$DIR/"
-            ssh btrzx1-1.rz.uni-bayreuth.de "cd $ADDREMOTEDIR/$DIR && nohup python3 -u monitor_job.py &> status.txt &"
-        fi
-    elif [[ "$DEST" = "local" ]] || [[ "$DEST" = "l" ]]; then
-        # Copy files from backup folder
-        if [[ "$DIRADD" = "b" ]]; then
-            rsync -a -P --exclude={'gkw.*','DM*','FDS','slurm*','monitor_job.py'} bt712347@btrzx1-1.rz.uni-bayreuth.de:$ADDREMOTEDIR/backup/$DIR/* $DIR
-        else
-            rsync -a -P --exclude={'gkw.*','DM*','FDS','slurm*','monitor_job.py'} bt712347@btrzx1-1.rz.uni-bayreuth.de:$ADDREMOTEDIR/$DIR/* $DIR
-        fi
+    if [[ "$DEST" = "--remote" ]] || [[ "$DEST" = "--r" ]]; then
+        echo -e "\nERROR: Directory does not exist on remote machine"
+        help
+    else
+        echo -e "\nERROR: Directory does not exist on remote machine"
+    fi
+fi
+
+# LOCAL ===========================================================================================
+
+# Check folder exists
+if [ -d "$LOCALBASE$LOCALDIR" ]; then
+    :   
+# Make folder if necessary
+elif [[ "$MAKEDIR" = true ]]; then
+    if [[ "$DEST" = "--local" ]] || [[ "$DEST" = "-l" ]]; then
+        mkdir -p $LOCALBASE$LOCALDIR
+    else
+        echo -e "\nERROR: Directory has to exist on local machine"
+    fi
+# Context
+else
+    if [[ "$DEST" = "--local" ]] || [[ "$DEST" = "-l" ]]; then
+        echo -e "\nERROR: Directory does not exist on local machine"
+        help
+    else
+        echo -e "\nERROR: Directory does not exist on local machine"
+    fi
+fi
+
+# RSYNC ===========================================================================================
+
+# Copy files
+if [[ "$DEST" = "--remote" ]] ||  [[ "$DEST" = "-r" ]]; then
+    # Copy files in backup folder
+    if [[ "$BACKUPDIR" = true ]]; then
+        rsync -a -P $LOCALBASE$LOCALDIR/* $SERVER:$REMOTEBASEbackup/$REMOTEDIR
+    else
+        rsync -a -P --exclude='data.h5' $LOCALBASE$LOCALDIR/* $SERVER:$REMOTEBASE$REMOTEDIR
+    fi
+
+elif [[ "$DEST" = "--local" ]] || [[ "$DEST" = "-l" ]]; then
+    # Copy files from backup folder
+    if [[ "$BACKUPDIR" = true ]]; then
+        rsync -a -P --exclude={'gkw.*','DM*','FDS','slurm*','monitor_job.py'} $SERVER:$REMOTEBASEbackup/$REMOTEDIR/* $LOCALBASE$LOCALDIR
+    else
+        rsync -a -P --exclude={'gkw.*','DM*','FDS','slurm*','monitor_job.py'} $SERVER:$REMOTEBASE$REMOTEDIR/* $LOCALBASE$LOCALDIR
     fi
 fi
