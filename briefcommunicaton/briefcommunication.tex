@@ -58,7 +58,7 @@
 %\linenumbers\relax % Commence numbering lines
 
 %% Additional
-\usepackage{caption}
+%\usepackage{caption}
 \usepackage{hyperref}
 
 % FUNCTIONS, INPUT =========================================================================================================
@@ -147,41 +147,44 @@
 
 %%% INTRODUCTION ===========================================================================================================
 
-\section{Introduction}
-\label{sec:intro}
+%\section{Introduction}
+%\label{sec:intro}
 
-This brief communication focused on continuing the work of Rath et. al \cite{doi:10.1063/1.4961231}. 
-The paper does mainly concentrate on gradient driven flux-tub simulations close to the non-linear threshold and the occurrence of the E$\times$B staircase structure and its formation over the simulation.
-At the end Section IV it was discussed that the circumstances for which the staircase can fully develop are beyond the scope of the paper.
-To gain more knowledge if the staircase structure can fully develop the following paper will focus on the effects of the box size on the E$\times$B staircase structure and if the wavelength converges with the box size. 
+This brief communication focuses on continuing the work of Rath et. al \cite{doi:10.1063/1.4961231}. 
+Their paper elaborates on gradient driven flux-tub simulations close to the non-linear threshold and the occurrence of the E$\times$B staircase structure and its formation over the simulation.
+At the end of Section IV it was discussed that the circumstances for which the staircase can fully develop are beyond the scope of the paper.
+To gain further insights on whether the staircase structure can fully develop the following brief communication will focus on the effects of the box size on the E$\times$B staircase structure and if the wavelength converges with the box size.\bigskip
 
 %%% THEORY =================================================================================================================
 
 %\section{Theory}
 %\label{sec:theory}
 
-It is known that radially sheared zonal flows plays a significant role in nonlinear stabilization in tokamak plasmas. \cite{WACooper1988,doi:10.1063/1.859529,doi:10.1063/1.873896}. 
-Through advection on the sheared zonal flows the turbulent structure in plasma gets deformed and tilted that causes an E$\times$B nonlinearty. \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}
+It is known that radially sheared zonal flows play a significant role in nonlinear stabilization in tokamak plasmas. \cite{WACooper1988,doi:10.1063/1.859529,doi:10.1063/1.873896}. 
+Through advection on the sheared zonal flows the turbulent structure in plasma gets deformed and tilted, which causes an E$\times$B nonlinearity. \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}
 The strength of the shearing process is the E$\times$B shearing rate $\omega_{\mathrm{E \times B}}$ which is the radial derivative of the advecting zonal flow velocity. \cite{doi:10.1063/1.871313, doi:10.1063/1.872847}
 The shearing rate $\omega_{\mathrm{E \times B}}$ is defined as 
 \begin{equation}
-	\omega_{\mathrm{E \times B}} = \frac{1}{2B} \frac{\partial^2 \langle \Phi \rangle}{\partial \psi^2}
+	\omega_{\mathrm{E \times B}} = \frac{1}{2} \frac{\partial^2 \langle \Phi \rangle}{\partial \psi^2}
 	\label{eq:shearingrate}
 \end{equation}
 where $\langle \Phi \rangle$ is the zonal electrostatic potential and $\psi$ the radial coordinate that labels the flux surfaces. \cite{doi:10.1063/1.4952621, doi:10.1063/1.3005380}
 It was shown that the nonlinear threshold for turbulence is directly related to shear stabilization. \cite{doi:10.1063/1.873896} 
-Often the shear stabilization is expressed in the empirical Waltz rule $\omega_{\mathrm{E \times B}} \sim \gamma$, \cite{doi:10.1063/1.870934, doi:10.1063/1.872847} where $\gamma$ is defined as the maximum linear growth rate in the unstable mode. In the discovered zonal flows, also known as E$\times$B staircase \cite{PhysRevE.82.025401}, exhibit amplitudes in terms of the E$\times$B shearing rate satisfying the stabilization criteria and for a fully developed staircase structure the E $\times$ B shearing rate $\omega_{\mathrm{E \times B}} = \gamma$. \cite{doi:10.1063/1.4961231, doi:10.1063/1.4952621}
+The shear stabilization is often expressed in the empirical Waltz rule $\omega_{\mathrm{E \times B}} \sim \gamma$, \cite{doi:10.1063/1.870934, doi:10.1063/1.872847} where $\gamma$ is defined as the maximum linear growth rate in the unstable mode. The discovered zonal flows, also known as E$\times$B staircase \cite{PhysRevE.82.025401}, exhibit amplitudes, which satisfy the stabilization criteria in terms of the E$\times$B shearing rate. For a fully developed staircase structure the E $\times$ B shearing rate $\omega_{\mathrm{E \times B}} = \gamma$. \cite{doi:10.1063/1.4961231, doi:10.1063/1.4952621}\bigskip
 
-\section{Simulation Setup}
-\label{sec:setup}
+%%% METHODS ==================================================================================================================
 
-The plasma parameters are nearly the same as in Ref \onlinecite{doi:10.1063/1.4961231} with the cyclone base case: safety factor $q = 1.4$, magnetic shear $\hat{s} = 0.78$, inverse aspect ratio $\epsilon = 0.19$, density gradient $R/L_n = 2.2$ and electron to ion temperature ratio $T_e/T_i = 1$. The maximum of the velocity grid is three times the thermal velocity for both the parallel and the perpendicular velocities and adiabatic electrons with neglected collisions were investigated. For this paper the resolution "Standard resolution with 6th order (S6)" from Ref \onlinecite{doi:10.1063/1.4961231} was used and is given in Table \ref{tab:resolution} with changes in $N_{\nu_\parallel}$ from 64 grid points to 48 to reduces the runtime of simulations. Simulations showed that this correction in grid points does not affect the simulation itself.
+%\section{Simulation Setup}
+%\label{sec:setup}
 
-The simulations are performed with the flux tube version of the non-linear gyro-kinetic code GKW.\cite{Peeters20092650}
-Futher informations regarding the simulation can be found in Ref \onlinecite{doi:10.1063/1.4961231}.
+The plasma parameters are closely modelled after those in Rath et al. \cite{doi:10.1063/1.4961231} with the cyclone base case: safety factor $q = 1.4$, magnetic shear $\hat{s} = 0.78$, inverse aspect ratio $\epsilon = 0.19$, density gradient $R/L_n = 2.2$ and electron to ion temperature ratio $T_e/T_i = 1$. The maximum of the velocity grid is three times the thermal velocity for both the parallel and the perpendicular velocities. Adiabatic electrons were investigated, while neglecting collisions.
 
-\begin{center}
-	\captionsetup{type=table}
+For this paper the resolution "Standard resolution with 6th order (S6)" from Ref \onlinecite{doi:10.1063/1.4961231} was used and is given in Table with changes in $N_{\nu_\parallel}$ from 64 grid points to 48 to reduces the runtime of simulations. Simulations showed that this correction in grid points does not affect the results itself.
+
+The simulations are performed with the flux tube version of the non-linear gyro-kinetic code GKW \cite{Peeters20092650} with periodic boundary conditions.
+Further information regarding the simulation can be found in Ref \onlinecite{doi:10.1063/1.4961231}.
+
+\begin{table}
 	\begin{ruledtabular}
 		\begin{tabular}{l | ccccc | ccccc | c | cc}
 			& $N_m$ & $N_x$ & $N_s$ & $N_{\nu_\parallel}$ & $N_\mu$ & $D$ & $\nu_d$           & $D_{\nu_\parallel}$ & $D_x$ & $D_y$ & Order & $k_y\rho$ & $k_x\rho$ \\
@@ -189,21 +192,25 @@ Futher informations regarding the simulation can be found in Ref \onlinecite{doi
 			S6   & 21    & 83    & 16    & 48                  & 9       & 1   & $|\nu_\parallel|$ & 0.2                 & 0.1   & 0.1   & 6     & 1.4       & 2.1       \\
 		\end{tabular}
 	\end{ruledtabular}
-	\captionof{table}{
-		Resolution used in this paper (for more informations about the parameter read Ref \onlinecite{doi:10.1063/1.4961231}) %: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
+	\caption{
+		Resolution used in this paper for further information read Rath et al. \cite{doi:10.1063/1.4961231} %: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
 	}
 	\label{tab:resolution}
-\end{center}
+\end{table} \bigskip
 
-\section{Results}
-\label{sec:results}
+%%% RESULTS ================================================================================================================
+
+%\section{Results}
+%\label{sec:results}
+
+The data is normalized with the heat conduction coefficient $\chi$ in gyro-Bohm units ($\rho^2\nu_{\mathrm{th}}/R)$, where $\rho = m_\mathrm{i}\nu_{\mathrm{th}}/eB$ is the ion Larmor radius, $\nu_{\mathrm{th}} = \sqrt{2T/m_\mathrm{i}}$ is the thermal velocity, $T$ the background temperature, e is the unit charge and $R$ is the major radius. 
 
 \includegraphicsOneCol{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{
 	Time traces of the heat conduction coefficient $\chi$ for $R/L_T = 6.0$ for radial and binormal increased boxsizes
 }{fig:eflux-1x1-2x2-3x3-comparison}
 
 \includegraphicsOneCol{S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x1_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{
-	Shearing rate $\omega_{\mathrm{E \times B}}$ for different time intervals in which heat conduction is almost zero but staircase has not fully developed for boxsize 3$\times$1
+	Shearing rate $\omega_{\mathrm{E \times B}}$ for different time intervals in which heat conduction is almost zero but the E$\times$B staircase has not fully developed for boxsize 3$\times$1
 }{fig:wexb-3x1-selection}
 
 \includegraphicsOneCol{S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{
@@ -226,19 +233,21 @@ Futher informations regarding the simulation can be found in Ref \onlinecite{doi
 
 \increasecounter{fig}{2}
 
-\section{Conclusion}
-\label{sec:conclusion}
+%%% CONCLUSION =============================================================================================================
+
+%\section{Conclusion}
+%\label{sec:conclusion}
 
 \section*{Data Availability}
-The data that support the findings of this study are available from the corresponding author upon reasonable request.
+The data that support the findings of this study are available from the corresponding author upon reasonable request. 
 
 % WORDCOUNT ================================================================================================================
 
-\wordcountmessage
+%\wordcountmessage
 
 % BIBLIOGRAPHY =============================================================================================================
 
-%\nocite{*}
+\nocite{}
 \bibliography{references.bib}% Produces the bibliography via BibTeX.
 
 \end{document}
