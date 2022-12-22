@@ -24,9 +24,16 @@ echo -e "\n
 REMOTEBASE="/scratch/bt712347/"
 #LOCALBASE="~/Bachelorthesis-Shearingrate-Wavelength"
 LOCALBASE=""
+VPN="vpn-server.uni-bayreuth.de"
 SERVER="btrzx1-1.rz.uni-bayreuth.de"
 
 MAKEDIR=false
+
+# Linux
+#CONNECTION="$(nmcli con show --active | grep -i eduroam)"
+
+# MacOS
+CONNECTION="$(/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -I | awk -F: '/ SSID/{print$2}')"
 
 # PARSER ==========================================================================================
 
@@ -124,6 +131,19 @@ fi
 
 #cd $HOME$WORKDIR
 
+# VPN =============================================================================================
+
+# Connect VPN
+#if [[ "$CONNECTION" != "eduroam" ]]; then
+#    {
+#        # Linux (Adjust VPN name if necessary)
+#        # nmcli con up $VPN
+#
+#        # MacOS (anyconnect client (installed) and credentials (in home folder) must be defined)
+#        cat ~/.anyconnect_credentials | /opt/cisco/anyconnect/bin/vpn -s connect $VPN
+#    } &> /dev/null
+#fi
+
 # REOMOTE =========================================================================================
 
 # Check folder exists
@@ -187,3 +207,16 @@ elif [[ "$DEST" = "--local" ]] || [[ "$DEST" = "-l" ]]; then
         rsync -a -P --exclude={'gkw.*','DM*','FDS','slurm*','monitor_job.py'} $SERVER:$REMOTEBASE$REMOTEDIR/* $LOCALBASE$LOCALDIR
     fi
 fi
+
+# VPN =============================================================================================
+
+# Disconnect VPN
+#if [[ "$CONNECTION" != "eduroam" ]]; then
+#    {
+#        # Linux (Adjust VPN name if necessary)
+#        #nmcli con down $VPN
+#
+#        # MacOS
+#        /opt/cisco/anyconnect/bin/vpn disconnect
+#    } &> /dev/null
+#fi

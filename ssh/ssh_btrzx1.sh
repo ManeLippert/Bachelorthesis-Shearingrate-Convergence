@@ -7,8 +7,10 @@
 
 # MacOS
 CONNECTION="$(/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -I | awk -F: '/ SSID/{print$2}')"
+
 VPN="vpn-server.uni-bayreuth.de"
 DIR="/scratch/bt712347/"
+SERVER="btrzx1-1.rz.uni-bayreuth.de"
 
 # CONNECT TO SSH =================================================================================
 
@@ -23,10 +25,10 @@ DIR="/scratch/bt712347/"
 #    } &> /dev/null
 #fi
 
-#ssh btrzx1-1.rz.uni-bayreuth.de
+#ssh $SERVER
 
 # ssh in specfic folder
-ssh -t btrzx1-1.rz.uni-bayreuth.de "cd $DIR && bash --login"
+ssh -t $SERVER "cd $DIR && bash --login"
 
 # Disconnect VPN
 #if [[ "$CONNECTION" != "eduroam" ]]; then
