@@ -29,10 +29,10 @@ START SCRIPT IN BACKGROUND:
 
   o WITH NOHUP:
     Command:
-    >>> nohup python3 -u slurm_monitor.py &> status.txt &
+    >>> nohup python3 -u slurm_monitor.py &> /dev/null &
 
     With arguments (example for 30000 timesteps):
-    >>> nohup python3 -u slurm_monitor.py -n 30000 &> status.txt &
+    >>> nohup python3 -u slurm_monitor.py -n 30000 &> /dev/null &
 
     Output:
     >>> [1] 10537
@@ -49,30 +49,7 @@ START SCRIPT IN BACKGROUND:
     >>> kill 10537
     
     Output after Enter or next Command:
-    [1]+ Beendet               nohup python3 slurm_monitor.py &> status.txt  
-    
-  o WITH SCREEN (has to be installed):
-    Create Screen:
-    >>> screen -S $SESSION
-    
-    Command:
-    >>> python3 -u slurm_monitor.py --screen True
-
-    With arguments (example for 30000 timesteps):
-    >>> python3 -u slurm_monitor.py -n 30000 --screen True
-    
-    Leave Screen:
-    >>> ((Strg + a) + d)
-    
-    Enter Screen:
-    >>> screen -r 
-    or
-    >>> screen -r $SESSION
-    
-    Kill Process:
-    >>> ^C (Strg + c)
-    or
-    >>> (Strg + d) (kill Screen itself)
+    [1]+ Terminated              nohup python3 slurm_monitor.py &> /dev/null &
 
 OUTPUT STATUS:
 Just run the file will create an dynamic output (recommended with using screen) or
@@ -120,14 +97,10 @@ additional.add_argument('--nodes', dest='nodes', nargs='?', type=str, default='3
 additional.add_argument('--time', dest='walltime', nargs='?', type=str, default='0-24:00:00',
                         help='walltime of server (d-hh:mm:ss)      (default=0-24:00:00)')
 
-
 additional.add_argument('--format', dest='formattable', nargs='?', type=str, default='universal',
                         help='format of output table               (default=universal)\n'+
                              '- fancy (round box)\n'+
                              '- universal (crossplattform)')
-
-additional.add_argument('--screen', dest='screen', nargs='?', type=bool, default=False,
-                        help='activate if you use screen           (default=False)')
 
 args = parser.parse_args()
 
@@ -161,11 +134,9 @@ jobscriptFilename = args.jobscriptFile
 restartFilename = args.restartFile
 
 statusFilename = args.statusFile
-#statusFile = open(statusFilename, 'w+')
+#statusFile = open(statusFilename, 'r+')
 
 formatTable = args.formattable
-
-screen = args.screen
 
 def outputFilename(info):
     return './slurm-' + info + '.out'
@@ -251,11 +222,17 @@ def progressbar(required_value, current_value, barsize=42,
 
 ## OUTPUT TABLE ============================================================================================================
 
+def message(string, add):
+    string = string + add + "\n"
+    return string
+
 def print_table_row(content,
                     current_value, required_value,
                     run_conter, current_time, required_time = walltime,
                     delete_line_index = -10, table_width = 76,
                     output_type = None, time_info = True):
+    
+    msg=""
     
     if formatTable == 'fancy':
         table_outline = ['╭─', '─╮', '╰─', '─╯', '├─', '─┤', '│ ', ' │', '─']
@@ -317,47 +294,35 @@ def print_table_row(content,
     content.insert(len(content), table_outline[7])
     
     if output_type == 'header':
-        if screen:
-            sys.stdout.write("\x1b[1A"*(1))
-        delete_line_in_file(statusFilename, end=-1)
+        delete_line_index = -1
         
-        print(sep_top)
-        print(row_format.format(*content))
-        print(sep_end)
+        msg = message(msg,sep_top)
+        msg = message(msg,row_format.format(*content))
+        msg = message(msg,sep_end)
         
     elif output_type == 'middle':
-        if screen:
-            sys.stdout.write("\x1b[1A"*(-delete_line_index))
-        delete_line_in_file(statusFilename, end=delete_line_index)
-        
-        print(sep_mid)
-        print(row_format.format(*content))
-        print(sep_end)
+        msg = message(msg,sep_mid)
+        msg = message(msg,row_format.format(*content))
+        msg = message(msg,sep_end)
         
     elif output_type == 'update':
-        if screen:
-            sys.stdout.write("\x1b[1A"*(-delete_line_index))
-        delete_line_in_file(statusFilename, end=delete_line_index)
-        
-        print(sep_end)
+        msg = message(msg,sep_end)
         
     else:
-        if screen:
-            sys.stdout.write("\x1b[1A"*(-delete_line_index))
-        delete_line_in_file(statusFilename, end=delete_line_index)
+        msg = message(msg,row_format.format(*content))
+        msg = message(msg,sep_end)
         
-        print(row_format.format(*content))
-        print(sep_end)
-        
-    print('\n')
+    msg = message(msg,'\n')
     
-    print(sep_top)
-    print(progress_format.format(*jobStatusHeader))
-    print(progress_format.format(*jobStatusInfo))   
-    print(sep_mid)
-    print(progress_format.format(*progressbar_content))
-    print(progress_format.format(*progressbartime_content))
-    print(sep_end)
+    msg = message(msg,sep_top)
+    msg = message(msg,progress_format.format(*jobStatusHeader))
+    msg = message(msg,progress_format.format(*jobStatusInfo))   
+    msg = message(msg,sep_mid)
+    msg = message(msg,progress_format.format(*progressbar_content))
+    msg = message(msg,progress_format.format(*progressbartime_content))
+    msg = message(msg,sep_end)
+    
+    delete_write_line_to_file(statusFilename, msg, end=delete_line_index)
 
 ## INFORMATIONS ============================================================================================================
 
@@ -376,7 +341,7 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
 
 def write_add_string_into_file(filename, substring, add, comment = None):
 
-    with open(filename, 'r') as file:
+    with open(filename, "r") as file:
         data = file.readlines()
 
     try:
@@ -389,45 +354,30 @@ def write_add_string_into_file(filename, substring, add, comment = None):
         data.insert(index + 1, comment)
         data.insert(index + 2, substring + add + '\n')
         
-    with open(filename, 'w') as file:
+    with open(filename, "w") as file:
         file.writelines(data)
         file.flush()
         
+def delete_write_line_to_file(filename, add = "", start=None, end=None):
+    
+    with open(filename, "r") as file:
+    
+        try:
+            lines = file.readlines()[start:end]
+            content = "".join(lines)
+            
+        except IndexError:
+            pass
+        
+    content += add
+    
+    write_file(filename, content)
+    
 def write_file(filename, content):
     
-    with open(filename, 'w') as file:
+    with open(filename, "w") as file:
         file.write(content)
         file.flush()
-        
-def delete_line_in_file(filename, start=None, end=None):
-    
-    file = open(filename, 'r')
-    
-    try:
-        lines = file.readlines()[start:end]
-        content = ''.join(lines)
-        
-        file = open(filename, 'w+')
-    
-        file.write(content)
-        file.flush()
-
-    except IndexError:
-        pass
-    
-def write_line_to_file(filename, content):
-    
-    file = open(filename, 'r')
-    
-    lines = file.readlines()
-    lines.append(content + '\n')
-    
-    file = open(filename, 'w+')
-    
-    file.writelines(lines)
-    file.flush()
-
-    print(content, flush=True)
 
 ## TIME ====================================================================================================================
 
@@ -524,9 +474,13 @@ def send_mail(recipient, subject, body = None):
 startTime = time.time()
 user = os.getlogin()
 
+write_file(statusFilename,"")
+
 print_table_row(['OUTPUT', 'INFO'], 
                 0, nTimestepsRequired, runCounter, currentTime, 
                 output_type='header')
+
+
 
 folder = os.path.dirname(os.path.abspath(__file__))
 path = os.path.dirname(os.path.abspath(__file__)).split(user + '/')[1]
