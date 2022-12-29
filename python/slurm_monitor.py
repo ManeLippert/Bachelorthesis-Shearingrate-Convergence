@@ -128,6 +128,9 @@ additional.add_argument("--format", dest="formattable", nargs="?", type=str, def
 additional.add_argument("--refresh-rate", dest="sleepTime", nargs="?", type=int, default=60,
                         help="time interval to check status in sec (default=60)")
 
+additional.add_argument("--screen", dest="screen", nargs="?", type=bool, default=False,
+                        help="activate output of script for screen (default=False)")
+
 args = parser.parse_args()
 
 # VARIABLES ================================================================================================================
@@ -160,6 +163,7 @@ statusFilename = args.statusFile
 #statusFile = open(statusFilename, "r+")
 
 formatTable = args.formattable
+screen = args.screen
 
 # Changing this value can cause problems in writing status file
 sleepTime = args.sleepTime
@@ -328,19 +332,22 @@ def print_table_row(content,
         msg += sep_end + "\n"
         
     elif output_type == "middle":
-        sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
+        if screen:
+            sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
         
         msg += sep_mid + "\n"
         msg += row_format.format(*content) + "\n"
         msg += sep_end + "\n"
         
     elif output_type == "update":
-        sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
+        if screen:
+            sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
         
         msg += sep_end + "\n"
         
     else:
-        sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
+        if screen:
+            sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
         
         msg += row_format.format(*content) + "\n"
         msg += sep_end + "\n"
@@ -355,7 +362,9 @@ def print_table_row(content,
     msg += progress_format.format(*progressbartime_content) + "\n"
     msg += sep_end + "\n"
     
-    print(msg, flush=True)
+    if screen:
+        print(msg, flush=True)
+    
     delete_write_line_to_file(statusFilename, msg, end=delete_line_index)
 
 ## INFORMATIONS ============================================================================================================
