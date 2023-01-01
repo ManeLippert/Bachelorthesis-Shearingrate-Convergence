@@ -56,10 +56,10 @@ START SCRIPT IN BACKGROUND:
     >>> screen -S $SESSION
     
     Command:
-    >>> python3 -u slurm_monitor.py
+    >>> python3 -u slurm_monitor.py --screen
 
     With arguments (example for 30000 timesteps):
-    >>> python3 -u slurm_monitor.py -n 30000
+    >>> python3 -u slurm_monitor.py --screen -n 30000
     
     Leave Screen:
     >>> ((Strg + a) + d)
@@ -93,7 +93,7 @@ additional.add_argument("-n", dest="timesteps", nargs="?", type=int, default=100
 additional.add_argument("--mail", dest="mail", nargs="?", type=str,
                         help="mail address (mail@server.de)        (default=None)")
 
-additional.add_argument("--restart-mail", dest="bool", nargs="?", type=bool, default=False,
+additional.add_argument("--restart-mail", dest="restart", action="store_true",
                         help="mail after every restart             (default=False)")
 
 additional.add_argument("-b", "--backup", dest="backup", nargs="?", type=str,
@@ -128,7 +128,7 @@ additional.add_argument("--format", dest="formattable", nargs="?", type=str, def
 additional.add_argument("--refresh-rate", dest="sleepTime", nargs="?", type=int, default=60,
                         help="time interval to check status in sec (default=60)")
 
-additional.add_argument("--screen", dest="screen", nargs="?", type=bool, default=False,
+additional.add_argument("--screen", dest="screen", action="store_true",
                         help="activate output of script for screen (default=False)")
 
 args = parser.parse_args()
@@ -145,7 +145,7 @@ currentTime = "00:00:00"
 # PARSER VARIABLES =========================================================================================================
 
 emailAddress = args.mail
-restartMail = args.bool
+restartMail = args.restart
 
 backupLocation = args.backup
 
