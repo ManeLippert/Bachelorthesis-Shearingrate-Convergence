@@ -496,7 +496,7 @@ def send_mail(recipient, subject, body = None):
 
     recipient = recipient.encode("utf_8")
     
-    subject = """ + subject + """
+    subject = subject.replace(" ", "_")
     subject = subject.encode("utf_8")
     
     if body == None:
