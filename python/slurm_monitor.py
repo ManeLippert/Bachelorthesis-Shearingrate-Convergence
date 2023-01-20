@@ -523,10 +523,8 @@ print_table_row(["OUTPUT", "INFO"],
                 0, nTimestepsRequired, runCounter, currentTime, 
                 output_type="header")
 
-
-
-folder = os.path.dirname(os.path.abspath(__file__))
-path = os.path.dirname(os.path.abspath(__file__)).split(user + "/")[1]
+folder = os.getcwd()
+path = folder.split(user + "/")[1]
 
 ## BACKUP PATH =============================================================================================================
 
