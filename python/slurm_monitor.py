@@ -97,7 +97,8 @@ additional.add_argument("--restart-mail", dest="restart", action="store_true",
                         help="mail after every restart             (default=False)")
 
 additional.add_argument("-b", "--backup", dest="backup", nargs="?", type=str,
-                        help="backup location for files            (default=None)")
+                        help="backup location for files            (default=None)\n"+
+                             "- local (creates backup in simulation folder)")
 
 additional.add_argument("-s", "--statusfile", dest="statusFile", nargs="?", type=str, default="status.txt",
                         help="file with output from nohup command  (default=status.txt)")
@@ -544,9 +545,17 @@ path = folder.split(user + "/")[1]
 ## BACKUP PATH =============================================================================================================
 
 if backup:
-    if backupLocation[-1] != "/":
-        backupLocation += "/"
-    backupPath = backupLocation + path
+    # If ../ has been specified as backupLocation, then the backup is copied to the same directory the simulation folder 
+    # (simFolder) is located in. The backup is copied to a directory with name simFolder + "-backup". 
+    if backupLocation == "local":
+        simFolder = path.split("/")[-1]
+        backupPath = folder + "/../" + simFolder + "-backup"
+     
+    # Otherwise, use the backupLocation parsed as argument.
+    else:
+        if backupLocation[-1] != "/":
+            backupLocation += "/"
+        backupPath = backupLocation + path
     
     if not os.path.exists(backupPath):
         os.makedirs(backupPath)
