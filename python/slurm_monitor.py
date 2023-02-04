@@ -320,7 +320,7 @@ def print_table_row(content,
         else:
             content.append(time_date())
             content.append(time_time())
-            content.append(time_duration(startTime))
+            content.append(time_duration(startTime, pastTime))
             
     content.insert(len(content), table_outline[7])
     
@@ -465,9 +465,19 @@ def time_time():
     e = datetime.datetime.now()
     return "%s:%s:%s" % (format_num(e.hour), format_num(e.minute), format_num(e.second))
 
-def time_duration(startTime):
+def time_duration(startTime, pastTime):
     stop = time.time()
-    return get_time_as_string(stop - startTime)
+    return get_time_as_string(stop - startTime + pastTime)
+
+def get_time_from_statusfile(filename, line_index):
+    with open(filename, "r") as file:
+        line = file.readlines()[line_index]
+        
+        content = line.split(" ")
+        time = content[-2]
+        time_sec = get_time_in_seconds(time)
+        
+        return time_sec
 
 ## STATUS ==================================================================================================================
 
@@ -514,14 +524,19 @@ def send_mail(recipient, subject, body = None):
 
 # JOB INIT =================================================================================================================
 
-startTime = time.time()
 user = os.getlogin()
+startTime = time.time()
 
-write_file(statusFilename,"")
+if not os.path.isfile(statusFilename):
+    partTime = 0
+    
+    write_file(statusFilename,"")
 
-print_table_row(["OUTPUT", "INFO"], 
-                0, nTimestepsRequired, runCounter, currentTime, 
-                output_type="header")
+    print_table_row(["OUTPUT", "INFO"], 
+                    0, nTimestepsRequired, runCounter, currentTime, 
+                    output_type="header")
+else:
+    partTime = get_time_from_statusfile(statusFilename, -11)
 
 folder = os.getcwd()
 path = folder.split(user + "/")[1]
