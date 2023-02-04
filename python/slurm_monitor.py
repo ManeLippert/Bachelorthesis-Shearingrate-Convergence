@@ -136,7 +136,7 @@ args = parser.parse_args()
 
 # VARIABLES ================================================================================================================
 
-outputCriteria = "0"
+outputCriteria = ["0", "Run successfully completed"]
 
 slurmFiles = [f for f in os.listdir() if "slurm-" in f]
 runCounter = len(slurmFiles)
@@ -381,6 +381,14 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
                         nTimestepsRequired, nTimestepsRequired, runCounter, currentTime)
         quit()
 
+def find_string_in_file(file, string):
+    
+    with open(file) as f:
+        if string in f.read():
+            return True
+        else:
+            return False
+        
 ## FILE ====================================================================================================================
 
 def write_add_string_into_file(filename, substring, add, comment = None):
@@ -686,9 +694,11 @@ while True:
         # Check error and making Backup
         while True:
             try:
-                outputContent = open(outputFilename(jobID)).readlines()[0].replace("\n","")
+                outputContent = open(outputFilename(jobID)).readlines()[-5].replace("\n","")
                 
-                if outputContent == outputCriteria: 
+                runSuccess = find_string_in_file("output.dat", outputCriteria[1])
+                
+                if outputCriteria[0] in outputContent and runSuccess: 
                     
                     if backup:
                         print_table_row(["BACKUP", backupLocation],
@@ -697,7 +707,7 @@ while True:
                     
                     break
                 else:
-                    print_table_row(["ERROR", outputContent[0:27]], 
+                    print_table_row(["ERROR", "SLURM Job failed to execute"], 
                                     nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
                         
                     if backup:
