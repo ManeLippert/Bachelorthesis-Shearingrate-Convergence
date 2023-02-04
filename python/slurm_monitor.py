@@ -297,9 +297,9 @@ def print_table_row(content,
     jobStatusHeader.insert(len(jobStatusHeader), table_outline[7])
         
     try:
-        jobStatusInfo = [jobStatus[1][12:]]
+        jobStatusInfo = [jobStatus[1][12:12+table_inner_width]]
     except IndexError:
-        jobStatusInfo = [76*" "]
+        jobStatusInfo = [table_inner_width*" "]
     jobStatusInfo.insert(0, table_outline[6])
     jobStatusInfo.insert(len(jobStatusInfo), table_outline[7])
     
