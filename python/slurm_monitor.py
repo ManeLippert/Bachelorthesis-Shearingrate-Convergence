@@ -545,7 +545,7 @@ path = folder.split(user + "/")[1]
 ## BACKUP PATH =============================================================================================================
 
 if backup:
-    # If ../ has been specified as backupLocation, then the backup is copied to the same directory the simulation folder 
+    # If local has been specified as backupLocation, then the backup is copied to the same directory as the simulation folder 
     # (simFolder) is located in. The backup is copied to a directory with name simFolder + "-backup". 
     if backupLocation == "local":
         simFolder = path.split("/")[-1]
