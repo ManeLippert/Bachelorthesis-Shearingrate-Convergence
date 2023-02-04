@@ -126,7 +126,7 @@ additional.add_argument("--format", dest="formattable", nargs="?", type=str, def
                              "- fancy (round box)\n"+
                              "- universal (crossplattform)")
 
-additional.add_argument("--refresh-rate", dest="sleepTime", nargs="?", type=int, default=60,
+additional.add_argument("--refresh-rate", dest="sleepTime", nargs="?", type=int, default=300,
                         help="time interval to check status in sec (default=60)")
 
 additional.add_argument("--screen", dest="screen", action="store_true",
