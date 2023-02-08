@@ -147,12 +147,12 @@ fi
 # REOMOTE =========================================================================================
 
 # Check folder exists
-if ssh btrzx1-1.rz.uni-bayreuth.de "[ -d $REMOTEBASE$REMOTEDIR ]"; then
+if ssh $SERVER "[ -d $REMOTEBASE$REMOTEDIR ]"; then
     :
 # Make folder if necessary
 elif [[ "$MAKEDIR" = true ]]; then
     if [[ "$DEST" = "--remote" ]] || [[ "$DEST" = "-r" ]]; then
-        ssh btrzx1-1.rz.uni-bayreuth.de "mkdir -p $REMOTEBASE$REMOTEDIR"
+        ssh $SERVER "mkdir -p $REMOTEBASE$REMOTEDIR"
     else
         echo -e "\nERROR: Directory has to exist on remote machine"
     fi
