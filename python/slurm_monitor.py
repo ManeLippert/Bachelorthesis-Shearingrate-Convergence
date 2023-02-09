@@ -107,9 +107,10 @@ additional.add_argument("--time", dest="walltime", nargs="?", type=str, default=
                         help="walltime of server (d-hh:mm:ss)      (default=0-24:00:00)")
 
 additional.add_argument("--format", dest="formattable", nargs="?", type=str, default="universal",
-                        help="format of output table               (default=universal)\n"+
+                        help="format of output table               (default=none)\n"+
                              "- fancy (round box)\n"+
-                             "- universal (crossplattform)")
+                             "- universal (crossplattform)\n"+
+                             "- none (No frame around box)")
 
 additional.add_argument("--refresh-rate", dest="sleepTime", nargs="?", type=int, default=300,
                         help="time interval to check status in sec (default=300)")
@@ -264,6 +265,9 @@ def print_table_row(content,
     
     if formatTable == "universal":
         table_outline = ["+-", "-+", "+-", "-+", "+-", "-+", "| ", " |", "-"]
+        
+    if formatTable == "none":
+        table_outline = ["--", "--", "--", "--", "--", "--", "  ", "  ", "-"]
     
     sep_top = table_outline[0] + table_inner_width*table_outline[8] + table_outline[1]
     sep_mid = table_outline[4] + table_inner_width*table_outline[8] + table_outline[5]
@@ -523,6 +527,15 @@ def send_mail(recipient, subject, body = None):
                                stdin=subprocess.PIPE)
     process.communicate(body)
 
+# KILL JOB =================================================================================================================
+
+PID = subprocess.getoutput(commandMonitorKill).split(" ")[0]
+if PID == "":
+    PID = subprocess.getoutput(commandMonitorKill).split(" ")[1]
+
+if kill:
+    subprocess.run(["kill", PID])
+    quit()
 
 # JOB INIT =================================================================================================================
 
@@ -566,37 +579,9 @@ if backup:
     if not os.path.exists(backupPath):
         os.makedirs(backupPath)
 
-# START/RESTART/KILL JOB ===================================================================================================
+# START/RESTART JOB ========================================================================================================
 
 outputType = set_output_type()
-
-PID = subprocess.getoutput(commandMonitorKill).split(" ")[0]
-
-if PID == "":
-    PID = subprocess.getoutput(commandMonitorKill).split(" ")[1]
-
-if kill:
-    try:
-        nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
-    except FileNotFoundError:
-        nTimestepsCurrent = 0
-        
-    jobStatusRunning, jobStatusPending = get_job_status()
-    
-    # Job running
-    if jobName in jobStatusRunning:
-        
-        jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
-        jobID = jobStatusRunning[jobStatusRunningNameIndex - 2]
-        
-        currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
-        
-    pastTime += get_time_in_seconds(currentTime)
-    
-    print_table_row(["ABORT", "Cancelled monitoring"], 
-                    nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
-    subprocess.run(["kill", PID])
-    quit()
 
 ## BEGIN ===================================================================================================================
 
