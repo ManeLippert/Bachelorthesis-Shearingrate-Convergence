@@ -696,9 +696,11 @@ while True:
             try:
                 outputContent = open(outputFilename(jobID)).readlines()[-5].replace("\n","")
                 
-                runSuccess = find_string_in_file("output.dat", outputCriteria[1])
+                # If scan of output.dat is needed: Scans for string "Run Successful in output.dat and returns bool value"
+                #runSuccess = find_string_in_file("output.dat", outputCriteria[1])
+                #if outputCriteria[0] in outputContent and runSuccess: 
                 
-                if outputCriteria[0] in outputContent and runSuccess: 
+                if outputCriteria[0] in outputContent: 
                     
                     if backup:
                         print_table_row(["BACKUP", backupLocation],
