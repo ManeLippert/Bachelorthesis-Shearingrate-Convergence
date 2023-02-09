@@ -29,27 +29,10 @@ START SCRIPT IN BACKGROUND:
 
   o WITH NOHUP:
     Command:
-    >>> nohup python3 -u slurm_monitor.py &> /dev/null &
-
-    With arguments (example for 30000 timesteps):
-    >>> nohup python3 -u slurm_monitor.py -n 30000 &> /dev/null &
-
-    Output:
-    >>> [1] 10537
-
-    List Process:
-    >>> ps ax | grep python3
-
-    Output:
-    >>> 10537 pts/1    S      0:00 python3 -u slurm_monitor.py
-    >>> 23426 pts/1    S+     0:00 grep --color=auto slurm_monitor.py
+    >>> nohup python3 -u slurm_monitor.py --job-name JOBNAME &> /dev/null &
 
     Kill Process:
-    grep --color=auto slurm_monitor.py gets generated automatically no need to kill!
-    >>> kill 10537
-    
-    Output after Enter or next Command:
-    [1]+ Terminated              nohup python3 slurm_monitor.py &> /dev/null &
+    >>> python3 -u slurm_monitor.py --job-name JOBNAME --kill
     
   o WITH SCREEN (has to be installed):
     Create Screen:
@@ -76,7 +59,7 @@ START SCRIPT IN BACKGROUND:
 
 OUTPUT STATUS:
 Just run the file will create an dynamic output (recommended with using screen) or
->>> cd $DATA && find . -name status.txt -exec cat {} \;
+>>> cd $DATA && find . -name status.txt -exec tail -8 {} \;
 
 ====================================== ARGUMENTS ======================================
 """
@@ -85,6 +68,10 @@ parser = argparse.ArgumentParser(description=description_text, formatter_class=a
 #parser._action_groups.pop()
 
 required = parser.add_argument_group("required arguments")
+
+required.add_argument("--job-name", dest="jobname", nargs="?", type=str, required= True,
+                      help="job name not longer than 8 character")
+
 additional = parser.add_argument_group("additional arguments")
 
 additional.add_argument("-n", dest="timesteps", nargs="?", type=int, default=10000,
@@ -98,7 +85,8 @@ additional.add_argument("--restart-mail", dest="restart", action="store_true",
 
 additional.add_argument("-b", "--backup", dest="backup", nargs="?", type=str,
                         help="backup location for files            (default=None)\n"+
-                             "- local (creates backup in simulation folder)")
+                             "- local (creates backup in simulation folder)\n"+
+                             "- home  (creates backup in home folder)")
 
 additional.add_argument("-s", "--statusfile", dest="statusFile", nargs="?", type=str, default="status.txt",
                         help="file with output from nohup command  (default=status.txt)")
@@ -108,9 +96,6 @@ additional.add_argument("-r", "--restartfile", dest="restartFile", nargs="?", ty
 
 additional.add_argument("-j", "--job", dest="jobscriptFile", nargs="?", type=str, default="jobscript-create",
                         help="jobscript to run SLURM job           (default=jobscript-create)")
-
-additional.add_argument("--job-name", dest="jobname", nargs="?", type=str, default="Name",
-                        help="job name not longer than 8 character (default=Name)")
 
 additional.add_argument("--ntask-per-node", dest="tasks", nargs="?", type=str, default="32",
                         help="MPI task per node                    (default=32)")
@@ -127,10 +112,13 @@ additional.add_argument("--format", dest="formattable", nargs="?", type=str, def
                              "- universal (crossplattform)")
 
 additional.add_argument("--refresh-rate", dest="sleepTime", nargs="?", type=int, default=300,
-                        help="time interval to check status in sec (default=60)")
+                        help="time interval to check status in sec (default=300)")
 
 additional.add_argument("--screen", dest="screen", action="store_true",
                         help="activate output of script for screen (default=False)")
+
+additional.add_argument("--kill", dest="kill", action="store_true",
+                        help="kills monitor process                (default=False)")
 
 args = parser.parse_args()
 
@@ -165,6 +153,9 @@ statusFilename = args.statusFile
 
 formatTable = args.formattable
 screen = args.screen
+
+# Kill process of monitoring
+kill = args.kill
 
 # Changing this value can cause problems in writing status file
 sleepTime = args.sleepTime
@@ -207,6 +198,8 @@ restartFlag = "FILE_COUNT"
 
 commandJobRunning = "squeue --states=running --name " + jobName
 commandJobPending = "squeue --states=pending --name " + jobName
+
+commandMonitorKill = "ps ax | grep " + jobName
 
 commandJobStarting = "sbatch"
 
@@ -537,7 +530,7 @@ user = os.getlogin()
 startTime = time.time()
 
 if not os.path.isfile(statusFilename):
-    partTime = 0
+    pastTime = 0
     
     write_file(statusFilename,"")
 
@@ -545,7 +538,7 @@ if not os.path.isfile(statusFilename):
                     0, nTimestepsRequired, runCounter, currentTime, 
                     output_type="header")
 else:
-    partTime = get_time_from_statusfile(statusFilename, -11)
+    pastTime = get_time_from_statusfile(statusFilename, -11)
 
 folder = os.getcwd()
 path = folder.split(user + "/")[1]
@@ -559,6 +552,11 @@ if backup:
         simFolder = path.split("/")[-1]
         backupPath = folder + "/../" + simFolder + "-backup"
      
+    # Create backup in home folder    
+    elif backupLocation == "home":
+        simFolder = path.split("/")[-1]
+        backupPath = "~/" + simFolder + "-backup"
+     
     # Otherwise, use the backupLocation parsed as argument.
     else:
         if backupLocation[-1] != "/":
@@ -568,9 +566,21 @@ if backup:
     if not os.path.exists(backupPath):
         os.makedirs(backupPath)
 
-# START/RESTART JOB ========================================================================================================
+# START/RESTART/KILL JOB ===================================================================================================
 
 outputType = set_output_type()
+
+PID = subprocess.getoutput(commandMonitorKill).split(" ")[0]
+if kill:
+    try:
+        nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
+    except FileNotFoundError:
+        nTimestepsCurrent = 0
+        
+    print_table_row(["ABORT", "Cancelled monitoring"], 
+                    nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
+    subprocess.run(["kill", PID])
+    quit
 
 ## BEGIN ===================================================================================================================
 
