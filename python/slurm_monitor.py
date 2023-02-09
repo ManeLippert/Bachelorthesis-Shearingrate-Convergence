@@ -452,7 +452,7 @@ def get_time_in_seconds(time):
     time = time.replace("-", ":")
     time_split = time.split(":")
 
-    seconds = [24*60*60, 60*60, 60, 1]
+    seconds = [7*24*60*60,24*60*60, 60*60, 60, 1]
     seconds = seconds[-len(time_split):]
 
     time_sec = sum([a*b for a,b in zip(seconds, map(int,time_split))])
@@ -571,16 +571,32 @@ if backup:
 outputType = set_output_type()
 
 PID = subprocess.getoutput(commandMonitorKill).split(" ")[0]
+
+if PID == "":
+    PID = subprocess.getoutput(commandMonitorKill).split(" ")[1]
+
 if kill:
     try:
         nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
     except FileNotFoundError:
         nTimestepsCurrent = 0
         
+    jobStatusRunning, jobStatusPending = get_job_status()
+    
+    # Job running
+    if jobName in jobStatusRunning:
+        
+        jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
+        jobID = jobStatusRunning[jobStatusRunningNameIndex - 2]
+        
+        currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
+        
+    pastTime += get_time_in_seconds(currentTime)
+    
     print_table_row(["ABORT", "Cancelled monitoring"], 
                     nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
     subprocess.run(["kill", PID])
-    quit
+    quit()
 
 ## BEGIN ===================================================================================================================
 
