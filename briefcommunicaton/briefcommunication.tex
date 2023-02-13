@@ -115,15 +115,25 @@
 	\immediate\write18{texcount -sum -1 \jobname.tex > wordcount.txt}
 }
 
+
+\newcommand{\wexb}{\omega_{\mathrm{\:E \times B}}}
+\newcommand{\exb}{\mathrm{\:E \times B}}
+\newcommand{\hatwexbkvec}{\hat{\omega}_{\mathrm{\:E \times B},\mathbf{k}}}
+\newcommand{\NR}{N_\mathrm{R}}
+\newcommand{\NB}{N_\mathrm{B}}
+\newcommand{\vthref}{v_\mathrm{th,ref}}
+\newcommand{\Rref}{R_\mathrm{ref}}
+\newcommand{\rlt}{R/L_T}
+\newcommand{\rhothref}{\rho_\mathrm{th,ref}}
+
 % MAIN =====================================================================================================================
 
 \begin{document}
 
 %% TITLE, INFO =============================================================================================================
 
-\title[Convergence of shearing rate $\omega_{\mathrm{\:E}\times\mathrm{B}}$ with box size in gradient driven simulation]{
-	Convergence of shearing rate $\omega_{\mathrm{\:E}\times\mathrm{B}}$ with box size in gradient driven simulation
-}
+\title[Wavelength convergence of the ${\mathrm{\:E}\times\mathrm{B}}$ staircase pattern in flux tube simulations of ion temperature gradient driven turbulence]
+{Wavelength convergence of the ${\mathrm{\:E}\times\mathrm{B}}$ staircase pattern in flux tube simulations of ion temperature gradient driven turbulence}
 
 \author{M. Lippert}
 	\altaffiliation{Repository of this work: \\ 
@@ -140,7 +150,9 @@
 %% ABSTRACT ================================================================================================================
 
 \begin{abstract}
-	The gradient driven simulation of Rath et al.\cite{doi:10.1063/1.4961231} gets revisited. Its is confirmed that the wavelength of the longest wavelength zonal flow mode converges with increased box sizes in radial and binormal direction. Especially the E$\times$B staircase structure repeats itself multiple times in the given box size. %why is this intresting?
+    The wavelength convergence of the $\exb$ staircase pattern is adressed in local gradient-driven flux tube simulations of ion temperature gradient (ITG) driven turbulence.
+    Its is shown that a mesoscale pattern wavelength of $\sim 57.20 - 76.27~\rhothref$ is inherent to ITG driven turbulence with Cyclone Base Case paramters in the local limit. 
+    
 \end{abstract}
 
 \maketitle
@@ -152,45 +164,17 @@
 %\section{Introduction}
 %\label{sec:intro}
 
-This brief communication focuses on continuing the work of Rath et al. \cite{doi:10.1063/1.4961231}. 
-Their paper elaborates on gradient driven flux-tub simulations close to the non-linear threshold and the occurrence of the E$\times$B staircase structure and its formation over the simulation.
-At the end section IV of the Rath et al. paper it was discussed that the circumstances for which the staircase can fully develop, like the change of the longest wavelength with increasing box size, were beyond the scope of the original paper.
-To gain further insights on whether the staircase structure can fully develop the following brief communication will focus on the effects of the box size on the E$\times$B staircase structure and whether the wavelength converges with the box size.\bigskip
+Ion temperature gradient driven turbulence close to marginal stability often exhibits zonal flow pattern formation on mesoscales \textemdash so-called ${\mathrm{\:E}\times\mathrm{B}}$ staircase structures \cite{pradalier2010}.
+Such pattern formation has been observed in local gradient-driven flux-tube simulations \cite{peeters2016, weikl2017, rath2021} as well as global gradient-driven \cite{mcmillan2009, villard2013, seo2022} and global flux-driven \cite{pradalier2010, pradalier2015, wang2020, kim2022, kishimoto2023} studies. 
+In global studies, usually spanning a larger fraction of the minor radius, multiple radial repetitions of staircase structures are usually observed, with a typical pattern wavelength of several ten Larmor radii.
+% By contrast, the radial domain size of local flux-tube simulations is often restricted to a similar mesoscale.
+By contrast, in the aformentioned local studies the wavelength of ${\mathrm{\:E}\times\mathrm{B}}$ staircase structures is always found to converge to the radial box size of the flux tube domain.
+The above observations lead to the question: 
+Does the basic pattern wavelength always converges to the box size, or is there a typical mesoscale wavelength inherent to staircase structures also in a local flux-tube description?
+The latter case would imply that it is not necessarily global physics, i.e., profile effects, that sets (i) the wavelength of the ExB staircase pattern and (ii) the scale of avalanche-like transport events, usually restricted to ${\mathrm{\:E}\times\mathrm{B}}$ staircase structures and considered as a nonlocal transport mechnaism\cite{pradalier2010}. 
+In this brief communication the above question is addressed through a box size convergence scan of the same cases close to the nonlinear threshold for turbulence generation as studied in Ref.~\cite{peeters2016}.\bigskip
 
-%%% THEORY =================================================================================================================
-
-%\section{Theory}
-%\label{sec:theory}
-
-It is known that radially sheared zonal flows play a significant role in nonlinear stabilization in tokamak plasmas. \cite{WACooper1988,doi:10.1063/1.859529,doi:10.1063/1.873896}. 
-Through advection on the sheared zonal flows the turbulent structure in plasma gets deformed and tilted, which causes an E$\times$B nonlinearity. \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}
-The strength of the shearing process is the E$\times$B shearing rate $\omega_{\mathrm{\:E \times B}}$ which is the radial derivative of the advecting zonal flow velocity. \cite{doi:10.1063/1.871313, doi:10.1063/1.872847}
-The shearing rate $\omega_{\mathrm{\:E \times B}}$ is defined as 
-\begin{equation}
-	\omega_{\mathrm{\:E \times B}} = \frac{1}{2} \frac{\partial^2 \langle \Phi \rangle}{\partial \psi^2}
-	\label{eq:shearingrate}
-\end{equation}
-\increasecounter{eq}{1}{1}
-where $\langle \Phi \rangle$ is the zonal electrostatic potential and $\psi$ the radial coordinate that labels the flux surfaces. \cite{doi:10.1063/1.4952621, doi:10.1063/1.3005380}
-It was shown that the nonlinear threshold for turbulence is directly related to shear stabilization. \cite{doi:10.1063/1.873896} % Dimits et al. showed
-The shear stabilization is often expressed in the empirical Waltz rule $\omega_{\mathrm{\:E \times B}} \sim \gamma$, \cite{doi:10.1063/1.870934, doi:10.1063/1.872847} where $\gamma$ is defined as the maximum linear growth rate in the unstable mode. The discovered zonal flows, also known as E$\times$B staircase \cite{PhysRevE.82.025401}, exhibit amplitudes, which satisfy the stabilization criteria in terms of the E$\times$B shearing rate. For a fully developed staircase structure the E $\times$ B shearing rate $\omega_{\mathrm{\:E \times B}} = \gamma$. \cite{doi:10.1063/1.4961231, doi:10.1063/1.4952621}\bigskip
-
-This paper covers the increase of the box size in radial direction and in binormal direction with periodic boundary conditions for the box itself. Which box size was used can be seen in each graphic in form of $N_\mathrm{R}\times N_\mathrm{B}$, where $N_\mathrm{R}$ stands for the times the radial box size was increased and $N_\mathrm{B}$ for the binormal box size. To validate a stabilized turbulence and if the E$\times$B Staircase structure has fully developed a closer look at the long wavelength zonal flow mode $|\widehat{\omega}_{\mathrm{\:E\times B}}|_{k_\mathrm{i}}$ is necessary. The long wavelength zonal flow mode is the absolute of the Fourier transform of the shearing rate $\omega_{\mathrm{\:E \times B}}$ for each time step, where $k_\mathrm{i}$ is the wave vector connected to the long wavelength zonal flow mode with index i and is defined as following
-\begin{equation}
-	k_\mathrm{i} = \frac{2\pi \mathrm{i}}{l_\psi}
-\end{equation}
-\increasecounter{eq}{1}{1}
-with $l_\psi$ as the length of the box size. In addition, the maximum amplitude of the long wavelength zonal flow mode  $|\widehat{\omega}_{\mathrm{\:E\times B}}|_{k_\mathrm{i}} = \gamma $. \cite{doi:10.1063/1.4961231} It is important that only for one wave vector $k_i$ the zonal mode reaches its maximum amplitude any other mode has to be close by zero. The mode with the maximum amplitude is called the longest wavelength zonal mode. \bigskip
-
-%%% METHODS ==================================================================================================================
-
-%\section{Simulation Setup}
-%\label{sec:setup}
-
-The plasma parameters are closely modelled after those in Rath et al. \cite{doi:10.1063/1.4961231} with the cyclone base case.
-%safety factor $q = 1.4$, magnetic shear $\widehat{s} = 0.78$, inverse aspect ratio $\epsilon = 0.19$, density gradient $R/L_n = 2.2$ and electron to ion temperature ratio $T_e/T_i = 1$. The maximum of the velocity grid is three times the thermal velocity for both the parallel and the perpendicular velocities. Adiabatic electrons were investigated, while neglecting collisions.
-The resolution "Standard resolution with 6th order (S6)" from Ref \onlinecite{doi:10.1063/1.4961231} was used and is given in Table \ref{tab:resolution} with changes in $N_{\nu_\parallel}$ from 64 grid points to 48 to reduce the runtime of simulations. Simulations showed no effect of the correction in grid points on the produced results. Furthermore, the gradient length $R/L_\mathrm{T}$ was set to the value 6.0 close to the finite heat flux threshold shown in Fig. 4 in Rath et al. \cite{doi:10.1063/1.4961231}. The simulations are performed with the flux tube version of the non-linear gyro-kinetic code GKW \cite{Peeters20092650} with periodic boundary conditions and circular geometry.
-Further information regarding the simulation can be found in Ref \onlinecite{doi:10.1063/1.4961231}.
+%%% SIMULATION SET-UP ======================================================================================================
 
 \begin{table}[ht]
 	\begin{ruledtabular}
@@ -201,55 +185,139 @@ Further information regarding the simulation can be found in Ref \onlinecite{doi
 		\end{tabular}
 	\end{ruledtabular}
 	\caption{
-		Resolution used in this paper for further information read Rath et al. \cite{doi:10.1063/1.4961231} %: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
+		Resolution used in this paper for further information read Ref.~\cite{peeters2016}. %: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
 	}
 	\label{tab:resolution}
 \end{table}
 
-The data is normalized with the heat conduction coefficient $\chi$ in gyro-Bohm units ($\rho^2\nu_{\mathrm{th}}/R)$, where $\rho = m_\mathrm{i}\nu_{\mathrm{th}}/eB$ is the ion Larmor radius, $\nu_{\mathrm{th}} = \sqrt{2T/m_\mathrm{i}}$ is the thermal velocity, $T$ the background temperature, $e$ is the unit charge and $R$ is the major radius.
+Here, gyrokinetic simulations are performed with the non-linear flux tube version of Gyrokinetic Workshop (GKW) \cite{peeters2009} in the adiabatic electron approximation.
+In agreement with Ref.~\cite{peeters2016}, Cyclone Base Case (CBC) like parameters are chosen with an inverse background temperature gradient length $R/L_T = 6.0$ (unless stated otherwise) and circular concentric flux surfaces. 
+The numerical resolution is compliant to the "Standard resolution with 6th order (S6)" set-up of the aforementioned reference, with a somewhat lowered number of parallel velocity grid points.
+It has been carefully verified that this modification preserves the same physical outcome as the orginial study.
+A summary of the numerical parameters is given in Tab.~\ref{tab:resolution} and for more details about the definition of individual quantities the reader is referred to Refs.~\cite{peeters2009, peeters2016}. \\
+The increase of the box size, relative to the standard box size $(l_\psi,~l_\zeta) = (76.27,~89.76)~\rho_\mathrm{th,ref}$, in the radial and binormal direction is always indicated by the real parametes $N_\mathrm{R}$ and $N_\mathrm{B}$, respectively.
+Here, $\rho_\mathrm{th,ref}$ is the reference thermal Larmor radius and the nomenclature $N_\mathrm{R}\times N_\mathrm{B}$ is applied throughout this work to indicate the increase in box size.  
+Note that the number of modes in the respective direction is always adapted accordingly to retain a spatial resolution compliant to the standard resolution (Tab.~\ref{tab:resolution}) and standard box size. \bigskip
+  
+%%% DIAGNOSTICS ================================================================================================================
+The ${\mathrm{\:E}\times\mathrm{B}}$ staircase pattern is manifest as radial structure formation in the ${\mathrm{\:E}\times\mathrm{B}}$ shearing rate defined by\cite{rath2016, doi:10.1063/1.3005380, rath2016, peeters2016}
+\begin{equation}
+	\omega_{\mathrm{\:E \times B}} = \frac{1}{2} \frac{\partial^2 \langle \Phi \rangle}{\partial \psi^2},
+	\label{eq:shearingrate}
+\end{equation}
+\increasecounter{eq}{1}{1}
+where $\langle \Phi \rangle$ is the zonal electrostatic potential normalized by $\rho_\ast T_\mathrm{ref}/e$ ($\rho_\ast = \rho_\mathrm{th,ref}/R_\mathrm{ref}$ is the reference thermal Larmor radius normalized with the reference major radius $R_\mathrm{ref}$, $T_\mathrm{ref}$ is a reference temperature, $e$ is the elementary charge) and $\psi$ is the radial coordinate that labels the flux surfaces normalized by $\rho_\mathrm{th,ref}$.
+The E$\times$B shearing rate $\omega_{\mathrm{\:E \times B}}$ is the radial derivative of the advecting zonal flow velocity \cite{doi:10.1063/1.871313, doi:10.1063/1.872847} and quantifies the zonal flow induced shearing of turbulent structures \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}. 
+Here, the zonal potential is estimated from the electrostatic potential $\phi$ on the two dimensional $\psi$-$\zeta$-plane at the low field side according to
+\begin{equation}
+\langle \Phi \rangle = \frac{1}{l_\zeta} \int_0^{l_\zeta} \mathrm{d}\zeta ~ \phi(\psi,\zeta,s=0).
+\end{equation}
+In order to diagnose the temporal evolution of the staircase pattern and to obtain an estimate of its amplitude the radial Fourier transform of the ${\mathrm{\:E}\times\mathrm{B}}$ shearing rate is considered. 
+It is defined by
+\begin{equation}
+	\omega_{\mathrm{\:E \times B}} = \sum_{k_j} \hat \omega_{\mathrm{\:E \times B}}(k_j,t) \times \exp(\mathrm{i} k_j \psi),
+	\label{eq:shearingrate_fourier}
+\end{equation}
+\increasecounter{eq}{1}{1}
+were $\hat \omega_{\mathrm{\:E \times B}}$ is the complex Fourier coefficient and 
+% use j as zonal flow mode number to distinguish it from the imaginary unit i
+\begin{equation}
+	k_\mathrm{j} = \frac{2\pi \mathrm{j}}{l_\psi}
+\end{equation}
+\increasecounter{eq}{1}{1}
+% explicitly introduce the terms zonal flow wave vector and zonal flow mode number for later usage
+defines the zonal flow wave vector with the zonal flow mode number $j$ ranging in $-(N_\psi -1)/2 \leq j \leq (N_\psi -1)/2 $.
+% define the zonal flow modes' amplitude in terms of the shearing rate
+Based on the defintions above, the shear carried by the zonal flow mode with wave vector $k_j$ is defined by $|\widehat{\omega}_{\mathrm{\:E\times B}}|_{k_\mathrm{j}} = 2 |\hat \omega_{\mathrm{\:E \times B}}|$. 
+% introduces the term basic mode of the pattern for later usage
+In general, the zonal flow mode that dominates the ${\mathrm{\:E}\times\mathrm{B}}$ staircase pattern, \textemdash also referred to as the \textit{basic mode } of the pattern in this work \textemdash exhibits the maximum amplitude in the spectrum $|\widehat{\omega}_{\mathrm{\:E\times B}}|_{k_\mathrm{j}}$.  
+Consistent with Ref.~\cite{peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rho_\mathrm{th,ref}^2 v_{\mathrm{th,ref}}/R_\mathrm{ref}$ ($v_{\mathrm{th,ref}} = \sqrt{2 T_\mathrm{ref}/m_\mathrm{ref}}$ is the reference thermal velocity and $m_\mathrm{ref}$ is the reference mass) throughout this work. \bigskip
+
 
 %%% RESULTS ================================================================================================================
 
 %\section{Results}
 %\label{sec:results}
 
-At the beginning the box size was only increased in radial direction with values for $N_\mathrm{R} = 1, 2, 3, 4$. The simulations show that the longest wavelength zonal mode is connected with $N_\mathrm{R}$ in terms of index $\mathrm{i} = N_\mathrm{R}$. This behavior can be seen in Fig. \ref{fig:wexb-eflux-1-2-3-4x1-comparison} where the longest wavelength zonal mode for the box size 1$\times$1 has the wave vector $k_1$, for 2$\times$1 the wave vector $k_2$ and so on. Despite numerical dissipation of the simulation producing an unlikeliness of turbulence stabilization, it may still stabilize after the simulation is run for a longer amount of time. \cite{doi:10.1063/1.4961231}
-
-Furthermore, it is visible that the longest wavelength zonal mode reaches its maximum amplitude (Fig. \ref{fig:wexb-eflux-1-2-3-4x1-comparison} (b)) when the turbulence is stabilized  (Fig. \ref{fig:wexb-eflux-1-2-3-4x1-comparison} (a)) but further investigation yields the result that the simulations has not stabilized yet. For example for the box size 3$\times$1 the turbulence has not been stabilized between [28000, 31000] normalized time units although the heat conduction coefficient $\chi$ subdued. This can be observed in Fig. \ref{fig:wexb-3x1-selection} where for [28000, 31000] normalized time units the staircase structure has a jump at ~40 normalized radial coordinates. In comparison, an unstable staircase structure has the form of a Sawtooth wave also visible in Fig. \ref{fig:wexb-3x1-selection} for [10000, 12000] normalized time units. This occurrence is due to the previously mentioned condition that only one zonal mode has a maximal amplitude while any other mode has an amplitude close to zero. So as additional verification process one could visualize the shearing rate $\omega_{\mathrm{\:E \times B}}$ to determine whether the staircase structure has fully developed. 
-
-After the turbulence is stabilized and the longest wavelength zonal mode has developed the wavelength of the shearing rate $\omega_{\mathrm{\:E \times B}}$ converges with the box size. The E$\times$B staircase structure does repeat itself exactly $N_\mathrm{R}$ times. In Fig. \ref{fig:wexb-1-2-3-4x1-stable-comparison} shows how the wavelength converges for different box sizes for different time intervals and the for this paper significant staircase structure repetition pattern. This can be linked to the wave vector of the longest wavelength zonal mode, for example for the box size 2$\times$1 the wave vector would be $k_2$ (Fig. \ref{fig:wexb-eflux-1-2-3-4x1-comparison}(b)) and the staircase structure repeats itself 2 times which shows a convergence of the structure to the box size. It is also visible that the Waltz rule applies for radially increased box sizes as well. Note that for clearer visibility the staircase structure for box size 1$\times$1 and for 4$\times$1 got shifted to the left in Fig. \ref{fig:wexb-1-2-3-4x1-stable-comparison} so that the staircase structures do overlapped. This shift does not affect the physical result because of the applied periodic boundary conditions of the box. 
-
-\includegraphicsOneCol{S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x1_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{
-	Shearing rate $\omega_{\mathrm{\:E \times B}}$ for different time intervals in which heat conduction is almost zero but the E$\times$B staircase has not fully developed for box size 3$\times$1
-}{fig:wexb-3x1-selection}
-
-\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison.pdf}{
+\includegraphicsTwoCol{{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison}.pdf}{
 	\textbf{(a)} Time traces of the heat conduction coefficient $\chi$ for $R/L_T = 6.0$ for radial increased box sizes
 	\textbf{(b)} Time traces of $|\widehat{\omega}_{\mathrm{\:E\times B}}|_{k_\mathrm{i}}$ for radial increased box sizes
 }{fig:wexb-eflux-1-2-3-4x1-comparison}{}
 
-\increasecounter{fig}{2}
+% \increasecounter{fig}{1}
 
-\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}{
+\includegraphicsTwoCol{{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison}.pdf}{
 	Comparison of shearing rate $\omega_{\mathrm{\:E \times B}}$ for radial increased box sizes. The staircase structure got 
 	shifted for better visibility.
 }{fig:wexb-1-2-3-4x1-stable-comparison}{}
 
-In the next step the box size was increased in radial and binormal direction at the same time. For this simulation the turbulence got stabilized and fully developed after 1500 normalized time unit seen in Fig. \ref{fig:eflux-1x1-2x2-3x3-comparison}. This leads to a much faster computation of zonal flow structures if the box size had to be increased. In comparison, the box size 3$\times$1 gets stabilized and fully developed after 42000 normalized time units.
 
-\includegraphicsOneCol{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{
+% what kind of analysis
+In the first test the radial box size is increased while the binormal box size is kept fixed to the standard size.
+The scan covers the realizations $\NR\times\NB \in [ 1\times1,~2\times1,~3\times1,~4\times1]$.
+% short introduction of the turbulence - zonal flow dynamics; cite peeters2016 explicitly to avoid any discussions lateron
+Each realization exhibits an initial quasi-stationary turbulent phase and a second final \cite{peeters2016} phase with almost supressed turbulence (see Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}).
+% introduce the fully developed staircase structure
+The latter state is indicative for the presence of a fully developed staircase pattern as depicted in Fig.~\ref{fig:wexb-1-2-3-4x1-stable-comparison}. 
+This type of structure is characterized by intervals of almost constant shear with alternating sign satisfying the Waltz criterion $|\wexb| \approx \gamma$\cite{doi:10.1063/1.870934, doi:10.1063/1.872847} ($\gamma$ is the growth rate of the most unstable liner ITG driven Eigenmode), connected by steep flanks where $\wexb$ crosses zero.
+% insofar the results of peeters2016 are well reproduced; now turn to the description of the main result of this test
+Fig.~\ref{fig:wexb-1-2-3-4x1-stable-comparison} shows a striking repetition of the staircase structure, with the number of repetitions equal to $\NR$.
+% yes, the wavelength converges; but even stronger result: the standard box size already allows for the correct staircase wavelength
+Hence, the basic wavelength of the pattern not only converges with increasing radial box size, the converged wavelength turns out to agree with the standard radial box size of Ref.~\cite{peeters2016} \\
+% cautios words
+Due to the lack of a substantial turbulent drive in the final suppressed state no further zonal flow evolution is observed [panel (b) of Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}] and one might critically ask whether the structures shown in Fig.~\ref{fig:wexb-1-2-3-4x1-stable-comparison} represent the real converged pattern in a statistical sense. 
+% very long initial quasi-stationary states
+Note that in the $3 \times 1$ case the initial quasi-stationary turbulent state extends up to a few $\sim 10^4~\Rref/\vthref$.
+% the j=3 zonal flow mode does show a temporal evolution with a few cycles covered by the initial turbulent phase -> this allows for some degree of statistical argument
+During this period the zonal flow mode with $j = 3$, i.~e., the mode that dominates the staircase pattern in final suppressed phase, undergoes a long-term evolution with a typical time scale of several $\sim 10^3~\Rref/\vthref$. 
+Hence, several of such cycles are covered by the initial turbulent phase, which is evident from the occurrence of phases with reduced amplitude around $t \approx 8000~\Rref/\vthref$ and $t \approx 18000~\Rref/\vthref$.
+% first important point: competition between the j = 3 and j = 4 mode -> the j = 4 mode is of shorter length scale compared to the j = 3 mode, hence, no convergence to the box scale
+It is the $j = 4$ zonal flow mode, i.~e., the next shorter radial scale mode, that domiantes the shear spectrum $|\hatwexbkvec|$ in the latter two phases (not shown), demonstrating a competition between the $j = 3$ and $j = 4$ modes.
+% second important point: no secular growth of the box scale zonal mode
+Most importantly, no secular growth of the $j = 1$ (box scale) zonal flow mode is observed during the entire quasi-stationary turbulent phase [dotted line in panel (b) of Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}]].
+% summary
+The above discussion indicates that although the $j = 3,~4$ zonal modes compete, the pattern scale does not converge to the radial box scale but rather to a mesoscale of $\sim 57.20 - 76.27~\rhothref$ (i.~e., $j = 4,~3$ in the $3\times1$ case). \\
+
+% what kind of analysis
+Since the radially elongated simulation domain might inhibit the development of isotropic turbulent structures, in the second test the radial and binormal box size is increased simulataneously.
+This scan covers the realizations $\NR\times\NB \in [1\times1,~2\times2,~3\times3]$.
+% mention shorter times scales for stabilization
+Interestingly, here, suppression of the turbulence by the emergence of a fully developed staircase pattern occurs after $\sim 1000~\Rref/\vthref$ always (see Fig. \ref{fig:eflux-1x1-2x2-3x3-comparison}), i.~e., significantly faster compared to the $3\times1$ and $4\times1$ realizations. 
+% Although the computational costs per time step is higher, the difference in the time scales renders this test computationally cheaper.
+%
+% the main result of this test: confirmation of wave length convergence
+As shown in Fig.~\ref{fig:wexb-3x3-stable} also this test confirms the convergence of the staircase pattern wavelength to a typical mesoscale that is distinct from the radial box size in the $\NR > 1$ realizations. 
+% discuss sumewhat smaller wavelength
+By contrast to the radial box size scan, however, here the $3\times3$ realization shows a stationary pattern with four repetitions of the fully developed staircase structure, i.~e., a somewhat smaller pattern wavelength. 
+Whether this is related to a possible pattern wavelength dependence on the binormal box size or to the competition between patterns with the two wavelengths $\lambda \in [57.20,~ 76.27]~\rhothref$ as observed in the first test is adressed in the next paragraph. \bigskip
+
+% what kind of analysis
+In a third test the binormal box size is varied with the radial box size fixed to $\NR = 3$.
+This test covers the realizations $\NR \times \NB \in [3\times1.5,~3\times2.5,~3\times3,~3\times5]$.
+% -> outcome?
+\bigskip
+
+% what kind of test
+In the final test the inverse background temperature gradient length $\rlt$ is varied at fixed $3\times3$ box size.
+Since suppression of turbulence usually occurs at later times when approaching the finite heat flux treshold from below \cite{peeters2016}, the analysis aims to lengthen the phase during which the zonal flow varies in time due to turbulent Reynolds stresses.
+This scan covers realizations with $\rlt \in [6.0,~6.2,~6.4]$.
+% what is the finite heat flux threshold
+In the case of $\rlt = ???$ turbulence suppression is observed for $t > ???$, while stationary turbulence during the entire simulation time trace of $???~\Rref/\vthref$ is found for $\rlt = ???$.
+The finite heat flux threshold, hence, is $\rlt|_\mathrm{finite} = ??? \pm ???$.
+% Which stationay wavelength occurs????
+Although the initial quasi-stationary turbulence in the former case is significantly larger compared to the $\rlt = 6.0$ realization discussed in the second test, a stationary pattern with basic zonal flow mode $j = ???$ establishes. 
+% Does it confirm our previous tests
+Again, the $j = 1$ (box scale) zonal flow mode does not grow secularly during the entire turbulent phase.
+Also this test confirmes the statistical soundness of the converged pattern wavelength of $\sim ???$.
+
+\includegraphicsOneCol{{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison}.pdf}{
 	Time traces of the heat conduction coefficient $\chi$ for $R/L_T = 6.0$ for radial and binormal increased box sizes
 }{fig:eflux-1x1-2x2-3x3-comparison}
 
-Even for this type of box sizes the wavelength converges with the box size and the Waltz rule is still satisfied. For the 3$\times$3 box size the E$\times$B staircase structure repeats itself four times which can be seen in Fig. \ref{fig:wexb-3x3-stable}. This stands in contradiction to the repetition of the radial increased box size. One could argue that the repetition of the staircase structure of a radial and binormal increased box size is greater equal $N_\mathrm{R}$. This poses the question whether E$\times$B staircase structure has a different repetition for different box sizes, for different box sizes, but this will need further research to be conducted. 
-
-\includegraphicsOneCol{S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_wexb_selection.pdf}{
-	Stablized shearing rate $\omega_{\mathrm{\:E \times B}}$ for boxsize 3$\times$3
+\includegraphicsOneCol{{S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_wexb_selection}.pdf}{
+	Stablized shearing rate $\omega_{\mathrm{\:E \times B}}$ for boxsize 3$\times$3. \textcolor{red}{Add $1\times1$, $2\times2$!}
 }{fig:wexb-3x3-stable} 
 
-%\includegraphicsTwoCol{Comparison/Boxsize/S6_rlt6.0_boxsize2x1-2-3x1-3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}{
-%	Comparison of time traces of the heat conduction coefficient $\chi$ for $R/L_T = 6.0$ for box size 2$\times$1 compared to 2$\times$2 and 3$\times$1 compared to 3$\times$3
-%}{fig:eflux-2x1-2-3x1-3-comparison}
 
 %%% CONCLUSION =============================================================================================================
 
@@ -262,7 +330,15 @@ Even for this type of box sizes the wavelength converges with the box size and t
 \bigskip
 \bigskip
 \bigskip
-To conclude, the wavelength does converge with the chosen box size and the Waltz rule holds in every simulation. Long runs can produce stabilized turbulence. Further investigation of the long wavelength zonal mode has to be made to determine if and under what conditions the turbulence has been stabilized. Therefore, it is important that only one long wavelength zonal mode has a maximal amplitude for given wave vector $k_i$ which is also the longest wavelength zonal mode. The E$\times$B staircase structure repeats itself multiple times in increased box sizes whereas radial increased box size shows a link between repetition and the times of radial box size increase, although this does not hold for radial and binormal increased box sizes. 
+
+% what has been done
+Through careful tests this briefcommunication confirms the wavelength convergence of the $\exb$ staircase pattern in local gyrokinetic flux tube simulations of ion temperature gradient (ITG) driven turbulence.
+% mention the scale explicitly, and also that it is the scale compliant to CBC parameters (for other plasma parameters it might differ)
+A mesoscale pattern wavelength of $\sim 57.20 - 76.27~\rhothref$ is found to be intrinsic to ITG driven turbulence for Cyclone Base Case parameters.
+% compare to other studies
+This length scale is somewhat larger compared to results from global studies with finite $\rho_\ast$, which report of a few $10^1~\rhothref$ \cite{pradalier2010}, and has to be considered the proper mesoscale in the local limit $\rho_\ast \rightarrow 0$.  
+% relevance of the outcome
+The occurrence of this mesoscale implies that non-locality is inherent to ITG driven turbulence, since avalanches are usually spatially organized by the $\exb$ staircase pattern \cite{mcmillan2009, pradalier2010, rath2016, peeters2016}. 
 
 
 %% APPENDIX ================================================================================================================
@@ -278,7 +354,7 @@ The data that support the findings of this study are available from the correspo
 
 % WORDCOUNT ================================================================================================================
 
-%\wordcountmessage
+\wordcountmessage
 
 % BIBLIOGRAPHY =============================================================================================================
 
