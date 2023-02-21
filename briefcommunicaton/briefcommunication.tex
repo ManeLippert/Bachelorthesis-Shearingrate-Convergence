@@ -118,7 +118,7 @@
 
 \newcommand{\wexb}{\omega_{\mathrm{\:E \times B}}}
 \newcommand{\exb}{\mathrm{\:E \times B}}
-\newcommand{\hatwexbkvec}{\hat{\omega}_{\mathrm{\:E \times B},\mathbf{k}}}
+\newcommand{\hatwexbkvec}{\widehat{\omega}_{\mathrm{\:E \times B},\mathbf{k}}}
 \newcommand{\NR}{N_\mathrm{R}}
 \newcommand{\NB}{N_\mathrm{B}}
 \newcommand{\vthref}{v_\mathrm{th,ref}}
@@ -215,11 +215,11 @@ Here, the zonal potential is estimated from the electrostatic potential $\phi$ o
 In order to diagnose the temporal evolution of the staircase pattern and to obtain an estimate of its amplitude the radial Fourier transform of the ${\mathrm{\:E}\times\mathrm{B}}$ shearing rate is considered. 
 It is defined by
 \begin{equation}
-	\omega_{\mathrm{\:E \times B}} = \sum_{k_j} \hat \omega_{\mathrm{\:E \times B}}(k_j,t) \times \exp(\mathrm{i} k_j \psi),
+	\omega_{\mathrm{\:E \times B}} = \sum_{k_j} \widehat \omega_{\mathrm{\:E \times B}}(k_j,t) \times \exp(\mathrm{i} k_j \psi),
 	\label{eq:shearingrate_fourier}
 \end{equation}
 \increasecounter{eq}{1}{1}
-were $\hat \omega_{\mathrm{\:E \times B}}$ is the complex Fourier coefficient and 
+were $\widehat \omega_{\mathrm{\:E \times B}}$ is the complex Fourier coefficient and 
 % use j as zonal flow mode number to distinguish it from the imaginary unit i
 \begin{equation}
 	k_\mathrm{j} = \frac{2\pi \mathrm{j}}{l_\psi}
@@ -228,7 +228,7 @@ were $\hat \omega_{\mathrm{\:E \times B}}$ is the complex Fourier coefficient an
 % explicitly introduce the terms zonal flow wave vector and zonal flow mode number for later usage
 defines the zonal flow wave vector with the zonal flow mode number $j$ ranging in $-(N_\psi -1)/2 \leq j \leq (N_\psi -1)/2 $.
 % define the zonal flow modes' amplitude in terms of the shearing rate
-Based on the defintions above, the shear carried by the zonal flow mode with wave vector $k_j$ is defined by $|\widehat{\omega}_{\mathrm{\:E\times B}}|_{k_\mathrm{j}} = 2 |\hat \omega_{\mathrm{\:E \times B}}|$. 
+Based on the defintions above, the shear carried by the zonal flow mode with wave vector $k_j$ is defined by $|\widehat{\omega}_{\mathrm{\:E\times B}}|_{k_\mathrm{j}} = 2 |\widehat \omega_{\mathrm{\:E \times B}}|$. 
 % introduces the term basic mode of the pattern for later usage
 In general, the zonal flow mode that dominates the ${\mathrm{\:E}\times\mathrm{B}}$ staircase pattern, \textemdash also referred to as the \textit{basic mode } of the pattern in this work \textemdash exhibits the maximum amplitude in the spectrum $|\widehat{\omega}_{\mathrm{\:E\times B}}|_{k_\mathrm{j}}$.  
 Consistent with Ref.~\cite{peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rho_\mathrm{th,ref}^2 v_{\mathrm{th,ref}}/R_\mathrm{ref}$ ($v_{\mathrm{th,ref}} = \sqrt{2 T_\mathrm{ref}/m_\mathrm{ref}}$ is the reference thermal velocity and $m_\mathrm{ref}$ is the reference mass) throughout this work. \bigskip
