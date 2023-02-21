@@ -9,13 +9,13 @@
  !Values in this file will override input.dat
  &RESTART
  DTIM    =  2.000000000000000E-002,
- TIME    =   11999.5292921179     ,
- NT_COMPLETE     =       20000,
- NT_REMAIN       =           0,
+ TIME    =   14170.3292921653     ,
+ NT_COMPLETE     =       23618,
+ NT_REMAIN       =        6382,
  NX_RST  =         247,
  NMOD_RST        =          31,
  NUMBER_OF_SPECIES_RST   =           1,
- FILE_COUNT      =       20000
+ FILE_COUNT      =       23618
  /
  &KX_SHIFT
  T_SHEAR_BEGIN   =  0.000000000000000E+000,

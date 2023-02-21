@@ -2,20 +2,20 @@
  !Written with restart file version:            2
  !Write status error code:            0
  !Restart file written with GKW version: 
- UNKNOWN                                                         
+ 0.4-b1-1051-ga17cfde                                            
  !Executable name: 
- gkw_l1-DP_UNKNOWN.x                                             
+ gkw_l1-DP_0.4-b1-1051-ga17cfde.x                                
  !Run on           96 processor(s)
  !Values in this file will override input.dat
  &RESTART
  DTIM    =  2.000000000000000E-002,
- TIME    =   5997.71402053004     ,
- NT_COMPLETE     =       10000,
+ TIME    =   11997.7140206610     ,
+ NT_COMPLETE     =       20000,
  NT_REMAIN       =           0,
  NX_RST  =         247,
  NMOD_RST        =          61,
  NUMBER_OF_SPECIES_RST   =           1,
- FILE_COUNT      =       10000
+ FILE_COUNT      =       20000
  /
  &KX_SHIFT
  T_SHEAR_BEGIN   =  0.000000000000000E+000,
