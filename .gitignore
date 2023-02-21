@@ -290,8 +290,7 @@ TSWLatexianTemp*
 #*Notes.bib
 
 # gkw ignore
-gkwdata.h5
-data.h5
+*.h5
 FDS
 DM*
 *.o
