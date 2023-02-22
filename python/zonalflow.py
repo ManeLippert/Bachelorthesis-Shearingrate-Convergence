@@ -1,8 +1,9 @@
 #Import modules
 import numpy as np
+import pandas as pd
 import h5tools
 import derivative
-import numpy as np
+
 import matplotlib.pyplot as plt
 from matplotlib import rc
 from matplotlib.transforms import Bbox
@@ -112,3 +113,19 @@ def get_fft_mean_max_shearingrate_amplitude(wexb_mean):
     wexb_rad_mean_amp_max = max(wexb_rad_mean_amp)
     
     return wexb_rad_mean_amp, wexb_rad_mean_amp_max
+
+def get_data_info(df_path, rlt, boxsize, Ns = 16, Nvpar = 48, Nmu = 9, 
+                  dtim = 0.020, krhomax = 1.4, Nx = 83):
+    
+    df = pd.read_csv(df_path)
+    
+    df = df.loc[df['rlt'] == rlt]
+    df = df.loc[df['boxsize'] == boxsize]
+    df = df.loc[df['Ns'] == Ns]
+    df = df.loc[df['Nvpar'] == Nvpar]
+    df = df.loc[df['Nmu'] == Nmu]
+    df = df.loc[df['dtim'] == dtim]
+    df = df.loc[df['krhomax'] == krhomax]
+    df = df.loc[df['Nx'] == Nx]
+    
+    return df
