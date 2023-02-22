@@ -25,7 +25,7 @@ plot.parameters(True, 32, (24,8), 300)
 # File import and Create picture folder
 data = 'S6_rlt6.0'
 path = ['boxsize1x1/Ns16/Nvpar48/Nmu9', 'boxsize2x1/Ns16/Nvpar48/Nmu9',
-        'boxsize3x1/Ns16/Nvpar48/Nmu9', 'boxsize4x1/Ns16/Nvpar48/Nmu9/Run1']
+        'boxsize3x1/Ns16/Nvpar48/Nmu9', 'boxsize4x1/Ns16/Nvpar48/Nmu9']
 
 
 filename = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path]
