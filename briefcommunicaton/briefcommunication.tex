@@ -120,10 +120,13 @@
 \newcommand{\hatwexb}{\widehat{\omega}_{\mathrm{\:E \times B}}}
 \newcommand{\exb}{\mathrm{\:E}\times\mathrm{B}}
 \newcommand{\hatwexbkvec}{\widehat{\omega}_{\mathrm{\:E \times B},\mathbf{k}}}
-\newcommand{\NR}{N_\mathrm{R}}
-\newcommand{\NB}{N_\mathrm{B}}
+%\newcommand{\NR}{N_\mathrm{R}}
+%\newcommand{\NB}{N_\mathrm{B}}
+\newcommand{\NR}{N_\psi}
+\newcommand{\NB}{N_\zeta}
 \newcommand{\rlt}{R/L_T}
-\newcommand{\rhoth}{\rho_\mathrm{th}}
+%\newcommand{\rhoth}{\rho_\mathrm{th}}
+\newcommand{\rhoth}{\rho}
 \newcommand{\vth}{v_{\mathrm{th}}}
 
 % MAIN =====================================================================================================================
@@ -199,34 +202,31 @@ A summary of the numerical parameters is given in Tab.~\ref{tab:resolution} and 
 
 The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{rath2016, doi:10.1063/1.3005380, rath2016, peeters2016}
 \begin{equation}
-	\wexb = \frac{1}{2} \frac{\partial^2 \langle \Phi \rangle}{\partial \psi^2},
+	\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \psi^2},
 	\label{eq:shearingrate}
 \end{equation}
 \increasecounter{eq}{1}{1}
-where $\langle \Phi \rangle$ is the zonal electrostatic potential normalized by $\rho_\ast T/e$ ($\rho_\ast = \rhoth/R$ is the thermal Larmor radius normalized with the major radius $R$, $T$ is a temperature, $e$ is the elementary charge) and $\psi$ is the radial coordinate that labels the flux surfaces normalized by $\rhoth$. 
-
-The E$\times$B shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{doi:10.1063/1.871313, doi:10.1063/1.872847} and quantifies the zonal flow induced shearing of turbulent structures \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}. 
-Here, the zonal potential is estimated from the electrostatic potential $\phi$ on the two-dimensional $\psi$-$\zeta$-plane at the low field side according to
+where $\langle \phi \rangle$ is the zonal electrostatic potential normalized by $\rho_\ast T/e$ ($\rho_\ast = \rhoth/R$ is the thermal Larmor radius normalized with the major radius $R$, $T$ is the temperature, $e$ is the elementary charge) and $\psi$ is the radial coordinate that labels the flux surfaces normalized by $\rhoth$. 
+The zonal potential is estimated from the electrostatic potential $\phi$ on the two-dimensional $\psi$-$\zeta$-plane at the low field side according to
 \begin{equation}
-\langle \Phi \rangle = \frac{1}{l_\zeta} \int_0^{l_\zeta} \mathrm{d}\zeta ~ \phi(\psi,\zeta,s=0).
+\langle \phi \rangle = \frac{1}{l_\zeta} \int_0^{l_\zeta} \mathrm{d}\zeta ~ \phi(\psi,\zeta,s=0),
 \end{equation}
+where $\zeta$ labels the field lines and is an approximate binormal or toroidal coordinate, and $s$ parameterizes the length along the field lines and represents a poloidal coordinate which represents together with the radial coordinate $\psi$ the Hamada coordinates $(\psi,\zeta,s)$. \cite{rath2021} (\textbf{REFERENCE Hamada})
+The E$\times$B shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{doi:10.1063/1.871313, doi:10.1063/1.872847} and quantifies the zonal flow induced shearing of turbulent structures \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}. 
+
 In order to diagnose the temporal evolution of the staircase pattern and to obtain an estimate of its amplitude the radial Fourier transform of the $\exb$ shearing rate is considered. 
 It is defined by
 \begin{equation}
-	\wexb = \sum_{k_j} \hatwexb(k_j,t) \times \exp(\mathrm{i} k_j \psi),
+	\wexb = \sum_{k_j} \hatwexb(k_j,t) \, \exp(\mathrm{i} k_j \psi),
 	\label{eq:shearingrate_fourier}
 \end{equation}
 \increasecounter{eq}{1}{1}
-were $\hatwexb$ is the complex Fourier coefficient and 
-% use j as zonal flow mode number to distinguish it from the imaginary unit i
-\begin{equation}
-	k_\mathrm{j} = \frac{2\pi \mathrm{j}}{l_\psi}
-\end{equation}
-\increasecounter{eq}{1}{1}
+where $\hatwexb$ is the complex Fourier coefficient and \linebreak $k_\mathrm{j} = 2\pi \mathrm{j}/l_\psi$
 % explicitly introduce the terms zonal flow wave vector and zonal flow mode number for later usage
 defines the zonal flow wave vector with the zonal flow mode number $j$ ranging in $-(N_\psi -1)/2 \leq j \leq (N_\psi -1)/2 $.
 % define the zonal flow modes' amplitude in terms of the shearing rate
 Based on the definitions above, the shear carried by the zonal flow mode with wave vector $k_j$ is defined by $|\hatwexb|_{k_\mathrm{j}} = 2 |\hatwexb|$. 
+
 % introduces the term basic mode of the pattern for later usage
 In general, the zonal flow mode that dominates the $\exb$ staircase pattern, \textemdash also referred to as the \textit{basic mode } of the pattern in this work \textemdash exhibits the maximum amplitude in the spectrum $|\hatwexb|_{k_\mathrm{j}}$. 
 
@@ -236,7 +236,7 @@ Here, the nomenclature $\NR\times \NB$ is applied throughout this work to indica
 Note that the number of modes in the respective direction is always adapted accordingly to retain a spatial resolution compliant to the standard resolution (Tab.~\ref{tab:resolution}) and standard box size.
 
 
-Consistent with Ref.~\cite{peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ is the thermal velocity and $m$ is the mass) throughout this work. Furthermore, quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities from Ref (\textbf{?}).\bigskip
+Consistent with Ref.~\cite{peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ is the thermal velocity and $m$ is the mass) throughout this work. Furthermore, quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities from Ref (\textbf{REFERENCE Quantities}).\bigskip
 
 
 %%% RESULTS ================================================================================================================
