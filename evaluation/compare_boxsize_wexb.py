@@ -83,9 +83,10 @@ def box_plot(fig, time_label, plot_label,
 
         wexb_rad_mean = rotate(wexb_rad_mean, s)
 
-        label_time = r' $t_\mathrm{' + n + r'}^' + time_label + '\in$ [' + str(start_time) + r', ' + str(end_time) + r']' # + '\n' + n
+        #label = r' $t_\mathrm{' + n + r'}^' + time_label + '\in$ [' + str(start_time) + r', ' + str(end_time) + r']' # + '\n' + n
+        label = r'$' + n + r'$'
 
-        ax.plot(rad_coord, wexb_rad_mean, color=c, linewidth = 5, linestyle='-', label = label_time)
+        ax.plot(rad_coord, wexb_rad_mean, color=c, linewidth = 5, linestyle='-', label = label)
 
         if b == box_max:
 

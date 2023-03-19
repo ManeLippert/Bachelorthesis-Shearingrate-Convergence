@@ -90,12 +90,12 @@ for i, n, k in zip(f, boxsize, max_index):
     ax_wexb_max.set_ylim(ymin=0, ymax=0.29)
 
 
-leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 2.3), ncol=5, frameon=False, columnspacing=1, handlelength=1)
+leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 2.42), ncol=5, frameon=False, columnspacing=1, handlelength=1)
 
 for line_wexb_max in leg_wexb_max.get_lines():
     line_wexb_max.set_linewidth(4)
 
-plt.subplots_adjust(top=0.9, wspace=0.4, hspace=0)
+plt.subplots_adjust(top=0.9, wspace=0.4, hspace=0.12)
 
 #plot.savefig_subplot(fig, ax_eflux   , picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf'   , pad=0.02)
 #plot.savefig_subplot(fig, ax_wexb_max, picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_max_comparison.pdf', pad=0.02)
