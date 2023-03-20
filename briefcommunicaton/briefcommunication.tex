@@ -28,7 +28,7 @@
 
 % DOCUMENT =================================================================================================================
 
-\documentclass[aip, amsmath, amssymb, reprint, twocolumn]{revtex4-1}
+\documentclass[aip, amsmath, amssymb, reprint, twocolumn, floatfix]{revtex4-1}
 
 % documentclass revtex4-1 options:
 % - aip,
@@ -58,9 +58,8 @@
 %\linenumbers\relax % Commence numbering lines
 
 %% Additional
-\usepackage{caption}
+\usepackage[format=hang]{caption}
 \usepackage{hyperref}
-\usepackage{float}
 
 % FUNCTIONS, INPUT =========================================================================================================
 
@@ -148,8 +147,8 @@
 					https://github.com/ManeLippert/Bachelorthesis-Shearingrate-Wavelength}
 \author{F. Rath}
 	\altaffiliation{Author to whom correspondence should be addressed: \\
-					Florian.Rath1@uni-bayreuth.de}
-	\email{Florian.Rath1@uni-bayreuth.de}
+					Florian.Rath@uni-bayreuth.de}
+	\email{Florian.Rath@uni-bayreuth.de}
 \author{A. G. Peeters}
 \affiliation{Physics Department, University of Bayreuth, 95440 Bayreuth, Germany}
 
@@ -207,7 +206,7 @@ A summary of the numerical parameters is given in Tab.~\ref{tab:resolution} and 
 
 The increase of the box size, relative to the standard box size $(L_\psi,~L_\zeta) = (76.27,~89.76)\,\rhoth$, in the radial and binormal direction is always indicated by the real parameter $\NR$ and $\NB$, respectively.
 Here, the nomenclature $\NR\times \NB$ is applied throughout this work to indicate the increase in box size.  
-Note that the number of modes in the respective direction is always adapted accordingly to retain a spatial resolution compliant to the standard resolution (Tab.~\ref{tab:resolution}) and standard box size. \bigskip
+Note that the number of modes in the respective direction is always adapted accordingly to retain a spatial resolution compliant to the standard resolution [Tab.~\ref{tab:resolution}] and standard box size. \bigskip
 
 The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{rath2016, doi:10.1063/1.3005380, rath2016, peeters2016}
 \begin{equation}
@@ -249,46 +248,50 @@ In general, the zonal flow mode that dominates the $\exb$ staircase pattern, als
 In the first test the radial box size is increased while the binormal box size is kept fixed to the standard size.
 The scan covers the realizations $\NR\times\NB \in [ 1\times1,~2\times1,~3\times1,~4\times1]$.
 % short introduction of the turbulence - zonal flow dynamics; cite peeters2016 explicitly to avoid any discussions lateron
-Each realization exhibits an initial quasi-stationary turbulent phase and a second final \cite{peeters2016} phase with almost suppressed turbulence (see Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}).
+Each realization exhibits an initial quasi-stationary turbulent phase and a second final \cite{peeters2016} phase with almost suppressed turbulence [Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}\,(a)].
 % introduce the fully developed staircase structure
 The latter state is indicative for the presence of a fully developed staircase pattern as depicted in Fig.~\ref{fig:wexb-stable-comparison}. 
-This type of structure is characterized by intervals of almost constant shear with alternating sign satisfying the Waltz criterion $|\wexb| \approx \gamma$\cite{doi:10.1063/1.870934, doi:10.1063/1.872847} ($\gamma$ is the growth rate of the most unstable liner ITG driven Eigenmode), connected by steep flanks where $\wexb$ crosses zero.
+This type of structure is characterized by intervals of almost constant shear with alternating sign satisfying the Waltz criterion $|\wexb| \approx \gamma$\cite{doi:10.1063/1.870934, doi:10.1063/1.872847} ($\gamma$ is the growth rate of the most unstable linear ITG driven Eigenmode), connected by steep flanks where $\wexb$ crosses zero.
 % insofar the results of peeters2016 are well reproduced; now turn to the description of the main result of this test
-Fig.~\ref{fig:wexb-stable-comparison} shows a striking repetition of the staircase structure, with the number of repetitions equal to $\NR$.
+Fig.~\ref{fig:wexb-stable-comparison}\,(a) shows a striking repetition of the staircase structure, with the number of repetitions equal to $\NR$.
 % yes, the wavelength converges; but even stronger result: the standard box size already allows for the correct staircase wavelength
 Hence, the basic wavelength of the pattern not only converges with increasing radial box size, the converged wavelength turns out to agree with the standard radial box size of Ref.~\cite{peeters2016} \\
 % cautios words
-Due to the lack of a substantial turbulent drive in the final suppressed state no further zonal flow evolution is observed [panel (b) of Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}] and one might critically ask whether the structures shown in Fig.~\ref{fig:wexb-stable-comparison} represent the real converged pattern in a statistical sense. 
+Due to the lack of a substantial turbulent drive in the final suppressed state no further zonal flow evolution is observed [Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}\,(b)] and one might critically ask whether the structures shown in Fig.~\ref{fig:wexb-stable-comparison} represent the real converged pattern in a statistical sense. 
 % very long initial quasi-stationary states
 Note that in the $3 \times 1$ case the initial quasi-stationary turbulent state extends up to a few $\sim 10^4\,R/\vth$.
 % the \nzf=3 zonal flow mode does show a temporal evolution with a few cycles covered by the initial turbulent phase -> this allows for some degree of statistical argument
-During this period the zonal flow mode with $\nzf = 3$, i.~e., the mode that dominates the staircase pattern in final suppressed phase, undergoes a long-term evolution with a typical time scale of several $\sim 10^3\,R/\vth$. 
+During this period the zonal flow mode with $\nzf = 3$, i.e., the mode that dominates the staircase pattern in final suppressed phase, undergoes a long-term evolution with a typical time scale of several $\sim 10^3\,R/\vth$. 
 Hence, several of such cycles are covered by the initial turbulent phase, which is evident from the occurrence of phases with reduced amplitude around $t \approx 8000\,R/\vth$ and $t \approx 18000\,    R/\vth$.
 % first important point: competition between the \nzf = 3 and \nzf = 4 mode -> the \nzf = 4 mode is of shorter length scale compared to the \nzf = 3 mode, hence, no convergence to the box scale
-It is the $\nzf = 4$ zonal flow mode, i.~e., the next shorter radial scale mode, that dominates the shear spectrum $|\widehat{\omega}_{\mathrm{\:E \times B}}|_{\mathbf{k}}   $ in the latter two phases (not shown), demonstrating a competition between the $\nzf = 3$ and $\nzf = 4$ modes.
+It is the $\nzf = 4$ zonal flow mode, i.e., the next shorter radial scale mode, that dominates the shear spectrum $|\hatwexb|_{\mathbf{k}}   $ in the latter two phases (not shown), demonstrating a competition between the $\nzf = 3$ and $\nzf = 4$ modes.
 % second important point: no secular growth of the box scale zonal mode
-Most importantly, no secular growth of the $\nzf = 1$ (box scale) zonal flow mode is observed during the entire quasi-stationary turbulent phase [dotted line in panel (b) of Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}]].
+Most importantly, no secular growth of the $\nzf = 1$ (box scale) zonal flow mode is observed during the entire quasi-stationary turbulent phase [Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}\,(b) dotted line].
 % summary
-The above discussion indicates that although the $\nzf = 3,~4$ zonal modes compete, the pattern scale does not converge to the radial box scale but rather to a mesoscale of $\sim 57.20 - 76.27\,\rhoth$ (i.~e., $\nzf = 4,~3$ in the $3\times1$ case). \\
+The above discussion indicates that although the $\nzf = 3,~4$ zonal modes compete, the pattern scale does not converge to the radial box scale but rather to a mesoscale of $\sim 57.20 - 76.27\,\rhoth$ (i.e., $\nzf = 4,~3$ in the $3\times1$ case). \\
 
 % what kind of analysis
 Since the radially elongated simulation domain might inhibit the development of isotropic turbulent structures, in the second test the radial and binormal box size is increased simultaneously.
 This scan covers the realizations $\NR\times\NB \in [1\times1,~2\times2,~3\times3]$.
 % mention shorter times scales for stabilization
-Interestingly, here, suppression of the turbulence by the emergence of a fully developed staircase pattern occurs after $\sim 1000~R/\vth$ always (see Fig. \ref{fig:eflux-1x1-2x2-3x3-comparison}), i.~e., significantly faster compared to the $3\times1$ and $4\times1$ realizations. 
+Interestingly, here, suppression of the turbulence by the emergence of a fully developed staircase pattern occurs after $\sim 1000~R/\vth$ always [Fig. \ref{fig:eflux-1x1-2x2-3x3-comparison}], i.e., significantly faster compared to the $3\times1$ and $4\times1$ realizations. 
 % Although the computational costs per time step is higher, the difference in the time scales renders this test computationally cheaper.
 %
 % the main result of this test: confirmation of wave length convergence
-As shown in Fig.~\ref{fig:wexb-stable-comparison} also this test confirms the convergence of the staircase pattern wavelength to a typical mesoscale that is distinct from the radial box size in the $\NR > 1$ realizations. 
+As shown in Fig.~\ref{fig:wexb-stable-comparison}\,(b) also this test confirms the convergence of the staircase pattern wavelength to a typical mesoscale that is distinct from the radial box size in the $\NR > 1$ realizations. 
 
 \includegraphicsTwoCol{{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison}.pdf}{
-	\textbf{(a)} Time traces of the heat conduction coefficient $\chi$ for $\rlt = 6.0$ for radial increased box sizes
+	\textbf{(a)} Time traces of the heat conduction coefficient $\chi$ for $\rlt = 6.0$ for radial increased box sizes\\
 	\textbf{(b)} Time traces of $|\hatwexb|_{\kzf}$ for radial increased box sizes
 }{fig:wexb-eflux-1-2-3-4x1-comparison}{}
 
 \includegraphicsTwoCol{{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison}.pdf}{
-	Comparison of shearing rate $\wexb$ for radial increased box sizes. The staircase structure got 
-	shifted for better visibility.
+	Comparison of shearing rate $\wexb$ for each box sizes scan averaged over time interval and the growth rate $\pm \gamma$ of the most unstable linear ITG driven Eigenmode. The staircase structures got shifted till alignment for better visibility.\\
+	\begin{tabular}{l l l l l l l l l}
+		\textbf{(a) radial:}    & $t_{1\times 1}$   & $\in [2000, 5000]$,   & $t_{2\times 1}$   & $\in [15000, 18000]$, & $t_{3\times 1}$ & $\in [43000, 45000]$, & $t_{4\times 1}$ & $\in [26000, 28000]$ \\
+		\textbf{(b) isotropic:} & $t_{1\times 1}$   & $\in [2000, 5000]$,   & $t_{2\times 2}$   & $\in [2000, 3000]$,   & $t_{3\times 3}$ & $\in [2000, 3000]$    &                 &                      \\
+		\textbf{(c) binormal:}  & $t_{3\times 1.5}$ & $\in [11000, 12000]$, & $t_{3\times 2.5}$ & $\in [2000, 3000]$,   & $t_{3\times 5}$ & $\in [2000, 4000]$    &                 &                      \\
+	\end{tabular}
 }{fig:wexb-stable-comparison}{}
 
 % discuss sumewhat smaller wavelength
@@ -297,8 +300,7 @@ Whether this is related to a possible pattern wavelength dependence on the binor
 
 % what kind of analysis
 In a third test the binormal box size is varied with the radial box size fixed to $\NR = 3$.
-This test covers the realizations $\NR \times \NB \in [3\times1.5,~3\times2.5,~3\times3,~3\times5]$. \bigskip
-% -> outcome?
+This test covers the realizations $\NR \times \NB \in [3\times1.5,~3\times2.5,~3\times3,~3\times5]$. As in the isotropic scan the turbulence subdued and a fully developed staircase pattern formats always after $\sim 1000\,R/\vth$ although the turbulence of realization $3\times 1.5$ does suppress after $\sim 11000\,R/\vth$ [Fig. \ref{fig:eflux-3x1.5-2.5-3-5-comparison}]. The convergence of staircase pattern can be seen in Fig \ref{fig:wexb-stable-comparison}\,(c) and the test confirms again the typical mesoscale distinct from $\NR > 1$. Fig. \ref{fig:wexb-stable-comparison}\,(c) also confirms that indeed a competition between patterns with two wavelengths $\lambda \in [57.20,~ 76.27]\,\rhoth$ causing the different results for $3 \times 1$ and $3\times 3$. The zonal flow mode number varies between $\nzf = [3,4]$ which can be seen in Fig. \ref{fig:wexb-stable-comparison}\,(c) for the realization $3\times 2.5$ where the staircase structure has an (PATTERN). The Fourier analysis yields in this case no definitely basic mode rather than two dominate modes with $\nzf = 3, 4$ which split the maximum amplitude $|\hatwexb|_{\kzf}$ between them.
 
 \includegraphicsOneCol{{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison}.pdf}{
 	Time traces of the heat conduction coefficient $\chi$ for $\rlt = 6.0$ for radial and binormal increased box sizes
@@ -342,11 +344,11 @@ The data that support the findings of this study are available from the correspo
 
 % WORDCOUNT ================================================================================================================
 
-\wordcountmessage
+%\wordcountmessage
 
 % BIBLIOGRAPHY =============================================================================================================
 
-%\nocite{}
+\nocite{}
 \bibliography{references.bib}% Produces the bibliography via BibTeX.
 
 \end{document}
