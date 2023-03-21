@@ -17,7 +17,7 @@ sys.path.insert(1, homepath + 'python')
 
 import zonalflow, h5tools, plot
 
-#'''
+'''
 # RADIAL ============================================================================================================================================
 
 
@@ -113,7 +113,7 @@ bbox_ax_wexb_max = ax_wexb_max.get_tightbbox(fig.canvas.get_renderer()).transfor
 #'''
 
 '''
-# BINORMAL ==========================================================================================================================================
+# ISOTROPIC =========================================================================================================================================
 
 plot.parameters(True, 32, (24,8), 300)
 
@@ -200,8 +200,8 @@ ax_wexb_max.text(1.02, 0.87, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
 plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
 #'''
 
-'''
-# BINORMAL SCAN =====================================================================================================================================
+#'''
+# BINORMAL  =========================================================================================================================================
 
 plot.parameters(True, 32, (24,8), 300)
 
@@ -245,12 +245,14 @@ for i, n, k in zip(f, boxsize, fourier_index):
     
     eflux, time = eflux[:max_index], time[:max_index]
 
-    ax_eflux.plot(time, eflux, label=n, linewidth = 2)
+    ax_eflux.plot(time, eflux, label=n, linewidth = 3)
     
     plot.ax_ticks_subplot(ax_eflux)
     
     if x_max < time[-2]:
         x_max = time[-2]
+    
+    x_max = 3000
     
     ax_eflux.set_xlim(xmin=0, xmax=x_max)
     ax_eflux.set_ylim(ymin=0, ymax=20)
