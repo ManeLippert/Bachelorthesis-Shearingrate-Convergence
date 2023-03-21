@@ -5,17 +5,17 @@
  0.4-b1-1051-ga17cfde                                            
  !Executable name: 
  gkw_l1-DP_0.4-b1-1051-ga17cfde.x                                
- !Run on           96 processor(s)
+ !Run on          192 processor(s)
  !Values in this file will override input.dat
  &RESTART
  DTIM    =  2.000000000000000E-002,
- TIME    =   14170.3292921653     ,
- NT_COMPLETE     =       23618,
- NT_REMAIN       =        6382,
+ TIME    =   16840.3292922236     ,
+ NT_COMPLETE     =       28068,
+ NT_REMAIN       =        1932,
  NX_RST  =         247,
  NMOD_RST        =          31,
  NUMBER_OF_SPECIES_RST   =           1,
- FILE_COUNT      =       23618
+ FILE_COUNT      =       28068
  /
  &KX_SHIFT
  T_SHEAR_BEGIN   =  0.000000000000000E+000,

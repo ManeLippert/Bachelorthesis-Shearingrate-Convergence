@@ -58,7 +58,7 @@
  number_of_species = 1 ! Number of species. Note: do not count the adiabatic species
  
  N_procs_mu   = 3               !As above, but for mu                                              
- N_procs_vpar = 8               !As above, but for vpar (>1 only works if vp_trap = 0)             
+ N_procs_vpar = 16              !As above, but for vpar (>1 only works if vp_trap = 0)             
  N_procs_s    = 4               !As above, but for s                                             
 /
 !---------------------------------------------------------------------------------------------------------------------
