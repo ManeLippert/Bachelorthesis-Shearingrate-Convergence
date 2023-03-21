@@ -30,6 +30,14 @@ lineargrowth_rlt_color = '#949494'
 
 plot.parameters(True, 40, (24,8), 300, linewidth=2)
 
+#colors = [['#db5f57', '#dbb757', '#a7db57', '#57db5f'],
+# 		             ['#57a7db', '#57dbb7', '#57db5f'],
+#		  ['#5f57db', '#57a7db', '#b757db', '#db57a7']]
+
+colors = [['#a11a5b', '#029e73', '#de8f05', '#0173b2'],
+ 		             ['#66c2a5', '#dbb757', '#0173b2'],
+		  ['#87429b', '#66c2a5', '#d55e00', '#56b4e9']]
+
 # FUNCTION ==========================================================================================================================================
 
 def rotate(l, n):
@@ -131,7 +139,7 @@ def box_plot(fig, time_label, plot_label,
 
 
         ax.set_xlim(xmin=0, xmax = rad_boxsize)
-        ax.set_ylim(ymin=-0.5, ymax = 0.5)
+        ax.set_ylim(ymin=-0.4, ymax = 0.4)
     
     handles_labels = [ax.get_legend_handles_labels() for ax in fig.axes]
     handles, labels = [sum(lol, []) for lol in zip(*handles_labels)]
@@ -205,10 +213,10 @@ file_rad = [h5py.File(i,"r+") for i in filename_rad]
 boxes_rad   = [4, 3, 2, 1]
 shifts_rad  = [20, 2, -5, 60]
 boxsize_rad = [r'4 \times 1\;\:\:', r'3 \times 1\;\:\:', r'2 \times 1\;\:\:', r'1 \times 1\;\:\:']
-colors_rad  = ['#d55e00', '#029e73', '#de8f05', '#0173b2']
+colors_rad  = colors[0]
 
 interval_rad = np.array([[26000, 43000, 15000, 2000],
-                       [28000, 45000, 18000, 5000]])
+                         [28000, 45000, 18000, 5000]])
                      
 layer_max, box_max_rad, box_min_rad = 1, max(boxes_rad), min(boxes_rad)
 
@@ -230,31 +238,31 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_compari
 # ISOTROPIC =========================================================================================================================================
 
 data = 'S6_rlt6.0'
-path_rad_bi = ['boxsize3x3/Ns16/Nvpar48/Nmu9', 'boxsize2x2/Ns16/Nvpar48/Nmu9', 'boxsize1x1/Ns16/Nvpar48/Nmu9']
+path_iso = ['boxsize3x3/Ns16/Nvpar48/Nmu9', 'boxsize2x2/Ns16/Nvpar48/Nmu9', 'boxsize1x1/Ns16/Nvpar48/Nmu9']
 
-filename_rad_bi = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path_rad_bi]
-file_rad_bi = [h5py.File(i,"r+") for i in filename_rad_bi]
+filename_iso = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path_iso]
+file_iso = [h5py.File(i,"r+") for i in filename_iso]
 
 plot.parameters(True, 40, (24,8), 300, linewidth=2)
 
-boxes_rad_bi   = [3, 2, 1]
-shifts_rad_bi  = [-5, -28, 60]
-boxsize_rad_bi = [r'3 \times 3\;\:\:', r'2 \times 2\;\:\:', r'1 \times 1\;\:\:']
-colors_rad_bi  = ['#57db5f', '#db57a4', '#0173b2']
+boxes_iso   = [3, 2, 1]
+shifts_iso  = [-5, -28, 60]
+boxsize_iso = [r'3 \times 3\;\:\:', r'2 \times 2\;\:\:', r'1 \times 1\;\:\:']
+colors_iso  = colors[1]
 
-interval_rad_bi = np.array([[2000, 2000, 2000],
-                        [3000, 3000, 5000]])
+interval_iso = np.array([[2000, 2000, 2000],
+                            [3000, 3000, 5000]])
 
-layer_max, box_max_rad_bi, box_min_rad_bi = 1, max(boxes_rad_bi), min(boxes_rad_bi)
+layer_max, box_max_iso, box_min_iso = 1, max(boxes_iso), min(boxes_iso)
 
-time_label_rad_bi = '{RB}'
+time_label_iso = '{RB}'
 
 '''
-fig_rad_bi = plt.figure(1, figsize = (6*box_max_rad_bi,6*layer_max))
+fig_iso = plt.figure(1, figsize = (6*box_max_iso,6*layer_max))
 
-box_plot(fig_rad_bi, layer, time_label_rad_bi, 
-         file_rad_bi, shifts_rad_bi, interval_rad_bi, colors_rad_bi, 
-         boxsize_rad_bi, boxes_rad_bi, box_max_rad_bi, box_min_rad_bi, 
+box_plot(fig_iso, layer, time_label_iso, 
+         file_iso, shifts_iso, interval_iso, colors_iso, 
+         boxsize_iso, boxes_iso, box_max_iso, box_min_iso, 
          LABEL_TOP=False)
 
 plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
@@ -268,7 +276,8 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_compa
 data = 'S6_rlt6.0'
 #path_bi = ['boxsize3x5/Ns16/Nvpar48/Nmu9', 'boxsize3x3/Ns16/Nvpar48/Nmu9', 'boxsize3x2.5/Ns16/Nvpar48/Nmu9',
 #          'boxsize3x1.5/Ns16/Nvpar48/Nmu9', 'boxsize3x1/Ns16/Nvpar48/Nmu9']
-path_bi = ['boxsize3x5/Ns16/Nvpar48/Nmu9', 'boxsize3x2.5/Ns16/Nvpar48/Nmu9', 'boxsize3x1.5/Ns16/Nvpar48/Nmu9']
+path_bi = ['boxsize3x5/Ns16/Nvpar48/Nmu9', 'boxsize3x3/Ns16/Nvpar48/Nmu9',
+           'boxsize3x2.5/Ns16/Nvpar48/Nmu9', 'boxsize3x1.5/Ns16/Nvpar48/Nmu9']
 
 filename_bi = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path_bi]
 file_bi = [h5py.File(i,"r+") for i in filename_bi]
@@ -276,20 +285,19 @@ file_bi = [h5py.File(i,"r+") for i in filename_bi]
 plot.parameters(True, 40, (24,8), 300, linewidth=2)
 
 #boxes_bi   = [3, 3, 3, 3, 3]
-boxes_bi   = [3, 3, 3]
+boxes_bi   = [3, 3, 3, 3]
 #shifts_bi  = [-10, -5, -10, -10, 2]
-shifts_bi  = [-2, -2, -10]
+shifts_bi  = [-2, -5,-2, -10]
 #boxsize_bi = [r'3 \times 5\;\:\:', r'3 \times 3\;\:\:', r'3 \times 2.5', r'3 \times 1.5', r'3 \times 1\;\:\:']
-boxsize_bi = [r'3 \times 5\;\:\:', r'3 \times 2.5', r'3 \times 1.5']
-#colors_bi  = ['#cc78bc', '#029e73', '#d55e00', '#de8f05', '#0173b2']
-colors_bi  = ['#cc78bc', '#56b4e9', '#ca9161']
+boxsize_bi = [r'3 \times 5\;\:\:', r'3 \times 3', r'3 \times 2.5', r'3 \times 1.5']
+colors_bi  = colors[2]
 
 
 #interval_bi = np.array([[2000, 2000, 2000, 11000, 43000],
 #                       [ 4000, 3000, 3000, 12000, 45000]])
 
-interval_bi = np.array([[1000, 2000, 2000],
-                       [ 3000, 3000, 3000]])
+interval_bi = np.array([[1000, 2000, 2000, 2000],
+                       [ 3000, 3000, 3000, 3000]])
 
 layer_max, box_max_bi, box_min_bi = 1, max(boxes_bi), min(boxes_bi)
 
@@ -312,20 +320,20 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_c
 
 # ALL BOXES =========================================================================================================================================
 
-file = [file_rad, file_rad_bi, file_bi]
+file = [file_rad, file_iso, file_bi]
 
 plot.parameters(True, 40, (24,8), 300, linewidth=2)
 
-boxes   = [boxes_rad, boxes_rad_bi, boxes_bi]
-shifts  = [shifts_rad, shifts_rad_bi, shifts_bi]
-boxsize = [boxsize_rad, boxsize_rad_bi, boxsize_bi]
-colors  = [colors_rad, colors_rad_bi, colors_bi]
+boxes   = [boxes_rad, boxes_iso, boxes_bi]
+shifts  = [shifts_rad, shifts_iso, shifts_bi]
+boxsize = [boxsize_rad, boxsize_iso, boxsize_bi]
+colors  = [colors_rad, colors_iso, colors_bi]
 
-interval = [interval_rad, interval_rad_bi, interval_bi]
+interval = [interval_rad, interval_iso, interval_bi]
 
-time_label = [time_label_rad, time_label_rad_bi, time_label_bi]
+time_label = [time_label_rad, time_label_iso, time_label_bi]
 
-box_max, box_min = [box_max_rad, box_max_rad_bi, box_max_bi], [box_min_rad, box_min_rad_bi, box_min_bi]
+box_max, box_min = [box_max_rad, box_max_iso, box_max_bi], [box_min_rad, box_min_iso, box_min_bi]
 
 xlabel = [False, False, False]
 ylabel = [False, True, False]
@@ -335,7 +343,7 @@ label = [ r'\bf{(a)}',  r'\bf{(b)}',  r'\bf{(c)}']
 
 
 i = 0
-layer, layer_hspace = 1, 0.1
+layer, layer_hspace = 1, 0.11
 layer_max, box_maximal, box_minimal = len(boxes), max(box_max), min(box_min)
 
 for f in file:
@@ -352,9 +360,16 @@ handles_labels = [ax.get_legend_handles_labels() for ax in fig.axes]
 handles, labels = [sum(lol, []) for lol in zip(*handles_labels)]
 l = plt.Line2D([0],[0],color="w",alpha=0)
 
-handles = handles[7:len(labels)] + [l] + handles[4:7] + [l] + handles[0:4]
-labels = labels[7:len(labels)] + [''] + labels[4:7] + [''] + labels[0:4]
+handles_bi, handles_iso, handles_rad = handles[7:len(labels)], handles[4:7], handles[0:4]
+labels_bi, labels_iso, labels_rad = labels[7:len(labels)], labels[4:7], labels[0:4]
 
+#fig.legend(handles_rad[::-1], labels_rad[::-1],loc='upper center', bbox_to_anchor=(0.5, 1.18), frameon=False, ncol=5, handlelength=1)
+#fig.legend(handles_iso[::-1], labels_iso[::-1],loc='upper center', bbox_to_anchor=(0.5, 0.04), frameon=False, ncol=5, handlelength=1)
+#fig.legend(handles_bi[::-1], labels_bi[::-1],loc='upper center', bbox_to_anchor=(0.5, - 1.10), frameon=False, ncol=5, handlelength=1)
+
+
+handles = handles_bi + [l] + handles_iso + [l] + handles_rad
+labels = labels_bi + [''] + labels_iso + [''] + labels_rad
 fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(3/box_maximal + 0.3/box_maximal, -1.1), frameon=False, ncol=1, handlelength=1)
 
 box_twin_xspine(fig, file[0][0], box_maximal, layer_max, layer_hspace=layer_hspace)

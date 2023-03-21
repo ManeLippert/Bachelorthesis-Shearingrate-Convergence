@@ -17,6 +17,10 @@ sys.path.insert(1, homepath + 'python')
 
 import zonalflow, h5tools, plot
 
+colors = [['#a11a5b', '#029e73', '#de8f05', '#0173b2'],
+ 		             ['#66c2a5', '#dbb757', '#0173b2'],
+		  ['#87429b', '#66c2a5', '#d55e00', '#56b4e9']]
+
 '''
 # RADIAL ============================================================================================================================================
 
@@ -49,7 +53,7 @@ ax_eflux.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
 ax_eflux.yaxis.set_label_coords(-0.045,0.5)
 
 ax_wexb_max.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
-ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{k_\mathrm{j}}~[\nu_{\mathrm{th}}/R]$')
+ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF}}~[\nu_{\mathrm{th}}/R]$')
 ax_wexb_max.yaxis.set_label_coords(-0.045,0.5)
 
 
@@ -57,13 +61,15 @@ fourier_index = 1
 x_max = 0
 max_index = [None, None, None, 45000]
 
-for i, n, k in zip(f, boxsize, max_index):
+color_rad = colors[0][::-1]
+
+for i, n, k, c in zip(f, boxsize, max_index, color_rad):
     #eflux
     eflux, time = zonalflow.get_eflux_time(i)
     
     eflux, time = eflux[:k], time[:k]
 
-    ax_eflux.plot(time, eflux, label= n)
+    ax_eflux.plot(time, eflux, label = n, color = c)
     
     plot.ax_ticks_subplot(ax_eflux)
     
@@ -78,9 +84,9 @@ for i, n, k in zip(f, boxsize, max_index):
     wexb_max = zonalflow.get_max_shearingrate(i, wexb, time, 1)
     
     if fourier_index == 3:
-        ax_wexb_max.plot(time, wexb_max[1][:k], label= n + r'; $k_{' + str(1) + ',\,' + str(fourier_index) + r'\times 1}$', linestyle = '--', dashes=(2, 2) , color = '#029e73', linewidth = 2)
+        ax_wexb_max.plot(time, wexb_max[1][:k], label=n + r'; $k_{' + str(1) + ',\,' + str(fourier_index) + r'\times 1}$', linestyle = '--', dashes=(2, 2) , color = c, linewidth = 2)
         
-    ax_wexb_max.plot(time, wexb_max[fourier_index][:k], label= n + r'; $k_{' + str(fourier_index) + ',\,' + str(fourier_index) + r'\times 1}$')
+    ax_wexb_max.plot(time, wexb_max[fourier_index][:k], label=n + r'$; k_{' + str(fourier_index) + ',\,' + str(fourier_index) + r'\times 1}$', color = c)
     
     fourier_index += 1
     
@@ -89,9 +95,13 @@ for i, n, k in zip(f, boxsize, max_index):
     ax_wexb_max.set_xlim(xmin=0, xmax=x_max)
     ax_wexb_max.set_ylim(ymin=0, ymax=0.29)
 
+#leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.3), ncol=5, frameon=False, columnspacing=1, handlelength=1)
+leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 2.43), ncol=5, frameon=False, columnspacing=1, handlelength=1)
 
-leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 2.42), ncol=5, frameon=False, columnspacing=1, handlelength=1)
-
+#for line_eflux, line_wexb_max in zip(leg_eflux.get_lines(), leg_wexb_max.get_lines()):
+#    line_eflux.set_linewidth(4)
+#    line_wexb_max.set_linewidth(4)
+    
 for line_wexb_max in leg_wexb_max.get_lines():
     line_wexb_max.set_linewidth(4)
 
@@ -112,7 +122,7 @@ bbox_ax_eflux = ax_eflux.get_tightbbox(fig.canvas.get_renderer()).transformed(fi
 bbox_ax_wexb_max = ax_wexb_max.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
 #'''
 
-#'''
+'''
 # ISOTROPIC =========================================================================================================================================
 
 plot.parameters(True, 32, (24,8), 300)
@@ -142,29 +152,28 @@ ax_eflux.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
 ax_eflux.yaxis.set_label_coords(-0.09,0.5)
 
 ax_wexb_max.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
-ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{k_\mathrm{j}}~[\nu_{\mathrm{th}}/R]$')
+ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF}}~[\nu_{\mathrm{th}}/R]$')
 ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
 
 
 x_max = 0
-max_index = 5000
+max_index = 3000
 fourier_index = [1, 2, 4]
-colors = ['#0173b2', '#de8f05', '#029e73', '#d55e00', '#cc78bc', '#ca9161', '#fbafe4', '#949494', '#ece133', '#56b4e9']
 
-for i, n, k in zip(f, boxsize, fourier_index):
+color_iso = colors[1][::-1]
+
+for i, n, k, c in zip(f, boxsize, fourier_index, color_iso):
     #eflux
     eflux, time = zonalflow.get_eflux_time(i)
     
     eflux, time = eflux[:max_index], time[:max_index]
 
-    ax_eflux.plot(time, eflux, label=n, linewidth = 3)
+    ax_eflux.plot(time, eflux, label=n, linewidth = 3, color = c)
     
     plot.ax_ticks_subplot(ax_eflux)
     
     if x_max < time[-2]:
         x_max = time[-2]
-    
-    x_max = 3000
     
     ax_eflux.set_xlim(xmin=0, xmax=x_max)
     ax_eflux.set_ylim(ymin=0, ymax=20)
@@ -173,7 +182,7 @@ for i, n, k in zip(f, boxsize, fourier_index):
     wexb, rad_coord, rad_boxsize, ddphi, dx, zonal_pot = zonalflow.get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(i)
     wexb_max = zonalflow.get_max_shearingrate(i, wexb, time, 1)
     
-    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', color=colors[k-1], linewidth = 3)
+    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', color = c, linewidth = 3)
     
     plot.ax_ticks_subplot(ax_wexb_max)
     
@@ -202,7 +211,7 @@ ax_wexb_max.text(1.02, 0.87, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
 plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
 #'''
 
-'''
+#'''
 # BINORMAL  =========================================================================================================================================
 
 plot.parameters(True, 32, (24,8), 300)
@@ -232,29 +241,28 @@ ax_eflux.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
 ax_eflux.yaxis.set_label_coords(-0.09,0.5)
 
 ax_wexb_max.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
-ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{k_\mathrm{j}}~[\nu_{\mathrm{th}}/R]$')
+ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF}}~[\nu_{\mathrm{th}}/R]$')
 ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
 
 
 x_max = 0
-max_index = None
+max_index = 3000
 fourier_index = [3, 3, 4, 4]
-colors = ['#0173b2', '#de8f05', '#029e73', '#d55e00', '#cc78bc', '#ca9161', '#fbafe4', '#949494', '#ece133', '#56b4e9']
 
-for i, n, k in zip(f, boxsize, fourier_index):
+color_bi = colors[2][::-1]
+
+for i, n, k, c in zip(f, boxsize, fourier_index, color_bi):
     #eflux
     eflux, time = zonalflow.get_eflux_time(i)
     
     eflux, time = eflux[:max_index], time[:max_index]
 
-    ax_eflux.plot(time, eflux, label=n, linewidth = 3)
+    ax_eflux.plot(time, eflux, label=n, linewidth = 3, color = c)
     
     plot.ax_ticks_subplot(ax_eflux)
     
     if x_max < time[-2]:
         x_max = time[-2]
-    
-    x_max = 3000
     
     ax_eflux.set_xlim(xmin=0, xmax=x_max)
     ax_eflux.set_ylim(ymin=0, ymax=20)
@@ -263,7 +271,7 @@ for i, n, k in zip(f, boxsize, fourier_index):
     wexb, rad_coord, rad_boxsize, ddphi, dx, zonal_pot = zonalflow.get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(i)
     wexb_max = zonalflow.get_max_shearingrate(i, wexb, time, 1)
     
-    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', color=colors[k-1], linewidth = 3)
+    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', linewidth = 3, color = c)
     
     plot.ax_ticks_subplot(ax_wexb_max)
     
