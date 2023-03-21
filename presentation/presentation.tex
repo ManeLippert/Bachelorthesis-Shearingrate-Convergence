@@ -18,6 +18,7 @@
 
 \documentclass[compress,aspectratio=169]{beamer}
 
+
 \usepackage{sleektheme/beamerthemesleek}
 \usetheme{sleek}
 \usepackage{sleektheme/dtklogos} % must be loaded after theme
@@ -62,6 +63,8 @@ framexrightmargin=0.5em,
 xleftmargin=0.5em,
 xrightmargin=0.5em
 }
+
+\graphicspath{{../pictures/}}
 
 %--------------------------------------------------------------------------
 % Functions
@@ -136,7 +139,7 @@ xrightmargin=0.5em
 	\end{frame}
 	\begin{frame}
 		\frametitle{Beschreibung von Plasma im Tokamak Reaktor}
-		\includegraphics[scale = 1]{pictures/Zonal_Flow.PNG}
+		\includegraphics[scale = 1]{Presentation/Zonal_Flow.PNG}
 		\begin{alertblock}{Achtung Instabilität am Plasmarand!}
 			\centering
 			Ionen Temperaturgradient Instabilität $\approx$ Rayleigh-Taylor Instabilität
@@ -146,48 +149,48 @@ xrightmargin=0.5em
 	\section{Ionen Temperaturgradient (ITG) Instabilität}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_00.pdf}
+		\includegraphics{Presentation/ITG_Instability_00.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_01.pdf}
+		\includegraphics{Presentation/ITG_Instability_01.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_02.pdf}
+		\includegraphics{Presentation/ITG_Instability_02.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_03.pdf}
+		\includegraphics{Presentation/ITG_Instability_03.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_04.pdf}
+		\includegraphics{Presentation/ITG_Instability_04.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_05.pdf}
+		\includegraphics{Presentation/ITG_Instability_05.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_06.pdf}
+		\includegraphics{Presentation/ITG_Instability_06.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_07.pdf}
+		\includegraphics{Presentation/ITG_Instability_07.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_08.pdf}
+		\includegraphics{Presentation/ITG_Instability_08.pdf}
 
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_09.pdf}
+		\includegraphics{Presentation/ITG_Instability_09.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{pictures/ITG_Instability_10.pdf}
+		\includegraphics{Presentation/ITG_Instability_10.pdf}
 	\end{frame}
 
 	\begin{frame}
@@ -203,7 +206,7 @@ xrightmargin=0.5em
 		\end{minipage}
 		\begin{minipage}{0.3\textwidth}
 			\begin{figure}%[4]
-				\href{https://www.youtube.com/watch?v=O6tUHzfj-zM}{\includegraphics[width=\textwidth]{pictures/turbulence.png}}
+				\href{https://www.youtube.com/watch?v=O6tUHzfj-zM}{\includegraphics[width=\textwidth]{Presentation/turbulence.png}}
 			\end{figure}
 			{\tiny Simulation eines Plasmaschlauch von Jeff Candy und Ron Waltz mit Code GYRO}
 		\end{minipage}
@@ -213,7 +216,7 @@ xrightmargin=0.5em
 	\begin{frame}
 		\frametitle{Anpassung der Magnetfeldlinienrichtung}
 		Verdrillen der magnetischen Flussdichte $\vect{B}$ überführt Plasma in stabilen Zustand \\[0.2cm]
-		\includegraphics[scale=0.25]{pictures/Stabilzation_Mechanism_black.png}
+		\includegraphics[scale=0.25]{Presentation/Stabilzation_Mechanism_black.png}
 	\end{frame}
 	
 	\begin{frame}
@@ -229,21 +232,21 @@ xrightmargin=0.5em
 			\end{itemize}
 		\end{minipage}
 		\begin{minipage}{0.3\textwidth}
-			\includegraphics[scale = 0.2]{pictures/Magnetic_Shear_black.png}
+			\includegraphics[scale = 0.2]{Presentation/Magnetic_Shear_black.png}
 		\end{minipage}
 	\end{frame}
 
 	%\begin{frame}
 	%	Wirbelströmung, welche größere Längenskalen in \doublequoted{Schlechte Krümmung} transportieren, werden mit Scherung reduziert bis sie sich komplett unterdrücken.
 	%	\frametitle{Regelung oder Unterdrückung von Turbulenzen}
-	%	\includegraphics[scale = 1.3]{pictures/Shearing.pdf}
+	%	\includegraphics[scale = 1.3]{Presentation/Shearing.pdf}
 	%\end{frame}
 
 	\begin{frame}
 		\frametitle{Regelung oder Unterdrückung von Turbulenzen}
 		{\tiny Waltz, Kerbel, Phys. Plasmas 1994 w/ Hammett, Beer, Dorland, Waltz Gyrofluid Eqs., Numerical Tokamak Project, DoE Computational Grand Challenge}
 		\begin{tabular}{c c}
-			\includegraphics[scale = 0.2]{pictures/Stablized_Plasma_Interaction.png} & \includegraphics[scale = 0.2]{pictures/Stablized_Plasma_LongScale.png} \\
+			\includegraphics[scale = 0.2]{Presentation/Stablized_Plasma_Interaction.png} & \includegraphics[scale = 0.2]{Presentation/Stablized_Plasma_LongScale.png} \\
 			Dominante nichtlineare Interaction  & Zusätzlicher verscherter Zonal Flow \\
 			zwischen turbulenter Wirbelströmung & unterdrückt Turbulenz komplett \\
 			und kontrollierten Zonal Flow & \\
@@ -257,7 +260,7 @@ xrightmargin=0.5em
 
 	\begin{frame}
 		\frametitle{Danke für die Aufmerksamkeit!}
-		\includegraphics[scale = 0.35]{pictures/Fusion_Meme.jpeg} \\
+		\includegraphics[scale = 0.35]{Presentation/Fusion_Meme.jpeg} \\
 	\end{frame}
 
 \end{document}
