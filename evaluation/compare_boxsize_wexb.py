@@ -268,7 +268,7 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_compa
 data = 'S6_rlt6.0'
 #path_bi = ['boxsize3x5/Ns16/Nvpar48/Nmu9', 'boxsize3x3/Ns16/Nvpar48/Nmu9', 'boxsize3x2.5/Ns16/Nvpar48/Nmu9',
 #          'boxsize3x1.5/Ns16/Nvpar48/Nmu9', 'boxsize3x1/Ns16/Nvpar48/Nmu9']
-path_bi = ['boxsize3x5/Ns16/Nvpar48/Nmu9', 'boxsize3x2.5/Ns16/Nvpar48/Nmu9', 'boxsize3x1.5/Ns16/Nvpar48/Nmu9/Run2']
+path_bi = ['boxsize3x5/Ns16/Nvpar48/Nmu9', 'boxsize3x2.5/Ns16/Nvpar48/Nmu9', 'boxsize3x1.5/Ns16/Nvpar48/Nmu9']
 
 filename_bi = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path_bi]
 file_bi = [h5py.File(i,"r+") for i in filename_bi]
@@ -278,7 +278,7 @@ plot.parameters(True, 40, (24,8), 300, linewidth=2)
 #boxes_bi   = [3, 3, 3, 3, 3]
 boxes_bi   = [3, 3, 3]
 #shifts_bi  = [-10, -5, -10, -10, 2]
-shifts_bi  = [-2, -2, -2]
+shifts_bi  = [-2, -2, -10]
 #boxsize_bi = [r'3 \times 5\;\:\:', r'3 \times 3\;\:\:', r'3 \times 2.5', r'3 \times 1.5', r'3 \times 1\;\:\:']
 boxsize_bi = [r'3 \times 5\;\:\:', r'3 \times 2.5', r'3 \times 1.5']
 #colors_bi  = ['#cc78bc', '#029e73', '#d55e00', '#de8f05', '#0173b2']
@@ -288,8 +288,8 @@ colors_bi  = ['#cc78bc', '#56b4e9', '#ca9161']
 #interval_bi = np.array([[2000, 2000, 2000, 11000, 43000],
 #                       [ 4000, 3000, 3000, 12000, 45000]])
 
-interval_bi = np.array([[2000, 2000, 11000],
-                       [ 4000, 3000, 12000]])
+interval_bi = np.array([[1000, 2000, 2000],
+                       [ 3000, 3000, 3000]])
 
 layer_max, box_max_bi, box_min_bi = 1, max(boxes_bi), min(boxes_bi)
 

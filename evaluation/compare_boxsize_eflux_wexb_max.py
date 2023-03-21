@@ -112,7 +112,7 @@ bbox_ax_eflux = ax_eflux.get_tightbbox(fig.canvas.get_renderer()).transformed(fi
 bbox_ax_wexb_max = ax_wexb_max.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
 #'''
 
-'''
+#'''
 # ISOTROPIC =========================================================================================================================================
 
 plot.parameters(True, 32, (24,8), 300)
@@ -164,6 +164,8 @@ for i, n, k in zip(f, boxsize, fourier_index):
     if x_max < time[-2]:
         x_max = time[-2]
     
+    x_max = 3000
+    
     ax_eflux.set_xlim(xmin=0, xmax=x_max)
     ax_eflux.set_ylim(ymin=0, ymax=20)
         
@@ -200,7 +202,7 @@ ax_wexb_max.text(1.02, 0.87, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
 plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
 #'''
 
-#'''
+'''
 # BINORMAL  =========================================================================================================================================
 
 plot.parameters(True, 32, (24,8), 300)
