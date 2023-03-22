@@ -134,7 +134,7 @@ def box_plot(fig, time_label, plot_label,
                 axT.set_xticklabels([])
             
             if YLABEL:
-                ax.set_ylabel(r'$\omega_{\mathrm{E \times B}}~[\nu_{\mathrm{th}}/R]$')
+                ax.set_ylabel(r'$\langle\omega_{\mathrm{E \times B}}\rangle~[\nu_{\mathrm{th}}/R]$')
                 ax.yaxis.set_label_coords(-0.25/box_max, 0.5, transform=ax.transAxes)
 
 

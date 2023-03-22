@@ -21,7 +21,7 @@ colors = [['#a11a5b', '#029e73', '#de8f05', '#0173b2'],
  		             ['#66c2a5', '#dbb757', '#0173b2'],
 		  ['#87429b', '#66c2a5', '#d55e00', '#56b4e9']]
 
-'''
+#'''
 # RADIAL ============================================================================================================================================
 
 
@@ -122,7 +122,7 @@ bbox_ax_eflux = ax_eflux.get_tightbbox(fig.canvas.get_renderer()).transformed(fi
 bbox_ax_wexb_max = ax_wexb_max.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
 #'''
 
-'''
+#'''
 # ISOTROPIC =========================================================================================================================================
 
 plot.parameters(True, 32, (24,8), 300)
@@ -157,7 +157,6 @@ ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
 
 
 x_max = 0
-max_index = 3000
 fourier_index = [1, 2, 4]
 
 color_iso = colors[1][::-1]
@@ -165,6 +164,7 @@ color_iso = colors[1][::-1]
 for i, n, k, c in zip(f, boxsize, fourier_index, color_iso):
     #eflux
     eflux, time = zonalflow.get_eflux_time(i)
+    max_index = zonalflow.get_index_from_value(time,3000 + 1)
     
     eflux, time = eflux[:max_index], time[:max_index]
 
@@ -246,7 +246,6 @@ ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
 
 
 x_max = 0
-max_index = 3000
 fourier_index = [3, 3, 4, 4]
 
 color_bi = colors[2][::-1]
@@ -254,6 +253,7 @@ color_bi = colors[2][::-1]
 for i, n, k, c in zip(f, boxsize, fourier_index, color_bi):
     #eflux
     eflux, time = zonalflow.get_eflux_time(i)
+    max_index = zonalflow.get_index_from_value(time,3000 + 1)
     
     eflux, time = eflux[:max_index], time[:max_index]
 
