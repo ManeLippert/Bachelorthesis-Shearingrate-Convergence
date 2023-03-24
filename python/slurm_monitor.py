@@ -6,7 +6,7 @@
 
 # MODULES ==================================================================================================================
 
-import datetime, time, os, sys, subprocess, math, argparse
+import datetime, time, os, sys, subprocess, math, argparse, pkg_resources
 
 # PARSER ===================================================================================================================
 
@@ -15,7 +15,9 @@ description_text = """
 ===================================== DESCRIPTION =====================================
 
 FEATURES:
-o NO REQUIREMENTS, runs with standard python3 libary
+o NO REQUIREMENTS, runs with standard python3 libary by default
+o Reset Option which rely on "numpy", "pandas", "h5py"
+  (script installs modules by itself)
 o Creats jobscript file with defined content (look into file itself for the jobscript)
 o Start/Restarts job until criteria is suffused (default=0)
 o Makes backup after each run before Restart and Restore files after fail
@@ -39,10 +41,10 @@ START SCRIPT IN BACKGROUND:
     >>> screen -S $SESSION
     
     Command:
-    >>> python3 -u slurm_monitor.py --screen
+    >>> python3 -u slurm_monitor.py --verbose
 
     With arguments (example for 30000 timesteps):
-    >>> python3 -u slurm_monitor.py --screen -n 30000
+    >>> python3 -u slurm_monitor.py --verbose -n 30000
     
     Leave Screen:
     >>> ((Strg + a) + d)
@@ -77,22 +79,16 @@ additional = parser.add_argument_group("additional arguments")
 additional.add_argument("-n", dest="timesteps", nargs="?", type=int, default=10000,
                         help="required timesteps                   (default=10000)")
 
-additional.add_argument("--mail", dest="mail", nargs="?", type=str,
-                        help="mail address (mail@server.de)        (default=None)")
+additional.add_argument("-r", "--reset", dest="reset", action="store_false",
+                        help="Uses Dumpfiles to reset Simulation   (default=True)")
 
-additional.add_argument("--restart-mail", dest="restartmail", action="store_true",
-                        help="mail after every restart             (default=False)")
+additional.add_argument("-v", "--verbose", dest="verbose", action="store_true",
+                        help="activate output of script            (default=False)")
 
 additional.add_argument("-b", "--backup", dest="backup", nargs="?", type=str,
                         help="backup location for files            (default=None)\n"+
                              "- local (creates backup in simulation folder)\n"+
                              "- home  (creates backup in home folder)")
-
-additional.add_argument("-s", "--statusfile", dest="statusFile", nargs="?", type=str, default="status.txt",
-                        help="file with output from nohup command  (default=status.txt)")
-
-additional.add_argument("-r", "--restartfile", dest="restartFile", nargs="?", type=str, default="FDS.dat",
-                        help="restart file with data               (default=FDS.dat)")
 
 additional.add_argument("-j", "--job", dest="jobscriptFile", nargs="?", type=str, default="jobscript-create",
                         help="jobscript to run SLURM job           (default=jobscript-create)")
@@ -103,8 +99,20 @@ additional.add_argument("--ntask-per-node", dest="tasks", nargs="?", type=str, d
 additional.add_argument("--nodes", dest="nodes", nargs="?", type=str, default="3",
                         help="number of nodes                      (default=3)")
 
-additional.add_argument("--time", dest="walltime", nargs="?", type=str, default="0-24:00:00",
+additional.add_argument("--walltime", dest="walltime", nargs="?", type=str, default="0-24:00:00",
                         help="walltime of server (d-hh:mm:ss)      (default=0-24:00:00)")
+
+additional.add_argument("--mail", dest="mail", nargs="?", type=str,
+                        help="mail address (mail@server.de)        (default=None)")
+
+additional.add_argument("--restart-mail", dest="restartmail", action="store_true",
+                        help="mail after every restart             (default=False)")
+
+additional.add_argument("--statusfile", dest="statusFile", nargs="?", type=str, default="status.txt",
+                        help="file with output from nohup command  (default=status.txt)")
+
+additional.add_argument("--restartfile", dest="restartFile", nargs="?", type=str, default="FDS.dat",
+                        help="restart file with data               (default=FDS.dat)")
 
 additional.add_argument("--format", dest="formattable", nargs="?", type=str, default="universal",
                         help="format of output table               (default=none)\n"+
@@ -114,9 +122,6 @@ additional.add_argument("--format", dest="formattable", nargs="?", type=str, def
 
 additional.add_argument("--refresh-rate", dest="sleepTime", nargs="?", type=int, default=300,
                         help="time interval to check status in sec (default=300)")
-
-additional.add_argument("--screen", dest="screen", action="store_true",
-                        help="activate output of script for screen (default=False)")
 
 additional.add_argument("--kill", dest="kill", action="store_true",
                         help="kills monitor process                (default=False)")
@@ -136,7 +141,7 @@ nTimestepsCurrent = 0
 # PARSER VARIABLES =========================================================================================================
 
 emailAddress = args.mail
-restartMail = args.restartmail
+RESTARTMAIL = args.restartmail
 
 backupLocation = args.backup
 
@@ -154,7 +159,8 @@ statusFilename = args.statusFile
 #statusFile = open(statusFilename, "r+")
 
 formatTable = args.formattable
-screen = args.screen
+VERBOSE = args.verbose
+RESET = args.reset
 
 # Kill process of monitoring
 kill = args.kill
@@ -208,14 +214,14 @@ commandJobStarting = "sbatch"
 # SWITCHES =================================================================================================================
 
 if emailAddress==None:
-    emailNotification = False
+    EMAIL = False
 else:
-    emailNotification = True
+    EMAIL = True
 
 if backupLocation==None:
-    backup = False
+    BACKUP = False
 else:
-    backup = True
+    BACKUP = True
     
 ## PATHS ===================================================================================================================
 
@@ -223,7 +229,7 @@ user = os.getlogin()
 folder = os.getcwd()
 path = folder.split(user + "/")[1]
 
-if backup:
+if BACKUP:
     # If local has been specified as backupLocation, then the backup is copied to the same directory as the simulation folder 
     # (simFolder) is located in. The backup is copied to a directory with name simFolder + "-backup". 
     if backupLocation == "local":
@@ -364,7 +370,7 @@ def print_table_row(content,
         msg += sep_end + "\n"
         
     elif output_type == "middle":
-        if screen:
+        if VERBOSE:
             sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
         
         msg += sep_mid + "\n"
@@ -372,13 +378,13 @@ def print_table_row(content,
         msg += sep_end + "\n"
         
     elif output_type == "update":
-        if screen:
+        if VERBOSE:
             sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
         
         msg += sep_end + "\n"
         
     else:
-        if screen:
+        if VERBOSE:
             sys.stdout.write("\x1b[1A"*(-delete_line_index + 1))
         
         msg += row_format.format(*content) + "\n"
@@ -394,12 +400,27 @@ def print_table_row(content,
     msg += progress_format.format(*progressbartime_content) + "\n"
     msg += sep_end + "\n"
     
-    if screen:
+    if VERBOSE:
         print(msg, flush=True)
     
     delete_write_line_to_file(statusFilename, msg, end=delete_line_index)
 
-## INFORMATIONS ============================================================================================================
+## PIP INSTALL =============================================================================================================
+
+def pip_install(modules):
+    required  = modules
+    installed = {pkg.key for pkg in pkg_resources.working_set}
+    missing   = required - installed
+
+    if missing:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", *missing], 
+                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        
+        print_table_row(["INSTALL", "Required Modules installed"])
+    else:
+        print_table_row(["CHECK", "Modules already installed"])
+
+## FILE ====================================================================================================================
 
 def get_value_of_variable_from_file(file, file_index, relative_index, string):
     try:
@@ -408,8 +429,7 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
         value = content[index][relative_index]
         return value
     except IndexError:
-        print_table_row(["ERROR", "String not found in file"], 
-                        nTimestepsRequired, nTimestepsRequired, runCounter, currentTime)
+        print_table_row(["ERROR", "String not found in file"])
         quit()
 
 def find_string_in_file(file, string):
@@ -419,8 +439,6 @@ def find_string_in_file(file, string):
             return True
         else:
             return False
-        
-## FILE ====================================================================================================================
 
 def write_add_string_into_file(filename, substring, add, comment = None):
 
@@ -461,6 +479,361 @@ def write_file(filename, content):
     with open(filename, "w") as file:
         file.write(content)
         file.flush()
+
+# AUTHOR: Florian Rath
+# IMPORT: gkw_reset_checkpiont.py (https://bitbucket.org/gkw/gkw/src/develop/python/gkw_reset_checkpoint.py)  
+def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
+
+    pip_install({"h5py", "pandas", "numpy"})
+    
+    import h5py, fileinput
+    import pandas as pd
+    import numpy as np
+    from shutil import copyfile
+    
+    # Function that delets all data in interval [nt_reset:nt_broke].
+    # ncol considers, if data series is ordered by a multiple interger of
+    # ntime.
+    def reset_time_trace(indata, dim, ncol, nt_reset):
+    
+        # Shift dimension dim to 0.
+        data_shifted = np.moveaxis(indata, dim, 0)
+  
+        # Reset data.
+        data_shifted_trimmed = data_shifted[0:int(nt_reset*ncol),]
+    
+        # Shift dimension back.
+        out = np.moveaxis(data_shifted_trimmed, 0, dim)
+  
+        # free memory
+        del data_shifted
+        del data_shifted_trimmed
+  
+        return out
+    
+    # Checks if file has binary format.
+    def is_binary(filename):
+        try:
+            with open(filename, 'tr') as check_file:
+                check_file.read()
+                return False
+        except:
+            return True
+    
+    
+    
+    # Check for specific files that are no ordinary data files.
+    def is_file_exception(filename):
+    
+        # substrings that have to be checked
+        check_list = ['geom.dat', 'DM1.dat', 'DM2.dat', 'FDS.dat', '.o', 'FDS', 
+                      'input.dat', 'perform_first.dat', 'perform.dat', 'output.dat', 
+                      'gkwdata.meta', 'gkw_hdf5_errors.txt', 'kx_connect.dat', 
+                      'jobscript', 'Poincare1.mat', 'perfloop_first.dat', 'par.dat', 
+                      'input_init.dat', 'sgrid', 'gkw', '.out', 'status.txt']
+        for key in check_list:
+            if key in filename:
+                return True
+    
+        return False
+    
+    
+    # Check if given file is a PBS or SLURM jobscript.
+    def is_jobscript(filename):
+        with open(filename,'r') as file:                                            
+            for line in file:
+                if '#PBS -l' in line:
+                    return True
+                if '#SBATCH' in line:
+                    return True
+            
+        return False
+    
+    def get_timestep(FILE):
+        if(os.path.isfile(SIM_DIR+'/'+FILE+'.dat')):
+            EXISTS = True
+            with open(SIM_DIR+'/'+FILE+'.dat','r') as file:                                                                            
+                for line in file:
+                    if 'NT_REMAIN' in line:
+                        expr = line.replace(' ','')
+                        expr = expr.replace(',','')
+                        expr = expr.replace('\n','')
+                        REMAIN = int(expr.split('=')[1])
+                    if 'NT_COMPLETE' in line:
+                        expr = line.replace(' ','')
+                        expr = expr.replace(',','')
+                        expr = expr.replace('\n','')
+                        COMPLETE = int(expr.split('=')[1])
+        
+        else:
+            REMAIN, COMPLETE, EXISTS = None, None, False
+            
+        return REMAIN, COMPLETE, EXISTS
+    
+    HDF5_FILENAME = "gkwdata.h5"
+    RESTARTFILE, DUMPFILE1, DUMPFILE2, = "FDS", "DM1", "DM2"
+  
+    # Change to simulation directory.
+    if(not os.path.isdir(SIM_DIR)):
+        return
+    else:
+        os.chdir(SIM_DIR)
+  
+    # Check if hdf5-file exists.
+    if(not os.path.isfile(HDF5_FILENAME)):
+        return
+  
+    # First, read hdf5 file and determine the number of big time steps NTIME, 
+    # requested in the input.dat file.
+    f = h5py.File(HDF5_FILENAME, "r+")
+    
+  
+    # Get requested big time steps from the /control group in the hdf5-file.
+    if(NTIME==None):
+        NTIME = int(f['input/control/ntime'][:])
+  
+    # Get number of big time steps after which simulation broke.
+    # If time.dat exists read this file to obtain number of time steps after
+    # which simulation broke.
+    if(os.path.isfile('time.dat')):
+      tim = pd.read_csv(SIM_DIR+'time.dat', header=None, sep='\s+').values
+      NT_BROKE = tim.shape[0]
+    # Else, get time from hdf5-file.
+    else:
+      NT_BROKE = f['diagnostic/diagnos_growth_freq/time'].shape[1]
+  
+  
+    # Set NT_BROKE for output files holding temporal derivates and therefore 
+    # one timestep less.
+    NT_BROKE_DERIV = NT_BROKE-1
+  
+    # Close the hdf5-file again.
+    f.close()
+    
+    # Get the number of remaining big time steps NT_REMAIN from checkpoint 
+    # files FDS.dat. This is used lateron to determine the most recent 
+    # checkpoint file.
+    NT_REMAIN, NT_COMPLETE, FDS_EXISTS = get_timestep(RESTARTFILE)
+    
+    # Get the number of remaining big time steps NT_REMAIN[1/2] from checkpoint 
+    # files DM[1/2]. This is used lateron to determine the most recent 
+    # checkpoint file.
+    NT_REMAIN1, NT_COMPLETE1, DM1_EXISTS = get_timestep(DUMPFILE1)
+    NT_REMAIN2, NT_COMPLETE2, DM2_EXISTS = get_timestep(DUMPFILE1)
+          
+          
+    # Check if FDS is the most recent checkpoint file. In this case
+    # resetting the simulation makes no sense.
+    if(FDS_EXISTS):
+        DM1_OLD, DM2_OLD = False, False
+        if(DM1_EXISTS):
+            if(NT_COMPLETE1 < NT_COMPLETE):
+                DM1_OLD = True
+        if(DM2_EXISTS):
+            if(NT_COMPLETE2 < NT_COMPLETE):
+                DM2_OLD = True
+        if(DM1_OLD and DM2_OLD):
+            return
+          
+          
+    # Now determine which checkpoint file is the recent one.
+    if(DM1_EXISTS and DM2_EXISTS):
+        if(NT_REMAIN1 > NT_REMAIN2):
+            NT_REMAIN, NT_COMPLETE, DUMPFILE = NT_REMAIN2, NT_COMPLETE2, DUMPFILE2
+        else:
+            NT_REMAIN, NT_COMPLETE, DUMPFILE = NT_REMAIN1, NT_COMPLETE1, DUMPFILE1
+            
+    elif(DM1_EXISTS and not DM2_EXISTS):
+        NT_REMAIN, NT_COMPLETE, DUMPFILE = NT_REMAIN1, NT_COMPLETE1, DUMPFILE1
+        
+    elif(DM2_EXISTS and not DM1_EXISTS):
+        NT_REMAIN, NT_COMPLETE, DUMPFILE = NT_REMAIN2, NT_COMPLETE2, DUMPFILE2 
+        
+    else:
+        return
+    
+    
+    if(not use_ntime):
+        # Find the total number ob big time steps the simulation time trace should have, 
+        # when considering the big time steps already completed as well as the big time 
+        # steps that remain. Can be different from NTIME, since the simulation could 
+        # have been restarted several times such that NTIME > NT_COMPLETE.
+        NTOT = NT_COMPLETE + NT_REMAIN
+        N_REQUEST = NTOT
+    
+        # Determine the time steps to which the time trace files have to be reset.
+        # Use NTOT here, since NTIME could have been changed at some point, or NT_COMPLETE
+        # could be larger than NTIME.
+        NT_RESET = NTOT-NT_REMAIN
+    else:
+        # Determine the time steps to which the time trace files have to be reset.
+        NT_RESET = NTIME-NT_REMAIN
+        N_REQUEST = NTIME
+    
+    # Same for files holding time derivatives.
+    NT_RESET_DERIV = NT_RESET-1
+  
+    # ----------------------------------------------------------------------
+    # Cycle over all nodes of hdf5-file and reset time trace datasets.
+  
+    # Check if hdf5-file exists.
+    if(os.path.isfile(HDF5_FILENAME)):
+    
+        # Find all possible keys items, i.e. both groups and datasets
+        f = h5py.File(HDF5_FILENAME, "a")
+        h5_keys = []
+        f.visit(h5_keys.append)
+  
+        # Cycle over all keys items and check, if any dimension has size NT_BROKE, 
+        # i.e., it is a time trace file.
+        for item in enumerate(h5_keys):
+      
+            data = f.get(item)
+          
+            # Consider datasets only.
+            if(isinstance(data, h5py.Dataset)):
+        
+                #Check if any dimension is an integer multiple of NT_BROKE, by checking
+                # the residual of the division.
+                res = [None]*len(data.shape)
+                for i in range(len(data.shape)):
+                    res[i] = data.shape[i]/NT_BROKE-np.floor(data.shape[i]/NT_BROKE)
+          
+                if 0.0 in res:
+        
+                    # Check which dimension is integer multiple of NT_BROKE
+                    # and save dimension as well as integer.
+                    new_shape = data.shape
+                    for i in range(len(data.shape)):
+                        ncol = data.shape[i]/NT_BROKE
+                        res = ncol - np.floor(ncol)
+                        if(res == 0):
+                            dim = i
+                            ncol = int(ncol)
+                            # adjust new shape to ncol*NT_RESET
+                            y = list(new_shape)
+                            y[dim] = int(ncol*NT_RESET)
+                            new_shape = tuple(y)
+                            break
+          
+                    # Reset dataset (.resize discards data with indices larger than 
+                    # ncol*NT_RESET along dimension dim).
+                    dset = f[item]
+                    dset.resize(int(ncol*NT_RESET),dim)
+  
+  
+        # After having repaired all datasets, close the hdf5-file again.
+        f.close()
+    
+    
+    # ----------------------------------------------------------------------
+    # Cycle over all csv-files and reset time trace.
+    for filename in os.listdir(SIM_DIR):
+      
+        # First perform some checks on files; cycle if file is binary, an exception
+        # or a jobscript.
+        if(is_binary(filename)):
+            continue
+        if(is_file_exception(filename)):
+            continue
+        if(is_jobscript(filename)):
+            continue
+        
+        # no file
+        if(not os.path.isfile(filename)):
+            continue
+    
+        # Load csv file.
+        data =  pd.read_csv(SIM_DIR+'/'+filename, header=None, sep='\s+').values
+    
+        #Check if any dimension is an integer multiple of NT_BROKE, by checking
+        #the residual of the division.
+        res = [None]*len(data.shape)
+    
+        # residul for output that holds time derivatives and therefore nt-1 datapoints
+        res_deriv = [None]*len(data.shape)
+        for i in range(len(data.shape)):
+            res[i] = data.shape[i]/NT_BROKE-np.floor(data.shape[i]/NT_BROKE)
+            res[i] = data.shape[i]/(NT_BROKE_DERIV)-np.floor(data.shape[i]/(NT_BROKE_DERIV))
+      
+        # ordinary files
+        if 0.0 in res:
+    
+            #Check which dimension is integer multiple of NT_BROKE
+            #and save dimension as well as integer.
+            for i in range(len(data.shape)):
+                ncol = data.shape[i]/NT_BROKE
+                res = ncol - np.floor(ncol)
+                if(res == 0):
+                    dim = i
+                    ncol = int(ncol)
+                    break
+              
+            # Load original dataset.
+            original_data = data
+            # print('\t Original shape: \t'+str(original_data.shape))
+      
+            # Reset time trace.
+            reset_data = reset_time_trace(original_data,dim,ncol,NT_RESET)
+            # print('\t Reset shape: \t' +str(reset_data.shape))
+    
+            # Save resetted data.
+            pd.DataFrame(reset_data).to_csv(filename, sep='\t', header=None, index=None)
+ 
+        # files holding time derivatives
+        if 0.0 in res_deriv:
+    
+            # Check which dimension is integer multiple of NT_BROKE
+            # and save dimension as well as integer.
+            for i in range(len(data.shape)):
+                ncol = data.shape[i]/NT_BROKE_DERIV
+                res = ncol - np.floor(ncol)
+                if(res == 0):
+                    dim = i
+                    ncol = int(ncol)
+                    break
+              
+            # Load original dataset.
+            original_data = data
+      
+            # Reset time trace.
+            reset_data = reset_time_trace(original_data,dim,ncol,NT_RESET_DERIV)
+    
+            # Save resetted data.
+            pd.DataFrame(reset_data).to_csv(filename, sep='\t', header=None, index=None)
+      
+  
+    # ----------------------------------------------------------------------
+    # Finally, copy most recent dump file to FDS[/.dat].
+  
+    # Copy the most recent dump file to FDS[/.dat].
+    copyfile(SIM_DIR+'/'+DUMPFILE, SIM_DIR+'/'+'FDS')
+    copyfile(SIM_DIR+'/'+DUMPFILE+'.dat', SIM_DIR+'/'+'FDS.dat')
+  
+    # First line of the so produced FDS.dat has to be modified. 
+    old_text = '!Dump filename: '+DUMPFILE
+    new_text = '!Dump filename: '+'FDS'
+  
+    # Replace first line in FDS.dat to set the correct file name.
+    with fileinput.input(SIM_DIR+'/'+'FDS.dat',inplace=True) as f:
+        for line in f:
+            line.replace(old_text, new_text)
+            
+def check_and_delete_file(filename):
+    
+    if(os.path.isfile(filename)):
+        os.remove(filename)
+    return
+
+def check_checkpoint_files():
+    DM1, DM2 = False, False
+    
+    if(os.path.isfile("DM1") and os.path.isfile("DM1.dat")):
+        haveDm1 = True
+    if(os.path.isfile("DM2") and os.path.isfile("DM2.dat")):
+        haveDm2 = True
+    
+    return DM1, DM2
 
 ## TIME ====================================================================================================================
 
@@ -597,7 +970,7 @@ while True:
             print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
             print_table_row(["SUCCESS", "Stop monitoring " + jobName], output_type="middle")
             
-            if emailNotification:
+            if EMAIL:
                 send_mail(emailAddress, "Ended Job " + jobName)
 
             quit()
@@ -626,11 +999,11 @@ while True:
                                 nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
             
             else:
-                if backup:
+                if BACKUP:
                     print_table_row(["BACKUP", backupLocation])
                     subprocess.run(["rsync", "-a", "", backupPath])
             
-            if emailNotification:
+            if EMAIL:
                 send_mail(emailAddress, "Continued Job " + jobName)
             break
     
@@ -641,11 +1014,11 @@ while True:
         print_table_row(["OUTPUT", "INFO"], output_type="header")
         print_table_row(["STARTING", "Start monitoring " + jobName], output_type="middle")
         
-        if backup:
+        if BACKUP:
             print_table_row(["BACKUP", backupLocation])
             subprocess.run(["rsync", "-a", "", backupPath])
             
-        if emailNotification:
+        if EMAIL:
             send_mail(emailAddress, "Started Job " + jobName)
         break
 
@@ -690,6 +1063,8 @@ while True:
     # Job start/restart
     else:
         
+        time.sleep(sleepTime)
+        
         # Check error and making Backup
         while True:
             try:
@@ -701,22 +1076,34 @@ while True:
                 
                 if outputCriteria[0] in outputContent: 
                     
-                    if backup:
+                    if BACKUP:
                         print_table_row(["BACKUP", backupLocation])
                         subprocess.run(["rsync", "-a", "", backupPath])
                     
                     break
                 else:
                     print_table_row(["ERROR", "SLURM Job failed to execute"])
+                    
+                    if RESET:
+                        DM1, DM2 = check_checkpoint_files()
+                    
+                        if(DM1 or DM2):
+                            print_table_row(["RESET", "Reset to last checkpoint."])
+                            reset_simulation(folder)
                         
-                    if backup:
+                            # Update backup
+                            if BACKUP:
+                                print_table_row(["BACKUP", backupLocation])
+                                subprocess.run(["rsync", "-a", "", backupPath])
+                        
+                    elif BACKUP:
                         print_table_row(["RESTORE", backupLocation])
                         subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
                     
                     break
                     
             except (IndexError, FileNotFoundError):
-                time.sleep(30)
+                time.sleep(sleepTime)
             except NameError:
                 break
         
@@ -727,7 +1114,7 @@ while True:
             if nTimestepsCurrent >= nTimestepsRequired:
                 print_table_row(["SUCCESS", "Stop monitoring " + jobName], current_time = walltime)
                 
-                if emailNotification:
+                if EMAIL:
                     send_mail(emailAddress, "Ended Job " + jobName)
                 break
                 
@@ -738,6 +1125,12 @@ while True:
         if jobscriptFilename == "jobscript-create":
             jobscriptFilename = "jobscript"
             write_file(jobscriptFilename, jobscriptContent)
+            
+        # Delete checkpoint files
+        check_and_delete_file("DM1")
+        check_and_delete_file("DM1.dat")
+        check_and_delete_file("DM2")
+        check_and_delete_file("DM2.dat")
         
         # Start Job
         startOutput = subprocess.check_output([commandJobStarting, jobscriptFilename]).decode("utf-8").replace("\n", "")
@@ -748,7 +1141,7 @@ while True:
         print_table_row(["STARTING", startOutput], output_type="middle")
         
         try:
-            if restartMail and emailNotification:
+            if RESTARTMAIL and EMAIL:
                 send_mail(emailAddress, "Restart Job " + jobName)
         except NameError:
             continue
