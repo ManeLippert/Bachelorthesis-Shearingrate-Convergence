@@ -222,6 +222,9 @@ if backupLocation==None:
     BACKUP = False
 else:
     BACKUP = True
+
+if RESET:
+    IMPORT = True
     
 ## PATHS ===================================================================================================================
 
@@ -483,13 +486,6 @@ def write_file(filename, content):
 # AUTHOR: Florian Rath
 # IMPORT: gkw_reset_checkpiont.py (https://bitbucket.org/gkw/gkw/src/develop/python/gkw_reset_checkpoint.py)  
 def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
-
-    pip_install({"h5py", "pandas", "numpy"})
-    
-    import h5py, fileinput
-    import pandas as pd
-    import numpy as np
-    from shutil import copyfile
     
     # Function that delets all data in interval [nt_reset:nt_broke].
     # ncol considers, if data series is ordered by a multiple interger of
@@ -1085,6 +1081,17 @@ while True:
                     print_table_row(["ERROR", "SLURM Job failed to execute"])
                     
                     if RESET:
+                        
+                        if IMPORT:
+                            pip_install({"h5py", "pandas", "numpy"})
+    
+                            import h5py, fileinput
+                            import pandas as pd
+                            import numpy as np
+                            from shutil import copyfile
+                            
+                            IMPORT = False
+                        
                         DM1, DM2 = check_checkpoint_files()
                     
                         if(DM1 or DM2):
