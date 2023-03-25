@@ -1016,8 +1016,8 @@ print_table_row(["OUTPUT", "INFO"], output_type="header", WRITEFILE=WRITEHEADER)
 nTimestepsCurrent = get_ntimestepCurrent([restartFilename, check1Filename, check2Filename])
     
 if nTimestepsCurrent >= nTimestepsRequired:
-    print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
-    print_table_row(["SUCCESS", "Stop monitoring " + jobName], output_type="middle")
+    print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)], output_type="middle")
+    print_table_row(["SUCCESS", "Stop monitoring " + jobName])
     
     if EMAIL:
         send_mail(emailAddress, "Ended Job " + jobName)
@@ -1200,7 +1200,7 @@ while True:
         print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
         
         if nTimestepsCurrent >= nTimestepsRequired:
-            print_table_row(["SUCCESS", "Stop monitoring " + jobName], current_time = wallTime)
+            print_table_row(["SUCCESS", "Stop monitoring " + jobName])
             
             if EMAIL:
                 send_mail(emailAddress, "Ended Job " + jobName)
