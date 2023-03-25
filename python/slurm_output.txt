@@ -1,0 +1,22 @@
+no executable:
+libhydra/spawn/intel/hydra_spawn.c:151): execvp error on file ./gkw.x (No such file or directory)
+
+success:
+0
+
+walltime:
+slurmstepd: error: *** JOB 911142 ON r01n29 CANCELLED AT 2023-01-31T16:20:58 DUE TO TIME LIMIT ***
+
+forrtl: error (78): process killed (SIGTERM)
+
+timeout:
+slurmstepd: error: *** JOB 910716 ON r07n14 CANCELLED AT 2023-01-30T15:31:07 DUE TO TIME LIMIT ***
+
+hdf5 error:
+HDF5-DIAG: Error detected in HDF5 (1.12.1) thread 0:
+  #000: H5L.c line 938 in H5Lexists(): invalid location identifier
+    major: Invalid arguments to routine
+    minor: Inappropriate type
+
+config:
+libibverbs: Warning: couldn't open config directory '/etc/libibverbs.d'.

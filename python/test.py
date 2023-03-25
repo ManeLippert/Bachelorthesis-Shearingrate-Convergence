@@ -1,12 +1,23 @@
-table_inner_width = 76
+def find_string_in_file(filename, string):
+    
+    with open(filename) as f:
+        if string in f.read():
+            return True
+        else:
+            return False
 
-jobStatusHeader = ["                     NAME     USER    STATUS TASK NODES TIME (W:DD:HH:MM:SS)"]
+def get_error_type(filename):
+    
+    slurm_errors = {"executable":["error on file ./gkw.x (No such file or directory)", "No executable found"],
+                    "walltime":["process killed (SIGTERM)", "Exceeded wall time"],
+                    "timeout":["DUE TO TIME LIMIT", "Exceeded time limit"],
+                    "config":["couldn't open config directory", "Config not loading"],
+                    "hdf5":["HDF5-DIAG", "Writing h5 file failed"]}
+    
+    for key in slurm_errors:
+        if find_string_in_file(filename, slurm_errors[key][0]):
+            return slurm_errors[key][1]
+    
+    return "Unknown error occurred"
 
-jobStatusInfo_cols   = [table_inner_width - 59, 8, 9, 10, 5, 6, 20, 1]
-jobStatusInfo_format = "".join(["{:>" + str(col) + "}" for col in jobStatusInfo_cols])
-        
-jobStatusInfo =  ["", "6.4/3x3", "bt712347", "STARTING", "32", "3", "0:03:15:52:16", ""]
-jobStatusInfo = [jobStatusInfo_format.format(*jobStatusInfo)]
-
-print(jobStatusHeader)
-print(jobStatusInfo)
+print(get_error_type("slurm_nofile.out"))

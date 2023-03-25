@@ -425,9 +425,9 @@ def pip_install(modules):
 
 ## FILE ====================================================================================================================
 
-def get_value_of_variable_from_file(file, file_index, relative_index, string):
+def get_value_of_variable_from_file(filename, file_index, relative_index, string):
     try:
-        content = [i.strip().split() for i in open(file).readlines()]
+        content = [i.strip().split() for i in open(filename).readlines()]
         index = [idx for idx, s in enumerate(content) if string in s][file_index]
         value = content[index][relative_index]
         return value
@@ -435,9 +435,9 @@ def get_value_of_variable_from_file(file, file_index, relative_index, string):
         print_table_row(["ERROR", "String not found in file"])
         quit()
 
-def find_string_in_file(file, string):
+def find_string_in_file(filename, string):
     
-    with open(file) as f:
+    with open(filename) as f:
         if string in f.read():
             return True
         else:
@@ -909,6 +909,20 @@ def set_output_type():
 
     return outputType
 
+def get_error_type(filename):
+    
+    slurm_errors = {"executable":["error on file ./gkw.x (No such file or directory)", "No executable found"],
+                    "walltime":["process killed (SIGTERM)", "Exceeded wall time"],
+                    "timeout":["DUE TO TIME LIMIT", "Exceeded time limit"],
+                    "config":["couldn't open config directory", "Config not loading"],
+                    "hdf5":["HDF5-DIAG", "Writing h5 file failed"]}
+    
+    for key in slurm_errors:
+        if find_string_in_file(filename, slurm_errors[key][0]):
+            return slurm_errors[key][1]
+    
+    return "Unknown error occurred"
+
 ## MAIL ====================================================================================================================
 
 def send_mail(recipient, subject, body = None):
@@ -1078,7 +1092,7 @@ while True:
                     
                     break
                 else:
-                    print_table_row(["ERROR", "SLURM Job failed to execute"])
+                    print_table_row(["ERROR", get_error_type(outputFilename(jobID))])
                     
                     if RESET:
                         
