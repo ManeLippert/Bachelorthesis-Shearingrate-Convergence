@@ -1,23 +1,40 @@
-def find_string_in_file(filename, string):
-    
-    with open(filename) as f:
-        if string in f.read():
-            return True
-        else:
-            return False
+import os
 
-def get_error_type(filename):
-    
-    slurm_errors = {"executable":["error on file ./gkw.x (No such file or directory)", "No executable found"],
-                    "walltime":["process killed (SIGTERM)", "Exceeded wall time"],
-                    "timeout":["DUE TO TIME LIMIT", "Exceeded time limit"],
-                    "config":["couldn't open config directory", "Config not loading"],
-                    "hdf5":["HDF5-DIAG", "Writing h5 file failed"]}
-    
-    for key in slurm_errors:
-        if find_string_in_file(filename, slurm_errors[key][0]):
-            return slurm_errors[key][1]
-    
-    return "Unknown error occurred"
+#data = int(os.path.getmtime("gkwdata.h5"))
+#restart_dat = int(os.path.getmtime("FDS.dat"))
+#restart_file = int(os.path.getmtime("FDS"))
+#
+#print(data)
+#print(restart_dat)
+#print(restart_file)
 
-print(get_error_type("slurm_nofile.out"))
+#print(data - restart_file)
+
+walltime = "0-24:00:00"
+
+def get_time_in_seconds(time):
+    
+    # Format D-HH:MM:SS or HH:MM:SS or MM:SS
+    
+    time = time.replace("-", ":")
+    time_split = time.split(":")
+
+    seconds = [7*24*60*60,24*60*60, 60*60, 60, 1]
+    seconds = seconds[-len(time_split):]
+
+    time_sec = sum([a*b for a,b in zip(seconds, map(int,time_split))])
+
+    return time_sec
+
+print(get_time_in_seconds(walltime))
+
+
+Test1 = False
+Test2 = False
+
+if Test1:
+    print("Test1")
+elif Test2: 
+    print("TEst2")
+else:
+    print("nothing")

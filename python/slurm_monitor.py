@@ -138,6 +138,8 @@ runCounter = len(slurmFiles)
 currentTime = "00:00:00"
 nTimestepsCurrent = 0
 
+dataFilename = "gkwdata.h5"
+
 # PARSER VARIABLES =========================================================================================================
 
 emailAddress = args.mail
@@ -222,9 +224,6 @@ if backupLocation==None:
     BACKUP = False
 else:
     BACKUP = True
-
-if RESET:
-    IMPORT = True
     
 ## PATHS ===================================================================================================================
 
@@ -232,6 +231,7 @@ user = os.getlogin()
 folder = os.getcwd()
 path = folder.split(user + "/")[1]
 
+# Set backup location
 if BACKUP:
     # If local has been specified as backupLocation, then the backup is copied to the same directory as the simulation folder 
     # (simFolder) is located in. The backup is copied to a directory with name simFolder + "-backup". 
@@ -483,6 +483,7 @@ def write_file(filename, content):
         file.write(content)
         file.flush()
 
+# Reset gkwdata.h5 with the use of dump files DM1, DM2
 # AUTHOR: Florian Rath
 # IMPORT: gkw_reset_checkpiont.py (https://bitbucket.org/gkw/gkw/src/develop/python/gkw_reset_checkpoint.py)  
 def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
@@ -958,11 +959,22 @@ if kill:
 
 startTime = time.time()
 
+# Set pastTime and create status file
 if not os.path.isfile(statusFilename):
     pastTime = 0
     write_file(statusFilename,"")
 else:
     pastTime = get_time_from_statusfile(statusFilename, -11)
+    
+if RESET:
+    pip_install({"h5py", "pandas", "numpy"})
+    
+    import h5py, fileinput
+    import pandas as pd
+    import numpy as np
+    from shutil import copyfile
+    
+    print_table_row(["IMPORT", "Load numpy, pandas, h5py"])
 
 # START/RESTART JOB ========================================================================================================
 
@@ -971,6 +983,9 @@ outputType = set_output_type()
 ## BEGIN ===================================================================================================================
 
 while True:
+    
+    # Check if timesteps criterion is satisfied, send mail and end monitoring 
+    # else continue monitoring and set output type accordingly
     try:
         nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
         
@@ -985,7 +1000,7 @@ while True:
 
             quit()
         
-        # Continue
+        # Continue monitoring and send mail
         else:
             print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
             
@@ -1017,7 +1032,7 @@ while True:
                 send_mail(emailAddress, "Continued Job " + jobName)
             break
     
-    # Start    
+    # If FDS.dat not found start monitoring routine and send mail        
     except FileNotFoundError:
         nTimestepsCurrent = 0
         
@@ -1036,6 +1051,7 @@ while True:
 
 while True:
     
+    # Check job status to monitor current state 
     jobStatusRunning, jobStatusPending = get_job_status()
 
     # Job running
@@ -1073,20 +1089,55 @@ while True:
     # Job start/restart
     else:
         
+        # Wait some time until FDS and gkwdata.h5 is written
         time.sleep(sleepTime)
         
-        # Check error and making Backup
+        # Check errors and making Backup
         while True:
             try:
                 outputContent = open(outputFilename(jobID)).readlines()[-5].replace("\n","")
                 
+                # Create Backup if run is successful
                 # If scan of output.dat is needed: Scans for string "Run Successful in output.dat and returns bool value"
                 #runSuccess = find_string_in_file("output.dat", outputCriteria[1])
                 #if outputCriteria[0] in outputContent and runSuccess: 
                 
                 if outputCriteria[0] in outputContent: 
                     
-                    if BACKUP:
+                    # Check if FDS/FDS.dat is updated after run and has equially time stamp as gkwdata.h5                    
+                    timestamp_data    = int(os.path.getmtime(dataFilename))
+                    timestamp_restart = int(os.path.getmtime(restartFilename))
+                    
+                    walltime_sec = get_time_in_seconds(walltime)
+                    timestamp_remain = timestamp_data - timestamp_restart
+                    
+                    # FDS/FDS.dat does not get written at the same time as gkwdata.h5
+                    # For that a time interval have to be considered 
+                    # To be certain the half wall time is set aus time interval
+                    if timestamp_remain > walltime_sec/2:
+                        
+                        print_table_row(["ERROR", "FDS/FDS.dat not updated"])
+                        
+                        # Reset simulation and save as backup
+                        if RESET:
+                        
+                            DM1, DM2 = check_checkpoint_files()
+                    
+                            if (DM1 or DM2):
+                                print_table_row(["RESET", "Reset to last checkpoint."])
+                                reset_simulation(folder)
+                        
+                                # Update backup
+                                if BACKUP:
+                                    print_table_row(["BACKUP", backupLocation])
+                                    subprocess.run(["rsync", "-a", "", backupPath])
+                    
+                        # Restore backup to rerun simulation    
+                        elif BACKUP:
+                            print_table_row(["RESTORE", backupLocation])
+                            subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
+                            
+                    elif BACKUP:
                         print_table_row(["BACKUP", backupLocation])
                         subprocess.run(["rsync", "-a", "", backupPath])
                     
@@ -1094,21 +1145,12 @@ while True:
                 else:
                     print_table_row(["ERROR", get_error_type(outputFilename(jobID))])
                     
+                    # Reset simulation and save as backup
                     if RESET:
-                        
-                        if IMPORT:
-                            pip_install({"h5py", "pandas", "numpy"})
-    
-                            import h5py, fileinput
-                            import pandas as pd
-                            import numpy as np
-                            from shutil import copyfile
-                            
-                            IMPORT = False
                         
                         DM1, DM2 = check_checkpoint_files()
                     
-                        if(DM1 or DM2):
+                        if (DM1 or DM2):
                             print_table_row(["RESET", "Reset to last checkpoint."])
                             reset_simulation(folder)
                         
@@ -1116,18 +1158,23 @@ while True:
                             if BACKUP:
                                 print_table_row(["BACKUP", backupLocation])
                                 subprocess.run(["rsync", "-a", "", backupPath])
-                        
+                    
+                    # Restore backup to rerun simulation    
                     elif BACKUP:
                         print_table_row(["RESTORE", backupLocation])
                         subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
                     
                     break
-                    
+            
+            # Wait sleepTime and check output file again
             except (IndexError, FileNotFoundError):
                 time.sleep(sleepTime)
+                
+            # If jobID undefined break cycle
             except NameError:
                 break
-        
+
+        # Check if timesteps criterion is satisfied, send mail and end monitoring
         try:
             nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
             print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
@@ -1138,22 +1185,23 @@ while True:
                 if EMAIL:
                     send_mail(emailAddress, "Ended Job " + jobName)
                 break
-                
+        
+        # If FDS.dat not found continue routine        
         except FileNotFoundError:
             pass   
         
-        # Create jobscript
-        if jobscriptFilename == "jobscript-create":
-            jobscriptFilename = "jobscript"
-            write_file(jobscriptFilename, jobscriptContent)
-            
         # Delete checkpoint files
         check_and_delete_file("DM1")
         check_and_delete_file("DM1.dat")
         check_and_delete_file("DM2")
         check_and_delete_file("DM2.dat")
         
-        # Start Job
+        # Create jobscript
+        if jobscriptFilename == "jobscript-create":
+            jobscriptFilename = "jobscript"
+            write_file(jobscriptFilename, jobscriptContent)
+        
+        # Start Job and send restart mail (if activated)
         startOutput = subprocess.check_output([commandJobStarting, jobscriptFilename]).decode("utf-8").replace("\n", "")
         jobID = startOutput.split(startOutputFlag)[1]
         
@@ -1169,6 +1217,7 @@ while True:
         
         time.sleep(30)
         
+        # Set output type to running or pending
         outputType = set_output_type()
         
 ## RESTART =================================================================================================================
