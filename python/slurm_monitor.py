@@ -15,9 +15,8 @@ description_text = """
 ===================================== DESCRIPTION =====================================
 
 FEATURES:
-o NO REQUIREMENTS, runs with standard python3 libary by default
-o Reset Option which rely on "numpy", "pandas", "h5py"
-  (script installs modules by itself)
+o NO REQUIREMENTS: Default script runs with standard python3 libary
+o Reset Option (rely on "h5py" & "pandas" & "numpy" which get installed by the script)
 o Creats jobscript file with defined content (look into file itself for the jobscript)
 o Start/Restarts job until criteria is suffused (default=0)
 o Makes backup after each run before Restart and Restore files after fail
@@ -976,6 +975,11 @@ if RESET:
     
     print_table_row(["IMPORT", "Load numpy, pandas, h5py"])
 
+#else:
+#    pip_install({"h5py"})
+#    import h5py
+#    print_table_row(["IMPORT", "Load module h5py"])
+
 # START/RESTART JOB ========================================================================================================
 
 outputType = set_output_type()
@@ -1104,44 +1108,54 @@ while True:
                 
                 if outputCriteria[0] in outputContent: 
                     
-                    # Check if FDS/FDS.dat is updated after run and has equially time stamp as gkwdata.h5                    
-                    timestamp_data    = int(os.path.getmtime(dataFilename))
-                    timestamp_restart = int(os.path.getmtime(restartFilename))
-                    
-                    walltime_sec = get_time_in_seconds(walltime)
-                    timestamp_remain = timestamp_data - timestamp_restart
-                    
-                    # FDS/FDS.dat does not get written at the same time as gkwdata.h5
-                    # For that a time interval have to be considered 
-                    # To be certain the half wall time is set aus time interval
-                    if timestamp_remain > walltime_sec/2:
+                    # Check if h5 file is closed before start/restart simulation
+                    # than check if FDS/FDS.dat is updated
+                    try:
+                        f = open(dataFilename)
+                        #f = h5py.File(dataFilename)
+                        f.close()
                         
-                        print_table_row(["ERROR", "FDS/FDS.dat not updated"])
-                        
-                        # Reset simulation and save as backup
-                        if RESET:
-                        
-                            DM1, DM2 = check_checkpoint_files()
-                    
-                            if (DM1 or DM2):
-                                print_table_row(["RESET", "Reset to last checkpoint."])
-                                reset_simulation(folder)
-                        
-                                # Update backup
-                                if BACKUP:
-                                    print_table_row(["BACKUP", backupLocation])
-                                    subprocess.run(["rsync", "-a", "", backupPath])
-                    
-                        # Restore backup to rerun simulation    
-                        elif BACKUP:
-                            print_table_row(["RESTORE", backupLocation])
-                            subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
+                        # Check if FDS/FDS.dat is updated after run and has equially time stamp as gkwdata.h5                    
+                        timestamp_data    = int(os.path.getmtime(dataFilename))
+                        timestamp_restart = int(os.path.getmtime(restartFilename))
+
+                        walltime_sec = get_time_in_seconds(walltime)
+                        timestamp_remain = timestamp_data - timestamp_restart
+
+                        # FDS/FDS.dat does not get written at the same time as gkwdata.h5
+                        # For that a time interval have to be considered 
+                        # To be certain the half wall time is set aus time interval
+                        if timestamp_remain > walltime_sec/2:
+
+                            print_table_row(["ERROR", "FDS/FDS.dat not updated"])
+
+                            # Reset simulation and save as backup
+                            if RESET:
                             
-                    elif BACKUP:
-                        print_table_row(["BACKUP", backupLocation])
-                        subprocess.run(["rsync", "-a", "", backupPath])
+                                DM1, DM2 = check_checkpoint_files()
+
+                                if (DM1 or DM2):
+                                    print_table_row(["RESET", "Reset to last checkpoint."])
+                                    reset_simulation(folder)
+
+                                    # Update backup
+                                    if BACKUP:
+                                        print_table_row(["BACKUP", backupLocation])
+                                        subprocess.run(["rsync", "-a", "", backupPath])
+
+                            # Restore backup to rerun simulation    
+                            elif BACKUP:
+                                print_table_row(["RESTORE", backupLocation])
+                                subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
+
+                        elif BACKUP:
+                            print_table_row(["BACKUP", backupLocation])
+                            subprocess.run(["rsync", "-a", "", backupPath])
                     
-                    break
+                        break
+                    except OSError:
+                        time.sleep(sleepTime)
+                        
                 else:
                     print_table_row(["ERROR", get_error_type(outputFilename(jobID))])
                     
