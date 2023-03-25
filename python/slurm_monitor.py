@@ -78,8 +78,8 @@ additional = parser.add_argument_group("additional arguments")
 additional.add_argument("-n", dest="timesteps", nargs="?", type=int, default=10000,
                         help="required timesteps                   (default=10000)")
 
-additional.add_argument("-r", "--reset", dest="reset", action="store_false",
-                        help="Uses Dumpfiles to reset Simulation   (default=True)")
+additional.add_argument("-r", "--reset", dest="reset", action="store_true",
+                        help="Uses Dumpfiles to reset Simulation   (default=False)")
 
 additional.add_argument("-v", "--verbose", dest="verbose", action="store_true",
                         help="activate output of script            (default=False)")
@@ -98,7 +98,7 @@ additional.add_argument("--ntask-per-node", dest="tasks", nargs="?", type=str, d
 additional.add_argument("--nodes", dest="nodes", nargs="?", type=str, default="3",
                         help="number of nodes                      (default=3)")
 
-additional.add_argument("--walltime", dest="walltime", nargs="?", type=str, default="0-24:00:00",
+additional.add_argument("--walltime", dest="wallTime", nargs="?", type=str, default="0-24:00:00",
                         help="walltime of server (d-hh:mm:ss)      (default=0-24:00:00)")
 
 additional.add_argument("--mail", dest="mail", nargs="?", type=str,
@@ -134,9 +134,9 @@ outputCriteria = ["0", "Run successfully completed"]
 slurmFiles = [f for f in os.listdir() if "slurm-" in f]
 runCounter = len(slurmFiles)
 
-currentTime = "00:00:00"
 nTimestepsCurrent = 0
 
+currentTime = "00:00:00"
 dataFilename = "gkwdata.h5"
 
 # PARSER VARIABLES =========================================================================================================
@@ -149,7 +149,7 @@ backupLocation = args.backup
 jobName = args.jobname
 tasks = args.tasks
 nodes = args.nodes
-walltime = args.walltime
+wallTime = args.wallTime
 
 nTimestepsRequired = args.timesteps
 
@@ -187,7 +187,7 @@ jobscriptContent = """#!/bin/bash -l
 
 # walltime
 #              d-hh:mm:ss
-#SBATCH --time=""" + walltime + """
+#SBATCH --time=""" + wallTime + """
 
 # execute the job
 time mpirun -np $SLURM_NTASKS ./gkw.x > output.dat
@@ -288,13 +288,17 @@ def message(string, add):
     return string
 
 def print_table_row(content,
-                    current_value = nTimestepsCurrent, required_value = nTimestepsRequired,
-                    run_conter =  runCounter, current_time = currentTime, required_time = walltime,
                     delete_line_index = -10, table_width = 80,
-                    output_type = None, time_info = True):
+                    output_type = None, 
+                    TIMEINFO = True, WRITEFILE=True):
+    
+    current_value, required_value = nTimestepsCurrent, nTimestepsRequired,
+    run_conter = runCounter
+    current_time, required_time = currentTime, wallTime
     
     msg=""
     table_inner_width = table_width - 4
+    table_content_width = table_inner_width - 47
     
     if formatTable == "fancy":
         table_outline = ["╭─", "─╮", "╰─", "─╯", "├─", "─┤", "│ ", " │", "─"]
@@ -309,7 +313,7 @@ def print_table_row(content,
     sep_mid = table_outline[4] + table_inner_width*table_outline[8] + table_outline[5]
     sep_end = table_outline[2] + table_inner_width*table_outline[8] + table_outline[3]
     
-    row_cols   = [2, 10, table_inner_width - 47, 13, 11, 13, 2]
+    row_cols   = [2, 10, table_content_width, 13, 11, 13, 2]
     row_format = "".join(["{:<" + str(col) + "}" for col in row_cols])
     
     progress_cols   = [2, table_inner_width, 2]
@@ -326,8 +330,8 @@ def print_table_row(content,
     jobStatus = subprocess.getoutput("squeue --name " + jobName).strip().split("\n")
         
     try:
-        jobStatusHeader = [" " + jobStatus[0]]
-        jobStatusInfo   = [jobStatus[1][12:12+table_inner_width]]
+        jobStatusHeader = ["  " + jobStatus[0]]
+        jobStatusInfo   = [jobStatus[1][11:11+table_inner_width]]
     except IndexError:
         jobStatusHeader = ["                     NAME     USER    STATUS TASK NODES TIME (W:DD:HH:MM:SS)"]
         
@@ -351,8 +355,9 @@ def print_table_row(content,
     progressbartime_content.insert(0, table_outline[6])
     progressbartime_content.insert(len(progressbartime_content), table_outline[7])
     
+    content[1] = content[1][-(table_content_width-1):]
     content.insert(0, table_outline[6])
-    if time_info:
+    if TIMEINFO:
         if output_type == "header":
             content.append("DATE")
             content.append("TIME")
@@ -404,8 +409,8 @@ def print_table_row(content,
     
     if VERBOSE:
         print(msg, flush=True)
-    
-    delete_write_line_to_file(statusFilename, msg, end=delete_line_index)
+    if WRITEFILE:
+        delete_write_line_to_file(statusFilename, msg, end=delete_line_index)
 
 ## PIP INSTALL =============================================================================================================
 
@@ -954,16 +959,90 @@ if kill:
     subprocess.run(["kill", PID])
     quit()
 
-# JOB INIT =================================================================================================================
+# START/RESTART JOB ========================================================================================================
 
 startTime = time.time()
+outputType = set_output_type()
+jobStatusRunning, jobStatusPending = get_job_status()
 
-# Set pastTime and create status file
+# Set current Time for progress bar
+if outputType == "running":
+    jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
+    currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
+elif outputType == "pending":
+    jobStatusPendingNameIndex = [idx for idx, s in enumerate(jobStatusPending) if jobName in s][0]
+    currentTime = jobStatusPending[jobStatusPendingNameIndex + 3]
+else:
+    currentTime = "00:00:00"
+
+# Set pastTime and create status file if necessary. When status file exist append next lines
+WRITEHEADER = True
 if not os.path.isfile(statusFilename):
     pastTime = 0
     write_file(statusFilename,"")
 else:
-    pastTime = get_time_from_statusfile(statusFilename, -11)
+    try:
+        pastTime = get_time_from_statusfile(statusFilename, -11)
+        WRITEHEADER = False
+    except IndexError:
+        pastTime = 0  
+
+print_table_row(["OUTPUT", "INFO"], output_type="header", WRITEFILE=WRITEHEADER)
+
+## BEGIN ===================================================================================================================
+
+# Check if timesteps criterion is satisfied, send mail and end monitoring 
+# else continue monitoring and set output type accordingly
+try:
+    nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
+        
+    if nTimestepsCurrent >= nTimestepsRequired:
+        print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
+        print_table_row(["SUCCESS", "Stop monitoring " + jobName], output_type="middle")
+        
+        if EMAIL:
+            send_mail(emailAddress, "Ended Job " + jobName)
+            
+        quit()
+    
+    # Continue monitoring and send mail
+    else:
+        print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
+            
+        if outputType != "no Output":
+            print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
+        
+        else:
+            if BACKUP:
+                print_table_row(["BACKUP", backupPath])
+                subprocess.run(["rsync", "-a", "", backupPath])
+        
+        if EMAIL:
+            send_mail(emailAddress, "Continued Job " + jobName)
+
+# If FDS.dat not found start monitoring routine and send mail        
+except FileNotFoundError:
+    nTimestepsCurrent = 0
+    
+    # Check if job is already running
+    if outputType != "no Output":
+        print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
+        print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
+        
+        if EMAIL:
+            send_mail(emailAddress, "Continued Job " + jobName)
+        
+    else:
+        print_table_row(["STARTING", "Start monitoring " + jobName], output_type="middle")
+    
+        if BACKUP:
+            print_table_row(["BACKUP", backupPath])
+            subprocess.run(["rsync", "-a", "", backupPath])
+        
+        if EMAIL:
+            send_mail(emailAddress, "Started Job " + jobName)
+    
+
     
 if RESET:
     pip_install({"h5py", "pandas", "numpy"})
@@ -979,77 +1058,6 @@ if RESET:
 #    pip_install({"h5py"})
 #    import h5py
 #    print_table_row(["IMPORT", "Load module h5py"])
-
-# START/RESTART JOB ========================================================================================================
-
-outputType = set_output_type()
-
-## BEGIN ===================================================================================================================
-
-while True:
-    
-    # Check if timesteps criterion is satisfied, send mail and end monitoring 
-    # else continue monitoring and set output type accordingly
-    try:
-        nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
-        
-        print_table_row(["OUTPUT", "INFO"], output_type="header")
-        
-        if nTimestepsCurrent >= nTimestepsRequired:
-            print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
-            print_table_row(["SUCCESS", "Stop monitoring " + jobName], output_type="middle")
-            
-            if EMAIL:
-                send_mail(emailAddress, "Ended Job " + jobName)
-
-            quit()
-        
-        # Continue monitoring and send mail
-        else:
-            print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
-            
-            jobStatusRunning, jobStatusPending = get_job_status()
-            
-            if outputType == "running":
-                #runCounter += 1
-                
-                jobStatusRunningNameIndex = [idx for idx, s in enumerate(jobStatusRunning) if jobName in s][0]
-                currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
-                
-                print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
-            
-            elif outputType == "pending":
-                #runCounter += 1
-                
-                jobStatusPendingNameIndex = [idx for idx, s in enumerate(jobStatusPending) if jobName in s][0]
-                currentTime = jobStatusPending[jobStatusPendingNameIndex + 3]
-                
-                print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)], 
-                                nTimestepsCurrent, nTimestepsRequired, runCounter, currentTime)
-            
-            else:
-                if BACKUP:
-                    print_table_row(["BACKUP", backupLocation])
-                    subprocess.run(["rsync", "-a", "", backupPath])
-            
-            if EMAIL:
-                send_mail(emailAddress, "Continued Job " + jobName)
-            break
-    
-    # If FDS.dat not found start monitoring routine and send mail        
-    except FileNotFoundError:
-        nTimestepsCurrent = 0
-        
-        print_table_row(["OUTPUT", "INFO"], output_type="header")
-        print_table_row(["STARTING", "Start monitoring " + jobName], output_type="middle")
-        
-        if BACKUP:
-            print_table_row(["BACKUP", backupLocation])
-            subprocess.run(["rsync", "-a", "", backupPath])
-            
-        if EMAIL:
-            send_mail(emailAddress, "Started Job " + jobName)
-        break
 
 ## MONITOR ROUTINE =========================================================================================================
 
@@ -1093,9 +1101,6 @@ while True:
     # Job start/restart
     else:
         
-        # Wait some time until FDS and gkwdata.h5 is written
-        time.sleep(sleepTime)
-        
         # Check errors and making Backup
         while True:
             try:
@@ -1119,13 +1124,13 @@ while True:
                         timestamp_data    = int(os.path.getmtime(dataFilename))
                         timestamp_restart = int(os.path.getmtime(restartFilename))
 
-                        walltime_sec = get_time_in_seconds(walltime)
+                        wallTime_sec = get_time_in_seconds(wallTime)
                         timestamp_remain = timestamp_data - timestamp_restart
 
                         # FDS/FDS.dat does not get written at the same time as gkwdata.h5
                         # For that a time interval have to be considered 
                         # To be certain the half wall time is set aus time interval
-                        if timestamp_remain > walltime_sec/2:
+                        if timestamp_remain > wallTime_sec/2:
 
                             print_table_row(["ERROR", "FDS/FDS.dat not updated"])
 
@@ -1140,16 +1145,16 @@ while True:
 
                                     # Update backup
                                     if BACKUP:
-                                        print_table_row(["BACKUP", backupLocation])
+                                        print_table_row(["BACKUP", backupPath])
                                         subprocess.run(["rsync", "-a", "", backupPath])
 
                             # Restore backup to rerun simulation    
                             elif BACKUP:
-                                print_table_row(["RESTORE", backupLocation])
+                                print_table_row(["RESTORE", backupPath])
                                 subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
 
                         elif BACKUP:
-                            print_table_row(["BACKUP", backupLocation])
+                            print_table_row(["BACKUP", backupPath])
                             subprocess.run(["rsync", "-a", "", backupPath])
                     
                         break
@@ -1170,12 +1175,12 @@ while True:
                         
                             # Update backup
                             if BACKUP:
-                                print_table_row(["BACKUP", backupLocation])
+                                print_table_row(["BACKUP", backupPath])
                                 subprocess.run(["rsync", "-a", "", backupPath])
                     
                     # Restore backup to rerun simulation    
                     elif BACKUP:
-                        print_table_row(["RESTORE", backupLocation])
+                        print_table_row(["RESTORE", backupPath])
                         subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
                     
                     break
@@ -1194,7 +1199,7 @@ while True:
             print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
             
             if nTimestepsCurrent >= nTimestepsRequired:
-                print_table_row(["SUCCESS", "Stop monitoring " + jobName], current_time = walltime)
+                print_table_row(["SUCCESS", "Stop monitoring " + jobName], current_time = wallTime)
                 
                 if EMAIL:
                     send_mail(emailAddress, "Ended Job " + jobName)
