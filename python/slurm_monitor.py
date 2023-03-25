@@ -336,13 +336,14 @@ def print_table_row(content,
         jobStatusHeader = ["  " + jobStatus[0]]
         jobStatusInfo   = [jobStatus[1][11:11+table_inner_width]]
     except IndexError:
-        jobStatusHeader = ["                     NAME     USER    STATUS TASK NODES TIME (W:DD:HH:MM:SS)"]
+        jobStatus_cols   = [12, 12, 10, table_inner_width- 71, 13, 11, 13]
+        jobStatus_format = "".join(["{:<" + str(col) + "}" for col in jobStatus_cols])
         
-        jobStatusInfo_cols   = [table_inner_width - 59, 8, 9, 10, 5, 6, 20, 1]
-        jobStatusInfo_format = "".join(["{:>" + str(col) + "}" for col in jobStatusInfo_cols])
-        
-        jobStatusInfo = ["", jobName, user, content[0], tasks, nodes, time_duration(startTime, pastTime), ""]
-        jobStatusInfo = [jobStatusInfo_format.format(*jobStatusInfo)]
+        jobStatusHeader = ["OUTPUT", "NAME", "USER", "" ,"DATE", "TIME", "W:DD:HH:MM:SS"]
+        jobStatusInfo   = ["STARTING", "test", "bt712347", "", "2023-03-25", "22:29:08", "0:00:00:00:00"]
+
+        jobStatusHeader   = [jobStatus_format.format(*jobStatusHeader)]
+        jobStatusInfo     = [jobStatus_format.format(*jobStatusInfo)]
         
     jobStatusHeader.insert(0, table_outline[6])
     jobStatusHeader.insert(len(jobStatusHeader), table_outline[7])
