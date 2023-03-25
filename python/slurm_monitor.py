@@ -138,6 +138,8 @@ nTimestepsCurrent = 0
 
 currentTime = "00:00:00"
 dataFilename = "gkwdata.h5"
+check1Filename, check2Filename = "DM1.dat", "DM2.dat"
+check1Bin, check2Bin = check1Filename.replace(".dat", ""), check2Filename.replace(".dat", "")
 
 # PARSER VARIABLES =========================================================================================================
 
@@ -155,6 +157,7 @@ nTimestepsRequired = args.timesteps
 
 jobscriptFilename = args.jobscriptFile
 restartFilename = args.restartFile
+restartBin = restartFilename.replace(".dat", "")
 
 statusFilename = args.statusFile
 #statusFile = open(statusFilename, "r+")
@@ -829,12 +832,28 @@ def check_and_delete_file(filename):
 def check_checkpoint_files():
     DM1, DM2 = False, False
     
-    if(os.path.isfile("DM1") and os.path.isfile("DM1.dat")):
-        haveDm1 = True
-    if(os.path.isfile("DM2") and os.path.isfile("DM2.dat")):
-        haveDm2 = True
+    if(os.path.isfile(check1Filename) and os.path.isfile(check1Bin)):
+        DM1 = True
+    if(os.path.isfile(check2Filename) and os.path.isfile(check2Bin)):
+        DM2 = True
     
     return DM1, DM2
+
+def get_timestep_from_restartfile(filename, flag):
+    return int(get_value_of_variable_from_file("./" + filename, 0, 2, flag).replace(",", ""))
+
+def get_ntimestepCurrent(filenames):
+    
+    ntimestep = 0
+    
+    for f in filenames:
+        if(os.path.isfile(f)):
+            ntimestepFile = get_timestep_from_restartfile(f, restartFlag)
+            
+            if ntimestepFile > ntimestep:
+                ntimestep = ntimestepFile
+        
+    return ntimestep
 
 ## TIME ====================================================================================================================
 
@@ -993,57 +1012,37 @@ print_table_row(["OUTPUT", "INFO"], output_type="header", WRITEFILE=WRITEHEADER)
 
 # Check if timesteps criterion is satisfied, send mail and end monitoring 
 # else continue monitoring and set output type accordingly
-try:
-    nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
-        
-    if nTimestepsCurrent >= nTimestepsRequired:
-        print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
-        print_table_row(["SUCCESS", "Stop monitoring " + jobName], output_type="middle")
-        
-        if EMAIL:
-            send_mail(emailAddress, "Ended Job " + jobName)
-            
-        quit()
+nTimestepsCurrent = get_ntimestepCurrent([restartFilename, check1Filename, check2Filename])
     
-    # Continue monitoring and send mail
-    else:
-        print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
-            
-        if outputType != "no Output":
-            print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
+if nTimestepsCurrent >= nTimestepsRequired:
+    print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
+    print_table_row(["SUCCESS", "Stop monitoring " + jobName], output_type="middle")
+    
+    if EMAIL:
+        send_mail(emailAddress, "Ended Job " + jobName)
         
-        else:
-            if BACKUP:
-                print_table_row(["BACKUP", backupPath])
-                subprocess.run(["rsync", "-a", "", backupPath])
-        
-        if EMAIL:
-            send_mail(emailAddress, "Continued Job " + jobName)
+    quit()
 
-# If FDS.dat not found start monitoring routine and send mail        
-except FileNotFoundError:
-    nTimestepsCurrent = 0
+# Continue monitoring and send mail
+else:
     
-    # Check if job is already running
-    if outputType != "no Output":
+    if outputType != "no Output" or os.path.isfile(restartFilename):
         print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
         print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
         
         if EMAIL:
             send_mail(emailAddress, "Continued Job " + jobName)
-        
+    
     else:
         print_table_row(["STARTING", "Start monitoring " + jobName], output_type="middle")
-    
+        
         if BACKUP:
             print_table_row(["BACKUP", backupPath])
             subprocess.run(["rsync", "-a", "", backupPath])
-        
+            
         if EMAIL:
             send_mail(emailAddress, "Started Job " + jobName)
-    
 
-    
 if RESET:
     pip_install({"h5py", "pandas", "numpy"})
     
@@ -1073,6 +1072,7 @@ while True:
         jobID = jobStatusRunning[jobStatusRunningNameIndex - 2]
         
         currentTime = jobStatusRunning[jobStatusRunningNameIndex + 3]
+        nTimestepsCurrent = get_ntimestepCurrent([restartFilename, check1Filename, check2Filename])
         
         if outputType == "running":
             print_table_row(["RUNNING", "Job is executed"])
@@ -1089,6 +1089,7 @@ while True:
         jobID = jobStatusPending[jobStatusPendingNameIndex - 2]
         
         currentTime = jobStatusPending[jobStatusPendingNameIndex + 3]
+        nTimestepsCurrent = get_ntimestepCurrent([restartFilename, check1Filename, check2Filename])
         
         if outputType == "pending":
             print_table_row(["WAITING", "Job is pending"])
@@ -1194,26 +1195,21 @@ while True:
                 break
 
         # Check if timesteps criterion is satisfied, send mail and end monitoring
-        try:
-            nTimestepsCurrent = int(get_value_of_variable_from_file("./" + restartFilename, 0, 2, restartFlag))
-            print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
-            
-            if nTimestepsCurrent >= nTimestepsRequired:
-                print_table_row(["SUCCESS", "Stop monitoring " + jobName], current_time = wallTime)
-                
-                if EMAIL:
-                    send_mail(emailAddress, "Ended Job " + jobName)
-                break
+        nTimestepsCurrent = get_ntimestepCurrent([restartFilename, check1Filename, check2Filename])
+        print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
         
-        # If FDS.dat not found continue routine        
-        except FileNotFoundError:
-            pass   
+        if nTimestepsCurrent >= nTimestepsRequired:
+            print_table_row(["SUCCESS", "Stop monitoring " + jobName], current_time = wallTime)
+            
+            if EMAIL:
+                send_mail(emailAddress, "Ended Job " + jobName)
+            break
         
         # Delete checkpoint files
-        check_and_delete_file("DM1")
-        check_and_delete_file("DM1.dat")
-        check_and_delete_file("DM2")
-        check_and_delete_file("DM2.dat")
+        check_and_delete_file(check1Bin)
+        check_and_delete_file(check1Filename)
+        check_and_delete_file(check2Bin)
+        check_and_delete_file(check2Filename)
         
         # Create jobscript
         if jobscriptFilename == "jobscript-create":
