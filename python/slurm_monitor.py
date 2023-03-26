@@ -1033,6 +1033,12 @@ else:
         
         if EMAIL:
             send_mail(emailAddress, "Continued Job " + jobName)
+            
+    elif os.path.isfile(restartFilename):
+        print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
+        
+        if EMAIL:
+            send_mail(emailAddress, "Continued Job " + jobName)
     
     else:
         print_table_row(["STARTING", "Start monitoring " + jobName], output_type="middle")
