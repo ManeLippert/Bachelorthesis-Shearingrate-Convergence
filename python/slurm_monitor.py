@@ -70,7 +70,7 @@ parser = argparse.ArgumentParser(description=description_text, formatter_class=a
 
 required = parser.add_argument_group("required arguments")
 
-required.add_argument("--job-name", dest="jobname", nargs="?", type=str, required= True,
+required.add_argument("-j", "--job-name", dest="jobname", nargs="?", type=str, required= True,
                       help="job name not longer than 8 character")
 
 additional = parser.add_argument_group("additional arguments")
@@ -89,7 +89,7 @@ additional.add_argument("-b", "--backup", dest="backup", nargs="?", type=str,
                              "- local (creates backup in simulation folder)\n"+
                              "- home  (creates backup in home folder)")
 
-additional.add_argument("-j", "--job", dest="jobscriptFile", nargs="?", type=str, default="jobscript-create",
+additional.add_argument("--jobscript", dest="jobscriptFile", nargs="?", type=str, default="jobscript-create",
                         help="jobscript to run SLURM job           (default=jobscript-create)")
 
 additional.add_argument("--ntask-per-node", dest="tasks", nargs="?", type=str, default="32",
@@ -211,7 +211,7 @@ restartFlag = "FILE_COUNT"
 commandJobRunning = "squeue --states=running --name " + jobName
 commandJobPending = "squeue --states=pending --name " + jobName
 
-commandMonitorKill = "ps ax | grep " + jobName
+commandMonitorKill = "ps ax | grep " + jobName + " | awk '{print $1}'"
 
 commandJobStarting = "sbatch"
 
@@ -971,10 +971,7 @@ def send_mail(recipient, subject, body = None):
 
 ## KILL JOB ================================================================================================================
 
-PID = subprocess.getoutput(commandMonitorKill).split(" ")[0]
-if PID == "":
-    PID = subprocess.getoutput(commandMonitorKill).split(" ")[1]
-
+PID = subprocess.getoutput(commandMonitorKill).split("\n")[0]
 if kill:
     subprocess.run(["kill", PID])
     quit()
@@ -1027,7 +1024,7 @@ if nTimestepsCurrent >= nTimestepsRequired:
 # Continue monitoring and send mail
 else:
     
-    if outputType != "no Output" or os.path.isfile(restartFilename):
+    if outputType != "no Output":
         print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
         print_table_row(["CONTROL", "Current Timesteps " + str(nTimestepsCurrent)])
         
