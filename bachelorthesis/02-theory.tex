@@ -1,8 +1,34 @@
-% 4. Theory
+% 2. Theory
 
 \chapter{Theory}
 \label{chap:theory}
 
-% Text
-
-% etc.
+In the following the box size is increased relative to the standard box size $(L_\xcoord,~L_\ycoord) = (76.27,~89.76)\,\rhoth$ in the radial and binormal direction. Here, $\xcoord$ is the radial coordinate that labels the flux surfaces normalized by the thermal Larmor radius $\rhoth$, $\ycoord$ labels the field lines and is an approximate binormal or toroidal coordinate. Together with the coordinate $s$ which parameterizes the length along the field lines and represents the poloidal coordinate these quantities form the Hamada coordinates \cite{hamada1958}.
+The increased box sizes are indicated by the real parameter $\NR$ for radial and $\NB$ for the binormal direction with the nomenclature $\NR\times \NB$ throughout this work.
+Note that, the number of modes in the respective direction, i.e., $N_x$ and $N_m$, respectively, is always adapted accordingly to retain a spatial resolution compliant to the standard resolution [Tab.~\ref{tab:resolution}] and standard box size. \\
+The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{rath2016, doi:10.1063/1.3005380, rath2016, peeters2016}
+\begin{equation}
+	\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2},
+	\label{eq:shearingrate}
+\end{equation}
+where $\langle \phi \rangle$ is the zonal electrostatic potential normalized by $\rho_\ast T/e$ ($\rho_\ast = \rhoth/R$ is the thermal Larmor radius normalized with the major radius $R$, $T$ is the temperature, $e$ is the elementary charge).
+The zonal potential is calculated from the electrostatic potential $\phi$ on the two-dimensional $\xcoord$-$\ycoord$-plane at the low field side according to\cite{rath2021}
+\begin{equation}
+\langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0).
+\end{equation}
+The E$\times$B shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{doi:10.1063/1.871313, doi:10.1063/1.872847} and quantifies the zonal flow induced shearing of turbulent structures \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}. \\
+Consistent with Ref.~\cite{peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ is the thermal velocity and $m$ is the mass). Furthermore, quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities from Ref.\cite{peeters2016,peeters2009}.
+\newpage
+In order to diagnose the temporal evolution of the staircase pattern and to obtain an estimate of its amplitude the radial Fourier transform of the $\exb$ shearing rate is considered. 
+It is defined by
+\begin{equation}
+	\wexb = \sum_{\kzf} \hatwexb(\kzf,t) \, \exp(\mathrm{i} \kzf \xcoord),
+	\label{eq:shearingrate_fourier}
+\end{equation}
+where $\hatwexb$ is the complex Fourier coefficient and \linebreak $\kzf = 2\pi \nzf/L_\xcoord$
+% explicitly introduce the terms zonal flow wave vector and zonal flow mode number for later usage
+defines the zonal flow wave vector with the zonal flow mode number $\nzf$ ranging in $-(N_\xcoord -1)/2 \leq \nzf \leq (N_\xcoord -1)/2 $.
+% define the zonal flow modes' amplitude in terms of the shearing rate
+Based on the definitions above, the shear carried by the zonal flow mode with wave vector $\kzf$ is defined by $\hatwexbamp = 2 |\hatwexb|$. 
+% introduces the term basic mode of the pattern for later usage
+In general, the zonal flow mode that dominates the $\exb$ staircase pattern, also referred to as the \textit{basic mode} of the pattern in this work, exhibits the maximum amplitude in the spectrum $\hatwexbamp$.\\

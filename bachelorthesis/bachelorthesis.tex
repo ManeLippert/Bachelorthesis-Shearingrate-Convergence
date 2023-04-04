@@ -5,70 +5,14 @@
 
 
 % Packages
-\documentclass[paper=a4,bibliography=totoc,BCOR=10mm,numbers=noenddot,fontsize=11pt,headsepline]{scrreprt}
-\usepackage[english]{babel}
-\usepackage[T1]{fontenc}
-\usepackage[latin1, utf8]{inputenc}        %ä, ö, ü included
-\usepackage[babel,german=quotes]{csquotes} %Quotes
-\usepackage{lmodern}
-\usepackage{graphicx}
-\usepackage{nicefrac}
-\usepackage{fancyvrb}
-\usepackage{amsmath,amssymb,amstext}
-\usepackage{siunitx}
-\usepackage{url}
-\usepackage[numbers]{natbib}
-\usepackage{microtype}
-\usepackage[format=plain]{caption}
-\usepackage{physics}
-\usepackage{titleref} 
+\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, numbers=noenddot, fontsize=11pt, headsepline]{scrreprt}
 
-% Additional Packages
-\usepackage{geometry}                      % Geometry
-\usepackage{anyfontsize}                   % All font sizes
-\usepackage[table]{xcolor}                 % Colors in tables
-\usepackage{ifthen}                        % If then statements
-\usepackage[absolute,overlay]{textpos}     % Text boxes
-\usepackage{amsfonts}                      % Fonts
-\usepackage{xstring}                       % String operations
-\usepackage{tikz}                          % Drawings
-\usepackage{pdfpages}                      % Import of pdfs
-\usepackage{hyperref}                      % Links in document
-\usepackage{makecell}                      % New line in tables
-\usepackage[nottoc,numbib]{tocbibind}      % Bib as chapter
-
-% Paragraph changes
-\parindent 0.0cm
-\parskip 0.8ex plus 0.5ex minus 0.5ex
-
-% Count and size of float objects
-% maximal 2 in top and bottom big pictures also possible
-\setcounter{bottomnumber}{2}
-\setcounter{topnumber}{2}
-\renewcommand{\bottomfraction}{1.}
-\renewcommand{\topfraction}{1.}
-\renewcommand{\textfraction}{0.}
-
-%\sc und \bc outdated
-\DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
-\DeclareOldFontCommand{\bf}{\normalfont\scshape}{\textbf}
-
-% Various
-\pagestyle{headings}            
-\graphicspath{{../pictures/}}    % Path for pictures
-\VerbatimFootnotes              % \verb etc. in \footnotes
-
-% Functions
-\newcommand\tab[1][1cm]{\hspace*{#1}}
-\newcommand{\vect}[1]{\boldsymbol{\mathbf{#1}}}
-\newcolumntype{g}{>{\columncolor[rgb]{ .741,  .843,  .933}}l}
-% Index not kursive
-\catcode`_=\active
-\newcommand_[1]{\ensuremath{\sb{\mathrm{#1}}}}
+\input{packages.tex}
+\input{functions.tex}
+\input{variables.tex}
 
 \begin{document}
     \nonfrenchspacing
-    %
     % 0.Chapter Cover
     \input{00-cover.tex}
     %
@@ -89,11 +33,8 @@
     % 4.Chapter Results
     \input{04-results.tex}
     %
-    % 5.Chapter discussion
-    \input{05-discussion.tex}
-    %
-    % 6.Chapter Closure
-    \input{06-closure.tex}
+    % 5.Chapter Closure
+    \input{05-closure.tex}
     %
     % Appendix
     %\input{06-appendix.tex}
