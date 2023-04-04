@@ -12,8 +12,15 @@
 \renewcommand{\textfraction}{0.}
 
 %\sc und \bc outdated
+\DeclareOldFontCommand{\rm}{\normalfont\rmfamily}{\mathrm}
+\DeclareOldFontCommand{\sf}{\normalfont\sffamily}{\mathsf}
+\DeclareOldFontCommand{\tt}{\normalfont\ttfamily}{\mathtt}
+\DeclareOldFontCommand{\bf}{\normalfont\bfseries}{\mathbf}
+\DeclareOldFontCommand{\it}{\normalfont\itshape}{\mathit}
+\makeatletter
+\DeclareOldFontCommand{\sl}{\normalfont\slshape}{\@nomath\sl}
 \DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
-\DeclareOldFontCommand{\bf}{\normalfont\scshape}{\textbf}
+\makeatother
 
 % Various
 \pagestyle{headings}            

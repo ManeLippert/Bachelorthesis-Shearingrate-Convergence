@@ -1,0 +1,94 @@
+% Sonny, Lenny, Glenn, Conny, Rejne, Bjarne, Bjornstrup
+%\usepackage[Rejne]{fncychap}
+
+\usepackage[explicit]{titlesec}
+\usepackage{tcolorbox}
+
+\definecolor{Notablue}{HTML}{3498DB}		%Theoretische Physik
+\definecolor{Notared}{HTML}{CF366C}			%Mathematik
+\definecolor{Notagreen}{HTML}{19B092}		%Experimentalphysik
+\definecolor{Notaorange}{HTML}{FA9D00}		%Chemie/Wahlfach nicht physikalisch
+\definecolor{Notagrey}{HTML}{969696}		%Praktikum
+\definecolor{Notalavendel}{HTML}{9DBBD8}	%Wahlfächer physikalisch
+\definecolor{SPKred}{HTML}{E60005}
+
+\newtcolorbox{titlecolorbox}[1]{ %the box around chapter
+    coltext=white,
+    colframe=Notared,
+    colback=Notared,
+    boxrule=0pt,
+    arc=0pt,
+    notitle,
+    width=4.8em,
+    height=2.4ex,
+    before=\hfill
+}
+
+\titleformat{\chapter}[display]
+  {\sffamily\Huge}
+  {}
+  {0pt}
+  {\begin{titlecolorbox}{}
+  {\large\sffamily\MakeUppercase{\chaptername}}
+  \end{titlecolorbox}
+  \vspace*{-4.19ex}\noindent\rule{\textwidth}{2pt}
+  \parbox[b]{\dimexpr\textwidth-4.8em\relax}{\raggedright\bfseries{#1}}{\hfill\fontsize{80}{60}\selectfont\thechapter}
+  }
+  []
+
+\titleformat{name=\chapter,numberless}[display]
+  {\sffamily\Huge}
+  {}
+  {0pt}
+  {\begin{titlecolorbox}{}
+  {\large\sffamily\MakeUppercase{\chaptername}}
+  \end{titlecolorbox}
+  \vspace*{-4.19ex}\noindent\rule{\textwidth}{2pt}
+  \parbox[b]{\dimexpr\textwidth-4.8em\relax}{\raggedright\bfseries{#1}}
+  }
+  []
+
+%\titleformat%
+%{\chapter}[hang]%
+%{\bfseries}{%
+%\begin{minipage}[t]{0.3\linewidth}  
+%\vspace{0pt}% do not remove
+%\begin{tikzpicture}
+%\node[
+%outer sep=0pt,
+%text width=2.5cm,
+%minimum height=2.5cm,
+%fill=black,
+%font=\color{white}\fontsize{80}{90}\selectfont,
+%align=center
+%] (num) {\thechapter};
+%\node[
+%outer sep=0pt,
+%inner sep=0pt,
+%anchor=south,
+%font=\color{black}\Large\normalfont
+%] at ([yshift=3pt]num.north) {\textls[180]{\textsc{\chaptertitlename}}};
+%\end{tikzpicture}  
+%\end{minipage}%
+%}
+%{0pt}%
+%{%
+%\begin{minipage}[t]{.7\linewidth}%
+%    \vspace{2pt} % do not remove
+%    \rule{\linewidth}{2.5pt}\\\vskip -1.75\baselineskip%
+%    \rule{\linewidth}{.7pt}\vskip 5pt
+%    {\LARGE\raggedright\textsf{#1}}
+%\end{minipage}%
+%}
+
+\titleformat{\section}[display]
+  {\sffamily\Large}
+  {}
+  {0pt}
+  {\raggedright\bfseries{\thesection\quad #1}}
+
+\titleformat{\subsection}[display]
+  {\sffamily\large}
+  {}
+  {0pt}
+  {\raggedright\bfseries{\thesubsection\quad #1}}

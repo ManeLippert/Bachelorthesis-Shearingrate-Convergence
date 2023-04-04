@@ -5,9 +5,12 @@
 
 
 % Packages
-\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, numbers=noenddot, fontsize=11pt, headsepline]{scrreprt}
+\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, numbers=noenddot, fontsize=11pt, headsepline, enabledeprecatedfontcommands]{scrreprt}
+
+% twoside, openright or openleft
 
 \input{packages.tex}
+\input{titlestyle.tex}
 \input{functions.tex}
 \input{variables.tex}
 
@@ -15,6 +18,9 @@
     \nonfrenchspacing
     % 0.Chapter Cover
     \input{00-cover.tex}
+    \input{00-abstract.tex}
+    \input{00-dedication.tex}
+
     %
     \thispagestyle{empty}
     \cleardoublepage
@@ -40,7 +46,7 @@
     %\input{06-appendix.tex}
     %
     % Literatur
-    \nocite{*}
+    %\nocite{*}
     \bibliographystyle{references.bst}
     \bibliography{references.bib}
 \end{document}
