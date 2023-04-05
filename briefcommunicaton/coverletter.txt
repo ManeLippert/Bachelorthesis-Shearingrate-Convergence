@@ -1,3 +1,8 @@
-The  radial  size  convergence  of  the   E×B  staircase  pattern  is  adressed  in  local  gradient-driven  flux  tube  simulations  of  ion  temperature  gradient  (ITG)  driven  turbulence. Its  is  shown  that  a  mesoscale  pattern  size  of ∼57.20−76.27\rho is inherent to ITG driven turbulence with Cyclone Base Case parameters in the local limit. 
-This case would imply that it is not necessarily global physics, i.e., profile effects, that set (i) the radial size of the  E×B staircase pattern and (ii) the scale of avalanche-like transport events.
-Multiple box size convergence scans in radial, binormal and isotropic directions close to the nonlinear threshold for turbulence generation were performed with the non-linear flux tube version of Gyrokinetic Workshop (GKW).
+
+Ion temperature gradient driven turbulence (ITG) close to marginal stability exhibits zonal flow pattern formation on mesoscales, so-called E × B staircase structures. Such pattern formation has been observed in local gradient-driven flux-tube simulations as well as global gradient-driven and global flux-driven studies.
+
+In global studies, spanning a larger fraction of the minor radius, multiple radial repetitions of staircase structures are usually observed, with a typical pattern size of several ten Larmor radii. By contrast, in previous local studies the radial size of E × B staircase structures converge to the radial box size of the flux tube domain. This leads to the question:
+
+Does the basic pattern size always converges to the box size, or is there a typical mesoscale size inherent to staircase structures also in a local flux-tube description?
+
+It is  shown by multiple box size convergence scans  that  a  mesoscale  pattern  size  of ∼57.20−76.27\rho is inherent to ITG driven turbulence with Cyclone Base Case parameters in the local limit. This outcome also implies that a typical scale for avalanche-like transport is inherent to ITG driven turbulence.
