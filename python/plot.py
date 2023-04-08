@@ -7,20 +7,31 @@ from cycler import cycler
 
 
 # Plot parameters
-def parameters(usetex, fontsize, figsize, dpi, 
-               linewidth = 1.5, ticklength = 10, ticksadditional = True, ticksdirc = 'in', tickspad = 10,
-               colorpalette = sns.color_palette("colorblind", as_cmap=True)):
+def parameters(fontsize, figsize, dpi, usetex = True,
+               linewidth = 3, colorpalette = sns.color_palette("colorblind", as_cmap=True),
+               tickwidth = 1.5, ticklength = 10, tickspad = 10, ticksdirc = 'in', ticksadditional = True,
+               legendpad = -2, legendontop = True):
+    
+    # TEXT ==========================================================
     
     plt.rcParams['text.usetex'] = usetex
     plt.rcParams['font.family'] = 'serif'
     plt.rcParams['font.size'] = fontsize
     
+    # FIGURE ========================================================
+    
     plt.rcParams['figure.figsize'] = figsize
     plt.rcParams['figure.dpi'] = dpi
     
+    # STYLE =========================================================
+    
+    plt.rcParams['axes.labelpad'] = 15
+    plt.rcParams['lines.linewidth'] = linewidth
     plt.rcParams['axes.prop_cycle'] = cycler('color', colorpalette)
     
-    plt.rcParams['axes.linewidth'] = linewidth
+    # TICKS AND FRAME ===============================================
+    
+    plt.rcParams['axes.linewidth'] = tickwidth
     
     plt.rcParams['xtick.top'] = ticksadditional
     plt.rcParams['xtick.bottom'] = ticksadditional
@@ -29,22 +40,30 @@ def parameters(usetex, fontsize, figsize, dpi,
     plt.rcParams['ytick.right'] = ticksadditional
     
     plt.rcParams['xtick.major.size'] = ticklength
-    plt.rcParams['xtick.major.width'] = linewidth
+    plt.rcParams['xtick.major.width'] = tickwidth
     
     plt.rcParams['ytick.major.size'] = ticklength
-    plt.rcParams['ytick.major.width'] = linewidth
+    plt.rcParams['ytick.major.width'] = tickwidth
     
     plt.rcParams['xtick.minor.size'] = ticklength/2
-    plt.rcParams['xtick.minor.width'] = linewidth
+    plt.rcParams['xtick.minor.width'] = tickwidth
     
     plt.rcParams['ytick.minor.size'] = ticklength/2    
-    plt.rcParams['ytick.minor.width'] = linewidth
+    plt.rcParams['ytick.minor.width'] = tickwidth
     
     plt.rcParams['xtick.direction'] = ticksdirc
     plt.rcParams['ytick.direction'] = ticksdirc
     
     plt.rcParams['xtick.major.pad'] = tickspad
     plt.rcParams['ytick.major.pad'] = tickspad
+    
+    # LEGEND ========================================================
+    
+    if legendontop == True:
+        plt.rcParams['legend.loc'] = 'upper center'
+        plt.rcParams['legend.frameon'] = False
+        #plt.rcParams['legend.handleheight'] = 1
+        plt.rcParams['legend.borderpad'] = legendpad
     
 def ax_ticks_subplot(ax):
     ax.tick_params(direction = "in")
@@ -84,17 +103,21 @@ def savefig_subplot(fig, ax, path, pad, bbox_input = None):
         
     fig.savefig(path, bbox_inches=bbox)
 
-def eflux_time(time, eflux, figuresize):
-    fig, ax = plt.subplots(figsize=figuresize)
+def eflux_time(time, eflux, figuresize = (24,8), xlim = (0, None), ylim = (0, None), label = None, create_plot = True, axis = None):
     
-    ax.plot(time, eflux)
-    ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
-    ax.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
+    if create_plot:
+        fig, axis = plt.subplots(figsize=figuresize)
     
-    ax.set_xlim(xmin=0, xmax=time[-1])
-    ax.set_ylim(ymin=0)
+    axis.plot(time, eflux, label = label)
+    axis.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
+    axis.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
     
-    ax_ticks_subplot(ax)
+    if xlim[1] == None:
+        axis.set_xlim((0, max(time)))
+    else:
+        axis.set_xlim(xlim)
+    
+    axis.set_ylim(ylim)
     
 def max_shearingrate_time(time, wexb_max, fourier_index, figuresize):
     fig, ax = plt.subplots(figsize=figuresize)
@@ -128,7 +151,6 @@ def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, stepsize):
     
         start += stepsize
         end += stepsize
-    
     
     #ax.set_title(r'$R/L_T =$ ' + rlt + ', time interval [0 '+str(wexb.shape[1])+']', pad=20)
     ax.set_xlabel(r'$\psi[\rho]$')

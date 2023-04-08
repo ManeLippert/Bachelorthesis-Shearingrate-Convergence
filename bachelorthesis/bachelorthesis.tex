@@ -5,7 +5,7 @@
 
 
 % Packages
-\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, numbers=noenddot, fontsize=11pt, headsepline, enabledeprecatedfontcommands]{scrreprt}
+\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, numbers=noenddot, fontsize=11pt, headsepline, enabledeprecatedfontcommands, twoside, openright]{scrreprt}
 
 % twoside, openright or openleft
 
@@ -28,22 +28,24 @@
     \cleardoublepage
     %
     % 1.Chapter Instruction
-    \input{01-introduction.tex}
+    \input{10-introduction.tex}
     %
     % 2.Chapter Theory
-    \input{02-theory.tex}
+    \input{20-theory.tex}
     %
     % 3.Chapter MAthods and Material
-    \input{03-methods.tex}
+    \input{30-methods.tex}
     %
     % 4.Chapter Results
-    \input{04-results.tex}
+    \input{40-resolution.tex}
+    \input{41-boxsizescan.tex}
+    \input{42-heatfluxthreshold.tex}
     %
     % 5.Chapter Closure
-    \input{05-closure.tex}
+    \input{50-closure.tex}
     %
     % Appendix
-    %\input{06-appendix.tex}
+    \input{60-appendix.tex}
     %
     % Literatur
     %\nocite{*}

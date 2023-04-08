@@ -28,8 +28,6 @@ lineargrowth = pd.read_csv(homepath + 'data/linear_growthrate_ITG.dat', index_co
 lineargrowth_rlt = lineargrowth['gamma_N'][6.0]
 lineargrowth_rlt_color = '#949494'
 
-plot.parameters(True, 40, (24,8), 300, linewidth=2)
-
 #colors = [['#db5f57', '#dbb757', '#a7db57', '#57db5f'],
 # 		             ['#57a7db', '#57dbb7', '#57db5f'],
 #		  ['#5f57db', '#57a7db', '#b757db', '#db57a7']]
@@ -135,7 +133,10 @@ def box_plot(fig, time_label, plot_label,
             
             if YLABEL:
                 ax.set_ylabel(r'$\langle\omega_{\mathrm{E \times B}}\rangle~[\nu_{\mathrm{th}}/R]$')
-                ax.yaxis.set_label_coords(-0.25/box_max, 0.5, transform=ax.transAxes)
+                #ax.yaxis.set_label_coords(-0.25/box_max, 0.5, transform=ax.transAxes)
+                
+                # Thesis
+                ax.yaxis.set_label_coords(-0.35/box_max, 0.5, transform=ax.transAxes)
 
 
         ax.set_xlim(xmin=0, xmax = rad_boxsize)
@@ -210,6 +211,8 @@ path_rad = ['boxsize4x1/Ns16/Nvpar48/Nmu9', 'boxsize3x1/Ns16/Nvpar48/Nmu9', 'box
 filename_rad = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path_rad]
 file_rad = [h5py.File(i,"r+") for i in filename_rad]
 
+plot.parameters(40, (24,8), 300, linewidth=2)
+
 boxes_rad   = [4, 3, 2, 1]
 shifts_rad  = [20, 2, -5, 60]
 boxsize_rad = [r'4 \times 1\;\:\:', r'3 \times 1\;\:\:', r'2 \times 1\;\:\:', r'1 \times 1\;\:\:']
@@ -243,7 +246,7 @@ path_iso = ['boxsize3x3/Ns16/Nvpar48/Nmu9', 'boxsize2x2/Ns16/Nvpar48/Nmu9', 'box
 filename_iso = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path_iso]
 file_iso = [h5py.File(i,"r+") for i in filename_iso]
 
-plot.parameters(True, 40, (24,8), 300, linewidth=2)
+plot.parameters(40, (24,8), 300, linewidth=2)
 
 boxes_iso   = [3, 2, 1]
 shifts_iso  = [-5, -28, 60]
@@ -282,7 +285,7 @@ path_bi = ['boxsize3x5/Ns16/Nvpar48/Nmu9', 'boxsize3x3/Ns16/Nvpar48/Nmu9',
 filename_bi = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path_bi]
 file_bi = [h5py.File(i,"r+") for i in filename_bi]
 
-plot.parameters(True, 40, (24,8), 300, linewidth=2)
+plot.parameters(40, (24,8), 300, linewidth=2)
 
 #boxes_bi   = [3, 3, 3, 3, 3]
 boxes_bi   = [3, 3, 3, 3]
@@ -322,7 +325,10 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_c
 
 file = [file_rad, file_iso, file_bi]
 
-plot.parameters(True, 40, (24,8), 300, linewidth=2)
+#plot.parameters(True, 40, (24,8), 300, linewidth=2)
+
+# Thesis
+plot.parameters(54, (24,8), 300, tickwidth=2)
 
 boxes   = [boxes_rad, boxes_iso, boxes_bi]
 shifts  = [shifts_rad, shifts_iso, shifts_bi]
@@ -368,12 +374,19 @@ labels_bi, labels_iso, labels_rad = labels[7:len(labels)], labels[4:7], labels[0
 #fig.legend(handles_bi[::-1], labels_bi[::-1],loc='upper center', bbox_to_anchor=(0.5, - 1.10), frameon=False, ncol=5, handlelength=1)
 
 
-handles = handles_bi + [l] + handles_iso + [l] + handles_rad
-labels = labels_bi + [''] + labels_iso + [''] + labels_rad
-fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(3/box_maximal + 0.3/box_maximal, -1.1), frameon=False, ncol=1, handlelength=1)
+handles = handles_bi + handles_iso + handles_rad
+labels = labels_bi + labels_iso  + labels_rad
+#fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(3/box_maximal + 0.3/box_maximal, -1.1), frameon=False, ncol=1, handlelength=1)
+
+# Thesis
+fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(0.9, -1.17), frameon=False, ncol=1, handlelength=1)
+
 
 box_twin_xspine(fig, file[0][0], box_maximal, layer_max, layer_hspace=layer_hspace)
 
-plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
+#plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
+
+# Thesis
+plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_thesis.pdf', bbox_inches='tight')
 
 #'''

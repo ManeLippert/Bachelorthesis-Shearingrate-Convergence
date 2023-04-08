@@ -21,11 +21,11 @@ print('\n<------------------------- Evaluation ------------------------->\n')
 
 # PARAMETER =========================================================================================================================================
 
-plot.parameters(True, 22, (24,8), 300)
+plot.parameters(40, (24,8), 300, linewidth = 4, tickwidth = 3)
 
-rlt, boxsize, Ns, Nvpar, Nmu = 6.2, '3x3', 16, 48, 9
+rlt, boxsize, Ns, Nvpar, Nmu = 6.0, '1x1', 16, 64, 9
 
-ALL, EVOLUTION, SELECTION = True, True, True
+ALL, EVOLUTION, SELECTION = False, False, False
 
 print('Input:', rlt, boxsize, Ns, Nvpar, Nmu, ALL, EVOLUTION, SELECTION, '\n')
 
@@ -84,7 +84,7 @@ lineargrowth_rlt_color = 'grey'
 
 eflux_data, time = zonalflow.get_eflux_time(f)
 
-plot.eflux_time(time, eflux_data, (24,8))
+plot.eflux_time(time, eflux_data, (24,8), xlim = (0, 6000), ylim = (0, 25))
 plt.savefig(picpath+data+'_'+resolution+'_eflux.pdf', bbox_inches='tight')
 
 # Omega_ExB =========================================================================================================================================

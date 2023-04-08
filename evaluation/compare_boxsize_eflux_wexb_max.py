@@ -25,7 +25,10 @@ colors = [['#a11a5b', '#029e73', '#de8f05', '#0173b2'],
 # RADIAL ============================================================================================================================================
 
 
-plot.parameters(True, 32, (24,8), 300)
+#plot.parameters(32, (24,8), 300)
+
+#Thesis
+plot.parameters(54, (30,14), 300, tickwidth = 3)
 
 # File import and Create picture folder
 data = 'S6_rlt6.0'
@@ -43,18 +46,20 @@ if not os.path.exists(picDir):
 
 
 # Compare eflux and amplitude in time domain
-fig, (ax_eflux, ax_wexb_max) = plt.subplots(2, 1, figsize = (24,8), sharex=True)
+fig, (ax_eflux, ax_wexb_max) = plt.subplots(2, 1, sharex=True)
 
 boxsize = [r'1$\times$1', r'2$\times$1', r'3$\times$1', r'4$\times$1']
 
 #ax_eflux.set_title(r'$N_s$ = 16,   $N_{\mathrm{vpar}}$ = 48,   $N_{\mathrm{\mu}}$ = 9', pad=20)
 #ax_eflux.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
 ax_eflux.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
-ax_eflux.yaxis.set_label_coords(-0.045,0.5)
+#ax_eflux.yaxis.set_label_coords(-0.045,0.5)
+ax_eflux.yaxis.set_label_coords(-0.065,0.5)
 
 ax_wexb_max.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
 ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF}}~[\nu_{\mathrm{th}}/R]$')
-ax_wexb_max.yaxis.set_label_coords(-0.045,0.5)
+#ax_wexb_max.yaxis.set_label_coords(-0.045,0.5)
+ax_wexb_max.yaxis.set_label_coords(-0.065,0.5)
 
 
 fourier_index = 1
@@ -95,8 +100,9 @@ for i, n, k, c in zip(f, boxsize, max_index, color_rad):
     ax_wexb_max.set_xlim(xmin=0, xmax=x_max)
     ax_wexb_max.set_ylim(ymin=0, ymax=0.29)
 
-#leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.3), ncol=5, frameon=False, columnspacing=1, handlelength=1)
-leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 2.43), ncol=5, frameon=False, columnspacing=1, handlelength=1)
+#leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 2.43), ncol=5, frameon=False, columnspacing=1, handlelength=1)
+# Thesis
+leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 2.15), ncol=5, frameon=False, columnspacing=0.5, handlelength=1)
 
 #for line_eflux, line_wexb_max in zip(leg_eflux.get_lines(), leg_wexb_max.get_lines()):
 #    line_eflux.set_linewidth(4)
@@ -107,25 +113,21 @@ for line_wexb_max in leg_wexb_max.get_lines():
 
 plt.subplots_adjust(top=0.9, wspace=0.4, hspace=0.12)
 
-#plot.savefig_subplot(fig, ax_eflux   , picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf'   , pad=0.02)
-#plot.savefig_subplot(fig, ax_wexb_max, picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_max_comparison.pdf', pad=0.02)
-
-handles_eflux, labels_eflux = ax_eflux.get_legend_handles_labels(), ax_eflux.get_legend_handles_labels()
-
 ax_eflux.text(1.01, 0.87, r'\bf{(a)}', transform=ax_eflux.transAxes)
 ax_wexb_max.text(1.01, 0.87, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
 
-plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
+#plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
 
-# bbox for 2x1-2 and 3x1-3 
-bbox_ax_eflux = ax_eflux.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
-bbox_ax_wexb_max = ax_wexb_max.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
-#'''
+plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf', bbox_inches='tight')
 
 #'''
+
+'''
 # ISOTROPIC =========================================================================================================================================
 
-plot.parameters(True, 32, (24,8), 300)
+#plot.parameters(32, (24,4.3), 300, legendpad = 0.4)
+# Thesis
+plot.parameters(44, (24,8), 300, tickwidth = 2, legendpad = 0.4)
 
 # File import and Create picture folder
 data = 'S6_rlt6.0'
@@ -142,18 +144,20 @@ if not os.path.exists(picDir):
     
     
 # Compare eflux and amplitude in time domain
-fig, (ax_eflux, ax_wexb_max) = plt.subplots(1, 2, figsize = (24,4.3)) #, sharex=True)
+fig, (ax_eflux, ax_wexb_max) = plt.subplots(1, 2) #, sharex=True)
 
-boxsize = [r'1$\times$1', r'2$\times$2', r'3$\times$3']
+boxsize = [r'1\times1', r'2\times2', r'3\times3']
 
 #ax_eflux.set_title(r'$N_s$ = 16,   $N_{\mathrm{vpar}}$ = 48,   $N_{\mathrm{\mu}}$ = 9', pad=20)
 ax_eflux.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
 ax_eflux.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
-ax_eflux.yaxis.set_label_coords(-0.09,0.5)
+#ax_eflux.yaxis.set_label_coords(-0.09,0.5)
+ax_eflux.yaxis.set_label_coords(-0.15,0.5)
 
 ax_wexb_max.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
 ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF}}~[\nu_{\mathrm{th}}/R]$')
-ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
+#ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
+ax_wexb_max.yaxis.set_label_coords(-0.15,0.5)
 
 
 x_max = 0
@@ -168,7 +172,7 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_iso):
     
     eflux, time = eflux[:max_index], time[:max_index]
 
-    ax_eflux.plot(time, eflux, label=n, linewidth = 3, color = c)
+    ax_eflux.plot(time, eflux, label= r'$' + n + r'$', linewidth = 3, color = c)
     
     plot.ax_ticks_subplot(ax_eflux)
     
@@ -182,7 +186,9 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_iso):
     wexb, rad_coord, rad_boxsize, ddphi, dx, zonal_pot = zonalflow.get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(i)
     wexb_max = zonalflow.get_max_shearingrate(i, wexb, time, 1)
     
-    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', color = c, linewidth = 3)
+    #ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', color = c, linewidth = 3)
+    # Thesis
+    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$' + n + r';~k_{' + str(k) + ',\,' + n + r'}$', linewidth = 3, color = c)
     
     plot.ax_ticks_subplot(ax_wexb_max)
     
@@ -191,30 +197,41 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_iso):
     ax_wexb_max.yaxis.set_ticks(np.arange(0, 0.40, 0.1))
     
 
-leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
-leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
+#leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
+#leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
 
-for line_eflux, line_wexb_max in zip(leg_eflux.get_lines(), leg_wexb_max.get_lines()):
-    line_eflux.set_linewidth(4)
+#for line_eflux, line_wexb_max in zip(leg_eflux.get_lines(), leg_wexb_max.get_lines()):
+#    line_eflux.set_linewidth(4)
+#    line_wexb_max.set_linewidth(4)
+
+# Thesis
+leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(-0.2, 1.26), ncol=4, frameon=False, columnspacing=1, handlelength=1)
+
+for line_wexb_max in leg_wexb_max.get_lines():
     line_wexb_max.set_linewidth(4)
 
+#plt.subplots_adjust(top=0.9, wspace=0.3, hspace=0.4)
+# Thesis
+plt.subplots_adjust(top=0.9, wspace=0.4, hspace=0.4)
 
-#plt.subplots_adjust(wspace=0, hspace=0)
-plt.subplots_adjust(top=0.9, wspace=0.3, hspace=0.4)
+#plot.savefig_subplot(fig, ax_eflux   , picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf'   , pad=0.02)
+#plot.savefig_subplot(fig, ax_wexb_max, picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_max_comparison.pdf', pad=0.02)
 
-plot.savefig_subplot(fig, ax_eflux   , picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf'   , pad=0.02)
-plot.savefig_subplot(fig, ax_wexb_max, picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_max_comparison.pdf', pad=0.02)
+ax_eflux.text(1.02, 0.91, r'\bf{(a)}', transform=ax_eflux.transAxes)
+ax_wexb_max.text(1.02, 0.91, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
 
-ax_eflux.text(1.02, 0.87, r'\bf{(a)}', transform=ax_eflux.transAxes)
-ax_wexb_max.text(1.02, 0.87, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
+#plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
+# Thesis
+plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf', bbox_inches='tight')
 
-plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
 #'''
 
 #'''
 # BINORMAL  =========================================================================================================================================
 
-plot.parameters(True, 32, (24,8), 300)
+#plot.parameters(32, (24,4.3), 300)
+# Thesis
+plot.parameters(44, (24,8), 300, tickwidth = 2, legendpad = 0.4)
 
 # File import and Create picture folder
 data = 'S6_rlt6.0'
@@ -231,19 +248,20 @@ if not os.path.exists(picDir):
     os.makedirs(picDir)
     
 # Compare eflux and amplitude in time domain
-fig, (ax_eflux, ax_wexb_max) = plt.subplots(1, 2, figsize = (24,4.3)) #, sharex=True)
+fig, (ax_eflux, ax_wexb_max) = plt.subplots(1, 2) #, sharex=True)
 
-boxsize = [r'3$\times$1.5', r'3$\times$2.5', r'3$\times$3', r'3$\times$5']
+boxsize = [r'3\times1.5', r'3\times2.5', r'3\times3', r'3\times5']
 
 #ax_eflux.set_title(r'$N_s$ = 16,   $N_{\mathrm{vpar}}$ = 48,   $N_{\mathrm{\mu}}$ = 9', pad=20)
 ax_eflux.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
 ax_eflux.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
-ax_eflux.yaxis.set_label_coords(-0.09,0.5)
+#ax_eflux.yaxis.set_label_coords(-0.09,0.5)
+ax_eflux.yaxis.set_label_coords(-0.15,0.5)
 
 ax_wexb_max.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
 ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF}}~[\nu_{\mathrm{th}}/R]$')
-ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
-
+#ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
+ax_wexb_max.yaxis.set_label_coords(-0.15,0.5)
 
 x_max = 0
 fourier_index = [3, 3, 4, 4]
@@ -257,7 +275,7 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_bi):
     
     eflux, time = eflux[:max_index], time[:max_index]
 
-    ax_eflux.plot(time, eflux, label=n, linewidth = 3, color = c)
+    ax_eflux.plot(time, eflux, label= r'$' + n + r'$', linewidth = 3, color = c)
     
     plot.ax_ticks_subplot(ax_eflux)
     
@@ -271,7 +289,9 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_bi):
     wexb, rad_coord, rad_boxsize, ddphi, dx, zonal_pot = zonalflow.get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(i)
     wexb_max = zonalflow.get_max_shearingrate(i, wexb, time, 1)
     
-    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', linewidth = 3, color = c)
+    #ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'n + $k_' + str(k) + r'$', linewidth = 3, color = c)
+    # Thesis
+    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$' + n + r';~k_{' + str(k) + ',\,' + n + r'}$', linewidth = 3, color = c)
     
     plot.ax_ticks_subplot(ax_wexb_max)
     
@@ -279,29 +299,42 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_bi):
     ax_wexb_max.set_ylim(ymin=0, ymax=0.30)
     ax_wexb_max.yaxis.set_ticks(np.arange(0, 0.40, 0.1))
     
-leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=5, frameon=False, columnspacing=1, handlelength=1)
-leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=5, frameon=False, columnspacing=1, handlelength=1)
+#leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
+#leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
 
-for line_eflux, line_wexb_max in zip(leg_eflux.get_lines(), leg_wexb_max.get_lines()):
-    line_eflux.set_linewidth(4)
+#for line_eflux, line_wexb_max in zip(leg_eflux.get_lines(), leg_wexb_max.get_lines()):
+#    line_eflux.set_linewidth(4)
+#    line_wexb_max.set_linewidth(4)
+
+# Thesis
+leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(-0.2, 1.26), ncol=4, frameon=False, columnspacing=1, handlelength=1)
+
+for line_wexb_max in leg_wexb_max.get_lines():
     line_wexb_max.set_linewidth(4)
 
-#plt.subplots_adjust(wspace=0, hspace=0)
-plt.subplots_adjust(top=0.9, wspace=0.3, hspace=0.4)
+#plt.subplots_adjust(top=0.9, wspace=0.3, hspace=0.4)
+# Thesis
+plt.subplots_adjust(top=0.9, wspace=0.4, hspace=0.4)
 
-plot.savefig_subplot(fig, ax_eflux   , picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf'   , pad=0.02)
-plot.savefig_subplot(fig, ax_wexb_max, picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_max_comparison.pdf', pad=0.02)
+#plot.savefig_subplot(fig, ax_eflux   , picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf'   , pad=0.02)
+#plot.savefig_subplot(fig, ax_wexb_max, picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_max_comparison.pdf', pad=0.02)
 
-ax_eflux.text(1.02, 0.87, r'\bf{(a)}', transform=ax_eflux.transAxes)
-ax_wexb_max.text(1.02, 0.87, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
+ax_eflux.text(1.02, 0.91, r'\bf{(a)}', transform=ax_eflux.transAxes)
+ax_wexb_max.text(1.02, 0.91, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
 
-plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
+#plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
+# Thesis
+plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf', bbox_inches='tight')
 #'''
 
 '''
 # BINORMAL SCAN OLD =================================================================================================================================
 
-plot.parameters(True, 32, (24,8), 300)
+# bbox for 2x1-2 and 3x1-3 
+bbox_ax_eflux = ax_eflux.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
+bbox_ax_wexb_max = ax_wexb_max.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.dpi_scale_trans.inverted())
+
+plot.parameters(32, (24,8), 300)
 
 # File import and Create picture folder
 data = 'S6_rlt6.0'
