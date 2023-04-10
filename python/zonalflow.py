@@ -93,6 +93,7 @@ def get_index_from_value(data, value):
     n, index = 0, None
     for i in data:
         if round(i) == value:
+            print(i, n)
             index = n
         n += 1
 
