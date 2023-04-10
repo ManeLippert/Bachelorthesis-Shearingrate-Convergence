@@ -157,9 +157,6 @@ data
    
 ### Files 
 
-* `compare_*.ipynb`: juypter notebooks with comparison of `rlt`, `boxsize`and `resolution` in folder `data`, `S6_rlt6.0`, `boxsize1x1`
-
-* `eval.ipynb`: jupyter notebook of evaluation
 * `FDS`: restart file needed to restart run with gkw from current timestep (*)
 * `FDS.dat`: database file of `FDS` with current status of the simulation after run with gkw
 * `input.dat`: input database for simultaion with all parameters
