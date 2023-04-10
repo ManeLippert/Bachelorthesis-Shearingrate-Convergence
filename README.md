@@ -11,9 +11,6 @@
 1. [Introduction](#introduction)
 2. [Journal](#journal)
 3. [Results](#results)
-
-    3.1 [Juypter Notebooks](#juypter-notebooks)
-
 4. [Literature](#literature)
 
 
