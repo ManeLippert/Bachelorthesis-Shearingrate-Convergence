@@ -918,16 +918,147 @@ The work on the thesis is documented in from of a journal and to keep track of a
       </p>
       </details>
 
-    </p>
-    </details>
-
-    * <details><summary>16.01.2023 &nbsp; Feedback to Draft of Brief Communcation </summary>
+    * <details><summary>16.01.2023 &nbsp; Meetng about Draft of Brief Communcation </summary>
       <p>
 
+      # Meeting about Draft of Brief Communcation
 
+      #### Monday 16.01.2023 14:00 to 14:45 with Florian Rath and Arthur Peeters
+
+      The First draft was good but the focus as an continuation of peeters2016 is an problem. The brief communication should be an paper on its own.
+
+      The case that for 3x3 the staircase structures repeats itself 4 times requires an boxsize scan in binormal direction for that an scan of 3x1.5, 3x2.5 and 3x5 will be made additionally as well a scan for 3x3 for $R/L_T$ = 6.2, 6.4 to lengthen the time of turbulence and to approach the heat flux threshold for verification.
 
       </p>
       </details>
+
+    * <details><summary>30.01.2023 &nbsp; Presentation Style in LaTeX </summary>
+      <p>
+      
+      # Presentation Style in LaTeX
+
+      To make an presentation about my bachelor work the decision were made in favor of latex because of the cross plattform compability of pdfs.
+      As style sheet will be used sleek theme which is an 16:9 variant of HSMR by Benjamin Weiss.
+
+      It could be that the use of powerpoint is necessary to add animations.
+
+      </p>
+      </details>
+    
+    </p>
+    </details>
+
+  * <details><summary>February</summary>
+    <p>
+
+    * <details><summary>04.02.2023 - 26.02.2023 &nbsp; Corrections of Brief Communication, New Fetaures for Restart Script, Juypter Notebook Problems and Binormal box scan </summary>
+      <p>
+      
+      # Corrections of Brief Communication, New Fetaures for Restart Script, Juypter Notebook Problems and Binormal box scan
+      ## Corrections of Brief Communication
+
+      The brief communication has get its first correction from Florian Rath which got accepted and minor things were changed afterwards. 
+      Graphics got reworked for new variable names and the box size plot reworked for an big box size plot including radial, isotropic and binormal box size plot.
+
+      ## New features restart script
+
+      The restart script gets new features:
+      * Kill option for nohup process to not kill of the false process with multiple user using the script
+      * Script continues writing to status file and does not rewrite it
+      * New backup locations to chose from praser
+      * Increased refresh rate to 300
+      * Additional check level to ensure successful run
+      * Reset Simulation with dump files. Thanks for Florian Rath to provide the function
+      * New jobStatusInfo header to get even informations when slumr `squeue` has no output
+      * Script can now be run from everythere so no need to copy it every time again into simultaion folder
+      * Check if h5 file is closed before restart and if `FDS.dat` and `gkwdata.h5` has same modified timestamp
+
+      ## Juypter Notebook Problems
+
+      After an update of python and visual studio code the juypter notebooks stop working and lost connection to the server after a image was produced. Because of that the evaluation got rewritten in python file in a new folder to be certian that the evaluation can go on.
+
+      Additional an datasheet was created in `csv` to have an main file with all informations.
+
+      ## Evaluation
+
+      Every simulation converges except for $R/L_T$ = 6.4 which was anticipate. After multiple errors 3x1.5 has to rerun the old file is under the folder Broken.
+
+      Results:
+      * 3x1.5 -> Convergence $k_4$
+      * 3x2.5 -> Convergence $k_3$, $k_4$
+      * 3x5 -> Convergence $k_4$
+
+      * rlt = 6.2 -> Convergence $k_3$
+      * rlt = 6.4 -> Turbulent -> Consistent with results of peeters2016
+
+      </p>
+      </details>
+
+    </p>
+    </details>
+
+  * <details><summary>March</summary>
+    <p>
+
+    * <details><summary>19.03.2023 - 22.03.2023 &nbsp; Writing new version of brief communication </summary>
+      </p>
+      
+      # Writing new version of brief communication
+
+      The breif commnication gets additional section for binormal box scan and minor issues were corrected (_ref, rearrangments, colors in plots, captions, name of quantities and formula and commands for quantites that repeats very often).
+
+      </p>
+      </details>
+
+    * <details><summary>23.03.2023 - 26.03.2023 &nbsp; New features for Restart script get implemented </summary>
+      </p>
+
+      # New features for Restart script get implemented
+
+      As stated befor the restart script gets new features that got implemented into the script itself.
+      Additional to that the reset function needs `h5py`, `pandas`and `numpy` modules installed. For that, a function to automatically install modules were made. 
+
+      The code itself got rewritten at some parts because of obsolete code and other isssues were fixed look into #24 for more.
+
+      </p>
+      </details>
+
+    </p>
+    </details>
+
+  * <details><summary>April</summary>
+    <p>
+
+    * <details><summary>04.04.2023 - 06.04.2023 &nbsp; Submit Brief Communication to "Physics of Plasma" </summary>
+      </p>
+
+      # Submit Brief Communication to "Physics of Plasma"
+
+      Brief communication got the last corrections from Arthur Peeters (wavelength -> size/radial size) and Florian Rath and submitted to AIPs "Physics of Plasma"
+      
+      </p>
+      </details>
+
+    * <details><summary>09.04.2023 - 17.04.2023 &nbsp; Writing Bachelor Thesis and Backup Data </summary>
+      </p>
+
+      # Writing Bachelor Thesis and Backup Data
+
+      ## Writing Bachelor Thesis
+
+      This time the focus lay down to write the bachelor thesis. For that, changes for brief communication plots were made to ensure readablity and the chapter pages style were changed to a new modern style (cover page will follow up).
+
+      Additionally the error indexs for the 6.2/3x3 simulation were found and written into datasheet. 
+
+      ## Backup Data
+
+      Data got uploaded to NAS and the git repository syncronized as well the server folder gets an clean up.
+      
+      </p>
+      </details>
+
+    </p>
+    </details>
 
   </p>
   </details>
