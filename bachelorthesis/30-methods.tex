@@ -4,30 +4,3 @@
 \label{chap:methods}
 \thispagestyle{empty}
 \newpage
-
-\section{Simulation Setup}
-\label{sec:simulation}
-
-The gyrokinetic simulations are performed with the non-linear flux tube version of Gyrokinetic Workshop (GKW) \cite{peeters2009} with adiabatic electron approximation.
-In agreement with Ref. \citenum{peeters2016}, Cyclone Base Case (CBC) like parameters are chosen with an inverse background temperature gradient length $\rlt = 6.0$ and circular concentric flux surfaces. 
-The numerical resolution is compliant to the "Standard resolution with 6th order (S6)" set-up of the aforementioned reference, with a somewhat lowered number of parallel velocity grid points.
-It has been carefully verified that this modification preserves the same physical outcome as the original study.
-A summary of the numerical parameters is given in Tab.~\ref{tab:resolution} and for more details about the definition of individual quantities the reader is referred to Refs. \citenum{peeters2009, peeters2016}.
-\begin{center}
-	\captionsetup{type=table}
-	\begin{tabular}{l | ccccc | ccccc | c | cc}
-		& $N_\mathrm{m}$ & $N_x$ & $N_\mathrm{s}$ & $N_{\nu_\parallel}$ & $N_\mu$ & $D$ & $\nu_\mathrm{d}$           & $D_{\nu_\parallel}$ & $D_x$ & $D_y$ & Order & $k_y\rho$ & $k_x\rho$ \\
-		\hline
-		S6   & 21    & 83    & 16    & 64                  & 9       & 1   & $|\nu_\parallel|$ & 0.2                 & 0.1   & 0.1   & 6     & 1.4       & 2.1       \\
-	\end{tabular}
-	\captionof{table}{
-		Resolution used in this paper: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
-	}
-	\label{tab:resolutionBenchmark}
-\end{center}
-
-\section{btrzx1 Cluster}
-\label{sec:cluster}
-
-\section{Restart Script for Simulation btrzx1 Cluster}
-\label{sec:restartscript}
