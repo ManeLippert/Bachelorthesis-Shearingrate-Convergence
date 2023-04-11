@@ -1018,7 +1018,7 @@ The work on the thesis is documented in from of a journal and to keep track of a
       As stated befor the restart script gets new features that got implemented into the script itself.
       Additional to that the reset function needs `h5py`, `pandas`and `numpy` modules installed. For that, a function to automatically install modules were made. 
 
-      The code itself got rewritten at some parts because of obsolete code and other isssues were fixed look into #24 for more.
+      The code itself got rewritten at some parts because of obsolete code and other isssues were fixed look into [#24](https://github.com/ManeLippert/Bachelorthesis-Shearingrate-Convergence/issues/24) for more.
 
       </p>
       </details>
