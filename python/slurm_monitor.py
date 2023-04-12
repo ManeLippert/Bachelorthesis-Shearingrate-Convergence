@@ -16,34 +16,35 @@ description_text = """
 
 FEATURES:
 o NO REQUIREMENTS: Default script runs with standard python3 libary
-o Reset Option (rely on "h5py" & "pandas" & "numpy" which get installed by the script)
-o Creats jobscript file with defined content (look into file itself for the jobscript)
-o Start/Restarts job until criteria is suffused (default=0)
-o Makes backup after each run before Restart and Restore files after fail
-o Sends mail at the beginning, end and restart (default=False) with status file 
-  as attachment (mailx has to be installed and working look into file for more info)
+o Creats jobscript file with defined content 
+  (look into variable "jobscriptContent" to add more option)
+o Start/Restarts job until criteria is suffused (default=10000)
+o Makes backup after each run before Restart and Restore files after failed run
+  (uses rsync command line utility)
+o Reset option after run fails and dump files were written
+  (rely on "h5py" & "pandas" & "numpy" which get installed by the script)
 o Creates status file with current status and progress bars and updates it dynamically
   Progress: Total progress of simulation
-  Run X:    Progress of current run
+  Run X   : Progress of current run
+o Sends mail at the beginning, end and restart (default=False) with status file 
+  as attachment 
+  (mailx has to be installed, look into "send_mail" function for more info)
 
 START SCRIPT IN BACKGROUND:
 
   o WITH NOHUP:
     Command:
-    >>> nohup python3 -u slurm_monitor.py --job-name JOBNAME &> /dev/null &
+    >>> nohup python3 -u slurm_monitor.py --job-name $JOBNAME &> /dev/null &
 
     Kill Process:
-    >>> python3 -u slurm_monitor.py --job-name JOBNAME --kill
+    >>> python3 -u slurm_monitor.py --job-name $JOBNAME --kill
     
   o WITH SCREEN (has to be installed):
     Create Screen:
     >>> screen -S $SESSION
     
     Command:
-    >>> python3 -u slurm_monitor.py --verbose
-
-    With arguments (example for 30000 timesteps):
-    >>> python3 -u slurm_monitor.py --verbose -n 30000
+    >>> python3 -u slurm_monitor.py --job-name $JOBNAME --verbose
     
     Leave Screen:
     >>> ((Strg + a) + d)
@@ -60,7 +61,7 @@ START SCRIPT IN BACKGROUND:
 
 OUTPUT STATUS:
 Just run the file will create an dynamic output (recommended with using screen) or
->>> cd $DATA && find . -name status.txt -exec tail -8 {} \;
+>>> cd $DATA && find . -name $STATUSFILENAME -exec tail -8 {} \;
 
 ====================================== ARGUMENTS ======================================
 """
@@ -137,7 +138,9 @@ runCounter = len(slurmFiles)
 nTimestepsCurrent = 0
 
 currentTime = "00:00:00"
+
 dataFilename = "gkwdata.h5"
+
 check1Filename, check2Filename = "DM1.dat", "DM2.dat"
 check1Bin, check2Bin = check1Filename.replace(".dat", ""), check2Filename.replace(".dat", "")
 
@@ -206,15 +209,6 @@ jobName = jobName[0:8]
 startOutputFlag = "Submitted batch job "
 restartFlag = "FILE_COUNT"
 
-## COMMANDS ================================================================================================================
-
-commandJobRunning = "squeue --states=running --name " + jobName
-commandJobPending = "squeue --states=pending --name " + jobName
-
-commandMonitorKill = "ps ax | grep " + jobName + " | awk '{print $1}'"
-
-commandJobStarting = "sbatch"
-
 # SWITCHES =================================================================================================================
 
 if emailAddress==None:
@@ -254,6 +248,18 @@ if BACKUP:
     
     if not os.path.exists(backupPath):
         os.makedirs(backupPath)
+        
+## COMMANDS ================================================================================================================
+
+commandJobRunning = "squeue --states=running --name " + jobName
+commandJobPending = "squeue --states=pending --name " + jobName
+
+commandMonitorKill = "ps ax | grep " + jobName + " | awk '{print $1}'"
+
+commandJobStarting = "sbatch"
+
+commandBackup  = ["rsync", "-a", "", backupPath]
+commandRestore = ["rsync", "-a", "-I", "--exclude=" + statusFilename, backupPath + "/", ""]
 
 # FUNCTIONS ================================================================================================================
 
@@ -450,25 +456,6 @@ def find_string_in_file(filename, string):
             return True
         else:
             return False
-
-def write_add_string_into_file(filename, substring, add, comment = None):
-
-    with open(filename, "r") as file:
-        data = file.readlines()
-
-    try:
-        index = [idx for idx, s in enumerate(data) if substring in s][0]
-        data[index] = substring + add + "\n"
-        
-    except IndexError:
-        index = [idx for idx, s in enumerate(data) if "\n" in s][1]
-        data.insert(index, "\n")
-        data.insert(index + 1, comment)
-        data.insert(index + 2, substring + add + "\n")
-        
-    with open(filename, "w") as file:
-        file.writelines(data)
-        file.flush()
         
 def delete_write_line_to_file(filename, add = "", start=None, end=None):
     
@@ -824,11 +811,12 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
         for line in f:
             line.replace(old_text, new_text)
             
-def check_and_delete_file(filename):
+def check_and_delete_file(filenames):
     
-    if(os.path.isfile(filename)):
-        os.remove(filename)
-    return
+    for filename in filenames:
+        if(os.path.isfile(filename)):
+            os.remove(filename)
+
 
 def check_checkpoint_files():
     DM1, DM2 = False, False
@@ -855,6 +843,16 @@ def get_ntimestepCurrent(filenames):
                 ntimestep = ntimestepFile
         
     return ntimestep
+
+def get_time_from_statusfile(filename, line_index):
+    with open(filename, "r") as file:
+        line = file.readlines()[line_index]
+        
+        content = line.split(" ")
+        time = content[-2]
+        time_sec = get_time_in_seconds(time)
+        
+        return time_sec
 
 ## TIME ====================================================================================================================
 
@@ -902,16 +900,6 @@ def time_time():
 def time_duration(startTime, pastTime):
     stop = time.time()
     return get_time_as_string(stop - startTime + pastTime)
-
-def get_time_from_statusfile(filename, line_index):
-    with open(filename, "r") as file:
-        line = file.readlines()[line_index]
-        
-        content = line.split(" ")
-        time = content[-2]
-        time_sec = get_time_in_seconds(time)
-        
-        return time_sec
 
 ## STATUS ==================================================================================================================
 
@@ -1042,7 +1030,7 @@ else:
         
         if BACKUP:
             print_table_row(["BACKUP", backupPath])
-            subprocess.run(["rsync", "-a", "", backupPath])
+            subprocess.run(commandBackup)
             
         if EMAIL:
             send_mail(emailAddress, "Started Job " + jobName)
@@ -1151,16 +1139,16 @@ while True:
                                     # Update backup
                                     if BACKUP:
                                         print_table_row(["BACKUP", backupPath])
-                                        subprocess.run(["rsync", "-a", "", backupPath])
+                                        subprocess.run(commandBackup)
 
                             # Restore backup to rerun simulation    
                             elif BACKUP:
                                 print_table_row(["RESTORE", backupPath])
-                                subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
+                                subprocess.run(commandRestore)
 
                         elif BACKUP:
                             print_table_row(["BACKUP", backupPath])
-                            subprocess.run(["rsync", "-a", "", backupPath])
+                            subprocess.run(commandBackup)
                     
                         break
                     except OSError:
@@ -1181,12 +1169,12 @@ while True:
                             # Update backup
                             if BACKUP:
                                 print_table_row(["BACKUP", backupPath])
-                                subprocess.run(["rsync", "-a", "", backupPath])
+                                subprocess.run(commandBackup)
                     
                     # Restore backup to rerun simulation    
                     elif BACKUP:
                         print_table_row(["RESTORE", backupPath])
-                        subprocess.run(["rsync", "-a", "-I", "--exclude=status.txt", backupPath + "/", ""])
+                        subprocess.run(commandRestore)
                     
                     break
             
@@ -1210,10 +1198,7 @@ while True:
             break
         
         # Delete checkpoint files
-        check_and_delete_file(check1Bin)
-        check_and_delete_file(check1Filename)
-        check_and_delete_file(check2Bin)
-        check_and_delete_file(check2Filename)
+        check_and_delete_file([check1Bin, check1Filename, check2Bin, check2Filename])
         
         # Create jobscript
         if jobscriptFilename == "jobscript-create":
