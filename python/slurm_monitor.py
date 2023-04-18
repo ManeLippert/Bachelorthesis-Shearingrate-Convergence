@@ -15,8 +15,8 @@ description_text = """
 ===================================== DESCRIPTION =====================================
 
 FEATURES:
-o NO REQUIREMENTS: Default script runs with standard python3 libary
-o Creats jobscript file with defined content 
+o NO REQUIREMENTS: Default script runs with standard python3 library
+o Creates jobscript file with defined content 
   (look into variable "jobscriptContent" to add more option)
 o Start/Restarts job until criteria is suffused (default=10000)
 o Makes backup after each run before Restart and Restore files after failed run
@@ -114,11 +114,11 @@ additional.add_argument("--statusfile", dest="statusFile", nargs="?", type=str, 
 additional.add_argument("--restartfile", dest="restartFile", nargs="?", type=str, default="FDS.dat",
                         help="restart file with data               (default=FDS.dat)")
 
-additional.add_argument("--format", dest="formattable", nargs="?", type=str, default="universal",
-                        help="format of output table               (default=none)\n"+
+additional.add_argument("--format", dest="formattable", nargs="?", type=str,
+                        help="format of output table               (default=None)\n"+
                              "- fancy (round box)\n"+
                              "- universal (crossplattform)\n"+
-                             "- none (No frame around box)")
+                             "- None (No frame)")
 
 additional.add_argument("--refresh-rate", dest="sleepTime", nargs="?", type=int, default=300,
                         help="time interval to check status in sec (default=300)")
@@ -315,7 +315,7 @@ def print_table_row(content,
     if formatTable == "universal":
         table_outline = ["+-", "-+", "+-", "-+", "+-", "-+", "| ", " |", "-"]
         
-    if formatTable == "none":
+    if formatTable == None:
         table_outline = ["--", "--", "--", "--", "--", "--", "  ", "  ", "-"]
     
     sep_top = table_outline[0] + table_inner_width*table_outline[8] + table_outline[1]
