@@ -27,7 +27,7 @@
 \graphicspath{{../pictures/}}    % Path for pictures
 
 % Functions
-\newcommand\tab[1][1cm]{\hspace*{#1}}
+%\newcommand\tab[1][1cm]{\hspace*{#1}}
 \newcommand{\vect}[1]{\boldsymbol{\mathbf{#1}}}
 \newcolumntype{g}{>{\columncolor[rgb]{ .741,  .843,  .933}}l}
 
@@ -50,3 +50,8 @@
     	\label{#3}
 	\end{center}
 }
+
+\newcommand\invisiblesection[1]{%
+  \refstepcounter{section}%
+  \addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+  \sectionmark{#1}}

@@ -1,3 +1,240 @@
-\section{Restart Script for Simulation btrzx1 Cluster}
+\section{Restart Script for Simulation}
 \label{sec:restartscript}
 
+As stated in Chapter \ref{sec:cluster} the \texttt{btrzx1}-cluster has a wall time of 24 hours but since simulations typical run longer than 24 hours one have to restart the simulation after the wall time gets exceeded. Some simulation need even longer so that the simulation itself needs multiple weeks to finish with a result which makes the restart of the simulation a daily task that could be easily forget. So to eliminate this minor inconveniences the following restart script were written.
+
+As script language \texttt{python} was chosen over shell because of its easiness to write code and the variety of tools which can interact with the \texttt{bash}-shell. \texttt{bash} was also considered but after some issue occurred regarding the mechanism to check wether a file exist or not, \texttt{python} was selected.
+
+The script was named \texttt{slurm\_monitor.py} to indicate that this script works with the the \texttt{Slurm} resource manager. The source code was pushed to the gkw repository on BitBucket \cite{slurmmonitor} or can be found in Appendix \ref{append:slurmcode}
+
+\subsection{How to run Restart Script in Terminal}
+\label{sub:codeRun}
+
+To run the restart script \texttt{python3} has to be installed on the system and should be accessible by the command line. With the following command can be the monitoring started:
+\begin{lstlisting}[language=Bash]
+python3 -u slurm_monitor.py --job-name $JOBNAME
+\end{lstlisting}
+Additional parser options can be added to the command above which will be summarized in the upcoming Chapter \ref{sub:codeFeatures}. The script was build to run in the background of the terminal for which there are two approaches:
+\begin{enumerate}
+    \item \texttt{nohup}: Runs command in the background while terminal can still be used or closed. \cite{nohup} The command for this method would be: \\
+\begin{lstlisting}[language=Bash]
+nohup python3 -u slurm_monitor.py --job-name $JOBNAME &> /dev/null &
+\end{lstlisting}
+and to cancel the monitoring:
+\begin{lstlisting}[language=Bash]
+python3 -u slurm_monitor.py --job-name $JOBNAME --kill
+\end{lstlisting}
+    \item \texttt{screen}: Opens a virtual terminal session which is detached from the main terminal and can be entered and closed. \cite{screen} Here the command would be:
+\begin{lstlisting}[language=Bash]
+screen -S $SESSION #Create screen session
+python3 -u slurm_monitor.py --job-name $JOBNAME --verbose
+\end{lstlisting}
+and to cancel the monitoring use the keyboard shortcut \keys{\ctrl + C} or kill screen itself with \keys{\ctrl + D}. To leave the screen use ( \keys{\ctrl + A} ) + \keys{D} and to enter the screen use:
+\begin{lstlisting}[language=Bash]
+screen -r $SESSION
+\end{lstlisting}
+\end{enumerate}
+
+\newpage
+\subsection{Features of Restart Script}
+\label{sub:codeFeatures}
+
+The restart script has several features which can be used via the command line interface as parser options. The following features with the corresponding parser option were implementing:
+\begin{itemize}
+    \item The script has no requirements because it runs on the standard \texttt{python3} library
+    \item \textbf{\textcolor{red}{!Required!}} Set job name not longer than 8 characters to identify simulation\\
+          \texttt{-j [JOBNAME], -\/-job-name [JOBNAME]}
+    \item Creates jobscript file with defined content\\
+          (look into variable \texttt{jobscriptContent} to add more option) \\
+          \texttt{-\/-jobscript [JOBSCRIPTFILE]~~~~~~~(default=jobscript-create)}\\
+          \texttt{-\/-nodes [NODES]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(default=3)}\\
+          \texttt{-\/-ntask-per-node [TASKS]~~~~~~~~~~~~~~~~~~~~~~~~(default=32)}\\
+          \texttt{-\/-walltime [WALLTIME]~~~~~~(d-hh:mm:ss)~(default=0-24:00:00)}
+    \item Start/Restarts simulation until job criteria is suffused \\
+          \texttt{-n [TIMESTEPS]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\,\,(default=10000)}\\
+          \texttt{-\/-restartfile [RESTARTFILE]~~~~~~~~~~~~~~~~(default=FDS.dat)}
+    \item Makes backup after each run before Restart and Restore files after failed run\\
+          (uses \texttt{rsync} command line utility)\\
+          Quicklinks: local (simulation folder), home (home folder) \\
+          \texttt{-b [LOCATION], -\/-backup [LOCATION]~~~~~~~~~~~\,(default=None)}
+    \item Reset option after run fails and dump files were written\\
+          (rely on \texttt{h5py}, \texttt{pandas} and \texttt{numpy} which get installed by the script itself)\\
+          \texttt{-r, -\/-reset~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\,(default=False)}
+    \item Creates status file with current status and progress bars and updates it dynamically\\
+          \texttt{-\/-statusfile [STATUSFILE]~~~~~~~~~~~~~~~(default=status.txt)}
+    \item Set form of the output table in status file\\
+          Options: fancy (round box), universial (crossplattform), None (No frame)\\
+          \texttt{-\/-format [FORMATTABLE]~~~~~~~~~~~~~~~~~~~~~~~~(default=None)}
+    \item Sends mail at the beginning, end and restart with status file as attachment\\
+          (\texttt{mailx} other equivalent has to be installed, look into \texttt{send\_mail} function for more info)\\
+          \texttt{-\/-mail [MAILADDRESS]~~~~~~~~~(mail@server.de)~(default=None)}\\
+          \texttt{-\/-restart-mail ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(default=False)}
+    \item Kills monitoring process by using the \texttt{PID} number\\
+          \texttt{-\/-kill~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(default=False)}
+    \item Set sleep interval after which the status of the current simulation should be checked\\
+          \texttt{-\/-refresh-rate [SLEEPTIME]~~~~~~~~~~~~~~~~~~~~~(default=300)}
+    \item Print output of status file table to console\\
+          \texttt{-v, -\/-verbose~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\,(default=False)}
+\end{itemize}
+
+%options:
+%  -h, --help            show this help message and exit
+%
+%required arguments:
+%  -j [JOBNAME], --job-name [JOBNAME]
+%                        job name not longer than 8 character
+%
+%additional arguments:
+%  -n [TIMESTEPS]        required timesteps                   (default=10000)
+%  -r, --reset           Uses Dumpfiles to reset Simulation   (default=False)
+%  -v, --verbose         activate output of script            (default=False)
+%  -b [BACKUP], --backup [BACKUP]
+%                        backup location for files            (default=None)
+%                        - local (creates backup in simulation folder)
+%                        - home  (creates backup in home folder)
+%  --jobscript [JOBSCRIPTFILE]
+%                        jobscript to run SLURM job           (default=jobscript-create)
+%  --ntask-per-node [TASKS]
+%                        MPI task per node                    (default=32)
+%  --nodes [NODES]       number of nodes                      (default=3)
+%  --walltime [WALLTIME]
+%                        walltime of server (d-hh:mm:ss)      (default=0-24:00:00)
+%  --mail [MAIL]         mail address (mail@server.de)        (default=None)
+%  --restart-mail        mail after every restart             (default=False)
+%  --statusfile [STATUSFILE]
+%                        file with output from nohup command  (default=status.txt)
+%  --restartfile [RESTARTFILE]
+%                        restart file with data               (default=FDS.dat)
+%  --format [FORMATTABLE]
+%                        format of output table               (default=none)
+%                        - fancy (round box)
+%                        - universal (crossplattform)
+%                        - none (No frame around box)
+%  --refresh-rate [SLEEPTIME]
+%                        time interval to check status in sec (default=300)
+%  --kill                kills monitor process                (default=False)
+%
+
+\newpage
+
+\subsection{General Structure}
+\label{sub:codeStructure}
+
+\newcommand{\distance}{2.5cm}
+
+\begin{center}
+    \begin{tikzpicture}[node distance=2cm]
+
+        \node (start)        [startstop]                                            {Start};
+        \node (init)         [init, below of = start]                               {Initialize};
+        \node (startLoop)    [startstop, below of = init]                           {Loop};
+        \node (checkStatus)  [process, below of=startLoop]                          {Check Status};
+        \node (checkData)    [process, below of=checkStatus, yshift = -2cm]         {Check Data};
+        \node (checkPending) [decision, below of=checkStatus, xshift=\distance]     {Pending};
+        \node (checkRunning) [decision, below of=checkStatus, xshift=-\distance]    {Running};
+        \node (error)        [decision, below of=checkData, xshift=-\distance]      {Errors};
+        \node (checkPoint)   [decision, below of=checkData, xshift=\distance]       {Checkpoint};
+        \node (backup)       [process,  below of=error, xshift=-\distance]          {Backup Data};
+        \node (restore)      [process,  below of=checkPoint, xshift=\distance]      {Restore Data};
+        \node (reset)        [process,  below of=checkData, yshift=-2cm]            {Reset Data};
+        \node (checkStep)    [decision, below of = reset]                           {Enough Timesteps};
+        \node (end)          [startstop, below of=checkStep, xshift=4cm]            {End};
+        \node (restart)      [init, below of=checkStep, xshift=-4cm]                {Start/Restart};
+
+        
+        \draw [arrow] (start)          --                                           (init);
+        \draw [arrow] (init)           --                                           (startLoop);
+        \draw [arrow] (startLoop)      --                                           (checkStatus);
+        \draw [arrow] (checkStatus)    -|                                           (checkRunning);
+        \draw [arrow] (checkRunning)   -- node[anchor=south] {No}                   (checkPending);
+        \draw [arrow] (checkPending)   -- node[anchor=north west] {Yes} + ( 3,0) |- (startLoop);
+        \draw [arrow] (checkRunning)   -- node[anchor=north east] {Yes} + (-3,0) |- (startLoop);
+        \draw [arrow] (checkPending)   |- node[anchor=north west] {No}              (checkData);
+        \draw [arrow] (checkData)      -|                                           (error);
+        \draw [arrow] (error)          -- node[anchor=south] {Yes}                  (checkPoint);
+        \draw [arrow] (error)          -| node[anchor=south east] {No}              (backup);
+        \draw [arrow] (checkPoint)     -| node[anchor=south west] {No}              (restore);
+        \draw [arrow] (checkPoint)     |- node[anchor=north west] {Yes}             (reset);
+        \draw [arrow] (backup)         --                                           (checkStep);
+        \draw [arrow] (reset)          --                                           (checkStep);
+        \draw [arrow] (restore)        --                                           (checkStep);
+        \draw [arrow] (checkStep)      -| node[anchor=south east] {No}              (restart);
+        \draw [arrow] (checkStep)      -| node[anchor=south west] {Yes}             (end);
+        \draw [arrow] (restart)        -- + (-3,0) |-                               (startLoop);
+        \draw [arrow] (end)            -- + ( 3,0) |-                               (start);
+
+    \end{tikzpicture}
+\end{center}
+
+\newpage
+
+\subsection{Status File created from Restart Script}
+\label{sub:statusFile}
+
+As stated in Chapter \ref{sub:codeFeatures} the restart script is writing a status file with the current status and progress bars of the simulation. The output is formatted like a table and can bei adjust in its appearance with the \texttt{-\/-format} parser option [Chapter \ref{sub:codeFeatures}]. The output types which are written in the status file are listed in Tab. \ref{tab:statusTypes}. To each output prints the restart script the date, time and the duration of the monitoring additionally into the table. 
+\begin{center}
+    \captionsetup{type=table}
+    \begin{tabular}{l | l}
+        Type              & Information                                                                                     \\\hline
+        \texttt{STARTING} & Start of monitoring process or Start/Restart of simulation                                      \\
+        \texttt{CONTINUE} & If the simulation has performed at least one run                                                \\\hline
+        \texttt{CONTROL}  & Check of the current time steps of the simulation                                               \\
+        \texttt{SUCCESS}  & Stop of monitoring because the time steps condition has been fulfilled                          \\\hline
+        \texttt{IMPORT}   & Modules \texttt{h5py}, \texttt{pandas} and \texttt{numpy} will be loaded                        \\
+        \texttt{INSTALL}  & Script installs the modules \texttt{h5py}, \texttt{pandas} and \texttt{numpy} on the user level \\
+        \texttt{CHECK}    & Required modules to use the reset option are already installed                                  \\\hline
+        \texttt{WAITING}  & Simulation is pending in the queue of Slurm                                                     \\
+        \texttt{RUNNING}  & Simulation is running on the server                                                             \\\hline
+        \texttt{BACKUP}   & The script performs the backup of the data to the predefined location                           \\
+        \texttt{RESTORE}  & The script reloads the data from the backup folder if errors occur                              \\
+        \texttt{RESET}    & The simulation gets reset with the use of dump files                                            \\\hline 
+        \texttt{ERROR}    & During the monitoring does occur an error                                                       \\
+                          & Types:                                                                                          \\
+                          & No executable (\texttt{gkw.x}), walltime, timeout, no config, \texttt{hdf5}, string error       \\
+    \end{tabular}
+    \captionof{table}{Output types in status file}
+    \label{tab:statusTypes}
+\end{center}
+
+To continue, the status file has different style options, e.g., \texttt{fancy}, \texttt{universal} and \texttt{None} which are displayed in Fig. \ref{fig:statusStyle}. 
+\begin{center}
+\captionsetup{type=figure}
+\begin{verbatim}
+  ╭───────────────╮    +---------------+    ------------------
+  │     fancy     │    |   universal   |           None
+  ├───────────────┤    +---------------+    ------------------
+  │               │    |               |    
+  ╰───────────────╯    +---------------+    ------------------
+\end{verbatim}
+\captionof{figure}{Styles of output table in status file}
+\label{fig:statusStyle}
+\end{center}
+In addition to that, it writes down the progress of simulation to the end of the status file in form of a progress bar which gets updated dynamically. The progress bar contains the current time step of the simulation in contrast to the required time steps and the progress of the run itself in seconds in relation to the wall time. It also contains the current output from \texttt{squeue}, if the simulation is running or pending, else the important information of the simulation. An example progress bar ist shown in Fig. \ref{fig:statusBar}.
+\begin{center}
+\captionsetup{type=figure}
+\begin{verbatim}
+ +------------------------------------------------------------+
+ |  JOBID  NAME     USER ST    TIME NODES  NODELIST(REASON)   |
+ | 970455 3x1.5 bt712347 CG 3:16:01     3  r03n03,r05n[15-16] |
+ +------------------------------------------------------------+
+ | PROGRESS  [===================>.....]  ( 80%)  20000/25000 |
+ | RUN 13    [===>.....................]  ( 13%)  11462/86400 |
+ +------------------------------------------------------------+
+\end{verbatim}
+\captionof{figure}{Progress bar example}
+\label{fig:statusBar}
+\end{center}
+The progress bar has the advantage that someone can easily access all important information at the glance. To boost productivity the following command could be quite handy:
+\begin{lstlisting}
+cd $DATA 
+find . -name $STATUSFILENAME -exec tail -8 {} \;
+\end{lstlisting}
+which prints all progress bars of every simulation in the data folder. If one want to see the complete status file change \texttt{tail -8} to \texttt{cat}.
+An example status file is displayed in the Appendix \ref{append:status}.
+
+%\displayfonttable[hex-digits=head+foot, range-end=1FFFF,compare-with=New Computer Modern Math,compare-color=black,  compare-bgcolor=black!5, missing-glyph-color=black!50, color=black!75]{Latin Modern Math}
+
+\subsection{Support for other Resource Managers}
+\label{sub:generalSupport}
+
+The general idea behind the restart script could be adapted for other resource managers. For example in the early stage of the development the script was changed to support the \texttt{PBS/Torque} resource manager which mainly runs on the \texttt{btrzx2}-cluster of the University of Bayreuth\cite{btrzx2} and supports the research of Dominik M{\"u}ller for his Bachelor Thesis\cite{Mueller2023} with the \texttt{RHMD}-code\cite{rmhd}. The script was named \texttt{torque\_monitor.py} and can be found in the GitHub Repository of this thesis\cite{torquemonitor} or in the Appendix \ref{append:torquecode}. But note that due to the early adaptation the code does lack many features of \texttt{slurm\_monitor.py} and was not maintained actively.

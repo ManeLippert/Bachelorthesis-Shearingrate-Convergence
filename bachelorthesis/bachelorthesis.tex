@@ -5,14 +5,17 @@
 
 
 % Packages
-\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, numbers=noenddot, fontsize=11pt, headsepline, enabledeprecatedfontcommands, twoside, openright]{scrreprt}
+\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, numbers=noenddot, fontsize=11pt, headsepline, enabledeprecatedfontcommands]{scrreprt}
 
 % twoside, openright or openleft
 
 \input{packages.tex}
-\input{titlestyle.tex}
-\input{functions.tex}
+\input{colors.tex}
 \input{variables.tex}
+\input{titlestyle.tex}
+\input{codestyle.tex}
+\input{flowdiagramm.tex}
+\input{functions.tex}
 
 \begin{document}
     \nonfrenchspacing
@@ -50,6 +53,9 @@
     %
     % Appendix
     \input{60-appendix.tex}
+    \input{61-code.tex}
+    \input{62-data.tex}
+    \input{63-briefcommunication.tex}
     %
     % Literatur
     %\nocite{*}

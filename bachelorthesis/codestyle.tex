@@ -1,0 +1,32 @@
+\usepackage{listings}
+\usepackage{verbatim}
+
+\usepackage{fontspec}
+\setmonofont{FreeMono}
+
+\lstdefinestyle{codestyle}{
+    backgroundcolor=\color{codebackground},   
+    commentstyle=\color{codegrey},
+    keywordstyle=\color{Notared},
+    numberstyle=\tiny\color{codegrey},
+    stringstyle=\color{Notagreen},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=true,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4,
+    %xleftmargin=0.25cm,
+    %xrightmargin=0.25cm
+}
+
+\lstset{
+    style=codestyle,
+    extendedchars=true,
+    literate=
+    {=}{=\allowbreak}1,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
