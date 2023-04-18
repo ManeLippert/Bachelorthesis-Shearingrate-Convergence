@@ -3,6 +3,7 @@
 This folder contains the data for my Bachelor Thesis which were simulated with gkw with adiabtic electrons approximation of the type S6 nearby the finite heatflux threshold.
 
 ## Data 
+
 Markdown version of [data.csv](./data.csv)
 
 | **case** | **rlt** | **boxsize** | **time** | **timestep** | **Ns** | **Nvpar** | **Nmu** | **dtim** | **krhomax** | **Nmod** | **Nx** | **stepsize_all** | **evo_start**                           | **evo_end**                              | **sel_start**    | **sel_end**      | **error_index** | **converge** | **mode** | **backup** | **path**                                                        |
@@ -42,6 +43,7 @@ Markdown version of [data.csv](./data.csv)
 * (#) marks files that can be deleted to free space
 
 ## Folder Structure
+
 The data is sorted by changed parameters in specific Folders. 
 ```
 data
