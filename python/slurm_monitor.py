@@ -346,7 +346,7 @@ def print_table_row(content,
         jobStatus_format = "".join(["{:<" + str(col) + "}" for col in jobStatus_cols])
         
         jobStatusHeader = ["OUTPUT", "NAME", "USER", "" ,"DATE", "TIME", "W:DD:HH:MM:SS"]
-        jobStatusInfo   = ["STARTING", "test", "bt712347", "", "2023-03-25", "22:29:08", "0:00:00:00:00"]
+        jobStatusInfo   = [content[0], jobName, user, "", time_date(), time_time(), time_duration(startTime, pastTime)]
 
         jobStatusHeader   = [jobStatus_format.format(*jobStatusHeader)]
         jobStatusInfo     = [jobStatus_format.format(*jobStatusInfo)]
