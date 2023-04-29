@@ -5,7 +5,7 @@
 
 
 % Packages
-\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, numbers=noenddot, fontsize=11pt, headsepline, enabledeprecatedfontcommands]{scrreprt}
+\documentclass[paper=a4, bibliography=totoc, BCOR=10mm, fontsize=11pt, headsepline, enabledeprecatedfontcommands]{scrreprt}
 
 % twoside, openright or openleft
 
@@ -17,15 +17,22 @@
 \input{flowdiagramm.tex}
 \input{functions.tex}
 
+\input{00-cover.tex}
+
 \begin{document}
     \nonfrenchspacing
     % 0.Chapter Cover
-    \input{00-cover.tex}
-    \input{01-abstract.tex}
-    \input{02-dedication.tex}
+    %\input{00-cover.tex}
+
+    \newgeometry{left=2.5cm,right=2.5cm}
+    \maketitle
+    \restoregeometry    
+
+    \input{01-dedication.tex}
+    \input{02-abstract.tex}
 
     %
-    \thispagestyle{empty}
+    %\thispagestyle{empty}
     \cleardoublepage
     \tableofcontents
     \cleardoublepage

@@ -1,78 +1,15 @@
-% 0. Cover
+\titlehead{
+    %\colorbox{Ubtgreen}{\includegraphics[height=2cm]{Uni_Logo_white.png}}
+    \centering
+    \includegraphics[height=2cm]{Uni_Logo_white_black.png}
+}
 
-\newgeometry{top=30mm, bottom=20mm, inner=20mm, outer=20mm}
-\thispagestyle{empty}
-
-% Boolean by default false. For new line in title
-\newboolean{twoRows}
-\newboolean{symbol}
-
-% Functions
-\makeatletter
-   \def\vhrulefill#1{\leavevmode\leaders\hrule\@height#1\hfill \kern\z@}
-\makeatother
-\newcommand*\ruleline[1]{\par\noindent\raisebox{.8ex}{\makebox[\linewidth]{\vhrulefill{\linethickness}\hspace{1ex}\raisebox{-.8ex}{#1}\hspace{1ex}\vhrulefill{\linethickness}}}}
-
-% Variables
-\def\schriftgrosse{30}
-\def\linethickness{1,5pt}
-
-\def\farbe{black}
-\def\fach{Bachelor Thesis}
-\def\name{Manuel Lippert}
-\def\titel{Size convergence \\ of the $\exb$ staircase pattern \\ in flux tube simulations \\ of ion temperature gradient driven \\ turbulence} % Absatz mit \\[0,5cm]
-\def\bottom{Theoretical Plasmaphysics}
-\def\datum{\today}
-\def\platz{Universität Bayreuth}
-\def\betreuer{Professor Arthur Peeters, Florian Rath}
-\def\logo{Uni_Logo}
-
-\def\teilnehmerm{Manuel Lippert}
-\def\emailm{Manuel.Lippert@uni-bayreuth.de}
-
-\begin{titlepage}
-			
-	\centering
-	{\LARGE \sffamily {\textbf{\bottom}\par}}
-	\vspace{2,5cm}
-    {\fontsize{30}{0}\sffamily\ruleline{\textcolor{\farbe}{\textbf{\fach}}}\par}
-    \vspace{6cm}
-	{\Large\sffamily \ruleline{\name}\par}
-	
-
-	\begin{textblock*}{21cm}(0cm,8cm) % {block width} (coords), centered		
-		{\fontsize{\schriftgrosse}{0}\sffamily\textcolor{\farbe}{\textbf{\titel}}\par}
-	\end{textblock*}
-	
-	% Group
-	\vspace{10cm}
-	%{\large\sffamily{Group \groupnr}}
-	
-	%Logo
-	\vfill
-
-	\begin{figure}[h]
-		\begin{center}
-		
-			\includegraphics[width=2cm]{\logo}
-		
-		\end{center}
-	\end{figure}
-
-	
-\end{titlepage}
-
-\restoregeometry
-
-% Information
-\chapter*{Information}
-\label{chap:info}
-
-\begin{tabular}{l l}
-
-	{\textbf{Day}} \hspace{1cm} & \hspace{1cm} {\datum}\\[0,2cm]
-	{\textbf{Place}} \hspace{1cm} & \hspace{1cm} {\platz}\\[0,2cm]
-	{\textbf{Supervisor}} \hspace{1cm} & \hspace{1cm} {\betreuer}\\[1,2cm]
-	{\textbf{Author}} \hspace{1cm} & \hspace{1cm} {\teilnehmerm~(\emailm)}\\
-
-\end{tabular}
+\subject{\normalfont Bachelor Thesis}
+\title{Size convergence of the $\mathbf{\exb}$ staircase pattern in flux tube simulations of ion temperature gradient driven turbulence}
+\author{Manuel Lippert}
+\date{\today}
+\publishers{\textbf{Instuitut for Theoretical Plasma Physics}\\
+\vspace*{2em}
+Supervisors:\\
+Prof.\,Arthur\,G.\,Peeters\\
+Dr.\,Florian\,Rath}
