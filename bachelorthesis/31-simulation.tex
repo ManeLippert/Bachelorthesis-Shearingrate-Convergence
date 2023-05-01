@@ -1,7 +1,7 @@
 \section{Simulation Setup}
 \label{sec:simulation}
 
-The gyrokinetic simulations are performed with the non-linear flux tube version of Gyrokinetic Workshop (GKW) \cite{peeters2009} with adiabatic electron approximation.
+The gyrokinetic simulations are performed with the non-linear flux tube version of Gyrokinetic Workshop (GKW) \cite{peeters2009} with adiabatic electron approximation. 
 In agreement with Ref. \citenum{peeters2016}, Cyclone Base Case (CBC) like parameters are chosen with an inverse background temperature gradient length $\rlt = 6.0$ and circular concentric flux surfaces. 
 The numerical resolution is compliant to the "Standard resolution with 6th order (S6)" set-up of the aforementioned reference. A summary of the numerical parameters is given in Tab.~\ref{tab:resolution} and for more details about the definition of individual quantities the reader is referred to Refs. \citenum{peeters2009, peeters2016}.
 \begin{center}
@@ -16,3 +16,7 @@ The numerical resolution is compliant to the "Standard resolution with 6th order
 	}
 	\label{tab:resolutionBenchmark}
 \end{center}
+
+Here, $\xcoord$ is the radial coordinate that labels the flux surfaces normalized by the thermal Larmor radius $\rhoth$, $\ycoord$ labels the field lines and is an approximate binormal coordinate. Together with the coordinate $s$ which parameterizes the length along the field lines and is referred to as the parallel coordinate these quantities form the Hamada coordinates \cite{hamada1958}.
+
+Consistent with Ref. \citenum{peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ is the thermal velocity and $m$ is the mass). Furthermore, quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities from Ref. \citenum{peeters2016,peeters2009}.
