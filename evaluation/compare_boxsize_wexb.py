@@ -113,7 +113,8 @@ def box_plot(fig, time_label, plot_label,
                 ax_label[0] = '0'
                 ax.set_xticklabels(ax_label)
                 
-                ax.set_xlabel(r'$\psi~[\rho]$')
+                #ax.set_xlabel(r'$\psi~[\rho]$')
+                ax.set_xlabel(r'$x~[\rho]$')
                 ax.xaxis.set_label_coords(0.5, -0.14, transform=ax.transAxes)
             else:
                 ax.set_xticklabels([])
@@ -127,16 +128,20 @@ def box_plot(fig, time_label, plot_label,
                 axT.set_xticklabels(axT_label)
                 
                 axT.set_xlabel(r'box size')
-                axT.xaxis.set_label_coords(0.5, 1.14, transform=ax.transAxes)
+                
+                axT.xaxis.set_label_coords(0.5, 1.15, transform=ax.transAxes)
+                
+                # Thesis
+                #axT.xaxis.set_label_coords(0.5, 1.2, transform=ax.transAxes)
             else:
                 axT.set_xticklabels([])
             
             if YLABEL:
                 ax.set_ylabel(r'$\langle\omega_{\mathrm{E \times B}}\rangle~[\nu_{\mathrm{th}}/R]$')
-                #ax.yaxis.set_label_coords(-0.25/box_max, 0.5, transform=ax.transAxes)
+                ax.yaxis.set_label_coords(-0.25/box_max, 0.5, transform=ax.transAxes)
                 
                 # Thesis
-                ax.yaxis.set_label_coords(-0.35/box_max, 0.5, transform=ax.transAxes)
+                #ax.yaxis.set_label_coords(-0.35/box_max, 0.5, transform=ax.transAxes)
 
 
         ax.set_xlim(xmin=0, xmax = rad_boxsize)
@@ -191,7 +196,8 @@ def box_twin_xspine(fig, hdf5_file, box_max, layer_max, linewidth = 2, layer_hsp
     newax_label[0] = '0'
     newax.set_xticklabels(newax_label)
     
-    newax.set_xlabel(r'$\psi~[\rho]$')
+    #newax.set_xlabel(r'$\psi~[\rho]$')
+    newax.set_xlabel(r'$x~[\rho]$')
     
     newax.tick_params(width=linewidth)
     
@@ -224,6 +230,7 @@ interval_rad = np.array([[26000, 43000, 15000, 2000],
 layer_max, box_max_rad, box_min_rad = 1, max(boxes_rad), min(boxes_rad)
 
 time_label_rad = '{R}'
+layer = 1
 
 '''
 fig_rad = plt.figure(1, figsize = (6*box_max_rad,6*layer_max))
@@ -259,6 +266,7 @@ interval_iso = np.array([[2000, 2000, 2000],
 layer_max, box_max_iso, box_min_iso = 1, max(boxes_iso), min(boxes_iso)
 
 time_label_iso = '{RB}'
+layer = 1
 
 '''
 fig_iso = plt.figure(1, figsize = (6*box_max_iso,6*layer_max))
@@ -305,6 +313,7 @@ interval_bi = np.array([[1000, 2000, 2000, 2000],
 layer_max, box_max_bi, box_min_bi = 1, max(boxes_bi), min(boxes_bi)
 
 time_label_bi = '{B}'
+layer = 1
 
 '''
 fig_bi = plt.figure(1, figsize = (6*box_max_bi,6*layer_max))
@@ -325,10 +334,10 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_c
 
 file = [file_rad, file_iso, file_bi]
 
-#plot.parameters(True, 40, (24,8), 300, linewidth=2)
+plot.parameters(40, (24,8), 300, linewidth=2)
 
 # Thesis
-plot.parameters(54, (24,8), 300, tickwidth=2)
+#plot.parameters(54, (24,8), 300, tickwidth=2)
 
 boxes   = [boxes_rad, boxes_iso, boxes_bi]
 shifts  = [shifts_rad, shifts_iso, shifts_bi]
@@ -376,17 +385,17 @@ labels_bi, labels_iso, labels_rad = labels[7:len(labels)], labels[4:7], labels[0
 
 handles = handles_bi + handles_iso + handles_rad
 labels = labels_bi + labels_iso  + labels_rad
-#fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(3/box_maximal + 0.3/box_maximal, -1.1), frameon=False, ncol=1, handlelength=1)
+fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(3/box_maximal + 0.3/box_maximal, -1.1), frameon=False, ncol=1, handlelength=1)
 
 # Thesis
-fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(0.9, -1.17), frameon=False, ncol=1, handlelength=1)
+#fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(0.9, -1.17), frameon=False, ncol=1, handlelength=1)
 
 
 box_twin_xspine(fig, file[0][0], box_maximal, layer_max, layer_hspace=layer_hspace)
 
-#plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
+plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
 
 # Thesis
-plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_thesis.pdf', bbox_inches='tight')
+#plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_thesis.pdf', bbox_inches='tight')
 
 #'''
