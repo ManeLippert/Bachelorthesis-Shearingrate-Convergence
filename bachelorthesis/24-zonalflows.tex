@@ -1,29 +1,35 @@
 \section{Zonal Flows and Shearing Rate $\wexb$}
 \label{sec:zonalflow}
 
-Zonal flows are referred in the tokamak plasma to the $\exb$-flows [Eq. \ref{eq:exb}] that is connected to the on flux-surfaces constant electrostatic potential, also called \textit{zonal potential}. (Ref 28) Because of the variation only across flux-surfaces only the zonal flow is tangential to the flux-surfaces and do not contribute to the turbulent transport across flux-surfaces caused by the $\exb$-motion. 
-Zonal flows are driven nonlinear through turbulent Reynolds stresses (Ref 32). For more about the mechanism behind zonal flow generation the reader is referred to Ref. (42,43,44,10). \bigskip
+Zonal flows are referred in the tokamak plasma to the $\exb$ flows [Eq.( \ref{eq:exb})] that is connected to the on flux-surfaces constant electrostatic potential, also called \textit{zonal potential}. \cite{Diamond2005} Because of the variation only across flux-surfaces only the zonal flow is tangential to the flux-surfaces and do not contribute to the turbulent transport across flux-surfaces caused by the $\exb$ motion. 
+Zonal flows are driven nonlinear through turbulent Reynolds stresses \cite{Diamond1991}. For more about the mechanism behind zonal flow generation the reader is referred to Ref. \citenum{Brizard2007, Dubin1983, Hasegawa1978, Krommes2000}. \bigskip
 
-Furthermore zonal flows are connected with the radially alternating zonal potential what introduces an velocity shear,i.e., a radial variation of the zonal flow velocity. This causes a shear deformation of turbulent structures which is considered to play a significant role in the suppression of turbulence (Ref 29, 67) especially the ion temperature gradient driven turbulence (Ref 22, 63, 64, 65, 66). The nonlinear generation mechanism causes an shift, also known as Dimits shift (Ref 67), of the critical temperature gradient $R/L_\mathrm{T,c}$ which leads to an later development of ITG driven turbulence. The shearing process tilted und stretches turbulent eddies, caused be the shear flow, until they break into smaller eddies with reduced radial correlation length which characterize the shearing as decorrelation process. Turbulence will then be reduced because of this process. (Ref 29,68,28)  \bigskip
+\includegraphicsHere{Theory/Zonal-Flow-Generation.pdf}{
+	Subdued turbulence because if stretched eddies which breaks in smaller structures caused by sheared $\exb$ drifts \cite{Hammett2009}
+}{fig:zonalflow}{0.9}
 
-When the zonal flows are strong enough to suppress turbulence completely due to the shearing process, pattern formation occurs in the stabilized tokamak plasma the so-called $\exb$ staircase structure. The $\exb$ staircase pattern has following properties:
+Furthermore, zonal flows are connected with the radially alternating zonal potential what introduces a velocity shear, i.e., a radial variation of the zonal flow velocity. This causes a shear deformation of turbulent structures which is considered to play a significant role in the suppression of turbulence \cite{Biglari1990, Dimits2000} especially the ion temperature gradient driven turbulence \cite{Nakata2012, Makwana2014, Maeyama2014, Whelan2018, Whelan2019}. The nonlinear generation mechanism causes a shift, also known as Dimits shift \cite{Dimits2000}, of the critical temperature gradient $R/L_\mathrm{T,c}$ which leads to a later development of ITG driven turbulence. The shearing process tilted und stretches turbulent eddies, caused be the shear flow, until they break into smaller eddies with reduced radial correlation length [Fig. \ref{fig:zonalflow}] which characterize the shearing as decorrelation process. Turbulence will then be reduced because of this process. \cite{Biglari1990,Diamond2005,Burnell1997} \bigskip
+
+\newpage
+
+When the zonal flows are strong enough to suppress turbulence completely due to the shearing process, pattern formation occurs in the stabilized tokamak plasma the so-called $\exb$ staircase structure. The $\exb$ staircase pattern has the following properties:
 \begin{enumerate}
 	\item[(1)] They occur on a \textit{radial mesoscale} of order of 10 \rhoth which is larger than the Larmor radius but smaller than the machine size $R_0$.
 	\item[(2)] The structure are \textit{quasi stationary} in space and varies on time scales much longer than the typical turbulent time scales.
 	\item[(3)] They have an \textit{typical amplitude} in terms of the $\exb$-shearing rate of the order of $10^{-1} \vth/R_0$.
-	\item[(4)] Turbulent transport occurs in \textit{avalanches} with propagation strongly linked to the local $\exb$ shearing rate. (Ref 23)
+	\item[(4)] Turbulent transport occurs in \textit{avalanches} with propagation strongly linked to the local $\exb$ shearing rate. \cite{McMillan2009}
 \end{enumerate} \bigskip
 
-The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{rath2016, doi:10.1063/1.3005380, peeters2016}
+The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{Rath2016, Pueschel2008, Peeters2016}
 \begin{equation}
 	\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2},
 	\label{eq:shearingrate}
 \end{equation}
 where $\langle \phi \rangle$ is the zonal electrostatic potential normalized by $\rho_\ast T/e$ ($\rho_\ast = \rhoth/R$ is the thermal Larmor radius normalized with the major radius $R$, $T$ is the temperature, $e$ is the elementary charge).
-The zonal potential is calculated from the electrostatic potential $\phi$ on the two-dimensional $\xcoord$-$\ycoord$-plane at the low field side according to\cite{rath2021}
+The zonal potential is calculated from the electrostatic potential $\phi$ on the two-dimensional $\xcoord$-$\ycoord$-plane at the low field side according to\cite{Rath2021}
 \begin{equation}
 \langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0).
 \end{equation}
-The $\exb$ shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{doi:10.1063/1.871313, doi:10.1063/1.872847} and quantifies the zonal flow induced shearing of turbulent structures \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}. \\ \bigskip
+The $\exb$ shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{Hahm1995, Waltz1998} and quantifies the zonal flow induced shearing of turbulent structures \cite{Biglari1990, Hahm1995, Burnell1997}. \\ \bigskip
 
-As mentioned before the turbulent transport occurs through avalanches which also mediate the turbulence of the ITG driven turbulence in the adabatic electron approximation. Avalanches are initial when the$\exb$ sharing rate has a zero crossing with a steep flank and propagates outwards with negative shearing and inwards for positive shearing (Ref 26,27). The fully developed avalanche resluts in almost completely quenched turbulence. Its development results in a discontinuous step int he dependency of turbulent fluxes on the temperature gradient als known as \textit{finite heat flux threshold} (Ref 25,77)
+As mentioned before the turbulent transport occurs through avalanches which also mediate the turbulence of the ITG driven turbulence in the adabatic electron approximation. Avalanches are initial when the $\exb$ sharing rate has a zero crossing with a steep flank and propagates outwards with negative shearing and inwards for positive shearing \cite{Idomura2009,McMillan2009}. The fully developed avalanche resluts in almost completely quenched turbulence. Its development results in a discontinuous step int he dependency of turbulent fluxes on the temperature gradient als known as \textit{finite heat flux threshold}. \cite{Peeters2016,Weikl2017}

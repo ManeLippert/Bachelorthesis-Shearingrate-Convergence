@@ -1,82 +1,82 @@
 \section{Charged Particle Motion in Magnetic and Electric Field}
 \label{sec:motion}
 
-In magnetic confinement devices like the tokamak reactor, the charged particles experience magnetic and electric fields which results in distinct motion under tha associated force. Charged particles can be separated in species, e.g. electrons and ions, which will be later on indicated bei the index sp on the quantities. 
+In magnetic confinement devices like the tokamak reactor, the charged particles experience magnetic and electric fields which results in distinct motion under tha associated force. Charged particles can be separated in species, e.g. electrons and ions, which will be later on not displayed in the governing equation. Throughout this thesis the charge $q$ or the mass $m$ indicate the quantities of a specific spiecies.
 
-\subsection{Particle Motion perpendicular to the magnetic field - The Gyro-Motion}
+\subsection{Particle Motion perpendicular to the magnetic field}
 \label{sub:gyromotion}
 
-Due to the Lorentz force particles with a velocity component perpendicular to the homogenous magnetic field $v_{\perp,\mathrm{sp}}$ undergo a circular motion in the plane perpendicular to the magnetic field. This type motion has circular frequency which is often referred as \textit{cyclotron frequency} and is defined as:
+Due to the Lorentz force particles with a velocity component perpendicular to the homogenous magnetic field $v_{\perp}$ undergo a circular motion in the plane perpendicular to the magnetic field. This type motion has circular frequency which is often referred as \textit{cyclotron frequency} and is defined as:
 \begin{gather}
-    \omega_\mathrm{c,sp} = \frac{|q_\mathrm{sp}|B}{m_\mathrm{sp}}~,
+    \omega_\mathrm{c} = \frac{|q|B}{m}~,
 \end{gather}
-where $m_\mathrm{sp}$ and $q_\mathrm{sp}$ are the mass and the charge of the particle and $B$ the strength of the magnetic field. The radius, the so called \textit{Larmor radius}, of this motion is given by:
+where $m$ and $q$ are the mass and the charge of the particle and $B$ the strength of the magnetic field. The radius, the so called \textit{Larmor radius}, of this motion is given by:
 \begin{gather}
-    \rho_\mathrm{sp} = \frac{m_\mathrm{sp}v_{\perp,\mathrm{sp}}}{|q_\mathrm{sp}|B}
+    \rho_\mathrm{L} = \frac{mv_{\perp}}{|q|B}
 \end{gather}
-which center is often as \textit{gyro-center}. Note that since the Lorentz force depends on the species of the particle the circulation direction is opposed between electron in ions. 
+which center is often as \textit{gyrocenter}. Note that since the Lorentz force depends on the species of the particle the circulation direction is opposed between electron in ions. 
 
 Due to the Coulomb collisions the plasma gets thermalized. Together with the Maxwell-Boltzmann distribution the typical species thermal velocity is
 \begin{gather}
-    v_\mathrm{th,sp} = \sqrt{\frac{2T_\mathrm{sp}}{m_\mathrm{sp}}}~,
+    \vth = \sqrt{\frac{2T}{m}}~,
 \end{gather}
-where $T_\mathrm{sp}$ represents the species temperature. Based on the thermal velocity $v_\mathrm{th,sp}$ the \textit{thermal Larmor radius} gets introduced as:
+where $T$ represents the species temperature. Based on the thermal velocity $v_\mathrm{th}$ the \textit{thermal Larmor radius} gets introduced as \cite{Wesson2011}
 \begin{gather}
-    \rho_\mathrm{th,sp} = \frac{m_\mathrm{sp}v_{\mathrm{th,sp}}}{|q_\mathrm{sp}|B}~.
+    \rhoth = \frac{m\vth}{|q|B}~.
 \end{gather}
 
 \newpage
 
-\subsection{Particle Motion parallel to the magnetic field - The Gyro Motion}
+\subsection{Particle Motion parallel to the magnetic field}
 \label{sub:parallelmotion}
 
-In absence of forces in the parallel direction of the magnetic field the particles can stream freely parallel to the homogenous magnetic field. The velocity of this motion is connected to the thermal velocity $v_\mathrm{th,sp}$ and is dominated bei electrons due to their lighter mass compared to ions ($v_\mathrm{th,e}/v_\mathrm{th,i} = 60$). 
+In absence of forces in the parallel direction of the magnetic field the particles can stream freely parallel to the homogenous magnetic field. The velocity of this motion is connected to the thermal velocity $\vth$ and is dominated bei electrons due to their lighter mass compared to ions ($v_\mathrm{th,e}/v_\mathrm{th,i} = 60$). 
 
 When an electric field with a component parallel to the magnetic field $E_\parallel$ acts on plasma the charged particles gets accelerated by the electric force
 \begin{gather}
-    F_{\parallel,E} = q_\mathrm{sp}E_\parallel~.
+    F_{\parallel,E} = qE_\parallel~.
 \end{gather}
 The parallel motion follows then from the equation of motion. Here the direction of the motion also depends on the species type.
 
-Since magnetic fields are not always homogenous an inhomogeneous magnetic field with its gradient $\nabla B$ contains an component parallel to the magnetic field which is given by:
+Since magnetic fields are not always homogenous an inhomogeneous magnetic field with its gradient $\nabla B$ contains a component parallel to the magnetic field which is given by:
 \begin{gather}
     \nabla_\parallel B = \frac{\vect{B}}{B} \cdot \nabla B~.
 \end{gather}
 This causes the force
 \begin{gather}
-    F_{\parallel,\nabla_\parallel B} = - \frac{m_\mathrm{sp}v^2_{\perp,\mathrm{sp}}}{2B} \nabla_\parallel B = \mu \nabla_\parallel B~;~~~~\mu = \frac{m_\mathrm{sp}v^2_{\perp,\mathrm{sp}}}{2B}
+    F_{\parallel,\nabla_\parallel B} = - \frac{mv^2_{\perp}}{2B} \nabla_\parallel B = \mu \nabla_\parallel B~;~~~~\mu = \frac{mv^2_{\perp}}{2B}
 \end{gather}
-with \textit{magnetic moment} $\mu$ which can be an adabatic invariant (constant of motion) if the variation of the magnetic field over time is smaller than the inverse of the cyclotron freqency $\omega^{-1}_\mathrm{c,sp}$ and the spatial variation is larger the Larmor radius $\rho_\mathrm{sp}$. The caused force has it application in the mirror effect where a charged particle gets reflected due to this force.
+with \textit{magnetic moment} $\mu$ which can be an adabatic invariant (constant of motion) if the variation of the magnetic field over time is smaller than the inverse of the cyclotron freqency $\omega^{-1}_\mathrm{c}$ and the spatial variation is larger the Larmor radius $\rho_\mathrm{L}$. The caused force has it application in the mirror effect where a charged particle gets reflected due to this force. \cite{Wesson2011}
 
 \newpage
 
-\subsection{Drifts in the Gyro-Center}
+\subsection{Drifts in the Gyrocenter}
 \label{sub:drift}
 
-In the presence of a magnetic field (homogenous, inhomogeneous or perturbed) and electric fields the gyro-center undergoes slow (compared to the thermal velocity $\vth$) drift motions perpendicular to the magnetic field. There are serval examples for this drift motion. According to this thesis topic only the main three drift types will be covered in the following.
+In the presence of a magnetic field (homogenous, inhomogeneous or perturbed) and electric fields the gyrocenter undergoes slow (compared to the thermal velocity $\vth$) drift motions perpendicular to the magnetic field. There are serval examples for this drift motion. According to this thesis topic only the main three drift types will be covered in the following.
 
 \begin{enumerate}
-    \item \textbf{$\exb$ drift:}\\
-    If an electric field $\vect{E}$ with an perpendicular component is present together with a the magnetic field $\vect{B}$ (both fields are homogenous) the acting Coulomb force and Lorentz force results to a drift of the gyro-center with
+    \item \textbf{$\exb$ Drift:}\\
+    If an electric field $\vect{E}$ with a perpendicular component is present together with the magnetic field $\vect{B}$ (both fields are homogenous) the acting Coulomb force and Lorentz force results to a drift of the gyrocenter with
     \begin{gather}
         \vect{v}_{E} = \frac{\vect{E}\times\vect{B}}{B^2}
         \label{eq:exb}
     \end{gather}
-    which is called the $\exb$-drift. Since both acting forces direction depends on the species type the direction of the $\exb$-drift is for every species the same.\\
+    which is called the $\exb$-drift. Since both acting forces direction depends on the species type the direction of the $\exb$ drift is for every species the same.
     \item \textbf{$\nabla B$ Drift:}\\
-    Inhomogeneous magnetic field causes an gradient $\nabla B$ of the magnetic field. Because of that gradient the gyro-center undergoes an $\nabla B$-drift defined by
+    Inhomogeneous magnetic field causes a gradient $\nabla B$ of the magnetic field. Because of that gradient the gyrocenter undergoes a $\nabla B$-drift defined by
     \begin{gather}
-        \vect{v}_{\nabla B} = \frac{m_\mathrm{sp} v^2_{\perp,\mathrm{sp}}}{2 q_\mathrm{sp}}\frac{\vect{B}\times \nabla B}{B^3}~.
+        \vect{v}_{\nabla B} = \frac{m v^2_{\perp}}{2 q}\frac{\vect{B}\times \nabla B}{B^3}~.
         \label{eq:gradB}
     \end{gather}
-    The $\nabla B$-drift varies thereby on scales which are larger compared to the Larmor radius. The direction of the $\nabla B$-drift depends on the species type. \\
-    \item \textbf{Curvature drift:}\\
-    Due to centrifugal force acting on the particle in a curved magnetic filed the gyro-center experience an curvature drift given by
+    The $\nabla B$-drift varies thereby on scales which are larger compared to the Larmor radius. The direction of the $\nabla B$-drift depends on the species type.
+    \item \textbf{Curvature Drift:}\\
+    Due to centrifugal force acting on the particle in a curved magnetic filed the gyrocenter experience a curvature drift given by
     \begin{gather}
-        \vect{v}_{\kappa} = \frac{m_\mathrm{sp} v^2_{\parallel,\mathrm{sp}}}{q_\mathrm{sp}}\frac{\vect{B}\times \kappa}{B^2} = \frac{m_\mathrm{sp} v^2_{\parallel,\mathrm{sp}}}{q_\mathrm{sp}} \frac{\vect{B}\times \nabla B}{B^3}~;~~~~\kappa = \frac{\nabla B}{B}~.
+        \vect{v}_{\kappa} = \frac{m v^2_{\parallel}}{q}\frac{\vect{B}\times \vect{\kappa}}{B^2} = \frac{m v^2_{\parallel}}{q} \frac{\vect{B}\times \nabla B}{B^3}~;\qquad\vect{\kappa} = -(\vect{b}\cdot \nabla)\vect{b} = \frac{\nabla B}{B}~,
         \label{eq:curvature}
     \end{gather}
-    To obtain the result for $\kappa$ in Eq. \ref{eq:curvature} the plasma pressure has to be small in comparison die the magnetic field strength $B$. In the form of Eq. \ref{eq:curvature} $\nabla B$- and curvature drift can be treated similarly.
+    where $\vect{b}$ is the unit vector along the magnetic field. To obtain the result for the curvature $\vect{\kappa}$ in Eq. (\ref{eq:curvature}) the plasma pressure has to be small in comparison die the magnetic field strength $B$. In the form of Eq. (\ref{eq:curvature}) $\nabla B$ and curvature drift can be treated similarly. \cite{Wesson2011}
 \end{enumerate}
 
 
