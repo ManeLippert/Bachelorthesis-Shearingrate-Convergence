@@ -184,23 +184,23 @@
 %\section{Introduction}
 %\label{sec:intro}
 
-Ion temperature gradient driven turbulence close to marginal stability exhibits zonal flow pattern formation on mesoscales, so-called $\exb$ staircase structures \cite{pradalier2010}.
-Such pattern formation has been observed in local gradient-driven flux-tube simulations \cite{peeters2016, weikl2017, rath2021} as well as global gradient-driven \cite{mcmillan2009, villard2013, seo2022} and global flux-driven \cite{pradalier2010, pradalier2015, wang2020, kim2022, kishimoto2023} studies. 
+Ion temperature gradient driven turbulence close to marginal stability exhibits zonal flow pattern formation on mesoscales, so-called $\exb$ staircase structures \cite{Pradalier2010}.
+Such pattern formation has been observed in local gradient-driven flux-tube simulations \cite{Peeters2016, Weikl2017, Rath2021} as well as global gradient-driven \cite{McMillan2009, Villard2013, Seo2022} and global flux-driven \cite{Pradalier2010, Pradalier2015, Wang2020, Kim2022, Kishimoto2023} studies. 
 In global studies, spanning a larger fraction of the minor radius, multiple radial repetitions of staircase structures are usually observed, with a typical pattern size of several ten Larmor radii.
 % By contrast, the radial domain size of local flux-tube simulations is often restricted to a similar mesoscale.
 By contrast, in the aforementioned local studies the radial size of $\exb$ staircase structures is always found to converge to the radial box size of the flux tube domain.
 The above observations lead to the question: 
 \textit{Does the basic pattern size always converges to the box size, or is there a typical mesoscale size inherent to staircase structures also in a local flux-tube description?}
-The latter case would imply that it is not necessarily global physics, i.e., profile effects, that set (i) the radial size of the $\exb$ staircase pattern and (ii) the scale of avalanche-like transport events. These transport events are usually restricted to $\exb$ staircase structures and considered as a nonlocal transport mechanism \cite{pradalier2010}. 
-In this brief communication the above question is addressed through a box size convergence scan of the same cases close to the nonlinear threshold for turbulence generation as studied in Ref.~\onlinecite{peeters2016}.\bigskip
+The latter case would imply that it is not necessarily global physics, i.e., profile effects, that set (i) the radial size of the $\exb$ staircase pattern and (ii) the scale of avalanche-like transport events. These transport events are usually restricted to $\exb$ staircase structures and considered as a nonlocal transport mechanism \cite{Pradalier2010}. 
+In this brief communication the above question is addressed through a box size convergence scan of the same cases close to the nonlinear threshold for turbulence generation as studied in Ref.~\onlinecite{Peeters2016}.\bigskip
 
 %%% SIMULATION SET-UP ======================================================================================================
 
-The gyrokinetic simulations are performed with the non-linear flux tube version of Gyrokinetic Workshop (GKW) \cite{peeters2009} with adiabatic electron approximation.
-In agreement with Ref.~\onlinecite{peeters2016}, Cyclone Base Case (CBC) like parameters are chosen with an inverse background temperature gradient length $\rlt = 6.0$ and circular concentric flux surfaces. 
+The gyrokinetic simulations are performed with the non-linear flux tube version of Gyrokinetic Workshop (GKW) \cite{Peeters2009} with adiabatic electron approximation.
+In agreement with Ref.~\onlinecite{Peeters2016}, Cyclone Base Case (CBC) like parameters are chosen with an inverse background temperature gradient length $\rlt = 6.0$ and circular concentric flux surfaces. 
 The numerical resolution is compliant to the "Standard resolution with 6th order (S6)" set-up of the aforementioned reference, with a somewhat lowered number of parallel velocity grid points.
 It has been carefully verified that this modification preserves the same physical outcome as the original study.
-A summary of the numerical parameters is given in Tab.~\ref{tab:resolution} and for more details about the definition of individual quantities the reader is referred to Ref.~\onlinecite{peeters2009, peeters2016}.
+A summary of the numerical parameters is given in Tab.~\ref{tab:resolution} and for more details about the definition of individual quantities the reader is referred to Ref.~\onlinecite{Peeters2009, Peeters2016}.
 \begin{table}[ht]
 	\begin{ruledtabular}
 		\begin{tabular}{l | ccccc | ccccc | c | cc}
@@ -210,28 +210,28 @@ A summary of the numerical parameters is given in Tab.~\ref{tab:resolution} and 
 		\end{tabular}
 	\end{ruledtabular}
 	\caption{
-		Resolution used in this paper for further information the author links to Ref.~\onlinecite{peeters2016}. %: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
+		Resolution used in this paper for further information the author links to Ref.~\onlinecite{Peeters2016}. %: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
 	}
 	\label{tab:resolution}
 \end{table}
 
 %%% DIAGNOSTICS ================================================================================================================
 
-In the following the box size is increased relative to the standard box size $(L_\xcoord,~L_\ycoord) = (76.27,~89.76)\,\rhoth$ in the radial and binormal direction. Here, $\xcoord$ is the radial coordinate that labels the flux surfaces normalized by the thermal Larmor radius $\rhoth$, $\ycoord$ labels the field lines and is an approximate binormal coordinate. Together with the coordinate $s$ which parameterizes the length along the field lines and is referred to as the parallel coordinate these quantities form the Hamada coordinates \cite{hamada1958}.
+In the following the box size is increased relative to the standard box size $(L_\xcoord,~L_\ycoord) = (76.27,~89.76)\,\rhoth$ in the radial and binormal direction. Here, $\xcoord$ is the radial coordinate that labels the flux surfaces normalized by the thermal Larmor radius $\rhoth$, $\ycoord$ labels the field lines and is an approximate binormal coordinate. Together with the coordinate $s$ which parameterizes the length along the field lines and is referred to as the parallel coordinate these quantities form the Hamada coordinates \cite{Hamada1958}.
 The increased box sizes are indicated by the real parameter $\NR$ for radial and $\NB$ for the binormal direction with the nomenclature $\NR\times \NB$ throughout this work.
 Note that, the number of modes in the respective direction, i.e., $N_x$ and $N_m$, respectively, is always adapted accordingly to retain a spatial resolution compliant to the standard resolution [Tab.~\ref{tab:resolution}] and standard box size. \\
-The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{rath2016, doi:10.1063/1.3005380, rath2016, peeters2016}
+The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{Rath2016, Pueschel2008, Rath2016, Peeters2016}
 \begin{equation}
 	\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2},
 	\label{eq:shearingrate}
 \end{equation}
 where $\langle \phi \rangle$ is the zonal electrostatic potential normalized by $\rho_\ast T/e$ ($\rho_\ast = \rhoth/R$ is the thermal Larmor radius normalized with the major radius $R$, $T$ is the temperature, $e$ is the elementary charge).
-The zonal potential is calculated from the electrostatic potential $\phi$ on the two-dimensional $\xcoord$-$\ycoord$-plane at the low field side according to\cite{rath2021}
+The zonal potential is calculated from the electrostatic potential $\phi$ on the two-dimensional $\xcoord$-$\ycoord$-plane at the low field side according to\cite{Rath2021}
 \begin{equation}
 \langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0).
 \end{equation}
-The E$\times$B shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{doi:10.1063/1.871313, doi:10.1063/1.872847} and quantifies the zonal flow induced shearing of turbulent structures \cite{doi:10.1063/1.859529, doi:10.1063/1.871313, doi:10.1063/1.872367}. \\
-Consistent with Ref.~\onlinecite{peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ is the thermal velocity and $m$ is the mass). Furthermore, quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities from Ref. \onlinecite{peeters2016,peeters2009}.
+The E$\times$B shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{Hahm1995, Waltz1998} and quantifies the zonal flow induced shearing of turbulent structures \cite{Biglari1990, Hahm1995, Burnell1997}. \\
+Consistent with Ref.~\onlinecite{Peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ is the thermal velocity and $m$ is the mass). Furthermore, quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities from Ref. \onlinecite{Peeters2016,Peeters2009}.
 \newpage
 In order to diagnose the temporal evolution of the staircase pattern and to obtain an estimate of its amplitude the radial Fourier transform of the $\exb$ shearing rate is considered. 
 It is defined by
@@ -256,14 +256,14 @@ In general, the zonal flow mode that dominates the $\exb$ staircase pattern, als
 % what kind of analysis
 In the first test the radial box size is increased while the binormal box size is kept fixed to the standard size. The scan covers the realizations $\NR\times\NB \in [ 1\times1,~2\times1,~3\times1,~4\times1]$.
 % short introduction of the turbulence - zonal flow dynamics; cite peeters2016 explicitly to avoid any discussions lateron
-Each realization exhibits an initial quasi-stationary turbulent phase and a second final \cite{peeters2016} phase with almost suppressed turbulence [Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}\,(a)].
+Each realization exhibits an initial quasi-stationary turbulent phase and a second final \cite{Peeters2016} phase with almost suppressed turbulence [Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}\,(a)].
 % introduce the fully developed staircase structure
 The latter state is indicative for the presence of a fully developed staircase pattern as depicted in Fig.~\ref{fig:wexb-stable-comparison}. 
-This type of structure is characterized by intervals of almost constant shear with alternating sign satisfying the Waltz criterion $|\wexb| \approx \gamma$\cite{doi:10.1063/1.870934, doi:10.1063/1.872847} ($\gamma$ is the growth rate of the most unstable linear ITG driven Eigenmode), connected by steep flanks where $\wexb$ crosses zero.
+This type of structure is characterized by intervals of almost constant shear with alternating sign satisfying the Waltz criterion $|\wexb| \approx \gamma$\cite{Waltz1994, Waltz1998} ($\gamma$ is the growth rate of the most unstable linear ITG driven Eigenmode), connected by steep flanks where $\wexb$ crosses zero.
 % insofar the results of peeters2016 are well reproduced; now turn to the description of the main result of this test
 Fig.~\ref{fig:wexb-stable-comparison}\,(a) shows a striking repetition of the staircase structure, with the number of repetitions equal to $\NR$.
 % yes, the radial size converges; but even stronger result: the standard box size already allows for the correct staircase size
-Hence, the basic size of the pattern not only converges with increasing radial box size, the converged radial size turns out to at least roughly agree with the standard radial box size of Ref.~\onlinecite{peeters2016}. \\
+Hence, the basic size of the pattern not only converges with increasing radial box size, the converged radial size turns out to at least roughly agree with the standard radial box size of Ref.~\onlinecite{Peeters2016}. \\
 % cautios words
 Due to the lack of a substantial turbulent drive in the final suppressed state no further zonal flow evolution is observed [Fig.~\ref{fig:wexb-eflux-1-2-3-4x1-comparison}\,(b)] and one might critically ask whether the structures shown in Fig.~\ref{fig:wexb-stable-comparison} represent the real converged pattern in a statistical sense. 
 % very long initial quasi-stationary states
@@ -319,11 +319,11 @@ This test covers the realizations $\NR \times \NB \in [3\times1.5,~3\times2.5,~3
 
 % what kind of test
 In the final test the inverse background temperature gradient length $\rlt$ is varied at fixed $3\times3$ box size.
-Since suppression of turbulence usually occurs at later times when approaching the finite heat flux threshold from below \cite{peeters2016}, the analysis aims to lengthen the phase during which the zonal flow varies in time due to turbulent Reynolds stresses.
+Since suppression of turbulence usually occurs at later times when approaching the finite heat flux threshold from below \cite{Peeters2016}, the analysis aims to lengthen the phase during which the zonal flow varies in time due to turbulent Reynolds stresses.
 This scan covers realizations with $\rlt \in [6.0,~6.2,~6.4]$.
 % what is the finite heat flux threshold
 In the case of $\rlt = 6.2$ turbulence suppression is observed for $t > 11000\,R/\vth$, while stationary turbulence during the entire simulation time trace of $12000\,R/\vth$ is found for $\rlt = 6.4$.
-The finite heat flux threshold, hence, is $\rlt|_\mathrm{finite} = 6.3 \pm 0.1$ in accordance to Ref. \onlinecite{peeters2016}.
+The finite heat flux threshold, hence, is $\rlt|_\mathrm{finite} = 6.3 \pm 0.1$ in accordance to Ref. \onlinecite{Peeters2016}.
 % Which stationay radial size occurs????
 Although the initial quasi-stationary turbulence in the former case is significantly longer compared to the $\rlt = 6.2$ realization discussed in the second test, a stationary pattern with basic zonal flow mode $\nzf = 3$ establishes. 
 % Does it confirm our previous tests
@@ -344,9 +344,9 @@ Through careful tests this brief communication confirms the radial size converge
 % mention the scale explicitly, and also that it is the scale compliant to CBC parameters (for other plasma parameters it might differ)
 A mesoscale pattern size of $\sim 57.20 - 76.27\,\rhoth$ is found to be intrinsic to ITG driven turbulence for Cyclone Base Case parameters.
 % compare to other studies
-This length scale is somewhat larger compared to results from global studies with finite $\rho_\ast$, which report of a few $10\,\rhoth$ \cite{pradalier2010}, and has to be considered the proper mesoscale in the local limit $\rho_\ast \rightarrow 0$.  
+This length scale is somewhat larger compared to results from global studies with finite $\rho_\ast$, which report of a few $10\,\rhoth$ \cite{Pradalier2010}, and has to be considered the proper mesoscale in the local limit $\rho_\ast \rightarrow 0$.  
 % relevance of the outcome
-The occurrence of this mesoscale implies that non-locality, in terms of Ref. \onlinecite{pradalier2010}, is inherent to ITG driven turbulence, since avalanches are spatially organized by the $\exb$ staircase pattern \cite{mcmillan2009, pradalier2010, rath2016, peeters2016}. 
+The occurrence of this mesoscale implies that non-locality, in terms of Ref. \onlinecite{Pradalier2010}, is inherent to ITG driven turbulence, since avalanches are spatially organized by the $\exb$ staircase pattern \cite{McMillan2009, Pradalier2010, Rath2016, Peeters2016}. 
 
 %% APPENDIX ================================================================================================================
 
