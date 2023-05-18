@@ -382,14 +382,18 @@ labels_bi, labels_iso, labels_rad = labels[7:len(labels)], labels[4:7], labels[0
 #fig.legend(handles_iso[::-1], labels_iso[::-1],loc='upper center', bbox_to_anchor=(0.5, 0.04), frameon=False, ncol=5, handlelength=1)
 #fig.legend(handles_bi[::-1], labels_bi[::-1],loc='upper center', bbox_to_anchor=(0.5, - 1.10), frameon=False, ncol=5, handlelength=1)
 
+handles = handles_bi + [l] + handles_iso + [l] + handles_rad
+labels = labels_bi + [''] + labels_iso + [''] + labels_rad
 
-handles = handles_bi + handles_iso + handles_rad
-labels = labels_bi + labels_iso  + labels_rad
-fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(3/box_maximal + 0.3/box_maximal, -1.1), frameon=False, ncol=1, handlelength=1)
+print(box_maximal)
+
+fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(3/box_maximal + 0.5/box_maximal, -1.1), frameon=False, ncol=1, handlelength=1)
 
 # Thesis
-#fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(0.9, -1.17), frameon=False, ncol=1, handlelength=1)
+#handles = handles_bi + handles_iso + handles_rad
+#labels = labels_bi + labels_iso  + labels_rad
 
+#fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(0.9, -1.17), frameon=False, ncol=1, handlelength=1)
 
 box_twin_xspine(fig, file[0][0], box_maximal, layer_max, layer_hspace=layer_hspace)
 
