@@ -61,4 +61,4 @@ My main recommendation is that this paper should be accepted, but a few points s
 
 4. It looks a bit strange to give a range of pattern size with 4 digits (abstract and throughout the paper). 
 
-    > [ ] Remove the last two digits from range
+    > [x] Remove the last two digits from range
