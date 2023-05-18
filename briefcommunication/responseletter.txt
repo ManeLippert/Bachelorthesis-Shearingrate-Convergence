@@ -7,7 +7,7 @@ Editorial Office Comments:
 * Separate figure files (separate from text and tables) are required for production purposes. Submit a separate figure file for each figure cited in the manuscript, not just one file containing all figures. The allowed file formats for figure files are TIF, PS, EPS, JPEG, or high-quality PDF. Figures may remain embedded in the manuscript. Number your separate figure files as they appear in the manuscript. For example 1, 2, 3. 
 NOTE: DOC or DOCX figure files are not permitted. 
 
-    > [ ] Rename figure files
+    > [x] Rename figure files
 
 
 
