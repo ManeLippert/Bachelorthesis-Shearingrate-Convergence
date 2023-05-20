@@ -258,8 +258,9 @@ commandMonitorKill = "ps ax | grep " + jobName + " | awk '{print $1}'"
 
 commandJobStarting = "sbatch"
 
-commandBackup  = ["rsync", "-a", "", backupPath]
-commandRestore = ["rsync", "-a", "-I", "--exclude=" + statusFilename, backupPath + "/", ""]
+if BACKUP:
+    commandBackup  = ["rsync", "-a", "", backupPath]
+    commandRestore = ["rsync", "-a", "-I", "--exclude=" + statusFilename, backupPath + "/", ""]
 
 # FUNCTIONS ================================================================================================================
 
