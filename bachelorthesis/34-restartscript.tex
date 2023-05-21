@@ -1,22 +1,23 @@
 \section{Restart Script for Simulation}
 \label{sec:restartscript}
 
-As stated in Chapter \ref{sec:cluster} the \texttt{btrzx1}-cluster has a wall time of 24 hours but since simulations typical run longer than 24 hours one have to restart the simulation after the wall time gets exceeded. Some simulation need even longer so that the simulation itself needs multiple weeks to finish with a result which makes the restart of the simulation a daily task that could be easily forget. So to eliminate this minor inconveniences the following restart script were written.
+As stated in Chapter \ref{sec:cluster} the \texttt{btrzx1}-cluster has a wall time of 24 hours but since simulations typical run longer than 24 hours one have to restart the simulation after the wall time gets exceeded. Some simulation need even longer so that the simulation itself needs multiple weeks to finish which makes the restart of the simulation a daily task that could be easily forgotten. So to eliminate this minor inconveniences the following restart script were written.
 
-As script language \texttt{python} was chosen over shell because of its easiness to write code and the variety of tools which can interact with the \texttt{bash}-shell. \texttt{bash} was also considered but after some issue occurred regarding the mechanism to check wether a file exist or not, \texttt{python} was selected.
+As script language \texttt{python} was chosen because of its easiness to write code and the variety of tools which can interact with the \texttt{bash} shell. \texttt{bash} was also considered but after some issue occurred regarding the mechanism to check wether a file exist or not, \texttt{python} was selected. Furthermore, the script has no requirements because it runs on the standard \texttt{python3} library.
 
 The script was named \texttt{slurm\_monitor.py} to indicate that this script works with the the \texttt{Slurm} resource manager. The source code was pushed to the gkw repository on BitBucket \cite{slurmmonitor} or can be found in Appendix \ref{append:slurmcode}
 
 \subsection{How to run Restart Script in Terminal}
 \label{sub:codeRun}
 
-To run the restart script \texttt{python3} has to be installed on the system and should be accessible by the command line. With the following command can be the monitoring started:
+To run the restart script \texttt{python3} has to be installed on the system and should be accessible via the command line. The monitoring can be started with the following command:
 \begin{lstlisting}[language=Bash]
 python3 -u slurm_monitor.py --job-name $JOBNAME
 \end{lstlisting}
 Additional parser options can be added to the command above which will be summarized in the upcoming Chapter \ref{sub:codeFeatures}. The script was build to run in the background of the terminal for which there are two approaches:
 \begin{enumerate}
-    \item \texttt{nohup}: Runs command in the background while terminal can still be used or closed. \cite{nohup} The command for this method would be: \\
+    \item \texttt{nohup}:\\
+    Runs command in the background while terminal can still be used or closed. \cite{nohup} The command for this method would be:
 \begin{lstlisting}[language=Bash]
 nohup python3 -u slurm_monitor.py --job-name $JOBNAME &> /dev/null &
 \end{lstlisting}
@@ -24,12 +25,13 @@ and to cancel the monitoring:
 \begin{lstlisting}[language=Bash]
 python3 -u slurm_monitor.py --job-name $JOBNAME --kill
 \end{lstlisting}
-    \item \texttt{screen}: Opens a virtual terminal session which is detached from the main terminal and can be entered and closed. \cite{screen} Here the command would be:
+    \item \texttt{screen}:\\
+    Opens a virtual terminal session which is detached from the main terminal (like a window) and can be entered and closed. \cite{screen} Here the command would be:
 \begin{lstlisting}[language=Bash]
 screen -S $SESSION #Create screen session
 python3 -u slurm_monitor.py --job-name $JOBNAME --verbose
 \end{lstlisting}
-and to cancel the monitoring use the keyboard shortcut \keys{\ctrl + C} or kill screen itself with \keys{\ctrl + D}. To leave the screen use ( \keys{\ctrl + A} ) + \keys{D} and to enter the screen use:
+and to cancel the monitoring use the keyboard shortcut \keys{\ctrl + C} or kill screen itself with \keys{\ctrl + D}. To leave the screen use (~\keys{\ctrl + A}~) + \keys{D} and to enter the screen use:
 \begin{lstlisting}[language=Bash]
 screen -r $SESSION
 \end{lstlisting}
@@ -41,7 +43,6 @@ screen -r $SESSION
 
 The restart script has several features which can be used via the command line interface as parser options. The following features with the corresponding parser option were implementing:
 \begin{itemize}
-    \item The script has no requirements because it runs on the standard \texttt{python3} library
     \item \textbf{\textcolor{red}{!Required!}} Set job name not longer than 8 characters to identify simulation\\
           \texttt{-j [JOBNAME], -\/-job-name [JOBNAME]}
     \item Creates jobscript file with defined content\\
@@ -50,7 +51,7 @@ The restart script has several features which can be used via the command line i
           \texttt{-\/-nodes [NODES]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(default=3)}\\
           \texttt{-\/-ntask-per-node [TASKS]~~~~~~~~~~~~~~~~~~~~~~~~(default=32)}\\
           \texttt{-\/-walltime [WALLTIME]~~~~~~(d-hh:mm:ss)~(default=0-24:00:00)}
-    \item Start/Restarts simulation until job criteria is suffused \\
+    \item Start/Restarts simulation until job criteria is suffused\\
           \texttt{-n [TIMESTEPS]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\,\,(default=10000)}\\
           \texttt{-\/-restartfile [RESTARTFILE]~~~~~~~~~~~~~~~~(default=FDS.dat)}
     \item Makes backup after each run before Restart and Restore files after failed run\\
@@ -76,6 +77,7 @@ The restart script has several features which can be used via the command line i
     \item Print output of status file table to console\\
           \texttt{-v, -\/-verbose~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\,(default=False)}
 \end{itemize}
+All boolean parameters are switches, i.e., the praser option only changes the value from \texttt{False} to \texttt{True}.
 
 %options:
 %  -h, --help            show this help message and exit

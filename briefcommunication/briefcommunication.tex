@@ -153,8 +153,8 @@
 
 %% TITLE, INFO =============================================================================================================
 
-\title[Size convergence of the $\exb$ staircase pattern in flux tube simulations of ion temperature gradient driven turbulence]
-{Size convergence of the $\exb$ staircase pattern in flux tube simulations of ion temperature gradient driven turbulence}
+\title[Size convergence of the \boldmath{$\exb$} staircase pattern in flux tube simulations of ion temperature gradient driven turbulence]
+{Size convergence of the \boldmath{$\exb$} staircase pattern in flux tube simulations of ion temperature gradient driven turbulence}
 
 \author{M. Lippert}
 	\altaffiliation{Repository of this work: \\ 
@@ -222,13 +222,13 @@ The increased box sizes are indicated by the real parameter $\NR$ for radial and
 Note that, the number of modes in the respective direction, i.e., $N_x$ and $N_m$, respectively, is always adapted accordingly to retain a spatial resolution compliant to the standard resolution [Tab.~\ref{tab:resolution}] and standard box size. \\
 The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{Rath2016, Pueschel2008, Rath2016, Peeters2016}
 \begin{equation}
-	\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2},
+	\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2}~,
 	\label{eq:shearingrate}
 \end{equation}
 where $\langle \phi \rangle$ is the zonal electrostatic potential normalized by $\rho_\ast T/e$ ($\rho_\ast = \rhoth/R$ is the thermal Larmor radius normalized with the major radius $R$, $T$ is the temperature, $e$ is the elementary charge).
 The zonal potential is calculated from the electrostatic potential $\phi$ on the two-dimensional $\xcoord$-$\ycoord$-plane at the low field side according to\cite{Rath2021}
 \begin{equation}
-\langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0).
+\langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0)~.
 \end{equation}
 The E$\times$B shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{Hahm1995, Waltz1998} and quantifies the zonal flow induced shearing of turbulent structures \cite{Biglari1990, Hahm1995, Burnell1997}. \\
 Consistent with Ref.~\onlinecite{Peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ is the thermal velocity and $m$ is the mass). Furthermore, quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities from Ref. \onlinecite{Peeters2016,Peeters2009}.
@@ -236,7 +236,7 @@ Consistent with Ref.~\onlinecite{Peeters2016} the turbulence level is quantified
 In order to diagnose the temporal evolution of the staircase pattern and to obtain an estimate of its amplitude the radial Fourier transform of the $\exb$ shearing rate is considered. 
 It is defined by
 \begin{equation}
-	\wexb = \sum_{\kzf} \hatwexb(\kzf,t) \, \exp(\mathrm{i} \kzf \xcoord),
+	\wexb = \sum_{\kzf} \hatwexb(\kzf,t) \, \exp(\mathrm{i} \kzf \xcoord)~,
 	\label{eq:shearingrate_fourier}
 \end{equation}
 where $\hatwexb$ is the complex Fourier coefficient and \linebreak $\kzf = 2\pi \nzf/L_\xcoord$
