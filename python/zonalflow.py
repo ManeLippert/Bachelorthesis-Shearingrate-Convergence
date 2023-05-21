@@ -114,8 +114,11 @@ def get_fft_mean_max_shearingrate_amplitude(wexb_mean):
     
     return wexb_rad_mean_amp, wexb_rad_mean_amp_max
 
-def get_data_info(df_path, rlt, boxsize, Ns = 16, Nvpar = 48, Nmu = 9, 
-                  dtim = 0.020, krhomax = 1.4, Nx = 83):
+def get_data_info(df_path, boxsize, 
+                  finit = "cosine2", 
+                  Ns = 16, Nvpar = 48, Nmu = 9, 
+                  rlt = 6.0,
+                  dtim = 0.020, krhomax = 1.4):
     
     df = pd.read_csv(df_path)
     
@@ -126,6 +129,6 @@ def get_data_info(df_path, rlt, boxsize, Ns = 16, Nvpar = 48, Nmu = 9,
     df = df.loc[df['Nmu'] == Nmu]
     df = df.loc[df['dtim'] == dtim]
     df = df.loc[df['krhomax'] == krhomax]
-    df = df.loc[df['Nx'] == Nx]
+    df = df.loc[df['finit'] == finit]
     
     return df

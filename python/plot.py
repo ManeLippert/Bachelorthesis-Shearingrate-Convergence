@@ -129,7 +129,7 @@ def max_shearingrate_time(time, wexb_max, fourier_index, figuresize):
             ax.plot(time,wexb_max[i], label = r'$k_' + str(i) + '$')
 
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
-    ax.set_ylabel(r'$|k_\psi^2 \phi|$')
+    ax.set_ylabel(r'$\omega_{\mathrm{E} \times \mathrm{B}}^{\mathrm{max}}$')
     
     ax.set_xlim(xmin=0, xmax=time[-1])
     ax.set_ylim(ymin=0)
