@@ -49,11 +49,11 @@
 /
 !---------------------------------------------------------------------------------------------------------------------
 &GRIDSIZE
- NX = 83
+ NX = 247
  N_s_grid = 16
  N_mu_grid = 9
  n_vpar_grid = 48
- NMOD = 21
+ NMOD = 61
  nperiod = 1
  number_of_species = 1 ! Number of species. Note: do not count the adiabatic species
  
@@ -136,3 +136,4 @@
  
  idisp = 1                      !Select between dissipation schemes in finite differences 
 /
+
