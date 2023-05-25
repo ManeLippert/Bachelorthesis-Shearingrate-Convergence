@@ -49,7 +49,7 @@
 /
 !---------------------------------------------------------------------------------------------------------------------
 &GRIDSIZE
- NX = 124
+ NX = 125
  N_s_grid = 16
  N_mu_grid = 9
  n_vpar_grid = 48
@@ -130,3 +130,4 @@
  
  idisp = 1                      !Select between dissipation schemes in finite differences 
 /
+

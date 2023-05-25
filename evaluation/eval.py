@@ -23,7 +23,7 @@ print('\n<------------------------- Evaluation ------------------------->\n')
 
 plot.parameters(40, (24,8), 300, linewidth = 4, tickwidth = 3, legendontop = False)
 
-boxsize = '2.5x2.5'
+boxsize = '1.5x1.5'
 
 ALL, EVOLUTION, SELECTION = False, False, False
 
@@ -86,7 +86,7 @@ lineargrowth_rlt_color = 'grey'
 
 eflux_data, time = zonalflow.get_eflux_time(f)
 
-plot.eflux_time(time, eflux_data, (24,8), xlim = (0, 3000), ylim = (0, 25))
+plot.eflux_time(time, eflux_data, (24,8), xlim = (0, None), ylim = (0, 25))
 plt.savefig(picpath+data+'_'+resolution+'_eflux.pdf', bbox_inches='tight')
 
 # Omega_ExB =========================================================================================================================================
