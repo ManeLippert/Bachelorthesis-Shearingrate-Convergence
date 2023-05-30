@@ -90,6 +90,9 @@ additional.add_argument("-b", "--backup", dest="backup", nargs="?", type=str,
                              "- local (creates backup in simulation folder)\n"+
                              "- home  (creates backup in home folder)")
 
+additional.add_argument("-d", "--dir", dest="directory", nargs="?", type=str, default=os.getcwd(),
+                        help="directory of simulation              (default=cwd)\n")
+
 additional.add_argument("--jobscript", dest="jobscriptFile", nargs="?", type=str, default="jobscript-create",
                         help="jobscript to run SLURM job           (default=jobscript-create)")
 
@@ -128,6 +131,37 @@ additional.add_argument("--kill", dest="kill", action="store_true",
 
 args = parser.parse_args()
 
+# PARSER VARIABLES =========================================================================================================
+
+emailAddress = args.mail
+RESTARTMAIL = args.restartmail
+
+backupLocation = args.backup
+folder = args.directory
+
+jobName = args.jobname
+tasks = args.tasks
+nodes = args.nodes
+wallTime = args.wallTime
+
+nTimestepsRequired = args.timesteps
+
+jobscriptFilename = args.jobscriptFile
+restartFilename = args.restartFile
+restartBin = restartFilename.replace(".dat", "")
+
+statusFilename = args.statusFile
+
+formatTable = args.formattable
+VERBOSE = args.verbose
+RESET = args.reset
+
+# Kill process of monitoring
+kill = args.kill
+
+# Changing this value can cause problems in writing status file
+sleepTime = args.sleepTime
+
 # VARIABLES ================================================================================================================
 
 outputCriteria = ["0", "Run successfully completed"]
@@ -144,39 +178,17 @@ dataFilename = "gkwdata.h5"
 check1Filename, check2Filename = "DM1.dat", "DM2.dat"
 check1Bin, check2Bin = check1Filename.replace(".dat", ""), check2Filename.replace(".dat", "")
 
-# PARSER VARIABLES =========================================================================================================
-
-emailAddress = args.mail
-RESTARTMAIL = args.restartmail
-
-backupLocation = args.backup
-
-jobName = args.jobname
-tasks = args.tasks
-nodes = args.nodes
-wallTime = args.wallTime
-
-nTimestepsRequired = args.timesteps
-
-jobscriptFilename = args.jobscriptFile
-restartFilename = args.restartFile
-restartBin = restartFilename.replace(".dat", "")
-
-statusFilename = args.statusFile
-#statusFile = open(statusFilename, "r+")
-
-formatTable = args.formattable
-VERBOSE = args.verbose
-RESET = args.reset
-
-# Kill process of monitoring
-kill = args.kill
-
-# Changing this value can cause problems in writing status file
-sleepTime = args.sleepTime
-
 def outputFilename(info):
-    return "./slurm-" + info + ".out"
+    return "slurm-" + info + ".out"
+
+## KILL JOB ================================================================================================================
+
+commandMonitorKill = "ps ax | grep " + jobName + " | grep -v grep | grep -v kill | awk '{print $1}'"
+
+PID = subprocess.getoutput(commandMonitorKill)
+if kill:
+    subprocess.run(["kill", PID])
+    quit()
 
 ## JOBSCRIPT CONTENT =======================================================================================================
 
@@ -196,7 +208,7 @@ jobscriptContent = """#!/bin/bash -l
 #SBATCH --time=""" + wallTime + """
 
 # execute the job
-time mpirun -np $SLURM_NTASKS ./gkw.x > output.dat
+time mpirun -np $SLURM_NTASKS """ + folder + "/" + """gkw.x > output.dat
 
 # end
 exit 0
@@ -220,11 +232,14 @@ if backupLocation==None:
     BACKUP = False
 else:
     BACKUP = True
-    
+
 ## PATHS ===================================================================================================================
 
 user = os.getlogin()
-folder = os.getcwd()
+
+if folder[-1] == "/":
+    folder = folder[:-1]
+
 path = folder.split(user + "/")[1]
 
 # Set backup location
@@ -254,41 +269,47 @@ if BACKUP:
 commandJobRunning = "squeue --states=running --name " + jobName
 commandJobPending = "squeue --states=pending --name " + jobName
 
-commandMonitorKill = "ps ax | grep " + jobName + " | awk '{print $1}'"
-
 commandJobStarting = "sbatch"
 
 if BACKUP:
-    commandBackup  = ["rsync", "-a", "", backupPath]
-    commandRestore = ["rsync", "-a", "-I", "--exclude=" + statusFilename, backupPath + "/", ""]
+    commandBackup  = ["rsync", "-a", folder + "/", backupPath]
+    commandRestore = ["rsync", "-a", "-I", "--exclude=" + statusFilename, backupPath + "/", folder]
 
 # FUNCTIONS ================================================================================================================
 
 ## PROGRESSBAR =============================================================================================================
 
-def progressbar(required_value, current_value, barsize=42,
-                prefix="", 
+def progressbar(required_value, current_value, progressbar_width,
+                prefix="", prefix_width = 10, percent_width = 8, ratio_width = 13,
                 progress_fill="=", progress_fill_top="", progress_fill_bot="",
                 progress_unfill=".", 
                 progress_bracket=["[","]"]):
     
-    x = int(barsize*current_value/required_value)
-    percent = int(100*current_value/required_value)
     
-    try:
-        percent_format = "  (" + (int(math.log10(100)) - int(math.log10(percent)))*" " + "{}%)"
-    except ValueError:
-        percent_format = "  (" + int(math.log10(100))*" " + "{}%)"
-        
-    try:
-        ratio_format = "  " + (int(math.log10(required_value)) - int(math.log10(current_value)))*" " + "{}/{}"
-    except ValueError:
-        ratio_format = "  " + int(math.log10(required_value))*" " + "{}/{}"
+    prefix_format = "{:<" + str(prefix_width) + "}"
+    
+    percentage = int(100*current_value/required_value)
+    percent = "(" + " "*(3-len(str(percentage))) + str(percentage) + "%)"
+    percent_format = "{:>" + str(percent_width) + "}"
+    
+    ratio = str(current_value) + "/" + str(required_value)
+    ratio_format = "{:>" + str(ratio_width) + "}"
+    
+    progressbar_bracket_width = (len(progress_bracket[0]) + len(progress_bracket[1]) 
+                                 + len(progress_fill_top) + len(progress_fill_bot))
+    
+    barsize = progressbar_width - prefix_width - percent_width - ratio_width - progressbar_bracket_width
+    
+    if percentage <= 100:
+        x = int(barsize*current_value/required_value)
+    else:
+        x = barsize
+    
+    progress_format = progress_bracket[0] + progress_fill_bot + "{}" + progress_fill_top + "{}" + progress_bracket[1] 
 
-        
-    bar_format =  "{}  " + progress_bracket[0] + progress_fill_bot + "{}" + progress_fill_top + "{}" + progress_bracket[1] + percent_format + ratio_format
-    bar = bar_format.format(prefix, progress_fill*x, progress_unfill*(barsize-x), percent, current_value, required_value)
-        
+    bar_format =  prefix_format +progress_format + percent_format + ratio_format
+    bar = bar_format.format(prefix, progress_fill*x, progress_unfill*(barsize-x), percent, ratio)
+    
     return bar
 
 ## OUTPUT TABLE ============================================================================================================
@@ -303,7 +324,7 @@ def print_table_row(content,
                     TIMEINFO = True, WRITEFILE=True):
     
     current_value, required_value = nTimestepsCurrent, nTimestepsRequired,
-    run_conter = runCounter
+    run_counter = runCounter
     current_time, required_time = currentTime, wallTime
     
     msg=""
@@ -329,8 +350,9 @@ def print_table_row(content,
     progress_cols   = [2, table_inner_width, 2]
     progress_format = "".join(["{:<" + str(col) + "}" for col in progress_cols])
     
-    progressbar_content = [progressbar(required_value, current_value, progress_fill_top=">", 
-                                       prefix="PROGRESS")]
+    progressbar_content = [progressbar(required_value, current_value, table_inner_width,
+                                       progress_fill_top=">", prefix="PROGRESS")]
+    
     progressbar_content.insert(0, table_outline[6])
     progressbar_content.insert(len(progressbar_content), table_outline[7])
     
@@ -343,7 +365,7 @@ def print_table_row(content,
         jobStatusHeader = ["  " + jobStatus[0]]
         jobStatusInfo   = [jobStatus[1][11:11+table_inner_width]]
     except IndexError:
-        jobStatus_cols   = [12, 12, 10, table_inner_width- 71, 13, 11, 13]
+        jobStatus_cols   = [12, 12, 10, table_inner_width - 71, 13, 11, 13]
         jobStatus_format = "".join(["{:<" + str(col) + "}" for col in jobStatus_cols])
         
         jobStatusHeader = ["OUTPUT", "NAME", "USER", "" ,"DATE", "TIME", "W:DD:HH:MM:SS"]
@@ -357,12 +379,9 @@ def print_table_row(content,
     jobStatusInfo.insert(0, table_outline[6])
     jobStatusInfo.insert(len(jobStatusInfo), table_outline[7])
     
-    try:
-        progressbartime_content = [progressbar(required_time, current_time, progress_fill_top=">",
-                                               prefix="RUN " + str(run_conter) + (2 - int(math.log10(run_conter)))*" " + " ")]
-    except ValueError:
-        progressbartime_content = [progressbar(required_time, current_time, progress_fill_top=">",
-                                               prefix="RUN " + str(run_conter) + 2*" " + " ")]
+    progressbartime_content = [progressbar(required_time, current_time, table_inner_width,
+                                           progress_fill_top=">", prefix="RUN " + str(run_counter))]
+    
     progressbartime_content.insert(0, table_outline[6])
     progressbartime_content.insert(len(progressbartime_content), table_outline[7])
     
@@ -441,8 +460,9 @@ def pip_install(modules):
 ## FILE ====================================================================================================================
 
 def get_value_of_variable_from_file(filename, file_index, relative_index, string):
+    
     try:
-        content = [i.strip().split() for i in open(filename).readlines()]
+        content = [i.strip().split() for i in open(folder + "/" + filename).readlines()]
         index = [idx for idx, s in enumerate(content) if string in s][file_index]
         value = content[index][relative_index]
         return value
@@ -452,7 +472,7 @@ def get_value_of_variable_from_file(filename, file_index, relative_index, string
 
 def find_string_in_file(filename, string):
     
-    with open(filename) as f:
+    with open(folder + "/" + filename) as f:
         if string in f.read():
             return True
         else:
@@ -460,7 +480,7 @@ def find_string_in_file(filename, string):
         
 def delete_write_line_to_file(filename, add = "", start=None, end=None):
     
-    with open(filename, "r") as file:
+    with open(folder + "/" + filename, "r") as file:
     
         try:
             lines = file.readlines()[start:end]
@@ -475,7 +495,7 @@ def delete_write_line_to_file(filename, add = "", start=None, end=None):
     
 def write_file(filename, content):
     
-    with open(filename, "w") as file:
+    with open(folder + "/" + filename, "w") as file:
         file.write(content)
         file.flush()
 
@@ -506,8 +526,9 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
     
     # Checks if file has binary format.
     def is_binary(filename):
+        
         try:
-            with open(filename, 'tr') as check_file:
+            with open(filename, "tr") as check_file:
                 check_file.read()
                 return False
         except:
@@ -519,11 +540,11 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
     def is_file_exception(filename):
     
         # substrings that have to be checked
-        check_list = ['geom.dat', 'DM1.dat', 'DM2.dat', 'FDS.dat', '.o', 'FDS', 
-                      'input.dat', 'perform_first.dat', 'perform.dat', 'output.dat', 
-                      'gkwdata.meta', 'gkw_hdf5_errors.txt', 'kx_connect.dat', 
-                      'jobscript', 'Poincare1.mat', 'perfloop_first.dat', 'par.dat', 
-                      'input_init.dat', 'sgrid', 'gkw', '.out', 'status.txt']
+        check_list = ["geom.dat", "DM1.dat", "DM2.dat", "FDS.dat", ".o", "FDS", 
+                      "input.dat", "perform_first.dat", "perform.dat", "output.dat", 
+                      "gkwdata.meta", "gkw_hdf5_errors.txt", "kx_connect.dat", 
+                      "jobscript", "Poincare1.mat", "perfloop_first.dat", "par.dat", 
+                      "input_init.dat", "sgrid", "gkw", ".out", statusFilename]
         for key in check_list:
             if key in filename:
                 return True
@@ -533,30 +554,31 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
     
     # Check if given file is a PBS or SLURM jobscript.
     def is_jobscript(filename):
-        with open(filename,'r') as file:                                            
+        
+        with open(filename,"r") as file:                                            
             for line in file:
-                if '#PBS -l' in line:
+                if "#PBS -l" in line:
                     return True
-                if '#SBATCH' in line:
+                if "#SBATCH" in line:
                     return True
             
         return False
     
     def get_timestep(FILE):
-        if(os.path.isfile(SIM_DIR+'/'+FILE+'.dat')):
+        if(os.path.isfile(SIM_DIR+"/"+FILE+".dat")):
             EXISTS = True
-            with open(SIM_DIR+'/'+FILE+'.dat','r') as file:                                                                            
+            with open(SIM_DIR+"/"+FILE+".dat","r") as file:                                                                            
                 for line in file:
-                    if 'NT_REMAIN' in line:
-                        expr = line.replace(' ','')
-                        expr = expr.replace(',','')
-                        expr = expr.replace('\n','')
-                        REMAIN = int(expr.split('=')[1])
-                    if 'NT_COMPLETE' in line:
-                        expr = line.replace(' ','')
-                        expr = expr.replace(',','')
-                        expr = expr.replace('\n','')
-                        COMPLETE = int(expr.split('=')[1])
+                    if "NT_REMAIN" in line:
+                        expr = line.replace(" ","")
+                        expr = expr.replace(",","")
+                        expr = expr.replace("\n","")
+                        REMAIN = int(expr.split("=")[1])
+                    if "NT_COMPLETE" in line:
+                        expr = line.replace(" ","")
+                        expr = expr.replace(",","")
+                        expr = expr.replace("\n","")
+                        COMPLETE = int(expr.split("=")[1])
         
         else:
             REMAIN, COMPLETE, EXISTS = None, None, False
@@ -564,7 +586,7 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
         return REMAIN, COMPLETE, EXISTS
     
     HDF5_FILENAME = "gkwdata.h5"
-    RESTARTFILE, DUMPFILE1, DUMPFILE2, = "FDS", "DM1", "DM2"
+    RESTARTFILE,DUMPFILE1, DUMPFILE2 = "FDS","DM1", "DM2"
   
     # Change to simulation directory.
     if(not os.path.isdir(SIM_DIR)):
@@ -573,27 +595,27 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
         os.chdir(SIM_DIR)
   
     # Check if hdf5-file exists.
-    if(not os.path.isfile(HDF5_FILENAME)):
+    if(not os.path.isfile(SIM_DIR + "/" + HDF5_FILENAME)):
         return
   
     # First, read hdf5 file and determine the number of big time steps NTIME, 
     # requested in the input.dat file.
-    f = h5py.File(HDF5_FILENAME, "r+")
+    f = h5py.File(SIM_DIR + "/" + HDF5_FILENAME, "r+")
     
   
     # Get requested big time steps from the /control group in the hdf5-file.
     if(NTIME==None):
-        NTIME = int(f['input/control/ntime'][:])
+        NTIME = int(f["input/control/ntime"][:])
   
     # Get number of big time steps after which simulation broke.
     # If time.dat exists read this file to obtain number of time steps after
     # which simulation broke.
-    if(os.path.isfile('time.dat')):
-      tim = pd.read_csv(SIM_DIR+'time.dat', header=None, sep='\s+').values
+    if(os.path.isfile(SIM_DIR + "/" + "time.dat")):
+      tim = pd.read_csv(SIM_DIR+"time.dat", header=None, sep="\s+").values
       NT_BROKE = tim.shape[0]
     # Else, get time from hdf5-file.
     else:
-      NT_BROKE = f['diagnostic/diagnos_growth_freq/time'].shape[1]
+      NT_BROKE = f["diagnostic/diagnos_growth_freq/time"].shape[1]
   
   
     # Set NT_BROKE for output files holding temporal derivates and therefore 
@@ -670,10 +692,10 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
     # Cycle over all nodes of hdf5-file and reset time trace datasets.
   
     # Check if hdf5-file exists.
-    if(os.path.isfile(HDF5_FILENAME)):
+    if(os.path.isfile(SIM_DIR + "/" + HDF5_FILENAME)):
     
         # Find all possible keys items, i.e. both groups and datasets
-        f = h5py.File(HDF5_FILENAME, "a")
+        f = h5py.File(SIM_DIR + "/" + HDF5_FILENAME, "a")
         h5_keys = []
         f.visit(h5_keys.append)
   
@@ -737,7 +759,7 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
             continue
     
         # Load csv file.
-        data =  pd.read_csv(SIM_DIR+'/'+filename, header=None, sep='\s+').values
+        data =  pd.read_csv(filename, header=None, sep="\s+").values
     
         #Check if any dimension is an integer multiple of NT_BROKE, by checking
         #the residual of the division.
@@ -764,14 +786,14 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
               
             # Load original dataset.
             original_data = data
-            # print('\t Original shape: \t'+str(original_data.shape))
+            # print("\t Original shape: \t"+str(original_data.shape))
       
             # Reset time trace.
             reset_data = reset_time_trace(original_data,dim,ncol,NT_RESET)
-            # print('\t Reset shape: \t' +str(reset_data.shape))
+            # print("\t Reset shape: \t" +str(reset_data.shape))
     
             # Save resetted data.
-            pd.DataFrame(reset_data).to_csv(filename, sep='\t', header=None, index=None)
+            pd.DataFrame(reset_data).to_csv(filename, sep="\t", header=None, index=None)
  
         # files holding time derivatives
         if 0.0 in res_deriv:
@@ -793,51 +815,54 @@ def reset_simulation(SIM_DIR, NTIME=None, use_ntime=False):
             reset_data = reset_time_trace(original_data,dim,ncol,NT_RESET_DERIV)
     
             # Save resetted data.
-            pd.DataFrame(reset_data).to_csv(filename, sep='\t', header=None, index=None)
+            pd.DataFrame(reset_data).to_csv(filename, sep="\t", header=None, index=None)
       
   
     # ----------------------------------------------------------------------
     # Finally, copy most recent dump file to FDS[/.dat].
   
     # Copy the most recent dump file to FDS[/.dat].
-    copyfile(SIM_DIR+'/'+DUMPFILE, SIM_DIR+'/'+'FDS')
-    copyfile(SIM_DIR+'/'+DUMPFILE+'.dat', SIM_DIR+'/'+'FDS.dat')
+    copyfile(SIM_DIR+"/"+DUMPFILE, SIM_DIR+"/"+"FDS")
+    copyfile(SIM_DIR+"/"+DUMPFILE+".dat", SIM_DIR+"/"+"FDS.dat")
   
     # First line of the so produced FDS.dat has to be modified. 
-    old_text = '!Dump filename: '+DUMPFILE
-    new_text = '!Dump filename: '+'FDS'
+    old_text = "!Dump filename: "+DUMPFILE
+    new_text = "!Dump filename: "+"FDS"
   
     # Replace first line in FDS.dat to set the correct file name.
-    with fileinput.input(SIM_DIR+'/'+'FDS.dat',inplace=True) as f:
+    with fileinput.input(SIM_DIR+"/"+"FDS.dat",inplace=True) as f:
         for line in f:
             line.replace(old_text, new_text)
             
 def check_and_delete_file(filenames):
     
     for filename in filenames:
-        if(os.path.isfile(filename)):
-            os.remove(filename)
+        
+        if(os.path.isfile(folder + "/" + filename)):
+            os.remove(folder + "/" + filename)
 
 
 def check_checkpoint_files():
     DM1, DM2 = False, False
     
-    if(os.path.isfile(check1Filename) and os.path.isfile(check1Bin)):
+    if(os.path.isfile(folder + "/" + check1Filename) and os.path.isfile(folder + "/" + check1Bin)):
         DM1 = True
-    if(os.path.isfile(check2Filename) and os.path.isfile(check2Bin)):
+    if(os.path.isfile(folder + "/" + check2Filename) and os.path.isfile(folder + "/" + check2Bin)):
         DM2 = True
     
     return DM1, DM2
 
 def get_timestep_from_restartfile(filename, flag):
-    return int(get_value_of_variable_from_file("./" + filename, 0, 2, flag).replace(",", ""))
+    
+    return int(get_value_of_variable_from_file(filename, 0, 2, flag).replace(",", ""))
 
 def get_ntimestepCurrent(filenames):
     
     ntimestep = 0
     
     for f in filenames:
-        if(os.path.isfile(f)):
+        
+        if(os.path.isfile(folder + "/" + f)):
             ntimestepFile = get_timestep_from_restartfile(f, restartFlag)
             
             if ntimestepFile > ntimestep:
@@ -846,11 +871,17 @@ def get_ntimestepCurrent(filenames):
     return ntimestep
 
 def get_time_from_statusfile(filename, line_index):
-    with open(filename, "r") as file:
+    
+    with open(folder + "/" + filename, "r") as file:
         line = file.readlines()[line_index]
         
         content = line.split(" ")
-        time = content[-2]
+        
+        if formatTable == None:
+            time = content[-3]
+        else:
+            time = content[-2]
+            
         time_sec = get_time_in_seconds(time)
         
         return time_sec
@@ -881,6 +912,8 @@ def get_time_in_seconds(time):
     # Format D-HH:MM:SS or HH:MM:SS or MM:SS
     
     time = time.replace("-", ":")
+    time = time.replace("\n", "")
+    
     time_split = time.split(":")
 
     seconds = [7*24*60*60,24*60*60, 60*60, 60, 1]
@@ -958,13 +991,6 @@ def send_mail(recipient, subject, body = None):
                                stdin=subprocess.PIPE)
     process.communicate(body)
 
-## KILL JOB ================================================================================================================
-
-PID = subprocess.getoutput(commandMonitorKill).split("\n")[0]
-if kill:
-    subprocess.run(["kill", PID])
-    quit()
-
 # START/RESTART JOB ========================================================================================================
 
 startTime = time.time()
@@ -983,7 +1009,7 @@ else:
 
 # Set pastTime and create status file if necessary. When status file exist append next lines
 WRITEHEADER = True
-if not os.path.isfile(statusFilename):
+if not os.path.isfile(folder + "/" + statusFilename):
     pastTime = 0
     write_file(statusFilename,"")
 else:
@@ -1020,7 +1046,7 @@ else:
         if EMAIL:
             send_mail(emailAddress, "Continued Job " + jobName)
             
-    elif os.path.isfile(restartFilename):
+    elif os.path.isfile(folder + "/" + restartFilename):
         print_table_row(["CONTINUE", "Continue monitoring " + jobName], output_type="middle")
         
         if EMAIL:
@@ -1098,7 +1124,7 @@ while True:
         # Check errors and making Backup
         while True:
             try:
-                outputContent = open(outputFilename(jobID)).readlines()[-5].replace("\n","")
+                outputContent = open(folder + "/" + outputFilename(jobID)).readlines()[-5].replace("\n","")
                 
                 # Create Backup if run is successful
                 # If scan of output.dat is needed: Scans for string "Run Successful in output.dat and returns bool value"
@@ -1110,13 +1136,13 @@ while True:
                     # Check if h5 file is closed before start/restart simulation
                     # than check if FDS/FDS.dat is updated
                     try:
-                        f = open(dataFilename)
+                        f = open(folder + "/" + dataFilename)
                         #f = h5py.File(dataFilename)
                         f.close()
                         
                         # Check if FDS/FDS.dat is updated after run and has equially time stamp as gkwdata.h5                    
-                        timestamp_data    = int(os.path.getmtime(dataFilename))
-                        timestamp_restart = int(os.path.getmtime(restartFilename))
+                        timestamp_data    = int(os.path.getmtime(folder + "/" + dataFilename))
+                        timestamp_restart = int(os.path.getmtime(folder + "/" + restartFilename))
 
                         wallTime_sec = get_time_in_seconds(wallTime)
                         timestamp_remain = timestamp_data - timestamp_restart
@@ -1207,7 +1233,7 @@ while True:
             write_file(jobscriptFilename, jobscriptContent)
         
         # Start Job and send restart mail (if activated)
-        startOutput = subprocess.check_output([commandJobStarting, jobscriptFilename]).decode("utf-8").replace("\n", "")
+        startOutput = subprocess.check_output([commandJobStarting, folder + "/" + jobscriptFilename]).decode("utf-8").replace("\n", "")
         jobID = startOutput.split(startOutputFlag)[1]
         
         runCounter += 1
