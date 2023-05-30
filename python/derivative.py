@@ -1,6 +1,19 @@
 import numpy as np
 
-def finite_first_order(y, dx, method):
+def finite_first_order(y, dx, method, PERIODIC = False):
+    
+    #print(np.insert(np.insert(y[:,0], 0, y[:,0][-1]), len(y[:,0]) + 1, y[:,0][0]))
+    
+    if PERIODIC:
+        
+        y_periodic = []
+        
+        for i in range(0, y.shape[1]):
+            
+            y_periodic.append(np.insert(np.insert(y[:,i], 0, y[:,i][-1]), len(y[:,i]) + 1, y[:,i][0]))
+        
+        y = np.array(y_periodic).transpose()
+    
     if method == 'central':
         dy_central = np.array([y[i+1] - y[i-1] for i in range(1, len(y)-1)])
         return dy_central/(2*dx)

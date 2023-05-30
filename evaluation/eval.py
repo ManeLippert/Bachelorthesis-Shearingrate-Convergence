@@ -21,13 +21,13 @@ print('\n<------------------------- Evaluation ------------------------->\n')
 
 # PARAMETER =========================================================================================================================================
 
-plot.parameters(40, (24,8), 300, linewidth = 4, tickwidth = 3, legendontop = False)
+plot.parameters(40, (24,8), 300, linewidth = 4, tickwidth = 3, legendontop = True)
 
-boxsize = '1.5x1.5'
+boxsize = '2.5x2.5'
 
-ALL, EVOLUTION, SELECTION = False, False, False
+ALL, EVOLUTION, SELECTION, PROFILE = False, False, True, False
 
-print('Input:', boxsize, ALL, EVOLUTION, SELECTION, '\n')
+#print('Input:', boxsize, ALL, EVOLUTION, SELECTION, '\n')
 
 # DATA IMPORT =======================================================================================================================================
 
@@ -46,16 +46,37 @@ if EVOLUTION:
         print('Evolution interval has to be defined in "data.csv"')
         EVOLUTION = False
 
-if SELECTION:
+if SELECTION or PROFILE:
     try:
         interval_sel = np.array([ast.literal_eval(datainfo['sel_start'].values[0]),
                                  ast.literal_eval(datainfo['sel_end'].values[0])])
     except ValueError:
         print('Selection interval has to be defined in "data.csv"')
-        SELECTION = False
+        SELECTION, PROFILE = False, False
 
 if ALL:
     stepsize_all = datainfo['stepsize_all'].values[0]
+    
+
+try:
+    error_index = ast.literal_eval(datainfo['error_index'].values[0])
+    
+    try:
+        if np.isnan(error_index):
+            ERROR = False
+        else:
+            ERROR = True
+            error_start, error_end = None, error_index
+    except ValueError:
+        ERROR = True
+        error_index = np.array(error_index)
+        error_start, error_end = error_index[0], error_index[1]
+    
+except ValueError:
+    ERROR = False
+    
+if ERROR:
+    print("Error Index : ", error_index)
 
 # DATA ==============================================================================================================================================
 
@@ -86,6 +107,12 @@ lineargrowth_rlt_color = 'grey'
 
 eflux_data, time = zonalflow.get_eflux_time(f)
 
+if ERROR:
+    if error_start == None:
+        eflux_data, time = eflux_data[:error_end], time[:error_end]
+    else:
+        eflux_data, time = np.concatenate((eflux_data[:error_start], eflux_data[error_end:])), np.concatenate((time[:error_start], time[error_end:]))
+
 plot.eflux_time(time, eflux_data, (24,8), xlim = (0, None), ylim = (0, 25))
 plt.savefig(picpath+data+'_'+resolution+'_eflux.pdf', bbox_inches='tight')
 
@@ -99,16 +126,22 @@ print('rad_boxsize :', rad_boxsize, '; stepsize :',dx)
 
 wexb_max = zonalflow.get_max_shearingrate(f, wexb, time, 5)
 
+if ERROR:
+    wexb_max_list = []
+    if error_start == None:
+        for i in wexb_max:
+            wexb_max_list.append(i[:error_end])
+    else:
+        for i in wexb_max:
+            wexb_max_list.append(np.concatenate((i[:error_start], i[error_end:])))
+        
+    wexb_max = np.array(wexb_max_list)
+    
+#print(len(wexb_max))
+
 plot.max_shearingrate_time(time, wexb_max, [1, 2, 3, 4], (24,8))
 plt.savefig(picpath+data+'_'+resolution+'_wexb_max.pdf', bbox_inches='tight')
 
-# SAVE DATA =========================================================================================================================================
-
-data_eval = [dx, ddphi, zonal_pot, wexb, wexb_max]
-groupname = ['evaluation' + '/' + x for x in ['derivative_stepsize', 'second_derivative_phi', 'zonalflow_potential', 
-                                              'shearing_rate', 'shearing_rate_maximum']]
-
-h5tools.hdf5_write_data(f, data_eval, groupname)
 
 # ALL SHEARING RATE =================================================================================================================================
 
@@ -164,9 +197,9 @@ if SELECTION:
     
     try:
         # Plot parameter
-        plot.parameters(True, 50, (24,8), 300)
+        plot.parameters(50, (18,8), 300)
 
-        fig, ax = plt.subplots(1, 1,figsize=(18,8))
+        fig, ax = plt.subplots(1, 1)
 
         colors = ['#029e73', '#d55e00']
 
@@ -193,17 +226,113 @@ if SELECTION:
         ax.text(1.01, 0.735, r'\boldmath{$+\gamma$}', color = lineargrowth_rlt_color, transform=ax.transAxes)
         ax.text(1.01, 0.205, r'\boldmath{$-\gamma$}', color = lineargrowth_rlt_color, transform=ax.transAxes)
 
-        ax.legend(loc='upper center', bbox_to_anchor=(1/2, 1.25), frameon=False, ncol = 4, handlelength=1)
+        ax.legend(frameon=False, ncol = 4, handlelength=1)
 
         ax.set_xlim(0, rad_boxsize)
         ax.set_ylim(-0.4, 0.4)
 
         ax.set_yticks(np.arange(-0.4, 0.5, 0.2))
 
-        ax.set_xlabel(r'$\psi~[\rho]$')
-        ax.set_ylabel(r'$\omega_{\mathrm{E \times B}}~[\nu_{\mathrm{th}}/R]$')
+        ax.set_xlabel(r'$x~[\rho]$')
+        ax.set_ylabel(r'$\langle\omega_{\mathrm{E \times B}}\rangle~[\nu_{\mathrm{th}}/R]$')
 
         plt.savefig(picpath+data+'_'+resolution+'_wexb_selection.pdf', bbox_inches='tight')
     
     except TypeError:
         print('Selection interval does not match time series')
+        
+# PROFILE ===========================================================================================================================================
+
+if PROFILE:
+    
+    try:
+        # Plot parameter
+        plot.parameters(40, (18,24), 300)
+
+        fig, ax = plt.subplots(3, 1, sharex=True)
+
+        colors = ['#0173b2', '#de8f05', '#029e73','#a11a5b']
+
+        i = 0
+
+        while i < len(interval_sel[0]):
+            
+            start_time, end_time = interval_sel[0][i], interval_sel[1][i]
+            label_time = r' $t \in$ [' + str(start_time) + r', ' + str(end_time) + r']'
+            start, end = zonalflow.get_index_from_value(time, start_time) , zonalflow.get_index_from_value(time, end_time)
+
+            wexb_rad_mean, wexb_rad_middle = zonalflow.get_mean_middle_shearingrate(start, end, wexb)
+            dr_dens_mean, rad_coord = zonalflow.get_radial_density_profile(f, start, end)
+            dr_ene_mean, rad_coord = zonalflow.get_radial_energy_profile(f, start, end)
+            
+            ax[0].plot(rad_coord, wexb_rad_mean, linewidth=4, label = label_time, color=colors[2])
+            
+            # linear growth rate
+            ax[0].plot(rad_coord,  np.repeat(lineargrowth_rlt, len(rad_coord)), linewidth = 4, linestyle = 'dashed', color = lineargrowth_rlt_color)
+            ax[0].plot(rad_coord, -np.repeat(lineargrowth_rlt, len(rad_coord)), linewidth = 4, linestyle = 'dashed', color = lineargrowth_rlt_color)
+
+            ax[0].text(1.01, 0.735, r'\boldmath{$+\gamma$}', color = lineargrowth_rlt_color, transform=ax[0].transAxes)
+            ax[0].text(1.01, 0.205, r'\boldmath{$-\gamma$}', color = lineargrowth_rlt_color, transform=ax[0].transAxes)
+            
+            ax[0].set_xlim(0, rad_boxsize)
+            ax[0].set_ylim(-0.4, 0.4)
+
+            ax[0].set_yticks(np.arange(-0.4, 0.5, 0.2))
+
+            #ax[0].set_xlabel(r'$x~[\rho]$')
+            ax[0].set_ylabel(r'$\langle\omega_{\mathrm{E \times B}}\rangle~[\nu_{\mathrm{th}}/R]$')
+            
+
+            ax[1].plot(rad_coord, dr_dens_mean, linewidth=4, label = label_time, color = colors[0])
+            
+            ax[1].set_xlim(0, rad_boxsize)
+            ax[1].set_ylim(-0.2, 0.2)
+            #ax[0].set_xlabel(r'$x~[\rho]$')
+            ax[1].set_ylabel(r'Density')
+            
+            #ax[0].legend(frameon=False, ncol = 4, handlelength=1)
+            
+            ax[2].plot(rad_coord, dr_ene_mean[0], linewidth=4, label = "Energy Perpendicular", color = colors[1])
+            ax[2].plot(rad_coord, dr_ene_mean[1], linewidth=4, label = "Energy Parallel", color = colors[3])
+            
+            ax[2].set_xlim(0, rad_boxsize)
+            ax[2].set_ylim(-1.5, 1.5)
+            ax[2].set_yticks(np.arange(-1.5, 1.6, 0.5))
+            ax[2].set_xlabel(r'$x~[\rho]$')
+            ax[2].set_ylabel(r'Energy')
+            
+            #ax[1].legend(frameon=False, ncol = 4, handlelength=1)
+
+            i += 1
+        
+        fig.suptitle(label_time)
+        
+        handles_labels = [axis.get_legend_handles_labels() for axis in ax]
+        handles, labels = [sum(lol, []) for lol in zip(*handles_labels)]
+        
+        fig.legend(handles[2:], labels[2:], ncol=3, bbox_to_anchor=(0.5, 0.88))
+        
+        plt.subplots_adjust(hspace=0.1)
+        
+        plt.savefig(picpath+data+'_'+resolution+'_wexb_dens_ene_selection.pdf', bbox_inches='tight')
+    
+    except TypeError:
+        print('Selection interval does not match time series')
+        
+
+# SAVE DATA =========================================================================================================================================
+
+data_eval = [dx, ddphi, zonal_pot, wexb, wexb_max]
+data_group = ['derivative_stepsize', 'second_derivative_phi', 'zonalflow_potential', 'shearing_rate', 'shearing_rate_maximum']
+    
+groupname = ['evaluation' + '/' + x for x in data_group]
+h5tools.hdf5_write_data(f, data_eval, groupname)
+
+if PROFILE:
+    f = h5py.File(filename,"r+")
+    
+    data_eval = [dr_dens_mean, dr_ene_mean[0], dr_ene_mean[1]]
+    data_group = ['derivative_dens', 'derivative_energy_perp', 'derivative_energy_par']
+
+    groupname = ['evaluation' + '/' + x for x in data_group]
+    h5tools.hdf5_write_data(f, data_eval, groupname)

@@ -129,14 +129,14 @@ def max_shearingrate_time(time, wexb_max, fourier_index, figuresize):
             ax.plot(time,wexb_max[i], label = r'$k_' + str(i) + '$')
 
     ax.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
-    ax.set_ylabel(r'$\omega_{\mathrm{E} \times \mathrm{B}}^{\mathrm{max}}$')
+    ax.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF}}~[\nu_{\mathrm{th}}/R]$')
     
     ax.set_xlim(xmin=0, xmax=time[-1])
     ax.set_ylim(ymin=0)
     
     ax_ticks_subplot(ax)
     
-    plt.legend(loc = 'center right')
+    plt.legend(ncol = max(fourier_index))
     
 def all_shearingrate_radialcoordinate(rad_coord, wexb, figuresize, stepsize):
     fig, ax = plt.subplots(figsize=figuresize)

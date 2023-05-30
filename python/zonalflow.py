@@ -1,6 +1,7 @@
 #Import modules
 import numpy as np
 import pandas as pd
+import h5py
 import h5tools
 import derivative
 
@@ -26,6 +27,76 @@ def get_eflux_time(hdf5_file):
     
     return flux, time[0]
 
+# From Florian Rath
+def get_radial_density_profile(hdf5_file, start_time = None, end_time = None):
+    
+    try:
+        dr_dens_mean = hdf5_file[h5tools.find_key(hdf5_file, 'derivative_dens')][()]
+        rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
+        
+    except (TypeError, ValueError):
+        print('Calculation of density derivative...')
+        
+        dens = hdf5_file['diagnostic/diagnos_moments/dens_kyzero_xs01'][()]
+        time = hdf5_file['diagnostic/diagnos_growth_freq/time'][()]
+        time = time[0]
+
+        rad_boxsize = hdf5_file[h5tools.find_key(hdf5_file, 'lxn')][()][0]
+        rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
+
+        # Mean over s
+        zonal_dens = np.mean(dens,0)
+
+        nx = zonal_dens.shape[0]
+        dx = rad_boxsize/nx
+
+        dr_dens = - derivative.finite_first_order(zonal_dens[:,:], dx, 'central', PERIODIC=True)
+
+        # Mean over t
+        start, end = get_index_from_value(time, start_time), get_index_from_value(time, end_time)
+        dr_dens_mean = np.mean(dr_dens[:,start:end], 1)
+    
+    return dr_dens_mean, rad_coord
+
+def get_radial_energy_profile(hdf5_file, start_time = None, end_time = None):
+    
+    try:
+        dr_ene_mean = [hdf5_file[h5tools.find_key(hdf5_file, 'derivative_energy_perp')][()], hdf5_file[h5tools.find_key(hdf5_file, 'derivative_energy_par')][()]]
+        rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
+    
+    except (TypeError, ValueError):
+        print('Calculation of radial energy derivative...')
+    
+        ene = [hdf5_file['diagnostic/diagnos_moments/ene_perp_kyzero_xs01'][()], hdf5_file['diagnostic/diagnos_moments/ene_par_kyzero_xs01'][()]]
+
+        #print(ene.shape)
+
+        time = hdf5_file['diagnostic/diagnos_growth_freq/time'][()]
+        time = time[0]
+
+        rad_boxsize = hdf5_file[h5tools.find_key(hdf5_file, 'lxn')][()][0]
+        rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
+
+        # Mean over s
+        zonal_ene = [np.mean(ene[0],0), np.mean(ene[1],0)]
+        dr_ene_mean = []
+
+        for i in zonal_ene:
+        
+            nx = i.shape[0]
+            dx = rad_boxsize/nx
+
+            dr = - derivative.finite_first_order(i[:,:], dx, 'central', PERIODIC=True)
+
+            # Mean over t
+            start, end = get_index_from_value(time, start_time), get_index_from_value(time, end_time)
+            dr_mean = np.mean(dr[:,start:end], 1)
+
+            dr_ene_mean.append(dr_mean)
+
+    return dr_ene_mean, rad_coord
+
+
 def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file, start_index = None, end_index = None):
     
     # Stepsize
@@ -40,7 +111,7 @@ def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file,
         #print('Loaded from data')
         
     except TypeError:
-        print('Calculation...')
+        print('Calculation shearing rate...')
         
         # Elektrostatic potencial
         phi = hdf5_file[h5tools.find_key(hdf5_file, 'phi')][:,:,start_index:end_index]
@@ -91,7 +162,9 @@ def get_max_shearingrate(hdf5_file, wexb, time, fourier_index_max):
 
 def get_index_from_value(data, value):
     n, index = 0, None
+    
     for i in data:
+        
         if round(i) == value:
             index = n
         n += 1
