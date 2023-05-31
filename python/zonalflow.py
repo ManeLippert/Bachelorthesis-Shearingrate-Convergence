@@ -29,12 +29,13 @@ def get_eflux_time(hdf5_file):
 
 # From Florian Rath
 def get_radial_density_profile(hdf5_file, start_time = None, end_time = None):
-    
+
+    rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
+
     try:
         dr_dens_mean = hdf5_file[h5tools.find_key(hdf5_file, 'derivative_dens')][()]
-        rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
         
-    except (TypeError, ValueError):
+    except TypeError:
         print('Calculation of density derivative...')
         
         dens = hdf5_file['diagnostic/diagnos_moments/dens_kyzero_xs01'][()]
@@ -60,9 +61,10 @@ def get_radial_density_profile(hdf5_file, start_time = None, end_time = None):
 
 def get_radial_energy_profile(hdf5_file, start_time = None, end_time = None):
     
+    rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
+    
     try:
         dr_ene_mean = [hdf5_file[h5tools.find_key(hdf5_file, 'derivative_energy_perp')][()], hdf5_file[h5tools.find_key(hdf5_file, 'derivative_energy_par')][()]]
-        rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
     
     except (TypeError, ValueError):
         print('Calculation of radial energy derivative...')
@@ -95,6 +97,44 @@ def get_radial_energy_profile(hdf5_file, start_time = None, end_time = None):
             dr_ene_mean.append(dr_mean)
 
     return dr_ene_mean, rad_coord
+
+def get_radial_zonal_potential_profile(hdf5_file, start_time = None, end_time = None):
+    
+    # Stepsize
+    rad_boxsize = hdf5_file[h5tools.find_key(hdf5_file, 'lxn')][()][0]
+    rad_coord = hdf5_file[h5tools.find_key(hdf5_file,'xphi')][0,:]
+    
+    try:
+        dr_zonal_pot_mean = hdf5_file[h5tools.find_key(hdf5_file, 'derivative_zonalflow_potential')][()]
+                
+    except TypeError:
+        print('Calculation of potential derivative...')
+        
+        time = hdf5_file['diagnostic/diagnos_growth_freq/time'][()]
+        time = time[0]
+        
+        try: 
+            zonal_pot = hdf5_file[h5tools.find_key(hdf5_file, 'zonalflow_potential')][()]
+            dx = hdf5_file[h5tools.find_key(hdf5_file, 'derivative_stepsize')][()]
+            
+        except TypeError:
+            
+            # Elektrostatic potencial
+            phi = hdf5_file[h5tools.find_key(hdf5_file, 'phi')][:,:]
+            nx = phi.shape[0]
+    
+            dx = rad_boxsize/nx
+        
+            # Mean over y to get a approximation for the zonal potenzial
+            zonal_pot = np.mean(phi,1)
+
+        dr_zonal_pot = derivative.finite_first_order(zonal_pot[:,:], dx, 'central', PERIODIC=True)
+
+        # Mean over t
+        start, end = get_index_from_value(time, start_time), get_index_from_value(time, end_time)
+        dr_zonal_pot_mean = np.mean(dr_zonal_pot[:,start:end], 1)
+    
+    return dr_zonal_pot_mean, rad_coord
 
 
 def get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(hdf5_file, start_index = None, end_index = None):
