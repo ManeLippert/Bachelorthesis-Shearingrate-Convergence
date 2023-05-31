@@ -18,7 +18,7 @@ sys.path.insert(1, homepath + 'python')
 import zonalflow, h5tools, plot
 
 colors = [['#a11a5b', '#029e73', '#de8f05', '#0173b2'],
- 		             ['#66c2a5', '#dbb757', '#0173b2'],
+ 		             ['#66c2a5', 'orange',  '#dbb757', 'red', '#0173b2'],
 		  ['#87429b', '#66c2a5', '#d55e00', '#56b4e9']]
 
 '''
@@ -125,14 +125,13 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison_t
 #'''
 # ISOTROPIC =========================================================================================================================================
 
-#plot.parameters(32, (24,4.3), 300, legendpad = 0.4)
+plot.parameters(32, (24,4.3), 300, legendpad = 0.4)
 # Thesis
-plot.parameters(44, (24,8), 300, tickwidth = 2, legendpad = 0.4)
+#plot.parameters(44, (24,8), 300, tickwidth = 2, legendpad = 0.4)
 
 # File import and Create picture folder
 data = 'S6_rlt6.0'
-path = ['boxsize1x1/Ns16/Nvpar48/Nmu9', 'boxsize2x2/Ns16/Nvpar48/Nmu9',
-        'boxsize3x3/Ns16/Nvpar48/Nmu9']
+path = ['boxsize1x1/Ns16/Nvpar48/Nmu9', 'boxsize1.5x1.5/Ns16/Nvpar48/Nmu9', 'boxsize2x2/Ns16/Nvpar48/Nmu9', 'boxsize2.5x2.5/Ns16/Nvpar48/Nmu9', 'boxsize3x3/Ns16/Nvpar48/Nmu9']
 
 filename = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path]
 f = [h5py.File(i,"r+") for i in filename]
@@ -146,29 +145,29 @@ if not os.path.exists(picDir):
 # Compare eflux and amplitude in time domain
 fig, (ax_eflux, ax_wexb_max) = plt.subplots(1, 2) #, sharex=True)
 
-boxsize = [r'1\times1', r'2\times2', r'3\times3']
+boxsize = [r'1 \times 1', r'1.5 \times 1.5', r'2 \times 2', r'2.5 \times 2.5', r'3 \times 3']
 
 #ax_eflux.set_title(r'$N_s$ = 16,   $N_{\mathrm{vpar}}$ = 48,   $N_{\mathrm{\mu}}$ = 9', pad=20)
 ax_eflux.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
 ax_eflux.set_ylabel(r'$\chi~[\rho^2 \nu_{\mathrm{th}} / R]$')
-#ax_eflux.yaxis.set_label_coords(-0.09,0.5)
-ax_eflux.yaxis.set_label_coords(-0.15,0.5)
+ax_eflux.yaxis.set_label_coords(-0.09,0.5)
+#ax_eflux.yaxis.set_label_coords(-0.15,0.5)
 
 ax_wexb_max.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
 ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF}}~[\nu_{\mathrm{th}}/R]$')
-#ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
-ax_wexb_max.yaxis.set_label_coords(-0.15,0.5)
+ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
+#ax_wexb_max.yaxis.set_label_coords(-0.15,0.5)
 
 
 x_max = 0
-fourier_index = [1, 2, 4]
+fourier_index = [1, 2, 2, 3, 4]
 
 color_iso = colors[1][::-1]
 
 for i, n, k, c in zip(f, boxsize, fourier_index, color_iso):
     #eflux
     eflux, time = zonalflow.get_eflux_time(i)
-    max_index = zonalflow.get_index_from_value(time,3000 + 1)
+    max_index = zonalflow.get_index_from_value(time,8000 + 1)
     
     eflux, time = eflux[:max_index], time[:max_index]
 
@@ -186,9 +185,9 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_iso):
     wexb, rad_coord, rad_boxsize, ddphi, dx, zonal_pot = zonalflow.get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(i)
     wexb_max = zonalflow.get_max_shearingrate(i, wexb, time, 1)
     
-    #ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', color = c, linewidth = 3)
+    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_' + str(k) + r'$', color = c, linewidth = 3)
     # Thesis
-    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$' + n + r';~k_{' + str(k) + ',\,' + n + r'}$', linewidth = 3, color = c)
+    #ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$' + n + r';~k_{' + str(k) + ',\,' + n + r'}$', linewidth = 3, color = c)
     
     plot.ax_ticks_subplot(ax_wexb_max)
     
@@ -197,32 +196,32 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_iso):
     ax_wexb_max.yaxis.set_ticks(np.arange(0, 0.40, 0.1))
     
 
-#leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
-#leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
+leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.48), ncol=3, frameon=False, columnspacing=1, handlelength=1)
+leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 1.48), ncol=3, frameon=False, columnspacing=1, handlelength=1)
 
-#for line_eflux, line_wexb_max in zip(leg_eflux.get_lines(), leg_wexb_max.get_lines()):
-#    line_eflux.set_linewidth(4)
-#    line_wexb_max.set_linewidth(4)
+for line_eflux, line_wexb_max in zip(leg_eflux.get_lines(), leg_wexb_max.get_lines()):
+    line_eflux.set_linewidth(4)
+    line_wexb_max.set_linewidth(4)
 
 # Thesis
-leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(-0.2, 1.26), ncol=4, frameon=False, columnspacing=1, handlelength=1)
+#leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(-0.2, 1.26), ncol=4, frameon=False, columnspacing=1, handlelength=1)
 
 for line_wexb_max in leg_wexb_max.get_lines():
     line_wexb_max.set_linewidth(4)
 
-#plt.subplots_adjust(top=0.9, wspace=0.3, hspace=0.4)
+plt.subplots_adjust(top=0.9, wspace=0.3, hspace=0.4)
 # Thesis
-plt.subplots_adjust(top=0.9, wspace=0.4, hspace=0.4)
+#plt.subplots_adjust(top=0.9, wspace=0.4, hspace=0.4)
 
-#plot.savefig_subplot(fig, ax_eflux   , picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf'   , pad=0.02)
-#plot.savefig_subplot(fig, ax_wexb_max, picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_max_comparison.pdf', pad=0.02)
+plot.savefig_subplot(fig, ax_eflux   , picDir + '/S6_rlt6.0_boxsize1x1-1.5x1.5-2x2-2.5x2.5-3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf'   , pad=0.02)
+plot.savefig_subplot(fig, ax_wexb_max, picDir + '/S6_rlt6.0_boxsize1x1-1.5x1.5-2x2-2.5x2.5-3x3_Ns16_Nvpar48_Nmu9_wexb_max_comparison.pdf', pad=0.02)
 
 ax_eflux.text(1.02, 0.91, r'\bf{(a)}', transform=ax_eflux.transAxes)
 ax_wexb_max.text(1.02, 0.91, r'\bf{(b)}', transform=ax_wexb_max.transAxes)
 
-#plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
+plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-1.5x1.5-2x2-2.5x2.5-3x3_Ns16_Nvpar48_Nmu9_comparison.pdf', bbox_inches='tight')
 # Thesis
-plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf', bbox_inches='tight')
+#plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-1.5x1.5-2x2-2.5x2.5-3x3_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf', bbox_inches='tight')
 
 #'''
 

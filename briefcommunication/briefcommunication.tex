@@ -153,8 +153,8 @@
 
 %% TITLE, INFO =============================================================================================================
 
-\title[Size convergence of the \boldmath{$\exb$} staircase pattern in flux tube simulations of ion temperature gradient driven turbulence]
-{Size convergence of the \boldmath{$\exb$} staircase pattern in flux tube simulations of ion temperature gradient driven turbulence}
+\title[Size convergence of the $\exb$ staircase pattern in flux tube simulations of ion temperature gradient driven turbulence]
+{Size convergence of the $\exb$ staircase pattern in flux tube simulations of ion temperature gradient driven turbulence}
 
 \author{M. Lippert}
 	\altaffiliation{Repository of this work: \\ 
@@ -185,7 +185,7 @@
 %\label{sec:intro}
 
 Ion temperature gradient driven turbulence close to marginal stability exhibits zonal flow pattern formation on mesoscales, so-called $\exb$ staircase structures \cite{Pradalier2010}.
-Such pattern formation has been observed in local gradient-driven flux-tube simulations \cite{Peeters2016, Weikl2017, Rath2021} as well as global gradient-driven \cite{McMillan2009, Villard2013, Seo2022} and global flux-driven \cite{Pradalier2010, Pradalier2015, Wang2020, Kim2022, Kishimoto2023} studies. 
+Such pattern formation has been observed in local gradient-driven flux-tube simulations \cite{Peeters2016, Rath2021}, including collisions \cite{Weikl2017}, as well as global gradient-driven \cite{McMillan2009, Villard2013, Seo2022} and global flux-driven \cite{Pradalier2010, Pradalier2015, Wang2020, Kim2022, Kishimoto2023} studies. 
 In global studies, spanning a larger fraction of the minor radius, multiple radial repetitions of staircase structures are usually observed, with a typical pattern size of several ten Larmor radii.
 % By contrast, the radial domain size of local flux-tube simulations is often restricted to a similar mesoscale.
 By contrast, in the aforementioned local studies the radial size of $\exb$ staircase structures is always found to converge to the radial box size of the flux tube domain.
@@ -222,13 +222,13 @@ The increased box sizes are indicated by the real parameter $\NR$ for radial and
 Note that, the number of modes in the respective direction, i.e., $N_x$ and $N_m$, respectively, is always adapted accordingly to retain a spatial resolution compliant to the standard resolution [Tab.~\ref{tab:resolution}] and standard box size. \\
 The $\exb$ staircase pattern is manifest as radial structure formation in the $\exb$ shearing rate defined by\cite{Rath2016, Pueschel2008, Rath2016, Peeters2016}
 \begin{equation}
-	\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2}~,
+	\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2},
 	\label{eq:shearingrate}
 \end{equation}
 where $\langle \phi \rangle$ is the zonal electrostatic potential normalized by $\rho_\ast T/e$ ($\rho_\ast = \rhoth/R$ is the thermal Larmor radius normalized with the major radius $R$, $T$ is the temperature, $e$ is the elementary charge).
 The zonal potential is calculated from the electrostatic potential $\phi$ on the two-dimensional $\xcoord$-$\ycoord$-plane at the low field side according to\cite{Rath2021}
 \begin{equation}
-\langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0)~.
+\langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0).
 \end{equation}
 The E$\times$B shearing rate $\wexb$ is the radial derivative of the advecting zonal flow velocity \cite{Hahm1995, Waltz1998} and quantifies the zonal flow induced shearing of turbulent structures \cite{Biglari1990, Hahm1995, Burnell1997}. \\
 Consistent with Ref.~\onlinecite{Peeters2016} the turbulence level is quantified by the turbulent heat conduction coefficient $\chi$, which is normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ is the thermal velocity and $m$ is the mass). Furthermore, quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities from Ref. \onlinecite{Peeters2016,Peeters2009}.
@@ -236,7 +236,7 @@ Consistent with Ref.~\onlinecite{Peeters2016} the turbulence level is quantified
 In order to diagnose the temporal evolution of the staircase pattern and to obtain an estimate of its amplitude the radial Fourier transform of the $\exb$ shearing rate is considered. 
 It is defined by
 \begin{equation}
-	\wexb = \sum_{\kzf} \hatwexb(\kzf,t) \, \exp(\mathrm{i} \kzf \xcoord)~,
+	\wexb = \sum_{\kzf} \hatwexb(\kzf,t) \, \exp(\mathrm{i} \kzf \xcoord),
 	\label{eq:shearingrate_fourier}
 \end{equation}
 where $\hatwexb$ is the complex Fourier coefficient and \linebreak $\kzf = 2\pi \nzf/L_\xcoord$
@@ -280,9 +280,9 @@ The above discussion indicates that although the $\nzf = 3,~4$ zonal modes compe
 
 % what kind of analysis
 Since the radially elongated simulation domain might inhibit the development of isotropic turbulent structures, in the second test the radial and binormal box size is increased simultaneously.
-This scan covers the realizations $\NR\times\NB \in [1\times1,~2\times2,~3\times3]$.
+This scan covers the realizations $\NR\times\NB \in [1\times1,~1.5\times1.5,~2\times2,~2.5\times2.5,~3\times3]$.
 % mention shorter times scales for stabilization
-Interestingly, suppression of the turbulence by the emergence of a fully developed staircase pattern always occurs after $\sim 1000~R/\vth$ [Fig. \ref{fig:eflux-1x1-2x2-3x3-comparison}], i.e., significantly faster compared to the $3\times1$ and $4\times1$ realizations. 
+Interestingly, suppression of the turbulence by the emergence of a fully developed staircase pattern almost always occurs after \linebreak $\sim 1000~R/\vth$ [Fig. \ref{fig:eflux-1x1-2x2-3x3-comparison}], i.e., significantly faster compared to the $3\times1$ and $4\times1$ realizations. 
 % Although the computational costs per time step is higher, the difference in the time scales renders this test computationally cheaper.
 %
 % the main result of this test: confirmation of wave length convergence
@@ -296,9 +296,10 @@ As shown in Fig.~\ref{fig:wexb-stable-comparison}\,(b) also this test confirms t
 \includegraphicsTwoCol{{Briefcommunication/2}.pdf}{
 	Comparison of shearing rate $\wexb$ for each box sizes scan averaged over given time interval and the growth rate $\pm \gamma$ of the most unstable linear ITG driven Eigenmode. The staircase structures are radially shifted with respect to each over till alignment for better visibility.\\
 	\begin{tabular}{l l l l l l l l l}
-		\textbf{(a) radial:}    & $t_{1\times 1}$   & $\in [2000, 5000]$,   & $t_{2\times 1}$   & $\in [15000, 18000]$, & $t_{3\times 1}$ & $\in [43000, 45000]$, & $t_{4\times 1}$ & $\in [26000, 28000]$ \\
-		\textbf{(b) isotropic:} & $t_{1\times 1}$   & $\in [2000, 5000]$,   & $t_{2\times 2}$   & $\in [2000, 3000]$,   & $t_{3\times 3}$ & $\in [2000, 3000]$    &                 &                      \\
-		\textbf{(c) binormal:}  & $t_{3\times 1.5}$ & $\in [2000, 3000]$,   & $t_{3\times 2.5}$ & $\in [2000, 3000]$,   & $t_{3\times 3}$ & $\in [2000, 3000]$    & $t_{3\times 5}$ & $\in [1000, 3000]$   \\
+		\textbf{(a) radial:}    & $t_{1\times 1}$   & $\in [2000, 5000]$,   & $t_{2\times 1}$     & $\in [15000, 18000]$, & $t_{3\times 1}$ & $\in [43000, 45000]$, & $t_{4\times 1}$     & $\in [26000, 28000]$ \\
+		\textbf{(b) isotropic:} & $t_{1\times 1}$   & $\in [2000, 5000]$,   & $t_{1.5\times 1.5}$ & $\in [7000, 8000]$,   & $t_{2\times 2}$ & $\in [2000, 3000]$,   & $t_{2.5\times 2.5}$ & $\in [2000, 3000]$   \\
+		                        & $t_{3\times 3}$   & $\in [2000, 3000]$    &                     &                       &                 &                       &                     &                      \\
+		\textbf{(c) binormal:}  & $t_{3\times 1.5}$ & $\in [2000, 3000]$,   & $t_{3\times 2.5}$   & $\in [2000, 3000]$,   & $t_{3\times 3}$ & $\in [2000, 3000]$,   & $t_{3\times 5}$     & $\in [1000, 3000]$   \\
 	\end{tabular}
 }{fig:wexb-stable-comparison}{0.98}
 
