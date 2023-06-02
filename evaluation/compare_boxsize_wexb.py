@@ -59,16 +59,17 @@ def box_plot(fig, plot_label,
         plt.rcParams['text.color']='white'
     
     for b, n, c, f, s, t_start, t_end in zip(box_index, box_label, colors, hdf5_file, xshift, interval[0], interval[1]):
-    
+        
         ax = fig.add_axes([0, -(layer  - 1)*(1 + layer_hspace), b/box_maximal, 1])
 
         ax.set_facecolor('none')
 
-        if b < box_max:        
-
-            axR = ax.secondary_yaxis('right')
-            axR.tick_params(direction = "out")
-            axR.yaxis.set_ticklabels([])
+        if b < box_max: 
+            
+            if type(b) != float:
+                axR = ax.secondary_yaxis('right')
+                axR.tick_params(direction = "out")
+                axR.yaxis.set_ticklabels([])
 
             ax.set_xticklabels([])
             ax.set_yticklabels([])
@@ -142,7 +143,11 @@ def box_plot(fig, plot_label,
                 
                 # Thesis
                 #ax.yaxis.set_label_coords(-0.35/box_max, 0.5, transform=ax.transAxes)
-
+                
+        if type(b) == float:
+            ax.spines[['right', 'top', 'left', 'bottom']].set_visible(False)
+            ax.set_yticks([])
+            axT.spines[['right', 'top', 'left', 'bottom']].set_visible(False)
 
         ax.set_xlim(xmin=0, xmax = rad_boxsize)
         ax.set_ylim(ymin=-0.4, ymax = 0.4)
@@ -255,8 +260,8 @@ file_iso = [h5py.File(i,"r+") for i in filename_iso]
 
 plot.parameters(40, (24,8), 300, linewidth=2)
 
-boxes_iso   = [3, 3, 2, 2, 1]
-shifts_iso  = [-5, 50, -28, 10, 60]
+boxes_iso   = [3, 2.5, 2, 1.5, 1]
+shifts_iso  = [-5, 42, -28, 5, 60]
 boxsize_iso = [r'3 \times 3\;\:\:', r'2.5 \times 2.5', r'2 \times 2\;\:\:', r'1.5 \times 1.5', r'1 \times 1\;\:\:']
 colors_iso  = colors[1]
 
@@ -361,7 +366,7 @@ i = 0
 layer, layer_hspace = 1, 0.11
 layer_max, box_maximal, box_minimal = len(boxes), max(box_max), min(box_min)
 
-'''
+#'''
 for f in file:
     
     fig = plt.figure(1, figsize = (6*box_maximal,6*layer))
