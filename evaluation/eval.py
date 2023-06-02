@@ -24,15 +24,16 @@ print('\n<------------------------- Evaluation ------------------------->\n')
 plot.parameters(40, (24,8), 300, linewidth = 4, tickwidth = 3, legendontop = True)
 
 boxsize = '3x3'
+finit = 'noise'
 
-ALL, EVOLUTION, SELECTION, PROFILE = False, False, True, True
+ALL, EVOLUTION, SELECTION, PROFILE = False, False, False, True
 
 #print('Input:', boxsize, ALL, EVOLUTION, SELECTION, '\n')
 
 # DATA IMPORT =======================================================================================================================================
 
 datainfopath = homepath + '/data/data.csv'
-datainfo = zonalflow.get_data_info(datainfopath, boxsize, finit = "noise")
+datainfo = zonalflow.get_data_info(datainfopath, boxsize, finit = finit)
 
 print(datainfo)
 
@@ -121,8 +122,6 @@ plt.savefig(picpath+data+'_'+resolution+'_eflux.pdf', bbox_inches='tight')
 wexb, rad_coord, rad_boxsize, ddphi, dx, zonal_pot = zonalflow.get_shearingrate_radialcoordinate_radialboxsize_ddphi_dx_zonalpot(f)
 
 print('rad_boxsize :', rad_boxsize, '; stepsize :',dx)
-
-print(rad_coord)
 
 # FOURIER ===========================================================================================================================================
 
@@ -253,7 +252,7 @@ if PROFILE:
 
         fig, ax = plt.subplots(2, 1, sharex=True)
 
-        colors = ['#0173b2', '#de8f05', '#029e73','#a11a5b']
+        colors = ['#0173b2', '#de8f05', '#029e73','#a11a5b', '#87429b']
 
         i = 0
 
@@ -264,11 +263,18 @@ if PROFILE:
             start, end = zonalflow.get_index_from_value(time, start_time) , zonalflow.get_index_from_value(time, end_time)
 
             wexb_rad_mean, wexb_rad_middle = zonalflow.get_mean_middle_shearingrate(start, end, wexb)
-            dr_dens_mean, rad_coord = zonalflow.get_radial_density_profile(f, start, end)
-            dr_ene_mean, rad_coord = zonalflow.get_radial_energy_profile(f, start, end)
-            dr_zonal_pot_mean, rad_coord = zonalflow.get_radial_zonal_potential_profile(f, start, end)
             
+            dr_dens, dr_dens_mean, rad_coord = zonalflow.get_radial_density_profile(f, start, end)
+            ddr_dens, ddr_dens_mean, rad_coord = zonalflow.get_second_radial_density_derivative(f, start, end)
+            
+            dr_ene, dr_ene_mean, rad_coord = zonalflow.get_radial_energy_profile(f, start, end)
+            ddr_ene, ddr_ene_mean, rad_coord = zonalflow.get_second_radial_energy_derivative(f, start, end)
+            
+            dr_zonal_pot, dr_zonal_pot_mean, rad_coord = zonalflow.get_radial_zonal_potential_profile(f, start, end)
+
+            ax[0].plot(rad_coord, wexb_rad_mean + ddr_ene_mean[0], linewidth=4, color=colors[4], label = r'$\phi_\mathrm{eff}$', alpha = 0.7)            
             ax[0].plot(rad_coord, wexb_rad_mean, linewidth=4, color=colors[2])
+            
             
             # linear growth rate
             ax[0].plot(rad_coord,  np.repeat(lineargrowth_rlt, len(rad_coord)), linewidth = 4, linestyle = 'dashed', color = lineargrowth_rlt_color)
@@ -338,8 +344,17 @@ h5tools.hdf5_write_data(f, data_eval, groupname)
 if PROFILE:
     f = h5py.File(filename,"r+")
     
-    data_eval = [dr_dens_mean, dr_ene_mean[0], dr_ene_mean[1], dr_zonal_pot_mean, dr_zonal_pot_mean]
-    data_group = ['derivative_dens', 'derivative_energy_perp', 'derivative_energy_par', 'derivative_zonalflow_potential', 'derivative_zonalflow_potential']
+    data_eval = [dr_dens, ddr_dens, dr_ene[0], dr_ene[1], dr_zonal_pot, dr_zonal_pot]
+    data_group = ['derivative_dens', 'second_derivative_dens', 'derivative_energy_perp', 'derivative_energy_par', 'derivative_zonalflow_potential', 'derivative_zonalflow_potential']
 
     groupname = ['evaluation' + '/' + x for x in data_group]
     h5tools.hdf5_write_data(f, data_eval, groupname)
+    
+    f = h5py.File(filename,"r+")
+    
+    data_eval = [ddr_ene[0], ddr_ene[1]]
+    data_group = ['second_derivative_energy_perp', 'second_derivative_energy_par']
+
+    groupname = ['evaluation' + '/' + x for x in data_group]
+    h5tools.hdf5_write_data(f, data_eval, groupname)
+    
