@@ -24,7 +24,7 @@ print('\n<------------------------- Evaluation ------------------------->\n')
 plot.parameters(40, (24,8), 300, linewidth = 4, tickwidth = 3, legendontop = True)
 
 boxsize = '3x3'
-finit = 'noise'
+finit = 'cosine5'
 
 ALL, EVOLUTION, SELECTION, PROFILE = False, False, False, True
 
@@ -299,19 +299,19 @@ if PROFILE:
             #ax[1].set_xlabel(r'$x~[\rho]$')
             #ax[1].set_ylabel(r'$-\nabla_{\!\!x} \phi~[n_0T_0/R_0]$')
                         
-            ax[1].plot(rad_coord, dr_ene_mean[0], linewidth=4, label = r"$E_{\perp, \mathrm{i}}$", color = colors[1])
-            ax[1].plot(rad_coord, dr_ene_mean[1], linewidth=4, label = r"$E_{\parallel, \mathrm{i}}$", color = colors[3])
+            ax[1].plot(rad_coord, dr_ene_mean[0], linewidth=4, label = r"$ - \langle \nabla_{\!\!x} E_{\perp, \mathrm{i}}\rangle$", color = colors[1])
+            ax[1].plot(rad_coord, dr_ene_mean[1], linewidth=4, label = r"$ - \langle \nabla_{\!\!x} E_{\parallel, \mathrm{i}}\rangle$", color = colors[3])
 
             ax[1].set_xlim(0, rad_boxsize)
             ax[1].set_ylim(-1.5, 1.5)
             ax[1].set_yticks(np.arange(-1.5, 1.6, 0.5))
             ax[1].set_xlabel(r'$x~[\rho]$')
-            ax[1].set_ylabel(r'$-\nabla_{\!\!x} E~[n_0T_0/R_0]$')
+            ax[1].set_ylabel(r'$ - \langle \nabla_{\!\!x} E\rangle~[n_0T_0/R]$')
             
             ax_right = ax[1].twinx()
             
             ax_right.plot(rad_coord, dr_zonal_pot_mean, linewidth=4, color = colors[0])
-            ax_right.set_ylabel(r'$e n_0 \nabla_{\!\!x} \phi~[n_0T_0/R_0]$', color = colors[0])
+            ax_right.set_ylabel(r'$e n_0 \langle \nabla_{\!\!x} \phi\rangle~[n_0T_0/R]$', color = colors[0])
             ax_right.set_ylim(-8, 8)
             ax_right.set_yticks(np.arange(-8, 9, 2))
             ax_right.tick_params(axis='y', colors = colors[0])
@@ -327,7 +327,8 @@ if PROFILE:
         
         plt.subplots_adjust(hspace=0.1)
         
-        plt.savefig(picpath+data+'_'+resolution+'_wexb_dens_ene_selection.pdf', bbox_inches='tight')
+        #plt.savefig(picpath+data+'_'+resolution+'_wexb_dens_ene_selection.pdf', bbox_inches='tight')
+        plt.savefig(picpath+data+'_'+resolution+'_wexb_dens_ene_phi_selection.pdf', bbox_inches='tight')
     
     except TypeError:
         print('Selection interval does not match time series')
