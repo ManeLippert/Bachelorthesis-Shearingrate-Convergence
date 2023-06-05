@@ -9,7 +9,6 @@
 *.log
 *.lot
 *.fls
-ZonalFlow.out
 *.toc
 *.fmt
 *.fot
@@ -317,5 +316,6 @@ libs/AMD/Demo
 # Python
 __pycache__
 
-# Literatur
+# folder
 literature
+response
