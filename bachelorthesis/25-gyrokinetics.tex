@@ -5,18 +5,17 @@
 \subsection{Vlasov Equation}
 \label{sub:vlasov}
 
-Because of the large number of particle in the fusion plasma a prediction only using Newton-Maxwell dynamics results in an impossible task for computers, but this problem can be solved with a statistical approach. For that the particle density distribution function $f(\vect{x}, \vect{v}, t)$ in the six dimensional phase space $\{\vect{x}$, $\vect{v}\}$ with the particles position $\vect{x}$ and velocity $\vect{v}$ is needed. Because collisions are happening at much smaller frequencies than the characteristic frequenies connected to turbulence, the collisionless model is often considered \cite{Garbet2010} which gives through evolution of the particle density distribution function the \textit{Vlasov equation}
+Because of the large number of particles in the fusion plasma a prediction only using Newton-Maxwell dynamics results in an impossible task for simulation based computations, but this problem can be solved with a statistical approach. For that the particle density distribution function $f(\vect{x}, \vect{v}, t)$ in the six dimensional phase space $\{\vect{x}$, $\vect{v}\}$ with the particles position $\vect{x}$ and velocity $\vect{v}$ is needed. Because collisions are happening at much smaller frequencies than the characteristic frequenies connected to turbulence, the collisionless model is often preferred \cite{Garbet2010} which results through evolution of the particle density distribution function in the \textit{Vlasov equation}
 \begin{gather}
 	\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{x}} \cdot \frac{\mathrm{d}\vect{x}}{\mathrm{d}t} + \frac{\partial f}{\partial \vect{v}} \cdot \frac{\mathrm{d}\vect{v}}{\mathrm{d}t} = 0~.
 	\label{eq:vlasov}
 \end{gather}
-To obtain a closed system the Maxwell equations with the particle density $n$ and current density $j$ can be descripted the distribution function as follows
-
+To obtain a closed system the Maxwell equations with the particle density $n$ and current density $j$ can be described with the distribution function as follows
 \begin{gather}
 	n = \int \mathrm{d}\vect{v}\,f(\vect{x}, \vect{v}, t) \qquad j = q \int \mathrm{d}\vect{v}\, v f(\vect{x}, \vect{v}, t)~,
 	\label{eq:densitycurrent}
 \end{gather}
-which are substituted into the Maxwell equations
+which are then substituted into the Maxwell equations
 \begin{gather}
 	\begin{aligned}
 		\nabla \cdot \vect{B} &= 0 &\qquad \nabla \times \vect{B} &= \mu_0\left( \sum_\mathrm{species} j + \epsilon_0 \frac{\partial \vect{E}}{\partial t} \right) \\
@@ -24,14 +23,14 @@ which are substituted into the Maxwell equations
 	\end{aligned}
 	\label{eq:maxwell}
 \end{gather}
-The Vlasov equation (\ref{eq:vlasov}) together with the Maxwell equations (\ref{eq:densitycurrent}) and (\ref{eq:maxwell}) is the basis of the gyrokinetic model. \cite{Krommes2012}
+The Vlasov equation (\ref{eq:vlasov}) in combination with the Maxwell equations (\ref{eq:densitycurrent}) and (\ref{eq:maxwell}) is the basis of the gyrokinetic model. \cite{Krommes2012}
 
 \newpage
 
 \subsection{Gyrokinetic Ordering}
 \label{sub:gyroordering}
 
-Dynamics in tokamak plasma is described by spatio-temporal scales which is also referred as \textit{gyrokinetic ordering}. This seperation is a comparison between the tuburbulence frequency $\omega$ and the cyclotron frequency $\omega_\mathrm{c}$ ($\omega/\omega_\mathrm{c} \sim 10^{-3})$ due to strong external magnetic fields which causes a fast gyro motion. The length scales of the turbulence are associated with the wavevector $\vect{k}$ which can be seperated into an perpendicular component $k_\perp = |\vect{k} \times \vect{b}|$ and a parallel component $k_\parallel = |\vect{k} \cdot \vect{b}|$ where $\vect{b}$ is parallel to the poloidal component of the magnetic field. The perpendicular component $k_\perp$ scales with the thermal Larmor radius $k_\perp^{-1} \sim \rhoth$ which is significant smaller as the equilibrium density $n_0$ what can be expressed with the gradient length $L_\mathrm{n} = |\nabla \ln n_0 |^{-1}$. The gradient length compares with the machine size $R$ which leads to the normalized Larmor radius $\rho_* = \rhoth/R \sim 10^{-3} - 10^{-4}$ with $R$ as major radius of the tokamak. The parallel component $k_\parallel$ on the other hand scales with the machine size $R$. Experiments also show that in the core plasma the fluctuation amplitude of the density perturbation $\delta n/n_0$ and magnetic field fluctuation $\delta B/B_0$, with $B_0$ as strength of the magnetic field in equilibrium, is of order $\sim 10^{-4}$. Together this seperations result in the following result
+Dynamics in tokamak plasma is described by spatio-temporal scales which is also referred to as \textit{gyrokinetic ordering}. This seperation compares the tuburbulence frequency $\omega$ and the cyclotron frequency $\omega_\mathrm{c}$ ($\omega/\omega_\mathrm{c} \sim 10^{-3})$ due to strong external magnetic fields which causes a fast gyro motion. The length scales of the turbulence are associated with the wavevector $\vect{k}$ which can be seperated into a perpendicular component $k_\perp = |\vect{k} \times \vect{b}|$ and a parallel component $k_\parallel = |\vect{k} \cdot \vect{b}|$ where $\vect{b}$ is parallel to the poloidal component of the magnetic field. The perpendicular component $k_\perp$ scales with the thermal Larmor radius $k_\perp^{-1} \sim \rhoth$ which is significantly smaller than the equilibrium density $n_0$, which can be expressed with the gradient length $L_\mathrm{n} = |\nabla \ln n_0 |^{-1}$. The gradient length compares with the machine size $R$ which leads to the normalized Larmor radius $\rho_* = \rhoth/R \sim 10^{-3} - 10^{-4}$ with $R$ as major radius of the tokamak. The parallel component $k_\parallel$ on the other hand scales with the machine size $R$. Experiments show that in the core plasma the fluctuation amplitude of the density perturbation $\delta n/n_0$ and magnetic field fluctuation $\delta B/B_0$, with $B_0$ as strength of the magnetic field in equilibrium, is of order $\sim 10^{-4}$. Together this seperation result in the following
 \begin{gather}
 	\frac{\omega}{\omega_\mathrm{c}} \sim \frac{k_\parallel}{k_\perp} \sim \frac{\rhoth}{L_\mathrm{n}} \sim \frac{\delta n}{n_0} \sim \frac{\delta B}{B_0} \sim \frac{v_\mathrm{d}}{\vth} \sim \epsilon_\mathrm{g}
 	\label{eq:gyroordering}
@@ -43,24 +42,24 @@ with $\epsilon_\mathrm{g} \ll 1$ which applies to the typical dynamics of a fusi
 \subsection{Gyrokinetic Equation}
 \label{sub:gyrokinetic}
  
-For the description for charged particle in the tokamak device the \textit{gyrocenter coordinates} will be used [Fig. \ref{fig:gyrocenterCoords}]. In this set of coordinates the gyrocenter follows the magnetic field with the parallel velocity $v_{\parallel}$. The gyro motion will be describd together with the magnetic moment $\mu = \frac{1}{2}mv_\perp/\omega_\mathrm{c}$, the gyrocenter $\vect{X}$ and the gyro phase $\zeta$ which gives a parameter set of six quantities $\{\vect{X}, v_{\parallel}, \mu, \zeta\}$.
+For the description of charged particle behaviour in the tokamak device the \textit{gyrocenter coordinates} are used [Fig. \ref{fig:gyrocenterCoords}]. In this set of coordinates the gyrocenter follows the magnetic field with the parallel velocity $v_{\parallel}$. The gyro motion is described together with the magnetic moment $\mu = \frac{1}{2}mv_\perp/\omega_\mathrm{c}$, the gyrocenter $\vect{X}$ and the gyro phase $\zeta$ which gives a parameter set of six quantities $\{\vect{X}, v_{\parallel}, \mu, \zeta\}$.
 
 \includegraphicsHere{Theory/Gyro-Center-Coordinates.pdf}{
 	Sketch of gyrocenter coordinates where the charged particle performs a circular motion around the gyrocenter. \cite{Krommes2000}
 }{fig:gyrocenterCoords}{0.7}
 
-In the next step the coordinates of the Vlasov equation (\ref{eq:vlasov}) will be transformed into the gyrocenter coordinates. For that the particle postion $\vect{x}$ will be described through the gyrocenter postion $\vect{X} = \vect{x} - \vect{\rho_\mathrm{L}}$ with the postion Larmor radius vector $\vect{\rho_\mathrm{L}}$. The particle velocity $\vect{v}$ gets decomposed into a parallel component $v_\parallel = \vect{v} \cdot \vect{b}$ and 
-a perpendicular component $v_\perp = |\vect{v} \times \vect{b}|$ which relates to the magnetic moment $\mu$. Through the gyrokinetic ordering a phase space transformation can be performed which is based on the Lie perturbation theory, the Hamiltonian or Lagrangian formalism and an asymtotic expansion in the smallness parameter $\epsilon_\mathrm{g}$. In the lowest order is the magnetic moment an exact invariant which makes the gyro phase $\zeta$ an ignorable variable. \cite{Garbet2010,Cary1981,Cary1983} Taking everything into account the new coordinates of the Vlasov equation are $\{\vect{X}, v_{\parallel}, \mu\}$ which transforms the Vlasov equation into the \textit{gyrokinetic equation}
+In the next step the coordinates of the Vlasov equation (\ref{eq:vlasov}) are transformed into the gyrocenter coordinates. For that the particle postion $\vect{x}$ is described through the gyrocenter postion $\vect{X} = \vect{x} - \vect{\rho_\mathrm{L}}$ with the postion Larmor radius vector $\vect{\rho_\mathrm{L}}$. The particle velocity $\vect{v}$ is decomposed into a parallel component $v_\parallel = \vect{v} \cdot \vect{b}$ and 
+a perpendicular component $v_\perp = |\vect{v} \times \vect{b}|$ which relates to the magnetic moment $\mu$. Through the gyrokinetic ordering a phase space transformation can be performed which is based on the Lie perturbation theory, the Hamiltonian or Lagrangian formalism and an asymtotic expansion in the smallness parameter $\epsilon_\mathrm{g}$. In the lowest order is the magnetic moment $\mu$ as an exact invariant which makes the gyro phase $\zeta$ an ignorable variable. \cite{Garbet2010,Cary1981,Cary1983} Taking everything into account the new coordinates of the Vlasov equation are $\{\vect{X}, v_{\parallel}, \mu\}$ which transforms the Vlasov equation into the \textit{gyrokinetic equation}
 \begin{gather}
 	\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{X}} \cdot \frac{\mathrm{d}\vect{X}}{\mathrm{d}t} + \frac{\partial f}{\partial v_\parallel} \cdot \frac{\mathrm{d}v_\parallel}{\mathrm{d}t} = 0~.
 	\label{eq:gyrokinetic}
 \end{gather}
 The time derivative of the magnetic moment $\mu$ is zero because the magnetic moment is an exact invariant. 
 
-\subsection{$\delta f$ Approximation and Local Limit}
+\subsection{{\boldmath $\delta f$} Approximation and Local Limit}
 \label{sub:application}
 
-All simulation in this thesis are performed with GKW (Gyro Kinetic Workshop) which uses in application of the gyrokinetic equation the $\delta f$ approximation and local limit approximation. For the $\delta f$ approximation the particle density distribution function f gets seperated into perturbation $\delta f$ and equilibrium $f_0$ (constant in time) as expressed in the gyrokinetic ordering (\ref{eq:gyroordering}). This is given by
+All simulations in this thesis are performed with GKW (Gyro Kinetic Workshop) which applies the gyrokinetic equation the $\delta f$ approximation and local limit approximation. For the $\delta f$ approximation the particle density distribution function f is seperated into perturbation $\delta f$ and equilibrium $f_0$ (constant in time) as expressed in the gyrokinetic ordering (\ref{eq:gyroordering}). This is given by
 \begin{gather}
 	f = f_0 + \delta f \qquad \delta f \sim \rho_* f_0~.
 \end{gather}
@@ -68,11 +67,11 @@ The distribution function in the equilibrium $f_0$ is set in GKW to the Maxwell 
 \begin{gather}
 	\nabla_\perp(\delta f) = \nabla_\perp (f_0)~.
 \end{gather}
-The $\delta f$ approximation applies for global and local description where the latter case is used in this thesis.
-The \textit{local limit} on the other hand uses the spatial seperation of equilibrium and perturbation and implies that all equilibrium and geometry quantities can be taken constant over the radial extent of the simulation volume. Because of the tokamak symmetry all equilibrium constants are also constant in the toridial direction where the dependency of the equilibrium magnetic field on the poloidal angle is retrained in general. \\\bigskip
+The $\delta f$ approximation applies for global and local description where the latter is used in this thesis.
+The \textit{local limit} on the other hand uses the spatial seperation of equilibrium and perturbation and implies that all equilibrium and geometry quantities can be considered constant over the radial extent of the simulation volume. Because of the tokamak symmetry all equilibrium constants are also constant in the toridial direction where the dependency of the equilibrium magnetic field on the poloidal angle is retrained in general. \\\bigskip
 
-In addition to that in GKW the following coordinates get applied with the parameter $\vect{X} = \{\xcoord, \ycoord, s\}$. Here, $\xcoord$ is the radial coordinate that labels the flux surfaces normalized by the thermal Larmor radius $\rhoth$, $\ycoord$ labels the field lines and is an approximate binormal coordinate. Together with the coordinate $s$ which parameterizes the length along the field lines and is referred to as the parallel coordinate these quantities form the Hamada coordinates \cite{Hamada1958}. This results in the new coordinates $\{\xcoord, \ycoord, s, v_\parallel, \mu\}$. Combining the $\delta f$ approximation and the Hamada coordinates the gyrokinetic equation can be formualted as follows
+In addition to this, in GKW the following coordinates get applied with the parameter $\vect{X} = \{\xcoord, \ycoord, s\}$. Here, $\xcoord$ is the radial coordinate that labels the flux surfaces normalized by the thermal Larmor radius $\rhoth$, $\ycoord$ labels the field lines and is an approximate binormal coordinate. Together with the coordinate $s$ which parameterizes the length along the field lines and is referred to as the parallel coordinate these quantities form the Hamada coordinates \cite{Hamada1958}. This results in the coordinates $\{\xcoord, \ycoord, s, v_\parallel, \mu\}$. Combining the $\delta f$ approximation and the Hamada coordinates the gyrokinetic equation can be formualted as follows
 \begin{gather}
 	\frac{\partial g}{\partial t} + \vect{v}_\chi \cdot \nabla g + (v_\parallel \vect{b} + \vect{v}_\mathrm{D}) \cdot \nabla(\delta f) - \frac{\mu B}{m}\frac{\vect{B}\cdot\nabla B}{B^2}\frac{\partial (\delta f)}{\partial v_\parallel} = S~,
 \end{gather}
-where $g$ is a function which contains the the perturbation $\delta f$ and the equilibrium $f_0$. Furthermore, $\vect{v}_\mathrm{D}$ and $\vect{v}_\chi$ are drift velocities which are caused by the inhomogeneous magnetic field and the perturbed magnetic field ($\vect{v}_\mathrm{D}$) and through the $\exb$ drift ($\vect{v}_\chi$). The source term $S$ combines from the distribution function in the equilibrium $f_0$ and a correction term for the collisions as well as the energy injection term. Due to prediodic boundary conditions in the radial direction the radially gradients cannot change in time which is also referred as \textit{gradient driven} approach. \cite{Peeters2009}
+where $g$ is a function which contains the perturbation $\delta f$ and the equilibrium $f_0$. Furthermore, $\vect{v}_\mathrm{D}$ and $\vect{v}_\chi$ are drift velocities which are caused by the inhomogeneous magnetic field and the perturbed magnetic field ($\vect{v}_\mathrm{D}$) and through the $\exb$ drift ($\vect{v}_\chi$). The source term $S$ contains the distribution function in the equilibrium $f_0$ and a correction term for the collisions as well as the energy injection term. Due to prediodic boundary conditions in the radial direction the radial averaged gradients are fixed in time which is also referred to as \textit{gradient driven} approach. \cite{Peeters2009}

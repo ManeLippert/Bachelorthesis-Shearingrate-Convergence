@@ -1,11 +1,11 @@
 \section{Restart Script for Simulation}
 \label{sec:restartscript}
 
-As stated in Chapter \ref{sec:cluster} the \texttt{btrzx1}-cluster has a wall time of 24 hours but since simulations typical run longer than 24 hours one have to restart the simulation after the wall time gets exceeded. Some simulation need even longer so that the simulation itself needs multiple weeks to finish which makes the restart of the simulation a daily task that could be easily forgotten. So to eliminate this minor inconveniences the following restart script were written.
+As stated in Chapter \ref{sec:cluster} the \texttt{btrzx1}-cluster has a wall time of 24 hours but since simulations typically run longer than 24 hours, the simulation has to be restarted after the wall time is exceeded. Some simulations need multiple weeks making a regular restart vital to obtaining complete sets of simulation data. The following restart script were written to outsource and simplify the process.
 
-As script language \texttt{python} was chosen because of its easiness to write code and the variety of tools which can interact with the \texttt{bash} shell. \texttt{bash} was also considered but after some issue occurred regarding the mechanism to check wether a file exist or not, \texttt{python} was selected. Furthermore, the script has no requirements because it runs on the standard \texttt{python3} library.
+As script language \texttt{python} was chosen because of its simple syntax and the variety of tools compatible with the \texttt{bash} shell. \texttt{bash} was also considered, but after some issues occurred regarding the mechanism to check wether a file exist or not, \texttt{python} was selected. Furthermore, the script uses the standard \texttt{python3} library and is therefore executabe with any \texttt{python3} enviroment.
 
-The script was named \texttt{slurm\_monitor.py} to indicate that this script works with the the \texttt{Slurm} resource manager. The source code was pushed to the gkw repository on BitBucket \cite{slurmmonitor} or can be found in Appendix \ref{append:slurmcode}
+The script was named \texttt{slurm\_monitor.py} to indicate that this script works with the \texttt{Slurm} resource manager. The source code was pushed to the gkw repository on BitBucket \cite{slurmmonitor} or can be found in Appendix \ref{append:slurmcode}
 
 \subsection{How to run Restart Script in Terminal}
 \label{sub:codeRun}
@@ -45,8 +45,9 @@ The restart script has several features which can be used via the command line i
 \begin{itemize}
     \item \textbf{\textcolor{red}{!Required!}} Set job name not longer than 8 characters to identify simulation\\
           \texttt{-j [JOBNAME], -\/-job-name [JOBNAME]}
-    \item Creates jobscript file with defined content\\
-          (look into variable \texttt{jobscriptContent} to add more option) \\
+    \item Can be started from everywhere with simulation folder path\\
+          \texttt{-d [DIRECTORY], -\/-dir [DIRECTORY]~~~~~~~~~~~~~(default=cwd)}
+    \item Creates jobscript file with defined content (variable \texttt{jobscriptContent})\\
           \texttt{-\/-jobscript [JOBSCRIPTFILE]~~~~~~~(default=jobscript-create)}\\
           \texttt{-\/-nodes [NODES]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~(default=3)}\\
           \texttt{-\/-ntask-per-node [TASKS]~~~~~~~~~~~~~~~~~~~~~~~~(default=32)}\\
@@ -55,8 +56,7 @@ The restart script has several features which can be used via the command line i
           \texttt{-n [TIMESTEPS]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\,\,(default=10000)}\\
           \texttt{-\/-restartfile [RESTARTFILE]~~~~~~~~~~~~~~~~(default=FDS.dat)}
     \item Makes backup after each run before Restart and Restore files after failed run\\
-          (uses \texttt{rsync} command line utility)\\
-          Quicklinks: local (simulation folder), home (home folder) \\
+          Quicklinks: \texttt{local} (simulation folder), \texttt{home} (home folder) \\
           \texttt{-b [LOCATION], -\/-backup [LOCATION]~~~~~~~~~~~\,(default=None)}
     \item Reset option after run fails and dump files were written\\
           (rely on \texttt{h5py}, \texttt{pandas} and \texttt{numpy} which get installed by the script itself)\\
@@ -173,24 +173,24 @@ All boolean parameters are switches, i.e., the praser option only changes the va
 \subsection{Status File created from Restart Script}
 \label{sub:statusFile}
 
-As stated in Chapter \ref{sub:codeFeatures} the restart script is writing a status file with the current status and progress bars of the simulation. The output is formatted like a table and can bei adjust in its appearance with the \texttt{-\/-format} parser option [Chapter \ref{sub:codeFeatures}]. The output types which are written in the status file are listed in Tab. \ref{tab:statusTypes}. To each output prints the restart script the date, time and the duration of the monitoring additionally into the table. 
+As stated in Chapter \ref{sub:codeFeatures} the restart script is writing a status file with the current status and progress bars of the simulation. The output is formatted as a table and can be adjusted in its appearance with the \texttt{-\/-format} parser option [Chapter \ref{sub:codeFeatures}]. The output types written in the status file are listed in Tab. \ref{tab:statusTypes}. To each output the restart script writeesthe date, time and the duration of the monitoring additionally into the table. 
 \begin{center}
     \captionsetup{type=table}
     \begin{tabular}{l | l}
         Type              & Information                                                                                     \\\hline
-        \texttt{STARTING} & Start of monitoring process or Start/Restart of simulation                                      \\
+        \texttt{STARTING} & Start monitoring process or Start/Restart of simulation                                         \\
         \texttt{CONTINUE} & If the simulation has performed at least one run                                                \\\hline
-        \texttt{CONTROL}  & Check of the current time steps of the simulation                                               \\
-        \texttt{SUCCESS}  & Stop of monitoring because the time steps condition has been fulfilled                          \\\hline
+        \texttt{CONTROL}  & Check the current time steps of the simulation                                                  \\
+        \texttt{SUCCESS}  & Stop monitoring because the time steps condition has been fulfilled                             \\\hline
         \texttt{IMPORT}   & Modules \texttt{h5py}, \texttt{pandas} and \texttt{numpy} will be loaded                        \\
         \texttt{INSTALL}  & Script installs the modules \texttt{h5py}, \texttt{pandas} and \texttt{numpy} on the user level \\
         \texttt{CHECK}    & Required modules to use the reset option are already installed                                  \\\hline
         \texttt{WAITING}  & Simulation is pending in the queue of Slurm                                                     \\
         \texttt{RUNNING}  & Simulation is running on the server                                                             \\\hline
-        \texttt{BACKUP}   & The script performs the backup of the data to the predefined location                           \\
+        \texttt{BACKUP}   & The script performs data backup to the predefined location                                      \\
         \texttt{RESTORE}  & The script reloads the data from the backup folder if errors occur                              \\
-        \texttt{RESET}    & The simulation gets reset with the use of dump files                                            \\\hline 
-        \texttt{ERROR}    & During the monitoring does occur an error                                                       \\
+        \texttt{RESET}    & The simulation restes with the use of dump files                                                \\\hline 
+        \texttt{ERROR}    & An error occur during monitoring                                                                \\
                           & Types:                                                                                          \\
                           & No executable (\texttt{gkw.x}), walltime, timeout, no config, \texttt{hdf5}, string error       \\
     \end{tabular}
@@ -211,7 +211,7 @@ To continue, the status file has different style options, e.g., \texttt{fancy}, 
 \captionof{figure}{Styles of output table in status file}
 \label{fig:statusStyle}
 \end{center}
-In addition to that, it writes down the progress of simulation to the end of the status file in form of a progress bar which gets updated dynamically. The progress bar contains the current time step of the simulation in contrast to the required time steps and the progress of the run itself in seconds in relation to the wall time. It also contains the current output from \texttt{squeue}, if the simulation is running or pending, else the important information of the simulation. An example progress bar ist shown in Fig. \ref{fig:statusBar}.
+In addition to that, it dynamically updates the progress of simulation to the end of the status file in form of a progress bar. The progress bar contains the current time step of the simulation in contrast to the required time steps and the progress of the run itself in seconds in relation to the wall time. It also contains the current output from \texttt{squeue}, if the simulation is running or pending, else the important information of the simulation. An example progress bar ist shown in Fig. \ref{fig:statusBar}.
 \begin{center}
 \captionsetup{type=figure}
 \begin{verbatim}
@@ -226,12 +226,12 @@ In addition to that, it writes down the progress of simulation to the end of the
 \captionof{figure}{Progress bar example}
 \label{fig:statusBar}
 \end{center}
-The progress bar has the advantage that someone can easily access all important information at the glance. To boost productivity the following command could be quite handy:
+The progress bar displays all important information at one glance. To boost productivity the following command is recommended:
 \begin{lstlisting}
 cd $DATA 
 find . -name $STATUSFILENAME -exec tail -8 {} \;
 \end{lstlisting}
-which prints all progress bars of every simulation in the data folder. If one want to see the complete status file change \texttt{tail -8} to \texttt{cat}.
+which prints all progress bars of every simulation to the data folder. If one want to see the complete status file change \texttt{tail -8} to \texttt{cat}.
 An example status file is displayed in the Appendix \ref{append:status}.
 
 %\displayfonttable[hex-digits=head+foot, range-end=1FFFF,compare-with=New Computer Modern Math,compare-color=black,  compare-bgcolor=black!5, missing-glyph-color=black!50, color=black!75]{Latin Modern Math}
