@@ -32,8 +32,12 @@ lineargrowth_rlt_color = '#949494'
 # 		             ['#57a7db', '#57dbb7', '#57db5f'],
 #		  ['#5f57db', '#57a7db', '#b757db', '#db57a7']]
 
+#colors = [['#a11a5b', '#029e73', '#de8f05', '#0173b2'],
+# 		             ['#66c2a5', 'orange',  '#dbb757', 'red', '#0173b2'],
+#		  ['#87429b', '#66c2a5', '#d55e00', '#56b4e9']]
+
 colors = [['#a11a5b', '#029e73', '#de8f05', '#0173b2'],
- 		             ['#66c2a5', 'orange',  '#dbb757', 'red', '#0173b2'],
+ 		             ['#66c2a5', '#dbb757', '#0173b2'],
 		  ['#87429b', '#66c2a5', '#d55e00', '#56b4e9']]
 
 # FUNCTION ==========================================================================================================================================
@@ -45,18 +49,10 @@ def box_plot(fig, plot_label,
              hdf5_file, xshift, interval, colors, 
              box_label, box_index, box_max, box_min, box_maximal,
              layer, layer_hspace = 0, legend_vpos = 0.5,
-             WHITE = False, LEGEND = True, LEGEND_TOP = True,
+             LEGEND = True, LEGEND_TOP = True,
              XLABEL = True, XLABEL_TOP = True,
              YLABEL = True,
              LABEL = False):
-    
-    if WHITE:
-        plt.rcParams['xtick.color']='white'
-        plt.rcParams['ytick.color']='white'
-        plt.rcParams['axes.labelcolor']='white'
-        plt.rcParams['axes.edgecolor']='white'
-        plt.rcParams['lines.color']='white'
-        plt.rcParams['text.color']='white'
     
     for b, n, c, f, s, t_start, t_end in zip(box_index, box_label, colors, hdf5_file, xshift, interval[0], interval[1]):
         
@@ -253,20 +249,29 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_compari
 # ISOTROPIC =========================================================================================================================================
 
 data = 'S6_rlt6.0'
-path_iso = ['boxsize3x3/Ns16/Nvpar48/Nmu9', 'boxsize2.5x2.5/Ns16/Nvpar48/Nmu9', 'boxsize2x2/Ns16/Nvpar48/Nmu9', 'boxsize1.5x1.5/Ns16/Nvpar48/Nmu9', 'boxsize1x1/Ns16/Nvpar48/Nmu9']
+#path_iso = ['boxsize3x3/Ns16/Nvpar48/Nmu9', 'boxsize2.5x2.5/Ns16/Nvpar48/Nmu9', 'boxsize2x2/Ns16/Nvpar48/Nmu9', 'boxsize1.5x1.5/Ns16/Nvpar48/Nmu9', 'boxsize1x1/Ns16/Nvpar48/Nmu9']
+path_iso = ['boxsize3x3/Ns16/Nvpar48/Nmu9', 'boxsize2x2/Ns16/Nvpar48/Nmu9', 'boxsize1x1/Ns16/Nvpar48/Nmu9']
 
 filename_iso = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path_iso]
 file_iso = [h5py.File(i,"r+") for i in filename_iso]
 
 plot.parameters(40, (24,8), 300, linewidth=2)
 
-boxes_iso   = [3, 2.5, 2, 1.5, 1]
-shifts_iso  = [-5, 42, -28, 5, 60]
-boxsize_iso = [r'3 \times 3\;\:\:', r'2.5 \times 2.5', r'2 \times 2\;\:\:', r'1.5 \times 1.5', r'1 \times 1\;\:\:']
+#boxes_iso   = [3, 2.5, 2, 1.5, 1]
+#shifts_iso  = [-5, 42, -28, 5, 60]
+#boxsize_iso = [r'3 \times 3\;\:\:', r'2.5 \times 2.5', r'2 \times 2\;\:\:', r'1.5 \times 1.5', r'1 \times 1\;\:\:']
+#colors_iso  = colors[1]
+#
+#interval_iso = np.array([[2000, 2000, 2000, 7000, 2000],
+#                         [3000, 3000, 3000, 8000, 5000]])
+
+boxes_iso   = [3, 2, 1]
+shifts_iso  = [-5, -28, 60]
+boxsize_iso = [r'3 \times 3\;\:\:', r'2 \times 2\;\:\:', r'1 \times 1\;\:\:']
 colors_iso  = colors[1]
 
-interval_iso = np.array([[2000, 2000, 2000, 7000, 2000],
-                         [3000, 3000, 3000, 8000, 5000]])
+interval_iso = np.array([[2000, 2000, 2000],
+                         [3000, 3000, 5000]])
 
 layer_max, box_max_iso, box_min_iso = 1, max(boxes_iso), min(boxes_iso)
 
@@ -339,7 +344,8 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_c
 
 file = [file_rad, file_iso, file_bi]
 
-plot.parameters(40, (24,8), 300, linewidth=2)
+#plot.parameters(40, (24,8), 300, linewidth=2)
+plot.parameters(40, (24,8), 300, linewidth=2, whiteplot = True)
 
 # Thesis
 #plot.parameters(54, (24,8), 300, tickwidth=2)
@@ -381,8 +387,11 @@ handles_labels = [ax.get_legend_handles_labels() for ax in fig.axes]
 handles, labels = [sum(lol, []) for lol in zip(*handles_labels)]
 l = plt.Line2D([0],[0],color="w",alpha=0)
 
-handles_bi, handles_iso, handles_rad = handles[9:len(labels)], handles[4:9], handles[0:4]
-labels_bi, labels_iso, labels_rad = labels[9:len(labels)], labels[4:9], labels[0:4]
+#handles_bi, handles_iso, handles_rad = handles[9:len(labels)], handles[4:9], handles[0:4]
+#labels_bi, labels_iso, labels_rad = labels[9:len(labels)], labels[4:9], labels[0:4]
+
+handles_bi, handles_iso, handles_rad = handles[7:len(labels)], handles[4:7], handles[0:4]
+labels_bi, labels_iso, labels_rad = labels[7:len(labels)], labels[4:7], labels[0:4]
 
 #fig.legend(handles_rad[::-1], labels_rad[::-1],loc='upper center', bbox_to_anchor=(0.5, 1.18), frameon=False, ncol=5, handlelength=1)
 #fig.legend(handles_iso[::-1], labels_iso[::-1],loc='upper center', bbox_to_anchor=(0.5, 0.04), frameon=False, ncol=5, handlelength=1)
@@ -401,7 +410,9 @@ fig.legend(handles[::-1], labels[::-1],loc='center left', bbox_to_anchor=(3/box_
 
 box_twin_xspine(fig, file[0][0], box_maximal, layer_max, layer_hspace=layer_hspace)
 
-plt.savefig(picDir + '/S6_rlt6.0_boxsize1-1.5-2-2.5-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
+#plt.savefig(picDir + '/S6_rlt6.0_boxsize1-1.5-2-2.5-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
+#plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
+plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.png', bbox_inches='tight', transparent = True)
 
 # Thesis
 #plt.savefig(picDir + '/S6_rlt6.0_boxsize1-1.5-2-2.5-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_thesis.pdf', bbox_inches='tight')

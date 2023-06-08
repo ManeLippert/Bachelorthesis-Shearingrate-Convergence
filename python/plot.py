@@ -10,7 +10,7 @@ from cycler import cycler
 def parameters(fontsize, figsize, dpi, usetex = True,
                linewidth = 3, colorpalette = sns.color_palette("colorblind", as_cmap=True),
                tickwidth = 1.5, ticklength = 10, tickspad = 10, ticksdirc = 'in', ticksadditional = True,
-               legendpad = -2, legendontop = True):
+               legendpad = -2, legendontop = True, whiteplot = False):
     
     # TEXT ==========================================================
     
@@ -64,6 +64,16 @@ def parameters(fontsize, figsize, dpi, usetex = True,
         plt.rcParams['legend.frameon'] = False
         #plt.rcParams['legend.handleheight'] = 1
         plt.rcParams['legend.borderpad'] = legendpad
+        
+    # WHITE PLOT ====================================================
+    
+    if whiteplot:
+        plt.rcParams['xtick.color']='white'
+        plt.rcParams['ytick.color']='white'
+        plt.rcParams['axes.labelcolor']='white'
+        plt.rcParams['axes.edgecolor']='white'
+        plt.rcParams['lines.color']='white'
+        plt.rcParams['text.color']='white'
     
 def ax_ticks_subplot(ax):
     ax.tick_params(direction = "in")

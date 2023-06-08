@@ -1,27 +1,36 @@
-# Convergence of Wavelength with Box Size in Gradient Driven Simulations
+# Size Convergence of the ExB Staircase Pattern in Flux Tube Simulations of Ion Temperature Gradient Driven Turbulence
 
-##### Bachelor Thesis about Zonal Flows
 
-![alt text](/pictures/Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.png)
+![alt text](/pictures/Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.png)
 
 
 
 ## Content
 
 1. [Introduction](#introduction)
-2. [Journal](#journal)
-3. [Results](#results)
+2. [Abstract](#abstract)
+3. [Journal](#journal)
 4. [Literature](#literature)
 
 
 
-## Introduction 
-This repository is focused on my work for my Bachelor Thesis in Zonal Flows and the convergence of the wavelength with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D.
+## Introduction
+
+This repository is focused on my work for my Bachelor Thesis about the topic of the size convergence of ExB Staircase Pattern with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D.
 
 * [GKW-Code](https://bitbucket.org/gkw/gkw/wiki/Home)
-* LaTeX-Code of my [Bachelor Thesis](/bachelorthesis) and the [Thesis](/bachelorthesis/ZonalFlow.pdf) 
+* [Bachelor-Thesis](bachelorthesis/bachelorthesis.pdf)
+* [Brief-Communication](briefcommunication/briefcommunication.pdf)
 
+## Abstract
 
+Ion temperature gradient driven turbulence (ITG) close to marginal stability exhibits zonal flow pattern formation on mesoscales, so-called $E\times B$ staircase structures. Such pattern formation has been observed in local gradient-driven flux-tube simulations as well as global gradient-driven and global flux-driven studies.
+
+To reduce the computational effort for the simulations lower input parameter of GKW (Gyro Kinetic Workshop) were tested to find the optimum of minimum resolution for the performed simulations.
+
+For convenience, a \texttt{python} script (\texttt{slurm\_monitor.py}) was written to monitor the simulation on the \texttt{btrzx1}-cluster and start/restart until the completion criterion is fulfilled.
+
+Furthermore, it is shown by multiple box size convergence scans that a mesoscale pattern  size of $\sim 57-76\,\rho$ is inherent to ITG driven turbulence with Cyclone Base Case parameters in the local limit. This outcome also implies that a typical scale for avalanche-like transport is inherent to ITG driven turbulence.
 
 ## Journal
 The work on the thesis is documented in from of a journal and to keep track of all changes [Source Control from GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/commits/main) was used.
@@ -1039,7 +1048,7 @@ The work on the thesis is documented in from of a journal and to keep track of a
       </p>
       </details>
 
-    * <details><summary>09.04.2023 - 17.04.2023 &nbsp; Writing Bachelor Thesis and Backup Data </summary>
+    * <details><summary>09.04.2023 - 09.05.2023 &nbsp; Writing Bachelor Thesis and Backup Data </summary>
       </p>
 
       # Writing Bachelor Thesis and Backup Data
@@ -1060,21 +1069,186 @@ The work on the thesis is documented in from of a journal and to keep track of a
     </p>
     </details>
 
+  * <details><summary>May</summary>
+    <p>
+
+    * <details><summary>17.05.2023 &nbsp; Meeting about Brief Communication Review </summary>
+      </p>
+
+      # Meeting about Brief Communication Review
+
+      #### Wednesday 17.05.2023 9:00 to 9:45 with Florian Rath
+
+      Feedback of Referees was good the brief communication will be corrected accordingly for that additional simulation will be performed:
+
+      - Two simulations with box size ```1.5x1.5``` and ```2.5x2.5```
+      - Two simulations with different initial conditions ```noise``` and and ```cosine5``` (default = ```cosine2```) for box size ```3x3```
+      - Additionally the diagnostics ```xy_kyzero_dens```, ```xy_kyzero_ene_par``` and ```xy_kyzero_ene_perp``` to investigate the influence of the pressure gradient on the shearing rate 
+
+      </p>
+      </details>
+
+    </p>
+    </details>
+
+  * <details><summary>June</summary>
+    <p>
+
+    * <details><summary>07.06.2023 &nbsp; Submission of revised Brief Communication </summary>
+      </p>
+
+      # Submission of revised Brief Communication
+
+      The revised brief communictaion got submitted to Physics of Plasma without issues with the corresponding response to the referees
+
+      </p>
+      </details>
+
+    * <details><summary>08.06.2023 - 30.06.2023 &nbsp; Correction Bachelor Thesis, Publish Repository and Presentation </summary>
+      </p>
+
+      # Correction Bachelor Thesis, Publish Repository and Presentation
+
+      The rest of the month the last finishing touches on my Bachelor Thesis were made and the repository published as well as my presentation prepared. 
+
+      The last data backup were made as well. This is probably the last entrance of this journal.
+
+      </p>
+      </details>
+
   </p>
   </details>
 
 </p>
 </details>
 
-## Results
-
 ## Literature
-[[1]](https://doi.org/10.1063/1.4961231) Peeters,A. G. and  Rath,F. and Buchholz,R. and  Camenen,Y. and Candy,J. and Casson,F. J. and Grosshauser,S. R. and Hornsby,W. A. and Strintzi,D. and Weikl,A. ["Gradient-driven flux-tube simulations of ion temperature gradient turbulence close tothe non-linear threshold"](https://doi.org/10.1063/1.4961231)
 
-[[2]](https://doi.org/10.1063/1.4952621) Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D. ["Comparison of gradient and flux driven gyro-kineticturbulent transport"](https://doi.org/10.1063/1.4952621)
+<details><summary>Literature</summary>
+</p>
 
-[[3]](https://doi.org/10.1016/j.cpc.2009.07.001) Peeters,A. G. and Camenen,Y. and Casson,F. J. and Hornsby,W. A. and Snodin,A. P. and Strintzi,D. and Szepesi, G. ["The nonlinear gyro-kinetic flux tube code GKW"](https://doi.org/10.1016/j.cpc.2009.07.001)
+[1] 2018 nohup. URL https://wiki.ubuntuusers.de/nohup/ – Accessed: 2023-04-15.
 
-[[4]](https://doi.org/10.1088/0741-3335/47/5/r01) Diamond,P. H. and Itoh,S.-I. and Itoh,K. and Hahm,T. S. ["Zonal flows in plasma—a review"](https://doi.org/10.1088/0741-3335/47/5/r01)
+[2] 2021 Screen. URL https://wiki.ubuntuusers.de/Screen/ – Accessed: 2023-04-15.
 
-[[5]](https://doi.org/10.1088/0029-5515/50/4/043002) Garbet,X. and Idomura,Y. and Villard,L. and Watanabe, T. H. ["Gyrokinetic simulations of turbulent transport"](https://doi.org/10.1088/0029-5515/50/4/043002)
+[3] Barton, Justin E., Wehner, William P., Schuster, Eugenio, Felici, Federico & Sauter, Olivier 2015 Simultaneous closed-loop control of the current profile and the electron temperature profile in the tcv tokamak.
+
+[4] Beer, M.A. 1994 Gyrofluid models of turbulent transport in tokamaks. PhD thesis, Princeton University.
+
+[5] Biglari, H., Diamond, P. H. & Terry, P. W. 1990 Influence of sheared poloidal rotation on edge turbulence. Phys. Fluids B: Plasma Physics 2 (1), 1–4.
+
+[6] Brizard, A. J. & Hahm, T. S. 2007 Foundations of nonlinear gyrokinetic theory. Rev. Mod. Phys. 79, 421–468.
+
+[7] Burrell, K. H. 1997 Effects of E×B velocity shear and magnetic shear on tur-
+bulence and transport in magnetic confinement devices. Physics of Plasmas 4 (5),1499–1518.
+
+[8] Cary, John R. 1981 Lie transform perturbation theory for Hamiltonian systems.Physics Reports 79 (2), 129–159.
+
+[9] Cary, John R & Littlejohn, Robert G 1983 Noncanonical Hamiltonian mechanics and its application to magnetic field line flow. Annals of Physics 151 (1), 1–34.
+
+[10] Casson, F.J. 2011 Turbulent transport in rotating tokamak plasmas. PhD thesis, University of Warwick.
+
+[11] Coppi, B., Rosenbluth, M. N. & Sagdeev, R. Z. 1967 Instabilities due to temperature gradients in complex magnetic field configurations. The Physics of Fluids 10 (3), 582–587.
+
+[12] Cowley, S. C., Kulsrud, R. M. & Sudan, R. 1991 Considerations of ion‐temperature‐gradient‐driven turbulence. Physics of Fluids B: Plasma Physics 3 (10), 2767–2782.
+
+[13] Dannert, T. 2005 Gyrokinetische Simulation von Plasmaturbulenz mit gefangenen Teilchen und Elektromagnetischen Effekten. PhD thesis, Technische Universtät München.
+
+[14] Diamond, P. H., Itoh, S.-I., Itoh, K. & Hahm, T. S. 2005 Zonal flows in plasma—a review. Plasma Phys. Controlled Fusion 47, R35.
+
+[15] Diamond, P. H. & Kim, Y.‐B. 1991 Theory of mean poloidal flow generation by turbulence. Physics of Fluids B: Plasma Physics 3 (7), 1626–1633.
+
+[16] Dif-Pradalier, G., Diamond, P. H., Grandgirard, V., Sarazin, Y., Abiteboul, J., Garbet, X., Ghendrih, Ph., Strugarek, A., Ku, S. & Chang, C. S. 2010 On the validity of the local diffusive paradigm in turbulent plasma transport. Phys. Rev. E 82, 025401.
+
+[17] Dif-Pradalier, G., Hornung, G., Ghendrih, Ph., Sarazin, Y., Clairet, F., Vermare, L., Diamond, P. H., Abiteboul, J., Cartier-Michaud, T., Ehrlacher, C., Estève, D., Garbet, X., Grandgirard, V., Gürcan, Ö. D., Hennequin, P., Kosuga, Y., Latu, G., Maget, P., Morel, P., Norscini, C., Sabot, R. & Storelli, A. 2015 Finding the elusive E×B staircase in magnetized plasmas. Phys. Rev. Lett. 114, 085004.
+
+[18] Dimits, A. M., Bateman, G., Beer, M. A., Cohen, B. I., Dorland, W., Hammett, G. W., Kim, C., Kinsey, J. E., Kotschenreuther, M., Kritz, A. H., Lao, L. L., Mandrekas, J., Nevins, W. M., Parker, S. E., Redd, A. J., Shumaker, D. E., Sydora, R. & Weiland, J. 2000 Comparisons and physics basis of tokamak transport models and turbulence simulations. Phys. of Plasmas 7 (3), 969–983.
+
+[19] Dubin, Daniel H. E., Krommes, John A., Oberman, C. & Lee, W. W. 1983 Nonlinear gyrokinetic equations. The Physics of Fluids 26 (12), 3524–3535.
+
+[20] Garbet, X., Idomura, Y., Villard, L. & Watanabe, T. H. 2010 Gyrokinetic simulations of turbulent transport. Nuclear Fusion 50 (4).
+
+[21] Hahm, T. S. & Burrell, K. H. 1995 Flow shear induced fluctuation suppression in finite aspect ratio shaped tokamak plasma. Physics of Plasmas 2 (5), 1648–1651.
+
+[22] Hamada, S. 1958 Kakuyugo Kenkyu 1, 542.
+
+[23] Hammett, Greg 2009 The Ion Temperature Gradient (ITG) Instability. CM- PD/CMSO Winter School, UCLA, 1/09/2009.
+
+[24] Hasegawa, Akira & Mima, Kunioki 1978 Pseudo‐three‐dimensional turbulence in magnetized nonuniform plasma. The Physics of Fluids 21 (1), 87–92.
+
+[25] H.Isliker, Pisokas, Th., Strintzi, D. & Vlahos, L. 2010 A self-organized criticality model for ion temperature gradient mode driven turbulence in confined plasma. Physics of Plasmas 17.
+
+[26] Horton, W. 1999 Drift waves and transport. Rev. Mod. Phys. 71, 735–778.
+
+[27] Idomura, Y., Urano, H., Aiba, N. & Tokuda, S. 2009 Study of ion turbulent transport and profile formations using global gyrokinetic full- f vlasov simulation. Nuclear Fusion 49 (6), 065029.
+
+[28] Kim, Y. J., Imadera, K., Kishimoto, Y. & Hahm, T. S. 2022 Transport events and E×B staircase in flux-driven gyrokinetic simulation of ion temperature gradient turbulence. Journal of the Korean Physical Society 81, 636.
+
+[29] Kishimoto, Y., Imadera, K., Ishizawa, A., Wang, W. & Li, J. Q. 2023 Characteristics of constrained turbulent transport in flux-driven toroidal plasmas. Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences 381 (2242), 20210231.
+
+[30] Kosuga, Y., Diamond, P. H. & Gürcan, Ö. D. 2013 How the propagation of heat-flux modulations triggers e×b flow pattern formation. Phys. Rev. Lett. 110, 105002.
+
+[31] Krommes, John A. 2012 The Gyrokinetic Description of Microturbulence in Magnetized Plasmas. Annual Review of Fluid Mechanics.
+
+[32] Krommes, John A. & Kim, Chang-Bae 2000 Interactions of disparate scales in drift-wave turbulence. Phys. Rev. E 62, 8508–8539.
+
+[33] Lippert, M. 2022 torque_monitor.py. URL https://github.com/ ManeLippert/Bachelorthesis-Shearingrate-Convergence/blob/ main/python/torque_monitor.py – Accessed: 2023-04-14.
+
+[34] Lippert, M. & Rath, F. 2023 slurm_monitor.py. URL https://bitbucket.org/gkw/gkw/src/develop/python/slurm_monitor.py – Accessed: 2023-04-12.
+
+[35] Lippert, M., Rath, F. & Peeters, A. G. 2023 Size convergence of the E×B staircase pattern in flux tube simulations of ion temperature gradient driven turbulence. Physics of Plasmas 7 (3), 969–983.
+
+[36] Maeyama, S., Ishizawa, A., Watanabe, T.-H., Nakata, M., Miyato, N., Yagi, M. & Idomura, Y. 2014 Comparison between kinetic-ballooning-mode-driven turbulence and ion-temperature-gradient-driven turbulence. Physics of Plasmas 21 (5), 052301.
+
+[37] Makwana, K. D., Terry, P. W., Pueschel, M. J. & Hatch, D. R. 2014 Subdominant modes in zonal-flow-regulated turbulence. Phys. Rev. Lett. 112, 095002.
+
+[38] McMillan, B. F., Jolliet, S., Tran, T. M., Villard, L., Bottino, A. & Angelino, P. 2009 Avalanchelike bursts in global gyrokinetic simulations. Physics of Plasmas 16 (2), 022310.
+
+[39] Mittendorf, J., Schobert, B. & Müller, D. 2023 Rmhd-code. URL https://bitbucket.org/astro_bayreuth/rmhdcode – Accessed: 2023-04-14.
+
+[40] Müller, D. 2023 Numerical simulations of exor events in protoplanetary disks: Numerical stability and growth of ring structures in the surface density. Bachelorthesis, University of Bayreuth.
+
+[41] Nakata, M., Watanabe, T.-H. & Sugama, H. 2012 Nonlinear entropy transfer via zonal flows in gyrokinetic plasma turbulence. Physics of Plasmas 19, 022303.
+
+[42] Peeters, A. G., Camenen, Y., Casson, F. J., Hornsby, W. A., Snodin, A. P., Strintzi, D. & Szepesi, G. 2009 The nonlinear gyro-kinetic flux tube code gkw. Comput. Phys. Commun. 180, 2650.
+
+[43] Peeters, A. G., Rath, F., Buchholz, R., Camenen, Y., Candy, J., Casson, F. J., Grosshauser, S. R., Hornsby, W. A., Strintzi, D. & Weikl, A. 2016 Gradient-driven flux-tube simulations of ion temperature gradient turbulence close to the non-linear threshold. Physics of Plasmas 23 (8), 082517.
+
+[44] Pueschel, M. J., Kammerer, M. & Jenko, F. 2008 Gyrokinetic turbulence simulations at high plasma beta. Physics of Plasmas 15 (10), 102310.
+
+[45] Rath, F., Peeters, A. G., Buchholz, R., Grosshauser, S. R., Migliano, P., Weikl, A. & Strintzi, D. 2016 Comparison of gradient and flux driven gyro-kinetic turbulent transport. Physics of Plasmas 23 (5), 052309.
+
+[46] Rath, F., Peeters, A. G. & Weikl, A. 2021 Analysis of zonal flow pattern formation and the modification of staircase states by electron dynamics in gyrokinetic near marginal turbulence. Physics of Plasmas 28 (7), 072305.
+
+[47] Rudakov, L.I. & Sagdeev, R.Z. 1961 On the instability of a nonuniform rarefied plasma in a strong magnetic field. Dokl. Akad. Nauk. SSSR 138 (3), 581–583.
+
+[48] Schelter, Dr.rer.nat. Ingo 2016 btrzx2 (2016). URL https://www.bzhpc.uni-bayreuth.de/de/keylab/Cluster/btrzx2_page/index.html – Accessed: 2023-04-14.
+
+[49] Schelter, Dr.rer.nat. Ingo 2020 btrzx1 (2020). URL https://www.bzhpc.uni-bayreuth.de/de/keylab/Cluster/btrzx1_page/index.html – Accessed: 2023-04-12.
+
+[50] Seiferling, F., Peeters, A. G., Grosshauser, S. R., Rath, F. & Weikl, A. 2019 The interplay of an external torque and e×b structure formation in tokamak plasmas. Physics of Plasmas 26 (10), 102306.
+
+[51] Seo, Janghoon, Jhang, Hogun & Kwon, Jae-Min 2022 Effects of light impurities on zonal flow activities and turbulent thermal transport. Physics of Plasmas 29 (5), 052502.
+
+[52] Stroth, Ulrich 2011 Plasmaphysik. Wiesbaden: Viewg+Teubner.
+
+[53] Villard, L, Angelino, P, Bottino, A, Brunner, S, Jolliet, S, McMillan, B F, Tran, T M & Vernay, T 2013 Global gyrokinetic ion temperature gradient turbulence simulations of iter. Plasma Physics and Controlled Fusion 55 (7), 074017.
+
+[54] Waltz, R. E., Dewar, R. L. & Garbet, X. 1998 Theory and simulation of rotational shear stabilization of turbulence. Physics of Plasmas 5 (5), 1784–1792.
+
+[55] Waltz, R. E., Kerbel, G. D. & Milovich, J. 1994 Toroidal gyro-landau fluid modelturbulence simulations in a nonlinearballooning mode representation with radial modes. Physics of Plasmas 1, 2229.
+
+[56] Wang, W., Kishimoto, Y., Imadera, K., Liu, H.R., Li, J.Q., Yagi, M. & Wang, Z.X. 2020 Statistical study for itg turbulent transport in flux-driven tokamak plasmas based on global gyro-kinetic simulation. Nuclear Fusion 60 (6), 066010.
+
+[57] Weikl, A., Peeters, A. G., Rath, F., Grosshauser, S. R., Buchholz, R., Hornsby, W. A., Seiferling, F. & Strintzi, D. 2017 Ion temperature gradient turbulence close to the finite heat flux threshold. Physics of Plasmas 24 (10), 102317.
+
+[58] Wesson, John 2011 Tokamaks. Oxford: Oxford University Press.
+
+[59] Whelan, G. G., Pueschel, M. J. & Terry, P. W. 2018 Nonlinear electromagnetic stabilization of plasma microturbulence. Phys. Rev. Lett. 120, 175002.
+
+[60] Whelan, G. G., Pueschel, M. J., Terry, P. W., Citrin, J., McKinney, I. J., Guttenfelder, W. & Doerk, H. 2019 Saturation and nonlinear electromagnetic stabilization of itg turbulence. Physics of Plasmas 26 (8), 082302.
+
+[61] W.M.Newins, J.Candy, S.Cowley, T.Dannert, A.Dimits, W.Dorland, C.Estrada-Mila, G.W.Hammet, F.Jenko, M.J.Pueschel & D.E.Shumaker 2006 Characterizing electron temperature gradient turbulence via numerical simulations. Physics of Plasmas 13.
+
+</p>
+</details>
