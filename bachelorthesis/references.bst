@@ -308,7 +308,7 @@ FUNCTION {bbl.urlname}
 { "URL" }
 
 FUNCTION {bbl.zugriff}   
-{ "Zugriffsdatum" }
+{ "Accessed" }
 
 MACRO {jan} {"Jan."}
 
