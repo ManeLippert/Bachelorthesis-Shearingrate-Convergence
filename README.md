@@ -30,7 +30,7 @@ To reduce the computational effort for the simulations lower input parameter of 
 
 For convenience, a ```python``` script [```slurm_monitor.py```](python/slurm_monitor.py) was written to monitor the simulation on the ```btrzx1```-cluster and start/restart until the completion criterion is fulfilled.
 
-Furthermore, it is shown by multiple box size convergence scans that a mesoscale pattern  size of $\sim 57-76 \rho$ is inherent to ITG driven turbulence with Cyclone Base Case parameters in the local limit. This outcome also implies that a typical scale for avalanche-like transport is inherent to ITG driven turbulence.
+Furthermore, it is shown by multiple box size convergence scans that a mesoscale pattern  size of $\sim 57-76~\rho$ is inherent to ITG driven turbulence with Cyclone Base Case parameters in the local limit. This outcome also implies that a typical scale for avalanche-like transport is inherent to ITG driven turbulence.
 
 ## Journal
 The work on the thesis is documented in from of a journal and to keep track of all changes [Source Control from GitHub](https://github.com/ManeLippert/Bachelorthesis-ZonalFlows/commits/main) was used.
