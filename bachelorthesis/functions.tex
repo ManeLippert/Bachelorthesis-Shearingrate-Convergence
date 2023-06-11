@@ -22,6 +22,11 @@
 \DeclareOldFontCommand{\sc}{\normalfont\scshape}{\@nomath\sc}
 \makeatother
 
+% Bold math in headings
+\makeatletter
+\g@addto@macro\bfseries{\boldmath}
+\makeatother
+
 % Various
 \pagestyle{headings}            
 \graphicspath{{../pictures/}}    % Path for pictures
