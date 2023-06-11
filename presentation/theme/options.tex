@@ -1,0 +1,17 @@
+%---------------------------------------------------------------------
+% OPTIONS
+%---------------------------------------------------------------------
+
+\newif\if@doSans
+\@doSansfalse
+\DeclareOption{noserifmath}{\@doSanstrue}
+
+\newif\if@doNoFlama
+\@doNoFlamafalse
+\DeclareOption{noflama}{\@doNoFlamatrue}
+
+\newif\if@doSectionPage
+\@doSectionPagefalse
+\DeclareOption{nosectionpages}{\@doSectionPagetrue}
+
+\ProcessOptions

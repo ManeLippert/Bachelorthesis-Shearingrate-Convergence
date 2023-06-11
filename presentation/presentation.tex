@@ -1,33 +1,28 @@
-% Author         : Pedro Ferreira (up201806093@up.pt)
-% Version        : 1.0
-% Created on     : 12.08.2022
-% Last Edited on : 14.08.2022
-
-% Adapted from HSRM theme by Benjamin Weiss
-% Copyright      : Copyright (c) 2013-2014 by Benjamin Weiss. All rights reserved.
-% License        : This file may be distributed and/or modified under the
-%                  GNU Public License.
-% Description    : HSRM beamer theme demonstration. Also includes a short 
-%                  Tutorial regarding the beamer class.
-
-
+% Author         : Manuel Lippert
+% Version        : 1.1
+% Created on     : 11.06.2023
+% Last Edited on : 11.06.2023
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                    !!! Compile with LuaLaTex !!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[compress,aspectratio=169]{beamer}
+\documentclass[compress,aspectratio=43]{beamer}
 
+%--------------------------------------------------------------------------
+% Theme
+%--------------------------------------------------------------------------
 
-\usepackage{sleektheme/beamerthemesleek}
-\usetheme{sleek}
-\usepackage{sleektheme/dtklogos} % must be loaded after theme
+\usepackage{theme/beamerthemefancy}
+\usetheme{fancy}
+
+\usepackage{theme/dtklogos} % must be loaded after theme
 
 %--------------------------------------------------------------------------
 % Common packages
 %--------------------------------------------------------------------------
-\usepackage[ngerman]{babel}
 
+\usepackage[ngerman]{babel}
 \usepackage{graphicx}
 \usepackage{multicol}
 \usepackage{multimedia}
@@ -35,42 +30,28 @@
 \usepackage{hyperref}
 \usepackage{tabularx}
 \usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{soul}
+
+%--------------------------------------------------------------------------
+% Functions, Graphics, Tikz, Underlines
+%--------------------------------------------------------------------------
+
 \usetikzlibrary{mindmap,backgrounds}
-\usepackage{booktabs}
-\newcommand{\tabitem}{~~\llap{\textbullet}~~}
-
-% Advanced table functions
-\usepackage{tabularx,ragged2e}
-\usepackage{booktabs}
-% Listings extension
-\usepackage{listings}
-\lstset{ %
-language=[LaTeX]TeX,
-basicstyle=\normalsize\ttfamily,
-keywordstyle=,
-numbers=left,
-numberstyle=\tiny\ttfamily,
-stepnumber=1,
-showspaces=false,
-showstringspaces=false,
-showtabs=false,
-breaklines=true,
-frame=tb,
-framerule=0.5pt,
-tabsize=4,
-framexleftmargin=0.5em,
-framexrightmargin=0.5em,
-xleftmargin=0.5em,
-xrightmargin=0.5em
-}
-
 \graphicspath{{../pictures/}}
 
-%--------------------------------------------------------------------------
-% Functions
-%--------------------------------------------------------------------------
-
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \newcommand{\vect}[1]{\boldsymbol{\mathbf{#1}}}
+
+\setul{0.3ex}{0.2ex}
+
+\makeatletter 
+\let\UL\ul 
+\renewcommand\ul{
+	\let\set@color\beamerorig@set@color 
+	\let\reset@color\beamerorig@reset@color 
+	\UL} 
+\makeatother
 
 %--------------------------------------------------------------------------
 % Document
@@ -149,48 +130,47 @@ xrightmargin=0.5em
 	\section{Ionen Temperaturgradient (ITG) Instabilität}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_00.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_00.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_01.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_01.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_02.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_02.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_03.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_03.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_04.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_04.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_05.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_05.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_06.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_06.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_07.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_07.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_08.pdf}
-
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_08.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_09.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_09.pdf}
 	\end{frame}
 	\begin{frame}
 		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics{Presentation/ITG_Instability_10.pdf}
+		\includegraphics[scale=0.8]{Presentation/ITG_Instability_10.pdf}
 	\end{frame}
 
 	\begin{frame}
@@ -198,7 +178,7 @@ xrightmargin=0.5em
 		\begin{minipage}{0.6\textwidth}\raggedleft
 			\centering
 			\begin{itemize}
-				\item ITG Instabilität erzeugt turbulente Wirbelströmung
+				\item ITG \ul{Instabilität} erzeugt turbulente Wirbelströmung
 				\item Wirbelströmung breitet sich über die Breite des Plasmatorus aus
 				\item Entstehung von \alert{Zonal Flows}
 				\item Namensgebung aus der Atmosphärenphysik (Bsp. Wolkenbänder von Jupiter)
@@ -232,7 +212,7 @@ xrightmargin=0.5em
 			\end{itemize}
 		\end{minipage}
 		\begin{minipage}{0.3\textwidth}
-			\includegraphics[scale = 0.2]{Presentation/Magnetic_Shear_black.png}
+			\includegraphics[scale = 0.15]{Presentation/Magnetic_Shear_black.png}
 		\end{minipage}
 	\end{frame}
 
@@ -246,7 +226,7 @@ xrightmargin=0.5em
 		\frametitle{Regelung oder Unterdrückung von Turbulenzen}
 		{\tiny Waltz, Kerbel, Phys. Plasmas 1994 w/ Hammett, Beer, Dorland, Waltz Gyrofluid Eqs., Numerical Tokamak Project, DoE Computational Grand Challenge}
 		\begin{tabular}{c c}
-			\includegraphics[scale = 0.2]{Presentation/Stablized_Plasma_Interaction.png} & \includegraphics[scale = 0.2]{Presentation/Stablized_Plasma_LongScale.png} \\
+			\includegraphics[scale = 0.15]{Presentation/Stablized_Plasma_Interaction.png} & \includegraphics[scale = 0.15]{Presentation/Stablized_Plasma_LongScale.png} \\
 			Dominante nichtlineare Interaction  & Zusätzlicher verscherter Zonal Flow \\
 			zwischen turbulenter Wirbelströmung & unterdrückt Turbulenz komplett \\
 			und kontrollierten Zonal Flow & \\
@@ -258,9 +238,11 @@ xrightmargin=0.5em
 	%	\frametitle{Zonal Flow auf Jupiter vs. Tokamak Reaktor}	
 	%\end{frame}
 
+	\appendix
+	\section*{Appendix}
 	\begin{frame}
 		\frametitle{Danke für die Aufmerksamkeit!}
-		\includegraphics[scale = 0.35]{Presentation/Fusion_Meme.jpeg} \\
+		\includegraphics[scale = 0.3]{Presentation/Fusion_Meme.jpeg} \\
 	\end{frame}
 
 \end{document}

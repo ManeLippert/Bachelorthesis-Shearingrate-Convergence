@@ -1,0 +1,23 @@
+%---------------------------------------------------------------------
+% Footline
+%---------------------------------------------------------------------
+
+\usenavigationsymbolstemplate{}
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1.0ex,left, leftskip=0.3cm]{section in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.8\paperwidth,ht=2.25ex,dp=1.0ex,center]{section in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor~-~\usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1.0ex,right,rightskip=0.3cm]{section in head/foot}%
+    \insertframenumber{}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+% Insert Institute into footer
+% ~~\beamer@ifempty{\insertshortinstitute}{}{(\insertshortinstitute)}
