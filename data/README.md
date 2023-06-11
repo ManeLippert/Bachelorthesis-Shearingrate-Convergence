@@ -6,41 +6,46 @@ This folder contains the data for my Bachelor Thesis which were simulated with g
 
 Markdown version of [data.csv](./data.csv)
 
-| **case** | **rlt** | **boxsize** | **time** | **timestep** | **Ns** | **Nvpar** | **Nmu** | **dtim** | **krhomax** | **Nmod** | **Nx** | **stepsize_all** | **evo_start**                           | **evo_end**                              | **sel_start**    | **sel_end**      | **error_index** | **converge** | **mode** | **backup** | **path**                                                        |
-|--------|-------|-----------|--------|------------|------|---------|-------|--------|-----------|--------|------|----------------|---------------------------------------|----------------------------------------|----------------|----------------|---------------|------------|--------|----------|---------------------------------------------------------------|
-| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 12     | 16        | 6       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 3000, 5000]                     | [2000, 4000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar16/Nmu6                    |
-| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 12     | 32        | 6       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 3000, 5000, 6000,  8000, 11000] | [2000, 4000, 5500, 7000, 10000, 12000] |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar32/Nmu6                    |
-| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 12     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 3000, 5000]                     | [2000, 4000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar48/Nmu9                    |
-| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 12     | 64        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar64/Nmu9                    |
-| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 16     | 16        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar16/Nmu9                    |
-| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 16     | 32        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar32/Nmu9                    |
-| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 6       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu6                    |
-| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9                    |
-| S6       | 6.0     | 1x1         | 7125.0   | 10000.0      | 16     | 48        | 9       | 0.025    | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/dtim0.025          |
-| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 0.7         | 11       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/krhomax0.70/Nmod11 |
-| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 43     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/Nx43               |
-| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 63     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/Nx63               |
-| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 16     | 64        | 6       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6                    |
-| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 16     | 64        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9                    |
-| S6       | 6.0     | 2x1         | 18000.0  | 30000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 2        | True       | /data/S6_rlt6.0/boxsize2x1/Ns16/Nvpar48/Nmu9                    |
-| S6       | 6.0     | 2x2         | 18000.0  | 30000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 2        | True       | /data/S6_rlt6.0/boxsize2x2/Ns16/Nvpar48/Nmu9                    |
-| S6       | 6.0     | 3x1         | 48000.0  | 80000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     | [10000, 28000] | [12000, 31000] |                 | True         | 3        | True       | /data/S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9                    |
-| S6       | 6.0     | 3x1.5       | 16840.3  | 28068        | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     | [11000]          | [12000]          |                 | True         | 4        | True      | /data/S6_rlt6.0/boxsize3x1.5/Ns16/Nvpar48/Nmu9                  |
-| S6       | 6.0     | 3x1.5       | 14170.0  | 23618        | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     | [11000]          | [12000]          | 23618           | True         | 3        | True      | /data/S6_rlt6.0/boxsize3x1.5/Ns16/Nvpar48/Nmu9/Broken           |
-| S6       | 6.0     | 3x2.5       | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     | [10000, 28000] | [12000, 31000] |                 | True         | 3 & 4    | True      | /data/S6_rlt6.0/boxsize3x2.5/Ns16/Nvpar48/Nmu9                  |
-| S6       | 6.0     | 3x3         | 7847.0   | 13083.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     | [4000]           | [7000]           |                 | True         | 4        | True       | /data/S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9                    |
-| S6       | 6.0     | 3x5         | 4769.0   | 7958.0       | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 4        | True      | /data/S6_rlt6.0/boxsize3x5/Ns16/Nvpar48/Nmu9                    |
-| S6       | 6.0     | 4x1         | 30000.0  | 50000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [24000, 26000]                        | [25500, 28000]                         |                  |                  | 47084           | True         | 4        | True       | /data/S6_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9                    |
-| S6       | 6.2     | 2x2         | 6000.0   | 10000.0      | 16     | 64        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | True         | 2        | True       | /data/S6_rlt6.2/boxsize2x2/Ns16/Nvpar64/Nmu9                    |
-| S6       | 6.2     | 3x3         | 14682.7  | 24475.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 2000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  | [14473,16132] | True         | 3        | True      | /data/S6_rlt6.2/boxsize3x3/Ns16/Nvpar48/Nmu9                    |
-| S6       | 6.3     | 1x1         | 6000.0   | 10000.0      | 16     | 64        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9                    |
-| S6       | 6.4     | 3x3         | 12000.0  | 20000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 1000             | [500, 1500, 4000]                     | [1000, 2000, 5500]                     |                  |                  |                 | False        | 0        | True      | /data/S6_rlt6.4/boxsize3x3/Ns16/Nvpar48/Nmu9                    |
+| **case** | **rlt** | **boxsize** | **time** | **timestep** | **Ns** | **Nvpar** | **Nmu** | **dtim** | **krhomax** | **Nmod** | **Nx** | **ikx** | **finit** | **stepsize_all** | **evo_start**                           | **evo_end**                              | **sel_start**    | **sel_end**      | **error_index** | **converge** | **mode** | **backup** | **path**                                                        |
+|----------|---------|-------------|----------|--------------|--------|-----------|---------|----------|-------------|----------|--------|---------|-----------|------------------|-----------------------------------------|------------------------------------------|------------------|------------------|-----------------|--------------|----------|------------|-----------------------------------------------------------------|
+| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 12     | 16        | 6       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 3000, 5000]"                     | "[2000, 4000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar16/Nmu6                    |
+| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 12     | 32        | 6       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 3000, 5000, 6000,  8000, 11000]" | "[2000, 4000, 5500, 7000, 10000, 12000]" |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar32/Nmu6                    |
+| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 12     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 3000, 5000]"                     | "[2000, 4000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar48/Nmu9                    |
+| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 12     | 64        | 9       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns12/Nvpar64/Nmu9                    |
+| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 16     | 16        | 9       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar16/Nmu9                    |
+| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 16     | 32        | 9       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar32/Nmu9                    |
+| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 6       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu6                    |
+| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9                    |
+| S6       | 6.0     | 1x1         | 7125.0   | 10000.0      | 16     | 48        | 9       | 0.025    | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/dtim0.025          |
+| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 0.7         | 11       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/krhomax0.70/Nmod11 |
+| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 43     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/Nx43               |
+| S6       | 6.0     | 1x1         | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 63     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/Nx63               |
+| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 16     | 64        | 6       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6                    |
+| S6       | 6.0     | 1x1         | 12000.0  | 20000.0      | 16     | 64        | 9       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 1        | True       | /data/S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9                    |
+| S6       | 6.0     | 1.5x1.5     | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 31       | 125    | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | [7000]           | [8000]           |                 | True         | 2        | False      | /data/S6_rlt6.0/boxsize1.5x1.5/Ns16/Nvpar48/Nmu9                |
+| S6       | 6.0     | 2x1         | 18000.0  | 30000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 165    | 10      | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 2        | True       | /data/S6_rlt6.0/boxsize2x1/Ns16/Nvpar48/Nmu9                    |
+| S6       | 6.0     | 2x2         | 18000.0  | 30000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 41       | 165    | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 2        | True       | /data/S6_rlt6.0/boxsize2x2/Ns16/Nvpar48/Nmu9                    |
+| S6       | 6.0     | 2.5x2.5     | 3402.1   | 5672         | 16     | 48        | 9       | 0.02     | 1.4         | 51       | 207    | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | [2000]           | [3000]           |                 | True         | 3        | False      | /data/S6_rlt6.0/boxsize2.5x2.5/Ns16/Nvpar48/Nmu9                |
+| S6       | 6.0     | 3x1         | 48000.0  | 80000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 247    | 15      | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | "[10000, 28000]" | "[12000, 31000]" |                 | True         | 3        | True       | /data/S6_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9                    |
+| S6       | 6.0     | 3x1.5       | 16840.3  | 28068        | 16     | 48        | 9       | 0.02     | 1.4         | 31       | 247    | 10      | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | [11000]          | [12000]          |                 | True         | 4        | True       | /data/S6_rlt6.0/boxsize3x1.5/Ns16/Nvpar48/Nmu9                  |
+| S6       | 6.0     | 3x1.5       | 14170.0  | 23618        | 16     | 48        | 9       | 0.02     | 1.4         | 31       | 247    | 10      | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | [11000]          | [12000]          | 23618           | True         | 3        | True       | /data/S6_rlt6.0/boxsize3x1.5/Ns16/Nvpar48/Nmu9/Broken           |
+| S6       | 6.0     | 3x2.5       | 6000.0   | 10000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 51       | 247    | 6       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | "[10000, 28000]" | "[12000, 31000]" |                 | True         | 3 & 4    | True       | /data/S6_rlt6.0/boxsize3x2.5/Ns16/Nvpar48/Nmu9                  |
+| S6       | 6.0     | 3x3         | 7847.0   | 13083.0      | 16     | 48        | 9       | 0.02     | 1.4         | 61       | 247    | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | [4000]           | [7000]           |                 | True         | 4        | True       | /data/S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9                    |
+| S6       | 6.0     | 3x3         | 3454.8   | 5758.0       | 16     | 48        | 9       | 0.02     | 1.4         | 61       | 247    | 5       | cosine5   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | [2000]           | [3000]           | "[1840, 1845]"  | True         | 4        | False      | /data/S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/cosine5            |
+| S6       | 6.0     | 3x3         | 5808.0   | 9680.0       | 16     | 48        | 9       | 0.02     | 1.4         | 61       | 247    | 5       | noise     | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     | [4000]           | [5000]           | "[1840, 1842]"  | True         | 3        | False      | /data/S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/noise              |
+| S6       | 6.0     | 3x5         | 4769.0   | 7958.0       | 16     | 48        | 9       | 0.02     | 1.4         | 101      | 247    | 3       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 4        | True       | /data/S6_rlt6.0/boxsize3x5/Ns16/Nvpar48/Nmu9                    |
+| S6       | 6.0     | 4x1         | 30000.0  | 50000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 21       | 329    | 20      | cosine2   | 1000             | "[24000, 26000]"                        | "[25500, 28000]"                         |                  |                  | 47084           | True         | 4        | True       | /data/S6_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9                    |
+| S6       | 6.2     | 2x2         | 6000.0   | 10000.0      | 16     | 64        | 9       | 0.02     | 1.4         | 41       | 165    | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | True         | 2        | True       | /data/S6_rlt6.2/boxsize2x2/Ns16/Nvpar64/Nmu9                    |
+| S6       | 6.2     | 3x3         | 14682.7  | 24475.0      | 16     | 48        | 9       | 0.02     | 1.4         | 61       | 247    | 5       | cosine2   | 2000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  | "[14473,16132]" | True         | 3        | True       | /data/S6_rlt6.2/boxsize3x3/Ns16/Nvpar48/Nmu9                    |
+| S6       | 6.3     | 1x1         | 6000.0   | 10000.0      | 16     | 64        | 9       | 0.02     | 1.4         | 21       | 83     | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9                    |
+| S6       | 6.4     | 3x3         | 12000.0  | 20000.0      | 16     | 48        | 9       | 0.02     | 1.4         | 61       | 247    | 5       | cosine2   | 1000             | "[500, 1500, 4000]"                     | "[1000, 2000, 5500]"                     |                  |                  |                 | False        | 0        | True       | /data/S6_rlt6.4/boxsize3x3/Ns16/Nvpar48/Nmu9                    |
 
 
 ### Important
 
 * (*) marks files that are not included on GitHub and are only included on the NAS of TPV in Bayreuth
 * (#) marks files that can be deleted to free space
+* (+) marks files with additional diagnostics
 
 ## Folder Structure
 
@@ -90,12 +95,22 @@ data
 │  │        ├── Nmu6 
 │  │        └── Nmu9
 │  │
+│  ├── boxsize1.5x1.5
+│  │  └── Ns16
+│  │     └── Nvpar48
+│  │        └── Nmu9
+│  │
 │  ├── boxsize2x1
 │  │  └── Ns16
 │  │     └── Nvpar48
 │  │        └── Nmu9
 │  │
 │  ├── boxsize2x2
+│  │  └── Ns16
+│  │     └── Nvpar48
+│  │        └── Nmu9
+│  │
+│  ├── boxsize2.5x2.5
 │  │  └── Ns16
 │  │     └── Nvpar48
 │  │        └── Nmu9
@@ -120,6 +135,8 @@ data
 │  │  └── Ns16
 │  │     └── Nvpar48
 │  │        └── Nmu9
+│  │           ├── cosine5 (+)
+│  │           └── noise   (+)
 │  │
 │  ├── boxsize3x5
 │  │  └── Ns16
@@ -169,7 +186,7 @@ data
 * `perfloop.dat`: (no description found)
 * `perform.dat`: performance database
 * `status.txt`: status file of specific run generated with python script `\python\monitor_job.py` (not in every folder included)(#)
-* `data.h5`: trimmed down version of `gkwdata.h5` for lower space consumption generated with shell script `\hdf5\hdf5_extract.sh` with added evaluated data (*)
+* `data.h5`: trimmed down version of `gkwdata.h5` for lower space consumption generated with shell script `\hdf5\hdf5_extract.sh` with added evaluated data (*), additional diagnostics marked with (+)
    <details><summary>Containing</summary>
    <p>
 
@@ -187,6 +204,9 @@ data
    │  ├── diagnos_grid
    │  │  └── lxn
    │  │
+   │  ├── diagnos_moments
+   │  │  └── xs_kyzero_dens (+), xs_kyzero_ene_par (+), xs_kyzero_ene_perp, (+)
+   │  │
    │  └── diagnos_growth_freq 
    │     └── time
    │
@@ -194,13 +214,16 @@ data
    │  └── xphi
    │
    └── evaluation
-      └── derivative_stepsize, second_derivative_phi, zonalflow_potential, shearing_rate, shearing_rate_maximum
+      └── derivative_stepsize, second_derivative_phi, zonalflow_potential, shearing_rate, shearing_rate_maximum,
+          'derivative_dens' (+), 'second_derivative_dens' (+), 
+          'derivative_energy_perp' (+), 'second_derivative_energy_perp' (+), 'derivative_energy_par' (+), 'second_derivative_energy_par' (+),
+          'derivative_zonalflow_potential' (+), 'derivative_zonalflow_potential' (+)
    ```
 
    </p>
    </details>
 
-* `gkwdata.h5`: raw data of the simulation (*) (#)
+* `gkwdata.h5`: raw data of the simulation (*) (#), additional diagnostics marked with (+)
    <details><summary>Containing</summary>
    <p>
 
@@ -226,7 +249,7 @@ data
    │  │  └── parallel
    │  │
    │  ├── diagnos_moments
-   │  │  └── den01, den_spectra, ene01, ene_spectra
+   │  │  └── den01, den_spectra, ene01, ene_spectra, xs_kyzero_dens (+), xs_kyzero_ene_par (+), xs_kyzero_ene_perp, (+)
    │  │
    │  └── diagnos_rad
    │     └── prof_back

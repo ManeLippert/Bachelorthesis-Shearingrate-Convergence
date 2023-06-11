@@ -3,35 +3,39 @@
 
 \begin{center}
     \captionsetup{type=table}
-    \begin{tabular}{l | c | l | l l l l l l l}
-            & $\rlt$ & box size  & $\Ns$ & $\Nvpar$ & $\Nmu$ & $d_\mathrm{tim}$ & $k\rho^\mathrm{max}$ & $N_\mathrm{mod}$ & $N_x$ \\ \hline 
-        1   & 6.0    & 1x1       & 12    & 16       & 6      & 0.02             & 1.4                  & 21               & 83    \\ 
-        2   & 6.0    & 1x1       & 12    & 32       & 6      & 0.02             & 1.4                  & 21               & 83    \\ 
-        3   & 6.0    & 1x1       & 12    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        4   & 6.0    & 1x1       & 12    & 64       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        5   & 6.0    & 1x1       & 16    & 16       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        6   & 6.0    & 1x1       & 16    & 32       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        7   & 6.0    & 1x1       & 16    & 48       & 6      & 0.02             & 1.4                  & 21               & 83    \\ 
-        8   & 6.0    & 1x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        9   & 6.0    & 1x1       & 16    & 48       & 9      & 0.025            & 1.4                  & 21               & 83    \\ 
-        10  & 6.0    & 1x1       & 16    & 48       & 9      & 0.02             & 0.7                  & 11               & 83    \\ 
-        11  & 6.0    & 1x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 43    \\ 
-        12  & 6.0    & 1x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 63    \\ 
-        13  & 6.0    & 1x1       & 16    & 64       & 6      & 0.02             & 1.4                  & 21               & 83    \\ 
-        14  & 6.0    & 1x1       & 16    & 64       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        15  & 6.0    & 2x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        16  & 6.0    & 2x2       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        17  & 6.0    & 3x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        18  & 6.0    & 3x1.5     & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        19  & 6.0    & 3x1.5     & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        20  & 6.0    & 3x2.5     & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        21  & 6.0    & 3x3       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        22  & 6.0    & 3x5       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        23  & 6.0    & 4x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        24  & 6.2    & 2x2       & 16    & 64       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        25  & 6.2    & 3x3       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        26  & 6.3    & 1x1       & 16    & 64       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
-        27  & 6.4    & 3x3       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    \\ 
+    \begin{tabular}{l | c | l | l l l l l l l l | l}
+            & $\rlt$ & box size  & $\Ns$ & $\Nvpar$ & $\Nmu$ & $d_\mathrm{tim}$ & $k\rho^\mathrm{max}$ & $N_\mathrm{mod}$ & $N_x$ & ikx & finit   \\ \hline 
+        1   & 6.0    & 1x1       & 12    & 16       & 6      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        2   & 6.0    & 1x1       & 12    & 32       & 6      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        3   & 6.0    & 1x1       & 12    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        4   & 6.0    & 1x1       & 12    & 64       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        5   & 6.0    & 1x1       & 16    & 16       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        6   & 6.0    & 1x1       & 16    & 32       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        7   & 6.0    & 1x1       & 16    & 48       & 6      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        8   & 6.0    & 1x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        9   & 6.0    & 1x1       & 16    & 48       & 9      & 0.025            & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        10  & 6.0    & 1x1       & 16    & 48       & 9      & 0.02             & 0.7                  & 11               & 83    & 5   & cosine2 \\ 
+        11  & 6.0    & 1x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 43    & 5   & cosine2 \\ 
+        12  & 6.0    & 1x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 63    & 5   & cosine2 \\ 
+        13  & 6.0    & 1x1       & 16    & 64       & 6      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        14  & 6.0    & 1x1       & 16    & 64       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\
+        15  & 6.0    & 1.5x1.5   & 16    & 48       & 9      & 0.02             & 1.4                  & 31               & 125   & 5   & cosine2 \\
+        16  & 6.0    & 2x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 10  & cosine2 \\ 
+        17  & 6.0    & 2x2       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        18  & 6.0    & 2.5x2.5   & 16    & 48       & 9      & 0.02             & 1.4                  & 51               & 207   & 5   & cosine2 \\ 
+        19  & 6.0    & 3x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 15  & cosine2 \\ 
+        20  & 6.0    & 3x1.5     & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 10  & cosine2 \\ 
+        21  & 6.0    & 3x1.5     & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 10  & cosine2 \\ 
+        22  & 6.0    & 3x2.5     & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 6   & cosine2 \\ 
+        23  & 6.0    & 3x3       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        24  & 6.0    & 3x3       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine5 \\
+        25  & 6.0    & 3x3       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & noise   \\
+        26  & 6.0    & 3x5       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 3   & cosine2 \\ 
+        27  & 6.0    & 4x1       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 20  & cosine2 \\ 
+        28  & 6.2    & 2x2       & 16    & 64       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        29  & 6.2    & 3x3       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        30  & 6.3    & 1x1       & 16    & 64       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
+        31  & 6.4    & 3x3       & 16    & 48       & 9      & 0.02             & 1.4                  & 21               & 83    & 5   & cosine2 \\ 
     \end{tabular}
     \captionof{table}{Parameters of simulations performed for this thesis}
     \label{tab:parametersSet}
@@ -56,20 +60,24 @@
         11  & 6.0    & 1x1      &  6000.0 & 10000       & ~            & False    & 0      & True   \\ 
         12  & 6.0    & 1x1      &  6000.0 & 10000       & ~            & False    & 0      & True   \\ 
         13  & 6.0    & 1x1      & 12000.0 & 20000       & ~            & True     & 1      & True   \\ 
-        14  & 6.0    & 1x1      & 12000.0 & 20000       & ~            & True     & 1      & True   \\ 
-        15  & 6.0    & 2x1      & 18000.0 & 30000       & ~            & True     & 2      & True   \\ 
-        16  & 6.0    & 2x2      & 18000.0 & 30000       & ~            & True     & 2      & True   \\ 
-        17  & 6.0    & 3x1      & 48000.0 & 80000       & ~            & True     & 3      & True   \\ 
-        18  & 6.0    & 3x1.5    & 16840.3 & 28068       & ~            & True     & 4      & True   \\ 
-        19  & 6.0    & 3x1.5    & 14170.0 & 23618       & 23618        & True     & 3      & True   \\ 
-        20  & 6.0    & 3x2.5    &  6000.0 & 10000       & ~            & True     & 3, 4   & True   \\ 
-        21  & 6.0    & 3x3      &  7847.0 & 13083       & ~            & True     & 4      & True   \\ 
-        22  & 6.0    & 3x5      &  4769.0 &  7958       & ~            & True     & 4      & True   \\ 
-        23  & 6.0    & 4x1      & 30000.0 & 50000       & 47084        & True     & 4      & True   \\ 
-        24  & 6.2    & 2x2      &  6000.0 & 10000       & ~            & True     & 2      & True   \\ 
-        25  & 6.2    & 3x3      & 14682.7 & 24475       & 14473-16132  & True     & 3      & True   \\ 
-        26  & 6.3    & 1x1      &  6000.0 & 10000       & ~            & False    & 0      & True   \\ 
-        27  & 6.4    & 3x3      & 12000.0 & 20000       & ~            & False    & 0      & True   \\ 
+        14  & 6.0    & 1x1      & 12000.0 & 20000       & ~            & True     & 1      & True   \\
+        15  & 6.0    & 1.5x1.5  &  6000.0 & 10000       & ~            & True     & 2      & True   \\
+        16  & 6.0    & 2x1      & 18000.0 & 30000       & ~            & True     & 2      & True   \\ 
+        17  & 6.0    & 2x2      & 18000.0 & 30000       & ~            & True     & 2      & True   \\ 
+        18  & 6.0    & 2.5x2.5  &  3402.1 &  5672       & ~            & True     & 3      & True   \\
+        19  & 6.0    & 3x1      & 48000.0 & 80000       & ~            & True     & 3      & True   \\ 
+        20  & 6.0    & 3x1.5    & 16840.3 & 28068       & ~            & True     & 4      & True   \\ 
+        21  & 6.0    & 3x1.5    & 14170.0 & 23618       & 23618        & True     & 3      & True   \\ 
+        22  & 6.0    & 3x2.5    &  6000.0 & 10000       & ~            & True     & 3, 4   & True   \\ 
+        23  & 6.0    & 3x3      &  7847.0 & 13083       & ~            & True     & 4      & True   \\ 
+        24  & 6.0    & 3x3      &  3454.8 &  5758       & 1840-1845    & True     & 4      & True   \\ 
+        25  & 6.0    & 3x3      &  5808.0 &  9680       & 1840-1842    & True     & 3      & True   \\ 
+        26  & 6.0    & 3x5      &  4769.0 &  7958       & ~            & True     & 4      & True   \\ 
+        27  & 6.0    & 4x1      & 30000.0 & 50000       & 47084        & True     & 4      & True   \\ 
+        28  & 6.2    & 2x2      &  6000.0 & 10000       & ~            & True     & 2      & True   \\ 
+        29  & 6.2    & 3x3      & 14682.7 & 24475       & 14473-16132  & True     & 3      & True   \\ 
+        30  & 6.3    & 1x1      &  6000.0 & 10000       & ~            & False    & 0      & True   \\ 
+        31  & 6.4    & 3x3      & 12000.0 & 20000       & ~            & False    & 0      & True   \\ 
     \end{tabular}
     \captionof{table}{Time steps with index which should be exclude in data analysis. Additional the stable column which indicates if turbulence subdued in simulation with the corresponding zonal flow mode number $\nzf$ (0 stands for turbulence not stable) and if the data is saved on the NAS of TPV (backup column)}
     \label{tab:parametersTime}
@@ -94,20 +102,24 @@
         11  & ./data/S6\_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/Nx43               \\ 
         12  & ./data/S6\_rlt6.0/boxsize1x1/Ns16/Nvpar48/Nmu9/Nx63               \\ 
         13  & ./data/S6\_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu6                    \\ 
-        14  & ./data/S6\_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9                    \\ 
-        15  & ./data/S6\_rlt6.0/boxsize2x1/Ns16/Nvpar48/Nmu9                    \\ 
-        16  & ./data/S6\_rlt6.0/boxsize2x2/Ns16/Nvpar48/Nmu9                    \\ 
-        17  & ./data/S6\_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9                    \\ 
-        18  & ./data/S6\_rlt6.0/boxsize3x1.5/Ns16/Nvpar48/Nmu9                  \\ 
-        19  & ./data/S6\_rlt6.0/boxsize3x1.5/Ns16/Nvpar48/Nmu9/Broken           \\ 
-        20  & ./data/S6\_rlt6.0/boxsize3x2.5/Ns16/Nvpar48/Nmu9                  \\ 
-        21  & ./data/S6\_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9                    \\ 
-        22  & ./data/S6\_rlt6.0/boxsize3x5/Ns16/Nvpar48/Nmu9                    \\ 
-        23  & ./data/S6\_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9                    \\ 
-        24  & ./data/S6\_rlt6.2/boxsize2x2/Ns16/Nvpar64/Nmu9                    \\ 
-        25  & ./data/S6\_rlt6.2/boxsize3x3/Ns16/Nvpar48/Nmu9                    \\ 
-        26  & ./data/S6\_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9                    \\ 
-        27  & ./data/S6\_rlt6.4/boxsize3x3/Ns16/Nvpar48/Nmu9                    \\ 
+        14  & ./data/S6\_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9                    \\
+        15  & ./data/S6\_rlt6.0/boxsize1.5x1.5/Ns16/Nvpar48/Nmu9                \\
+        16  & ./data/S6\_rlt6.0/boxsize2x1/Ns16/Nvpar48/Nmu9                    \\ 
+        17  & ./data/S6\_rlt6.0/boxsize2x2/Ns16/Nvpar48/Nmu9                    \\ 
+        18  & ./data/S6\_rlt6.0/boxsize2.5x2.5/Ns16/Nvpar48/Nmu9                \\
+        19  & ./data/S6\_rlt6.0/boxsize3x1/Ns16/Nvpar48/Nmu9                    \\ 
+        20  & ./data/S6\_rlt6.0/boxsize3x1.5/Ns16/Nvpar48/Nmu9                  \\ 
+        21  & ./data/S6\_rlt6.0/boxsize3x1.5/Ns16/Nvpar48/Nmu9/Broken           \\ 
+        22  & ./data/S6\_rlt6.0/boxsize3x2.5/Ns16/Nvpar48/Nmu9                  \\ 
+        23  & ./data/S6\_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9                    \\ 
+        24  & ./data/S6\_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/cosine5            \\
+        25  & ./data/S6\_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/noise              \\
+        26  & ./data/S6\_rlt6.0/boxsize3x5/Ns16/Nvpar48/Nmu9                    \\ 
+        27  & ./data/S6\_rlt6.0/boxsize4x1/Ns16/Nvpar48/Nmu9                    \\ 
+        28  & ./data/S6\_rlt6.2/boxsize2x2/Ns16/Nvpar64/Nmu9                    \\ 
+        29  & ./data/S6\_rlt6.2/boxsize3x3/Ns16/Nvpar48/Nmu9                    \\ 
+        30  & ./data/S6\_rlt6.3/boxsize1x1/Ns16/Nvpar64/Nmu9                    \\ 
+        31  & ./data/S6\_rlt6.4/boxsize3x3/Ns16/Nvpar48/Nmu9                    \\ 
     \end{tabular}
     \captionof{table}{Data location for each simulation}
     \label{tab:parametersPath}

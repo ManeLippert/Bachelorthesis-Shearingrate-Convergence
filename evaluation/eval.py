@@ -345,8 +345,8 @@ h5tools.hdf5_write_data(f, data_eval, groupname)
 if PROFILE:
     f = h5py.File(filename,"r+")
     
-    data_eval = [dr_dens, ddr_dens, dr_ene[0], dr_ene[1], dr_zonal_pot, dr_zonal_pot]
-    data_group = ['derivative_dens', 'second_derivative_dens', 'derivative_energy_perp', 'derivative_energy_par', 'derivative_zonalflow_potential', 'derivative_zonalflow_potential']
+    data_eval = [dr_dens, ddr_dens, dr_ene[0], dr_ene[1], dr_zonal_pot]
+    data_group = ['derivative_dens', 'second_derivative_dens', 'derivative_energy_perp', 'derivative_energy_par', 'derivative_zonalflow_potential']
 
     groupname = ['evaluation' + '/' + x for x in data_group]
     h5tools.hdf5_write_data(f, data_eval, groupname)
