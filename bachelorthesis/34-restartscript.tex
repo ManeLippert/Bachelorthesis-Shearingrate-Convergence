@@ -1,7 +1,7 @@
 \section{Restart Script for Simulation}
 \label{sec:restartscript}
 
-As stated in Chapter \ref{sec:cluster} the \texttt{btrzx1}-cluster has a wall time of 24 hours but since simulations typically run longer than 24 hours, the simulation has to be restarted after the wall time is exceeded. Some simulations need multiple weeks making a regular restart vital to obtaining complete sets of simulation data. The following restart script were written to outsource and simplify the process.
+As stated in Chapter \ref{sec:cluster} the \texttt{btrzx1}-cluster has a wall time of 24 hours but since simulations typically run longer than 24 hours, the simulation has to be restarted after the wall time is exceeded. Some simulations need multiple weeks making a regular restart vital to obtaining complete sets of simulation data. The following restart script was written to outsource and simplify the process.
 
 As script language \texttt{python} was chosen because of its simple syntax and the variety of tools compatible with the \texttt{bash} shell. \texttt{bash} was also considered, but after some issues occurred regarding the mechanism to check wether a file exist or not, \texttt{python} was selected. Furthermore, the script uses the standard \texttt{python3} library and is therefore executabe with any \texttt{python3} enviroment.
 
@@ -231,7 +231,7 @@ The progress bar displays all important information at one glance. To boost prod
 cd $DATA 
 find . -name $STATUSFILENAME -exec tail -8 {} \;
 \end{lstlisting}
-which prints all progress bars of every simulation to the data folder. If one want to see the complete status file change \texttt{tail -8} to \texttt{cat}.
+which prints all progress bars of every simulation to the data folder. If one wants to see the complete status file change \texttt{tail -8} to \texttt{cat}.
 An example status file is displayed in the Appendix \ref{append:status}.
 
 %\displayfonttable[hex-digits=head+foot, range-end=1FFFF,compare-with=New Computer Modern Math,compare-color=black,  compare-bgcolor=black!5, missing-glyph-color=black!50, color=black!75]{Latin Modern Math}
