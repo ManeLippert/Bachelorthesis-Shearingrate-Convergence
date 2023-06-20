@@ -5,30 +5,16 @@
 \usepackage{tabularx}
 
 \usenavigationsymbolstemplate{}
-% \setbeamertemplate{footline}
-% {
-%   \leavevmode%
-%   \hbox{%
-%   \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1.0ex,left, leftskip=0.3cm]{section in head/foot}%
-%     \usebeamerfont{date in head/foot}\insertshortdate
-%   \end{beamercolorbox}%
-%   \begin{beamercolorbox}[wd=.8\paperwidth,ht=2.25ex,dp=1.0ex,center]{section in head/foot}%
-%     \usebeamerfont{author in head/foot}\insertshortauthor~-~\usebeamerfont{title in head/foot}\insertshorttitle
-%   \end{beamercolorbox}%
-%   \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1.0ex,right,rightskip=0.3cm]{section in head/foot}%
-%     \insertframenumber{}
-%   \end{beamercolorbox}}%
-%   \vskip0pt%
-% }
 
 \setbeamertemplate{footline}
-{
-  \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1.0ex, center, leftskip=0.02\paperwidth, rightskip=0.02\paperwidth]{section in head/foot}%
-    \noindent
-    \makebox[0.1\paperwidth][l]{\usebeamerfont{date in head/foot}\insertshortdate}%
-    \makebox[0.76\paperwidth][c]{\usebeamerfont{author in head/foot}\insertshortauthor~-~\usebeamerfont{title in head/foot}\insertshorttitle}%
-    \makebox[0.1\paperwidth][r]{\insertframenumber}
-  \end{beamercolorbox}
+{   
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1.0ex, center, leftskip=0.02\paperwidth, rightskip=0.02\paperwidth]{section in head/foot}%
+        \noindent
+        \makebox[0.1\paperwidth][l]{\usebeamerfont{date in head/foot}\insertshortdate}%
+        %\makebox[0.76\paperwidth][c]{\usebeamerfont{author in head/foot}\insertshortauthor~-~\usebeamerfont{title in head/foot}\insertshorttitle}%
+        \makebox[0.76\paperwidth][c]{\usebeamerfont{author in head/foot}\usebeamerfont{title in head/foot}\insertshorttitle}%
+        \makebox[0.1\paperwidth][r]{\insertframenumber}
+    \end{beamercolorbox}
 }
 
 % Insert Institute into footer

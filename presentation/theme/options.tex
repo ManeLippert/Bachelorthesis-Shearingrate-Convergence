@@ -14,4 +14,12 @@
 \@doSectionPagefalse
 \DeclareOption{nosectionpages}{\@doSectionPagetrue}
 
+\newif\if@doDarkMode
+\@doDarkModefalse
+\DeclareOption{darkmode}{\@doDarkModetrue}
+
+\newif\if@doTransparentline
+\@doTransparentlinefalse
+\DeclareOption{transparent}{\@doTransparentlinetrue}
+
 \ProcessOptions

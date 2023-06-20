@@ -7,7 +7,7 @@
 %                    !!! Compile with LuaLaTex !!!
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[compress,aspectratio=1610]{beamer}
+\documentclass[compress,aspectratio=1610,noflama]{beamer}
 
 %--------------------------------------------------------------------------
 % Theme
@@ -22,7 +22,7 @@
 % Common packages
 %--------------------------------------------------------------------------
 
-\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage{graphicx}
 \usepackage{multicol}
 \usepackage{multimedia}
@@ -32,15 +32,35 @@
 \usepackage{tikz}
 \usepackage{booktabs}
 \usepackage{soul}
+%\usepackage[numbers, super]{natbib}
+\usepackage{tikz}
+\usepackage{multirow}
+
+%--------------------------------------------------------------------------
+% Variables
+%--------------------------------------------------------------------------
+
+\input{../bachelorthesis/colors.tex}
+\input{../bachelorthesis/flowdiagramm.tex}
+\input{../bachelorthesis/variables.tex}
+\input{../bachelorthesis/tikz.tex}
+
+%--------------------------------------------------------------------------
+% Variables
+%--------------------------------------------------------------------------
+
+\newcommand{\backgroundpicture}{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}
+\newcommand{\backgroundxshift}{0.27\paperwidth}
+\newcommand{\backgroundwidth}{0.7\paperwidth} 
+
+\newcommand{\logopicture}{Uni_Logo_white_black}
 
 %--------------------------------------------------------------------------
 % Functions, Graphics, Tikz, Underlines
 %--------------------------------------------------------------------------
 
-\usetikzlibrary{mindmap,backgrounds}
 \graphicspath{{../pictures/}}
 
-\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 \newcommand{\vect}[1]{\boldsymbol{\mathbf{#1}}}
 
 \setul{0.3ex}{0.2ex}
@@ -57,208 +77,412 @@
 % Document
 %--------------------------------------------------------------------------
 
-\title{Turbulenzen in Plasma}
-\subtitle{Beispiel anhand von Plasma im Tokamak Reaktor}
+\title{Size convergence of the E$\times$B \\ Staircase pattern in flux tube \\ simulations of ion temperature \\ gradient driven turbulence}
+\subtitle{~}
 \author{Manuel Lippert}
-\institute{Physik (Master of Science)}
+\institute{Theoretical Physics V}
 
 \begin{document}
 
 	\maketitle
 
-	\begin{frame}{Gliederung}
-		\tableofcontents[hideallsubsections]
+	%\begin{frame}{Gliederung}
+	%	\tableofcontents[hideallsubsections]
+	%\end{frame}
+
+	\section*{Motivation}
+	\begin{frame}
+		\frametitle{Motivation}
+
+		\begin{center}
+			\begin{itemize}
+				\item <2-> Ion temperature gradient driven turbulence close to marginal stability exhibits Zonal flow pattern formation on mesoscales 
+				\item <3-> Patterns are called $\exb$ staircase structures
+			\end{itemize}
+		\end{center}
+		\bigskip
+		\onslide<4-> Observed pattern formation in
+		\begin{center}
+			\begin{itemize}
+				\item <5-> local gradient-driven flux-tube simulations, including collisions and background $\exb$ shear,
+				\item <6-> local flux-driven realizations, including mean electric field shear,
+				\item <7-> global gradient-driven and global flux-driven studies.
+			\end{itemize}
+			\bigskip
+			\onslide<8-> \textbf{Does the basic pattern size always converges to the box size, or is there a typical mesoscale size inherent to staircase structures also in a local flux-tube description?}
+		\end{center}
+	\end{frame}
+
+	\section*{Theory}
+
+	\begin{frame}
+		\frametitle{Charged Particle Motion}
+
+		\begin{center}
+			\begin{tabular}{>{\onslide<2->}c<{\onslide}@{\hspace{0.5cm}} >{\onslide<3->}c<{\onslide}@{\hspace{0.5cm}} >{\onslide<4->}c<{\onslide}}
+				\textbf{Lorentz force} & 
+				\textbf{Electric force} & 
+				\textbf{Inhomogeneous magnetic field} \\
+				$F_{\perp, B} = |q| v_\perp B$ & 
+				$F_{\parallel,E} = qE_\parallel$ & 
+				$F_{\parallel,\nabla_{\!\parallel} B} = - \underbrace{\frac{mv^2_{\perp}}{2B}}_{\mu} \nabla_{\!\parallel} B$ \\
+				\input{../pictures/Theory/Lorentz-Force.tex} & 
+				\input{../pictures/Theory/Electric-Force.tex} & 
+				\input{../pictures/Theory/Inhomogenous-Magnetic-Field.tex} \\
+			\end{tabular}
+		\end{center}
 	\end{frame}
 	
-	\centering
+	\begin{frame}
+		\frametitle{Drift in the Gyrocenter}
+		\begin{center}
+			\begin{tabular}{>{\onslide<2->}c<{\onslide} >{\onslide<3->}c<{\onslide} >{\onslide<3->}c<{\onslide}}
+				{\boldmath $\exb$} \textbf{Drift} & 
+				{\boldmath $\nabla B$} \textbf{Drift} & 
+				\textbf{Curvature Drift} \\
+				$\vect{v}_{E} = \frac{\vect{E}\times\vect{B}}{B^2}$ & 
+				$\vect{v}_{\nabla B} = \frac{m v^2_{\perp}}{2 q}\frac{\vect{B}\times \nabla B}{B^3}$ & 
+				$\vect{v}_{\kappa} = \frac{m v^2_{\parallel}}{qB^2}\vect{B}\times \underbrace{\vect{\kappa}}_{\frac{\nabla B}{B}} = \frac{m v^2_{\parallel}}{q} \frac{\vect{B}\times \nabla B}{B^3}$\\[1cm]
+				\input{../pictures/Theory/ExB-Drift.tex} & 
+				\multicolumn{2}{>{\onslide<3->}c<{\onslide}}{\input{../pictures/Theory/GradB-Drift.tex}} \\
+			\end{tabular}
+		\end{center}
+	
+	\end{frame}
+	\begin{frame}
+		\frametitle{Magnetic Confinement in Tokamak}
+		\begin{center}
+			\begin{tabular}{>{\onslide<2->}c<{\onslide} >{\onslide<2->}c<{\onslide}}
+				\includegraphics[width=0.6\paperwidth]{Theory/Tokamak-Torus.pdf} & $\beta = \frac{nT}{\mu_0 B^2/2}$
+			\end{tabular}
+		\end{center}
+	\end{frame}
 
-	\section{Magnetohydrodynamische (MHD) Gleichungen}
-	%\subsection{Magnetohydrodynamische Gleichungen}
+	\begin{frame}
+		\frametitle{Ion Temperature Gradient (ITG) Driven Instability}
+		\begin{center}
+			\onslide<2->\input{../pictures/Theory/ITG-Turbulence.tex}
+		\end{center}
+	\end{frame}
+
+
+	\begin{frame}
+		\frametitle{Zonal Flows}
+		\begin{center}
+			\onslide<2->\includegraphics[width = 0.8\paperwidth]{Theory/Zonal-Flow-Generation.pdf}
+			%\begin{itemize}
+			%	\item <3-> Zonal flows are linked to the $\exb$ flows
+			%	\item <4-> Zonal flow is tangential to the flux-surfaces and does not contribute to the turbulent transport across the flux-surfaces
+			%\end{itemize}
+		\end{center}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Shearing Rate}
+
+		\onslide<2-> Pattern formation occurs in the stabilized tokamak plasma the so-called $\exb$ staircase structure. \\\bigskip
+		
+		Properties:
+		\begin{enumerate}
+			\item[(1)] <3-> They occur on a \textit{radial mesoscale} of order of $\rho_\mathrm{L} < 10\,\rhoth < R$
+			\item[(2)] <4-> The structure are \textit{quasi stationary} in space and vary on time scales much longer than the typical turbulence time scales.
+			\item[(3)] <5-> They have a \textit{typical amplitude} of the order of $10^{-1} \vth/R$.
+			\item[(4)] <6-> Turbulent transport occurs in \textit{avalanches} with propagation strongly linked to the local $\exb$ shearing rate.
+		\end{enumerate}
+		\onslide<7->{
+		\begin{center}
+			\begin{tabular}{c c}
+				$\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2}$ & $\langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0)$ \\
+			\end{tabular}
+		\end{center}
+		}
+	\end{frame}
+
 	%\begin{frame}
-	%	\frametitle{Magnetohydrodynamische Gleichungen}
+	%	\frametitle{Vlasov Equation}
+	%	\begin{gather*}
+	%		\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{x}} \cdot \frac{\mathrm{d}\vect{x}}{\mathrm{d}t} + \frac{\partial f}{\partial \vect{v}} \cdot \frac{\mathrm{d}\vect{v}}{\mathrm{d}t} = 0
+	%	\end{gather*}
+	%	\begin{gather*}
+	%		n = \int \mathrm{d}\vect{v}\,f(\vect{x}, \vect{v}, t) \qquad j = q \int \mathrm{d}\vect{v}\, v f(\vect{x}, \vect{v}, t)
+	%	\end{gather*}
 	%	\begin{gather*}
 	%		\begin{aligned}
-	%			\partial_t \rho + \nabla \cdot (\rho \vect{v}) &= 0 \\
-	%			\rho \partial_t \vect{v} + \rho (\vect{v} \cdot \nabla) \vect{v} + \nabla p &= \frac{\vect{J} \times \vect{B}}{c} + \rho \vect{g} + \vect{F} \\
-	%			\nabla \times \vect{B} &= \frac{4 \pi}{c} \vect{J} \\
-	%			\nabla \times \vect{E} &= -\frac{1}{c}\partial_t\vect{B} \\
-	%			\nabla \cdot \vect{B} &= 0 \\
-	%			\vect{J} &= \sigma \left(\vect{E} + \frac{\vect{v} \times \vect{B}}{c}\right)
+	%			\nabla \cdot \vect{B} &= 0 &\qquad \nabla \times \vect{B} &= \mu_0\left( \sum_\mathrm{species} j + \epsilon_0 \frac{\partial \vect{E}}{\partial t} \right) \\
+	%			\nabla \cdot \vect{E} &= \frac{1}{\epsilon_0} \sum_\mathrm{species} qn &\qquad \nabla \times \vect{E} &= - \frac{\partial \vect{B}}{\partial t}
 	%		\end{aligned}
 	%	\end{gather*}
 	%\end{frame}
 
 	\begin{frame}
-		\frametitle{Magnetohydrodynamische (MHD) Gleichungen}
-		\begingroup
-			\setbeamercolor{block title}{bg=Sec3Dark}
-			\setbeamercolor{block body}{bg=Sec3}
-			\begin{block}{Kontinuitätsgleichung}
-				\centering
-				$\partial_t \rho + \nabla \cdot (\rho \vect{v}) = 0$
-			\end{block}
-		\endgroup
-		\begingroup
-			\setbeamercolor{block title}{bg=Sec2CompDark}
-			\setbeamercolor{block body}{bg=Sec2Comp}
-			\begin{block}{Navier-Stokes Gleichung}
-				\centering
-				$\rho \partial_t \vect{v} + \rho (\vect{v} \cdot \nabla) \vect{v} = - \nabla p + \frac{\vect{J} \times \vect{B}}{c} + \rho \vect{g} + \vect{F}$
-			\end{block}
-		\endgroup
-		\begingroup
-			\setbeamercolor{block title}{bg=Sec1Dark}
-			\setbeamercolor{block body}{bg=Sec1}
-			\begin{block}{Maxwell Gleichungen}
-				\centering
-				\begin{tabular}{l l}
-					$\nabla \cdot \vect{B} = 0$ & $\nabla \times \vect{B} = \frac{4 \pi}{c} \vect{J}$ \\[0.3cm]
-					$\vect{J} = \sigma \left(\vect{E} + \frac{\vect{v} \times \vect{B}}{c}\right)$ & $\nabla \times \vect{E} = -\frac{1}{c}\partial_t\vect{B}$ \\
-				\end{tabular}
-			\end{block}
-		\endgroup
-	\end{frame}
-	\begin{frame}
-		\frametitle{Beschreibung von Plasma im Tokamak Reaktor}
-		\includegraphics[scale = 1]{Presentation/Zonal_Flow.PNG}
-		\begin{alertblock}{Achtung Instabilität am Plasmarand!}
-			\centering
-			Ionen Temperaturgradient Instabilität $\approx$ Rayleigh-Taylor Instabilität
-		\end{alertblock}
-	\end{frame}
+		\frametitle{Gyrokinetics}
+		\pause
+		\begin{tabular}{l l l}
 
-	
-	\frame{
-    	\frametitle{Embedded Video}  
-    	\begin{center}
-        	\movie{\includegraphics[width=\textwidth]{Zonal_Flow.PNG}}{../pictures/Presentation/video.mp4}
-    	\end{center}
-	}
+			$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{x}} \cdot \frac{\mathrm{d}\vect{x}}{\mathrm{d}t} + \frac{\partial f}{\partial \vect{v}} \cdot \frac{\mathrm{d}\vect{v}}{\mathrm{d}t} = 0$ & 
+			$f(\vect{x}, \vect{v}, t)$ & 
+			Vlasov Equation \pause \\[0.7cm]
 
+			\multicolumn{2}{l}{$\Downarrow$ \qquad $\frac{\omega}{\omega_\mathrm{c}} \sim \frac{k_\parallel}{k_\perp} \sim \frac{\rhoth}{L_\mathrm{n}} \sim \frac{\delta n}{n_0} \sim \frac{\delta B}{B_0} \sim \frac{v_\mathrm{d}}{\vth} \sim \epsilon_\mathrm{g}$} & 
+			Gyrokinetic Ordering \pause \\[0.7cm]
+			
+			$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{X}} \cdot \frac{\mathrm{d}\vect{X}}{\mathrm{d}t} + \frac{\partial f}{\partial v_\parallel} \cdot \frac{\mathrm{d}v_\parallel}{\mathrm{d}t} = 0$ & 
+			$f(\vect{X}, v_{\parallel}, \mu)~;~\frac{\mathrm{d}\mu}{\mathrm{d}t} = 0$ & 
+			Gyrokinetic Formalism \pause \\[0.7cm]
+			
+			\multicolumn{2}{l}{$\Downarrow$ \qquad $f = f_0 + \delta f$} & 
+			$\delta f$ Approx \& Local Limit \pause \\[0.7cm]
 
-	\frame{
-    	\frametitle{Video Slide} 
-    	\begin{center}
-        	\href{run:../pictures/Presentation/video.mp4}{\includegraphics[width=\textwidth]{Zonal_Flow.PNG}}
-    	\end{center}
-	}
-
-	\section{Ionen Temperaturgradient (ITG) Instabilität}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_00.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_01.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_02.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_03.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_04.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_05.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_06.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_07.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_08.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_09.pdf}
-	\end{frame}
-	\begin{frame}
-		\frametitle{ITG Instabilität am Plasmarand}
-		\includegraphics[scale=0.8]{Presentation/ITG_Instability_10.pdf}
-	\end{frame}
-
-	\begin{frame}
-		\frametitle{Zonal Flow Bildung}
-		\begin{minipage}{0.6\textwidth}\raggedleft
-			\centering
-			\begin{itemize}
-				\item ITG \ul{Instabilität} erzeugt turbulente Wirbelströmung
-				\item Wirbelströmung breitet sich über die Breite des Plasmatorus aus
-				\item Entstehung von \alert{Zonal Flows}
-				\item Namensgebung aus der Atmosphärenphysik (Bsp. Wolkenbänder von Jupiter)
-			\end{itemize}
-		\end{minipage}
-		\begin{minipage}{0.3\textwidth}
-			\begin{figure}%[4]
-				\href{https://www.youtube.com/watch?v=O6tUHzfj-zM}{\includegraphics[width=\textwidth]{Presentation/turbulence.png}}
-			\end{figure}
-			{\tiny Simulation eines Plasmaschlauch von Jeff Candy und Ron Waltz mit Code GYRO}
-		\end{minipage}
-	\end{frame}
-
-	\section{Turbulenz im Plasma stabilisieren}
-	\begin{frame}
-		\frametitle{Anpassung der Magnetfeldlinienrichtung}
-		Verdrillen der magnetischen Flussdichte $\vect{B}$ überführt Plasma in stabilen Zustand \\[0.2cm]
-		\includegraphics[scale=0.25]{Presentation/Stabilzation_Mechanism_black.png}
-	\end{frame}
-	
-	\begin{frame}
-		\frametitle{Turbulenzen verringern}
-		\begin{minipage}{0.6\textwidth}\raggedleft
-			\begin{itemize}
-				\item Wirbelströmung verursachende Partikel folgen meistens Feldlinien
-				\item Turbulenzen können mit negativer magnetischen Scherung verringert werden
-				\item Verdrehung in Richtung der "Guten Krümmung"
-				%\item Umkehrung der magnetischen Scherung verdreht Wirbelströmung in kleinen Abständen in Richtung der "Guten Krümmung"
-				%\item Umgekehrte magnetische Scherung wird erzeugt durch Quetschung des Magnetfelds bei hohen Plasmadruck
-				\item Durch die Verformung des Plasmas kann sich Scherung lokal verändern
-			\end{itemize}
-		\end{minipage}
-		\begin{minipage}{0.3\textwidth}
-			\includegraphics[scale = 0.15]{Presentation/Magnetic_Shear_black.png}
-		\end{minipage}
-	\end{frame}
-
-	%\begin{frame}
-	%	Wirbelströmung, welche größere Längenskalen in \doublequoted{Schlechte Krümmung} transportieren, werden mit Scherung reduziert bis sie sich komplett unterdrücken.
-	%	\frametitle{Regelung oder Unterdrückung von Turbulenzen}
-	%	\includegraphics[scale = 1.3]{Presentation/Shearing.pdf}
-	%\end{frame}
-
-	\begin{frame}
-		\frametitle{Regelung oder Unterdrückung von Turbulenzen}
-		{\tiny Waltz, Kerbel, Phys. Plasmas 1994 w/ Hammett, Beer, Dorland, Waltz Gyrofluid Eqs., Numerical Tokamak Project, DoE Computational Grand Challenge}
-		\begin{tabular}{c c}
-			\includegraphics[scale = 0.15]{Presentation/Stablized_Plasma_Interaction.png} & \includegraphics[scale = 0.15]{Presentation/Stablized_Plasma_LongScale.png} \\
-			Dominante nichtlineare Interaction  & Zusätzlicher verscherter Zonal Flow \\
-			zwischen turbulenter Wirbelströmung & unterdrückt Turbulenz komplett \\
-			und kontrollierten Zonal Flow & \\
+			\multicolumn{2}{l}{$\frac{\partial g}{\partial t} + \vect{v}_\chi \cdot \nabla g + (v_\parallel \vect{b} + \vect{v}_\mathrm{D}) \cdot \nabla(\delta f) - \frac{\mu B}{m}\frac{\vect{B}\cdot\nabla B}{B^2}\frac{\partial (\delta f)}{\partial v_\parallel} = S$} &
+			Gyrokinetic Equation \\[0.7cm]
+			\multicolumn{3}{l}{$g \sim (f_0 + \delta f)\qquad S \sim (f + f_0)\qquad \vect{v}_\mathrm{D} \sim \nabla B \qquad \vect{v}_\chi \sim \exb \qquad f(\xcoord, \ycoord, s, v_\parallel, \mu)$} \\
 		\end{tabular}
 	\end{frame}
 
-	%\section{Parallelen zur Atmosphären-Physik}
-	%\begin{frame}
-	%	\frametitle{Zonal Flow auf Jupiter vs. Tokamak Reaktor}	
-	%\end{frame}
+	\section*{Material and Methods}
 
-	\appendix
-	\section*{Appendix}
 	\begin{frame}
-		\frametitle{Danke für die Aufmerksamkeit!}
-		\includegraphics[scale = 0.3]{Presentation/Fusion_Meme.jpeg} \\
+		\frametitle{Simulation Setup}
+
+		\begin{center}
+			\begin{itemize}
+				\item <2-> Non-linear flux tube version of Gyrokinetic Workshop (GKW) 
+				\item <3-> Circular concentric flux surfaces 
+				\item <4-> Standard resolution with 6th order (S6) 
+				\item <5-> Cyclone Base Case (CBC) parameters $\rlt = 6.0$ 
+				\item <6-> Turbulence level is quantified by the turbulent heat conduction coefficient $\chi$ (normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$)) 
+				\item <7-> Quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities
+				\item <8-> Standard box size $(L_\xcoord,~L_\ycoord) = (76.3,~89.8)\,\rhoth$
+			\end{itemize}
+			\onslide<9->{
+			\bigskip
+			\begin{tabular}{l | ccccc | ccccc | c | cc}
+				& $N_\mathrm{m}$ & $N_x$ & $N_\mathrm{s}$ & $N_{\nu_\parallel}$ & $N_\mu$ & $D$ & $\nu_\mathrm{d}$           & $D_{\nu_\parallel}$ & $D_x$ & $D_y$ & Order & $k_y\rho$ & $k_x\rho$ \\
+				\hline
+				S6   & 21    & 83    & 16    & 64                  & 9       & 1   & $|\nu_\parallel|$ & 0.2                 & 0.1   & 0.1   & 6     & 1.4       & 2.1       \\
+			\end{tabular}}
+		\end{center}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Diagnostics}
+		
+		\begin{center}
+			\onslide<2-> $\wexb = \sum_{\kzf} \hatwexb(\kzf,t) \, \exp(\mathrm{i} \kzf \xcoord)$ \\[0.5cm]
+			\onslide<3-> $\kzf = 2\pi \nzf/L_\xcoord$ \\[0.5cm]
+			\onslide<4-> $\hatwexbamp = 2 |\hatwexb(\kzf,t)|$ \\[0.5cm]
+			\begin{itemize}
+				\item <5-> Zonal flow mode that dominates the $\exb$ staircase pattern are called \textbf{basic mode} 
+				\item <6-> The basic mode exhibits the maximum amplitude in the spectrum $\hatwexbamp$
+			\end{itemize}
+		\end{center}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Restart Script}
+		\pause
+		
+		\newcommand{\distance}{2.5cm}
+
+		\begin{center}
+		    \begin{tikzpicture}[node distance=1.5cm]
+			
+		        \node (init)         [init]                                                 {Start / Initialize};
+		        \node (startLoop)    [startstop, below of = init]                           {Loop};
+		        \node (checkStatus)  [process, below of=startLoop]                          {Check Status};
+		        \node (checkData)    [process, below of=checkStatus, yshift = -1.5cm]       {Check Data};
+		        \node (checkPending) [decision, below of=checkStatus, xshift=\distance]     {Pending};
+		        \node (checkRunning) [decision, below of=checkStatus, xshift=-\distance]    {Running};
+			
+			
+		        \draw [arrow] (init)           --                                           (startLoop);
+		        \draw [arrow] (startLoop)      --                                           (checkStatus);
+		        \draw [arrow] (checkStatus)    -|                                           (checkRunning);
+		        \draw [arrow] (checkRunning)   -- node[anchor=south] {No}                   (checkPending);
+		        \draw [arrow] (checkPending)   -- node[anchor=north west] {Yes} + ( 3,0) |- (startLoop);
+		        \draw [arrow] (checkRunning)   -- node[anchor=north east] {Yes} + (-3,0) |- (startLoop);
+		        \draw [arrow] (checkPending)   |- node[anchor=north west] {No}              (checkData);
+			
+		    \end{tikzpicture}
+		\end{center}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Restart Script}
+
+		\newcommand{\distance}{2.5cm}
+
+		\begin{center}
+		    \begin{tikzpicture}[node distance=2cm]
+			
+		        \node (checkData)    [process]       										{Check Data};
+		        \node (error)        [decision, below of=checkData, xshift=-\distance]      {Errors};
+		        \node (checkPoint)   [decision, below of=checkData, xshift=\distance]       {Checkpoint};
+		        \node (backup)       [process,  below of=error, xshift=-\distance]          {Backup Data};
+		        \node (restore)      [process,  below of=checkPoint, xshift=\distance]      {Restore Data};
+		        \node (reset)        [process,  below of=checkData, yshift=-2cm]            {Reset Data};
+		        \node (checkStep)    [decision, below of = reset]                           {Enough Timesteps};
+
+		        \draw [arrow] (checkData)      -|                                           (error);
+		        \draw [arrow] (error)          -- node[anchor=south] {Yes}                  (checkPoint);
+		        \draw [arrow] (error)          -| node[anchor=south east] {No}              (backup);
+		        \draw [arrow] (checkPoint)     -| node[anchor=south west] {No}              (restore);
+		        \draw [arrow] (checkPoint)     |- node[anchor=north west] {Yes}             (reset);
+		        \draw [arrow] (backup)         --                                           (checkStep);
+		        \draw [arrow] (reset)          --                                           (checkStep);
+		        \draw [arrow] (restore)        --                                           (checkStep);
+			
+		    \end{tikzpicture}
+		\end{center}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Restart Script}
+
+		\newcommand{\distance}{2.5cm}
+
+		\begin{center}
+		    \begin{tikzpicture}[node distance=1.5cm]
+				
+				\node (init)         [init]                                                 {Start / Initialize};
+		        \node (startLoop)    [startstop, below of = init]                           {Loop};
+		        \node (checkStatus)  [process, below of=startLoop]                          {...};
+		        \node (checkStep)    [decision, below of = checkStatus]                     {Enough Timesteps};
+		        \node (end)          [startstop, below of=checkStep, xshift=4cm]            {End};
+		        \node (restart)      [init, below of=checkStep, xshift=-4cm]                {Start/Restart};
+
+		        \draw [arrow] (init)           --                                           (startLoop);
+		        \draw [arrow] (startLoop)      --                                           (checkStatus);
+		        \draw [arrow] (checkStep)      -| node[anchor=south east] {No}              (restart);
+		        \draw [arrow] (checkStep)      -| node[anchor=south west] {Yes}             (end);
+		        \draw [arrow] (restart)        -- + (-3,0) |-                               (startLoop);
+		        \draw [arrow] (end)            -- + ( 3,0) |-                               (init);
+			
+		    \end{tikzpicture}
+		\end{center}
+
+	\end{frame}
+
+	\section*{Results}
+
+	\begin{frame}
+		\frametitle{Variation of Computational Resolution}
+		\pause
+		\textbf{Goals:}
+		\begin{itemize}
+			\item Estimate the minimal resolution without numerical dissipation
+			\item Reduce \textbf{calculation time} and \textbf{costs} of the simulation
+		\end{itemize}
+		\pause
+		\textbf{Criteria:}
+		\begin{enumerate}
+			\item[\textbf{(1)}] Subdued turbulence after \textbf{short} time periods
+			\item[\textbf{(2)}] Stability for \textbf{long} time periods 
+		\end{enumerate}
+		\pause
+		\textbf{Verification:}
+		\begin{enumerate}
+			\item Reduce only one number of grid points and look if criterias \textbf{(1), (2)} are satisfied
+			\item Reduce to known the minimum number of grid points to verify result in general.
+		\end{enumerate}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Benchmark}
+		\begin{center}
+			\only<2>{\includegraphics[width = 0.8\paperwidth]{S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9/S6_rlt6.0_boxsize1x1_Ns16_Nvpar64_Nmu9_eflux.pdf}}
+
+			\only<3>{\includegraphics[width = 0.8\paperwidth]{Comparison/Gradient-Length/S6_rlt6.0-6.3_boxsize1x1_Ns16_Nvpar64_Nmu9_eflux_comparison.pdf}}
+		\end{center}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Reduction of Grid Points}
+		
+		\begin{center}
+			\only<2>{\includegraphics[width = 0.8\paperwidth]{Comparison/Resolution/Nvpar/S6_rlt6.0_boxsize1x1_Ns16_Nvpar16-32-48-64_Nmu9_eflux_comparison.pdf}}
+
+			\only<3>{\includegraphics[width = 0.8\paperwidth]{Comparison/Resolution/Nmu/S6_rlt6.0_boxsize1x1_Ns16_Nvpar64_Nmu6-9_eflux_comparison.pdf}}
+			
+			\only<4>{\includegraphics[width = 0.8\paperwidth]{Comparison/Resolution/Nmu/S6_rlt6.0_boxsize1x1_Ns16_Nvpar48_Nmu6-9_eflux_comparison.pdf}}
+			
+			\only<5>{\includegraphics[width = 0.8\paperwidth]{Comparison/Resolution/Ns/S6_rlt6.0_boxsize1x1_Ns12-16_Nvpar64_Nmu9_eflux_comparison.pdf}}
+			
+			\only<6>{
+				\textbf{Final Resolution}\\
+				\bigskip
+				\begin{tabular}{l | ccccc | ccccc | c | cc}
+					& $N_\mathrm{m}$ & $N_x$ & $N_\mathrm{s}$ & $N_{\nu_\parallel}$ & $N_\mu$ & $D$ & $\nu_\mathrm{d}$           & $D_{\nu_\parallel}$ & $D_x$ & $D_y$ & Order & $k_y\rho$ & $k_x\rho$ \\
+					\hline
+					S6   & 21    & 83    & 16    & 48                  & 9       & 1   & $|\nu_\parallel|$ & 0.2                 & 0.1   & 0.1   & 6     & 1.4       & 2.1       \\
+				\end{tabular}
+			}
+		\end{center}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Size Convergence of $\exb$ Staircase Pattern}
+		\begin{center}
+			\only<2>{\textbf{(1) Radial} \\[0.5cm] $\NR \times \NB \in [1\times1,~2\times1,~3\times1,~4\times1]$}
+
+			\only<3>{\includegraphics[width = 0.8\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf}}
+
+			\only<4>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
+
+			\only<5>{\textbf{(2) Isotropic} \\[0.5cm] $\NR \times \NB \in [1\times1,~1.5\times1.5,~2\times2,~2.5\times2.5,~3\times3]$}
+
+			\only<6>{\includegraphics[width = 0.8\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf}}
+
+			\only<7>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
+
+			\only<8>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_cosine2-cosine5-noise_wexb_comparison.pdf}}
+			
+			\only<9>{\textbf{(3) Binormal} \\[0.5cm] $\NR \times \NB \in [3\times1.5,~3\times2.5,~3\times3,~3\times5]$}
+			
+			\only<10>{\includegraphics[width = 0.8\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf}}
+			
+			\only<11>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
+		\end{center}
+
+		\only<12>{
+			$\Rightarrow$ Mesoscale pattern size of $\sim 57 - 76\,\rhoth$ 
+			\pause
+			That means profile effects set 
+			\pause
+			\begin{itemize}
+				\item[(i)] the radial size of the $\exb$ staircase pattern
+				\pause
+				\item[(ii)] the scale of avalanche-like transport events.
+			\end{itemize}
+		}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{The finite Heat Flux Threshold}
+		\begin{center}
+			\onslide<2->\includegraphics[width = 0.8\paperwidth]{Comparison/Gradient-Length/S6_rlt6.0-6.2-6.4_boxsize3x3_Ns16_Nvpar48_Nmu9_eflux_comparison.pdf}
+
+			\onslide<3->$\Rightarrow~\boxed{\rlt|_\mathrm{finite} = 6.3 \pm 0.1}$
+		\end{center}
+	\end{frame}
+
+
+	\section*{Conclusion}
+
+	\begin{frame}
+		\frametitle{Conclusion}
+		
+		\begin{minipage}{0.4\paperwidth}\raggedleft
+			\begin{itemize}
+				\item <2-> Parallel velocity $\Nvpar$ could be reduced from 64 to 48, which halfed the time until suppression of turbulence
+				\item <3-> Restart Script with \texttt{python} led to further convenience during the task of performing simulations
+				\item <4-> Mesoscale pattern size of $\sim 57 - 76\,\rhoth$ is found to be intrinsic to ITG driven turbulence for Cyclone Base Case parameters
+				\item <5-> Finite heat flux threshold is located at $\rlt|_\mathrm{finite} = 6.3 \pm 0.1$
+			\end{itemize}
+		\end{minipage}
+		\begin{minipage}{0.4\paperwidth}
+			\onslide<4-> \includegraphics[width = 0.5\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_thesis.pdf}
+		\end{minipage}
 	\end{frame}
 
 \end{document}

@@ -9,11 +9,14 @@
 \def\titlepage{\usebeamertemplate{title page}}
 \setbeamertemplate{title page}
 {
-	% Add background to title page
-	\AddToShipoutPictureFG*{\includegraphics[width=\paperwidth]{Presentation/background}}
+	\AddToShipoutPictureFG*{
+		\hspace*{\backgroundxshift}
+		\includegraphics[width=\backgroundwidth]{\backgroundpicture}
+	}
+
 	\begin{minipage}[b][\paperheight]{\textwidth}
 	\vspace*{5mm}
-	\includegraphics[height=14mm]{Presentation/logo}\par
+	\includegraphics[height=14mm]{\logopicture}\par
 	\vspace*{5mm}
 	\ifx\insertsubtitle\@empty%
 	\else%
@@ -41,5 +44,6 @@
 		{\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute\par}%
 	\fi% 
 	\vspace*{5mm}
+
 	\end{minipage}
 }
