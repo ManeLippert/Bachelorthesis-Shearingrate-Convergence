@@ -1,7 +1,7 @@
 \section{Variation of Computational Resolution}
 \label{sec:variationsofresolution}
 
-At the beginning of this work the goal is to estimate the minimal resolution needed to run the simulation without numerical dissipation biasing the physical outcome. Numerical dissipation can therefore result to no formation of zonal flow structures, which cause an permanent turbulent state of the simulation. The goal behind this testing is to reduce \textbf{calculation time} and \textbf{costs} of the simulation. \\
+At the beginning of this work the goal is to estimate the minimal resolution needed to run the simulation without numerical dissipation biasing the physical outcome. Numerical dissipation can therefore result to no formation of zonal flow structures, which cause a permanent turbulent state of the simulation. The goal behind this testing is to reduce \textbf{calculation time} and \textbf{costs} of the simulation. \\
 Because of that, the criteria for the best resolution should be:
 \begin{enumerate}
 	\item[\textbf{(1)}] Subdued turbulence after \textbf{short} time periods
@@ -10,16 +10,16 @@ Because of that, the criteria for the best resolution should be:
 and the following procedure will be applied for verification:
 \begin{enumerate}
 	\item Reduce only one number of grid points and look if criterias \textbf{(1), (2)} are satisfied
-	\item Reduce to known minimum number of grid points to verify result in general.
+	\item Reduce to known the minimum number of grid points to verify result in general.
 \end{enumerate}
 
 \subsection{Benchmark}
 \label{sub:benchmark}
 
-Starting from the \enquote{Standard resolution with 6th order (S6)} [Tab. \ref{tab:resolutionBenchmark}] the first step is to reproduce the result of Ref. \citenum{Peeters2016} in Section IV. Note that, because of selected circular concentric geometry the used inverse background temperature gradient length is $\rlt = 6.0$ instead of $\rlt = 7.0$ which was used in Section IV of Ref. \citenum{Peeters2016} for $s$-$\alpha$ geometry. In Fig. \ref{fig:eflux-ns16-nvpar64-nmu9} the obtained data is similar to the results from Ref. \citenum{Peeters2016} with subdued turbulence after $\sim 3000\,R/\vth$. 
+Starting from the \enquote{Standard resolution with 6th order (S6)} [Table \ref{tab:resolutionBenchmark}] the first step is to reproduce the result of Ref. \citenum{Peeters2016} in Section IV. Note that, because of selected circular concentric geometry the used inverse background temperature gradient length is $\rlt = 6.0$ instead of $\rlt = 7.0$ which was used in Section IV of Ref. \citenum{Peeters2016} for $s$-$\alpha$ geometry. In Fig. \ref{fig:eflux-ns16-nvpar64-nmu9} the obtained data is similar to the results from Ref. \citenum{Peeters2016} with subdued turbulence after $\sim 3000\,R/\vth$. 
 
 \includegraphicsHere{S6_rlt6.0/boxsize1x1/Ns16/Nvpar64/Nmu9/S6_rlt6.0_boxsize1x1_Ns16_Nvpar64_Nmu9_eflux.pdf}{
-	Time trace of the heat conduction coefficient $\chi$ for $\rlt = 6.0$ for benchmark
+	Time trace of the heat conduction coefficient $\chi$ for $\rlt = 6.0$ for benchmark.
 }{fig:eflux-ns16-nvpar64-nmu9}{}
 
 As next step to verify the selection of the gradient length $\rlt$ an approach to the finite heat flux threshold was made. As Ref. \citenum{Peeters2016} in Section V concludes the finite heat flux threshold is approximately located at a gradient length of $\rlt = 6.3$ for circular geometry [FIG. 4 of Ref. \citenum{Peeters2016}]. Therefore, following parameters were used
@@ -29,7 +29,7 @@ As next step to verify the selection of the gradient length $\rlt$ an approach t
 As seen in Fig. \ref{fig:eflux-gradient-length} for $\rlt = 6.3$ no suppression of turbulence occurs in the whole time domain, which is in agreement with Ref. \citenum{Peeters2016}.
 
 \includegraphicsHere{Comparison/Gradient-Length/S6_rlt6.0-6.3_boxsize1x1_Ns16_Nvpar64_Nmu9_eflux_comparison.pdf}{
-	Time traces for $\rlt = 6.0$ and $\rlt = 6.3$ for benchmark
+	Time traces for $\rlt = 6.0$ and $\rlt = 6.3$ for benchmark.
 }{fig:eflux-gradient-length}{}
 
 \subsection{Reduction of parallel Velocity Grid Points $\Nvpar$}
@@ -47,7 +47,7 @@ So to conclude only grid points with $\Nvpar = 48, 64$ are satisfying the set of
 With this number of grid points the time until turbulence subdued is halfed compared to the benchmark case, i.e., turbulence suppression occur after $\sim 1500\,R/\vth$.
 
 \includegraphicsHere{Comparison/Resolution/Nvpar/S6_rlt6.0_boxsize1x1_Ns16_Nvpar16-32-48-64_Nmu9_eflux_comparison.pdf}{
-	Time traces for reduced parallel velocity grid points $\Nvpar$
+	Time traces for reduced parallel velocity grid points $\Nvpar$.
 }{fig:eflux-ns16-nvpar16-32-48-64-nmu9}{}
 
 \subsection{Reduction of Magnetic Moment Grid Points $\Nmu$}
@@ -60,7 +60,7 @@ In the next step the number of grid points for the magnetic moment $\Nmu$ were r
 As in Fig. \ref{fig:eflux-ns16-nvpar64-nmu6-9} shown, the reduction of grid points for the magnetic moment does not significantly impact the suppression of turbulence. The turbulence enters the stationary state in both cases after $\sim 3000\,R/\vth$.  
 
 \includegraphicsHere{Comparison/Resolution/Nmu/S6_rlt6.0_boxsize1x1_Ns16_Nvpar64_Nmu6-9_eflux_comparison.pdf}{
-	Time traces for reduced magnetic moment grid points $\Nmu$
+	Time traces for reduced magnetic moment grid points $\Nmu$.
 }{fig:eflux-ns16-nvpar64-nmu6-9}{}
 
 To conclude a final result the number of grid points for the parallel velocity got reduced to $\Nvpar = 48$ according to Chapter \ref{sub:reduceNvpar}. In this case the turbulence does not subdue for the resolution $\Nmu = 6$ which leads, with both criteria in mind, to the following resolution
@@ -68,8 +68,8 @@ To conclude a final result the number of grid points for the parallel velocity g
 	\boxed{\Nmu = 9}~.
 \end{gather*}
 
-\includegraphicsHere{Comparison/Resolution/Nmu/S6_rlt6.0_boxsize1x1_Ns16_Nvpar48_Nmu6-9_eflux_comparison.pdf}{
-	Time traces for reduced magnetic moment grid points $\Nmu$
+\includegraphicsHere{Comparison/Resolution/Nmu/S6_rlt6.0_boxsize1x1_Ns16_Nvpar64_Nmu6-9_eflux_comparison.pdf}{
+	Time traces for reduced magnetic moment grid points $\Nmu$.
 }{fig:eflux-ns16-nvpar48-nmu6-9}{}
 
 \subsection{Reduction Grid Points along of the Magnetic Field $\Ns$}
@@ -85,13 +85,13 @@ In Fig. \ref{fig:eflux-ns12-16-nvpar64-nmu9} can be seen that the reduction to $
 \end{gather*}
 
 \includegraphicsHere{Comparison/Resolution/Ns/S6_rlt6.0_boxsize1x1_Ns12-16_Nvpar64_Nmu9_eflux_comparison.pdf}{
-	Time traces for reduced magnetic field grid points $\Ns$
+	Time traces for reduced magnetic field grid points $\Ns$.
 }{fig:eflux-ns12-16-nvpar64-nmu9}{}
 
 \subsection{Final Resolution for Simulation}
 \label{sub:resolution}
 
-Together with the results of Chapter \ref{sub:reduceNvpar}, \ref{sub:reduceNmu} and \ref{sub:reduceNs} the final resolution used in the upcoming simulations is displayed in Tab. \ref{tab:resolution}, with reduced number of grid points for the parallel velocity $\Nvpar$.
+Together with the results of Chapter \ref{sub:reduceNvpar}, \ref{sub:reduceNmu} and \ref{sub:reduceNs} the final resolution used in the upcoming simulations is displayed in Table \ref{tab:resolution}, with reduced number of grid points for the parallel velocity $\Nvpar$.
 \begin{center}
 	\captionsetup{type=table}
 	\begin{tabular}{l | ccccc | ccccc | c | cc}
@@ -100,7 +100,7 @@ Together with the results of Chapter \ref{sub:reduceNvpar}, \ref{sub:reduceNmu} 
 		S6   & 21    & 83    & 16    & 48                  & 9       & 1   & $|\nu_\parallel|$ & 0.2                 & 0.1   & 0.1   & 6     & 1.4       & 2.1       \\
 	\end{tabular}
 	\captionof{table}{
-		Resolution used in this work: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$
+		Resolution used in this work: Number of toroidal modes $N_m$, number of radial modes $N_x$, number of grid points along the magnetic field $N_s$,number of parallel velocity grid points $N_{\nu_\parallel}$, number of magnetic moment grid points $N_\mu$, dissipation coefficient used in convection along the magnetic field $D$,the velocity in the dissipation scheme $\nu_d$, dissipation coefficient used in the trapping term $D_{\nu_\parallel}$, damping coefficient of radial modes $D_x$, damping coefficient of toroidal modes $D_y$, order of the scheme used for the zonal mode, maximum poloidal wave vector $k_y\rho$, and maximum radial wave vector $k_x\rho$.
 	}
 	\label{tab:resolution}
 \end{center}

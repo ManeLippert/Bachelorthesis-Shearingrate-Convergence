@@ -6,7 +6,7 @@ In magnetic confinement devices like the tokamak reactor, the charged particles 
 \subsection{Particle Motion perpendicular to the magnetic field}
 \label{sub:gyromotion}
 
-Due to the Lorentz force, particles with a velocity component perpendicular to the homogenous magnetic field $v_{\perp}$ undergo a circular motion in the plane perpendicular to the magnetic field. This type of motion has circular frequency, which is often referred to as \textit{cyclotron frequency} and is defined as
+Due to the Lorentz force, particles with a velocity component perpendicular to the homogenous magnetic field $v_{\perp}$ undergo a circular motion in the plane perpendicular to the magnetic field [Fig. \ref{fig:perp-par-motion}(a)]. This type of motion has circular frequency, which is often referred to as \textit{cyclotron frequency} and is defined as
 \begin{gather}
     \omega_\mathrm{c} = \frac{|q|B}{m}~,
 \end{gather}
@@ -36,7 +36,7 @@ When an electric field with a component parallel to the magnetic field $E_\paral
 \begin{gather}
     F_{\parallel,E} = qE_\parallel~.
 \end{gather}
-The parallel motion follows then from the equation of motion. Here the direction of the motion also depends on the species type.\\\bigskip
+The parallel motion follows then from the equation of motion. Here the direction of the motion also depends on the species type [Fig. \ref{fig:perp-par-motion}(b)].\\\bigskip
 
 Since magnetic fields are not always homogenous, an inhomogeneous magnetic field with its gradient $\nabla B$ containing a component parallel to the magnetic field which is given by
 \begin{gather}
@@ -44,16 +44,38 @@ Since magnetic fields are not always homogenous, an inhomogeneous magnetic field
 \end{gather}
 causes the force
 \begin{gather}
-    F_{\parallel,\nabla_{\!\parallel} B} = - \frac{mv^2_{\perp}}{2B} \nabla_{\!\parallel} B = \mu \nabla_{\!\parallel} B~;~~~~\mu = \frac{mv^2_{\perp}}{2B}
+    F_{\parallel,\nabla_{\!\parallel} B} = - \frac{mv^2_{\perp}}{2B} \nabla_{\!\parallel} B = - \mu \nabla_{\!\parallel} B~;~~~~\mu = \frac{mv^2_{\perp}}{2B}
 \end{gather}
-with \textit{magnetic moment} $\mu$. The magnetic moment $\mu$ is an adabatic invariant (constant of motion) if the variation of the magnetic field over time is smaller than the inverse of the cyclotron freqency $\omega^{-1}_\mathrm{c}$ and the spatial variation is larger the Larmor radius $\rho_\mathrm{L}$. The resulting force has its application in the mirror effect where a charged particle gets reflected due to this force. \cite{Wesson2011}
+with \textit{magnetic moment} $\mu$. The magnetic moment $\mu$ is an adabatic invariant (constant of motion) if the variation of the magnetic field over time is smaller than the inverse of the cyclotron frequency $\omega^{-1}_\mathrm{c}$ and the spatial variation is larger the Larmor radius $\rho_\mathrm{L}$. The resulting force has its application in the mirror effect where a charged particle gets reflected due to this force [Fig. \ref{fig:perp-par-motion}(c)]. \cite{Wesson2011}
+
+\newpage
+
+\begin{center}
+    \captionsetup{type=figure}
+    \begin{tabular}{c c c c c c}
+        \input{../pictures/Theory/Lorentz-Force_Thesis.tex} &
+        \input{../pictures/Theory/Electric-Force.tex} &
+        \input{../pictures/Theory/Inhomogenous-Magnetic-Field.tex}\\[0.3cm]
+        \textbf{(a)} & \textbf{(b)} & \textbf{(c)} \\
+    \end{tabular}
+    \captionof{figure}{Forces acting on a charged particle:\\
+        \begin{tabular}{l l}
+            \textbf{(a)} & Lorentz force $\vect{F}_{\perp, B}$ perpendicular to velocity $\vect{v}$ which causes,\\
+                         & circular motion with Lamor radius $\rho_\mathrm{L}$ and cyclotron frequency $\omega_\mathrm{c}$ \\
+            \textbf{(b)} & Electric force $\vect{F}_{\parallel,E}^\pm$,\\
+            \textbf{(c)} & Mirror effect with force $\vect{F}_{\parallel,\nabla_{\!\parallel} B}$ and magnetic moment $\mu$ \\
+                         & caused by an inhomogeneous magnetic field $\vect{B}$.  \\
+        \end{tabular}
+    }
+    \label{fig:perp-par-motion}
+\end{center}
 
 \newpage
 
 \subsection{Drifts in the Gyrocenter}
 \label{sub:drift}
 
-In the presence of a magnetic field (homogenous, inhomogeneous or perturbed) and electric fields the gyrocenter undergoes slow (compared to the thermal velocity $\vth$) drift motions perpendicular to the magnetic field. There are serval examples for this drift motion. According to this thesis topic only the main three drift types will be covered in the following.
+In the presence of a magnetic field (homogenous, inhomogeneous or perturbed) and electric fields the gyrocenter undergoes slow (compared to the thermal velocity $\vth$) drift motions perpendicular to the magnetic field. There are several examples for this drift motion. According to this thesis topic only the main three drift types will be covered in the following.
 
 \begin{enumerate}
     \item {\boldmath $\exb$} \textbf{Drift:}\\
@@ -62,14 +84,14 @@ In the presence of a magnetic field (homogenous, inhomogeneous or perturbed) and
         \vect{v}_{E} = \frac{\vect{E}\times\vect{B}}{B^2}
         \label{eq:exb}
     \end{gather}
-    which is called the $\exb$ drift. Since both acting forces direction depends on the species type the direction of the $\exb$ drift is for every species the same.
+    which is called the $\exb$ drift. Since both acting forces direction depends on the species type the direction of the $\exb$ drift is for every species the same [Fig. \ref{fig:drift}(a)].
     \item {\boldmath $\nabla B$} \textbf{Drift:}\\
     Inhomogeneous magnetic field causes a gradient $\nabla B$ of the magnetic field. Because of that gradient the gyrocenter undergoes a $\nabla B$ drift defined by
     \begin{gather}
         \vect{v}_{\nabla B} = \frac{m v^2_{\perp}}{2 q}\frac{\vect{B}\times \nabla B}{B^3}~.
         \label{eq:gradB}
     \end{gather}
-    The gradient of the magnetic field $\nabla B$ varies thereby on scales larger compared to the Larmor radius. The direction of the $\nabla B$ drift depends on the species type.
+    The gradient of the magnetic field $\nabla B$ varies thereby on scales larger compared to the Larmor radius. The direction of the $\nabla B$ drift depends on the species type [Fig. \ref{fig:drift}(b)].
     \item \textbf{Curvature Drift:}\\
     Due to centrifugal force acting on the particle in a curved magnetic field the gyrocenter experiences a curvature drift according to
     \begin{gather}
@@ -79,4 +101,22 @@ In the presence of a magnetic field (homogenous, inhomogeneous or perturbed) and
     where $\vect{b}$ is the unit vector along the magnetic field. To obtain the result for the curvature $\vect{\kappa}$ in Eq. (\ref{eq:curvature}) the plasma pressure has to be small compared to the magnetic field strength $B$. In the form of Eq. (\ref{eq:curvature}) $\nabla B$ and curvature drift can be treated similarly. \cite{Wesson2011}
 \end{enumerate}
 
+\newpage
 
+\begin{center}
+    \captionsetup{type=figure}
+    \begin{tabular}{c c}
+        \input{../pictures/Theory/ExB-Drift.tex} &
+        \input{../pictures/Theory/GradB-Drift.tex} \\[0.3cm]
+        \textbf{(a)} & \textbf{(b)} \\
+    \end{tabular}
+    \captionof{figure}{Dirft motion in gyrocenter:\\
+        \begin{tabular}{l l}
+            \textbf{(a)} & $\exb$ Drift with drift velocity $\vect{v}_E$, electric field $\vect{E}$ and\\
+                         & magnetic field $\vect{B}$,\\
+            \textbf{(b)} & $\nabla B$ Drift/Curvature Drift with drift velocity $\vect{v}^{\pm}_{\nabla B;\kappa}$, magnetic\\
+                         & field $\vect{B}$ and gradient of the magnetic field $\nabla B$. \\
+        \end{tabular}
+    }
+    \label{fig:drift}
+\end{center}

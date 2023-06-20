@@ -3,9 +3,9 @@
 
 As stated in Chapter \ref{sec:cluster} the \texttt{btrzx1}-cluster has a wall time of 24 hours but since simulations typically run longer than 24 hours, the simulation has to be restarted after the wall time is exceeded. Some simulations need multiple weeks making a regular restart vital to obtaining complete sets of simulation data. The following restart script was written to outsource and simplify the process.
 
-As script language \texttt{python} was chosen because of its simple syntax and the variety of tools compatible with the \texttt{bash} shell. \texttt{bash} was also considered, but after some issues occurred regarding the mechanism to check wether a file exist or not, \texttt{python} was selected. Furthermore, the script uses the standard \texttt{python3} library and is therefore executabe with any \texttt{python3} enviroment.
+As script language \texttt{python} was chosen because of its simple syntax and the variety of tools compatible with the \texttt{bash} shell. \texttt{bash} was also considered, but after some issues occurred regarding the mechanism to check whether a file exist or not, \texttt{python} was selected. Furthermore, the script uses the standard \texttt{python3} library and is therefore executable with any \texttt{python3} environment.
 
-The script was named \texttt{slurm\_monitor.py} to indicate that this script works with the \texttt{Slurm} resource manager. The source code was pushed to the gkw repository on BitBucket \cite{slurmmonitor} or can be found in Appendix \ref{append:slurmcode}
+The script was named \texttt{slurm\_monitor.py} to indicate that this script works with the \texttt{Slurm} resource manager. The source code was pushed to the GKW repository on BitBucket \cite{slurmmonitor} or can be found in Appendix \ref{append:slurmcode}
 
 \subsection{How to run Restart Script in Terminal}
 \label{sub:codeRun}
@@ -77,7 +77,7 @@ The restart script has several features which can be used via the command line i
     \item Print output of status file table to console\\
           \texttt{-v, -\/-verbose~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\,(default=False)}
 \end{itemize}
-All boolean parameters are switches, i.e., the praser option only changes the value from \texttt{False} to \texttt{True}.
+All boolean parameters are switches, i.e., the parser option only changes the value from \texttt{False} to \texttt{True}.
 
 %options:
 %  -h, --help            show this help message and exit
@@ -173,7 +173,7 @@ All boolean parameters are switches, i.e., the praser option only changes the va
 \subsection{Status File created from Restart Script}
 \label{sub:statusFile}
 
-As stated in Chapter \ref{sub:codeFeatures} the restart script is writing a status file with the current status and progress bars of the simulation. The output is formatted as a table and can be adjusted in its appearance with the \texttt{-\/-format} parser option [Chapter \ref{sub:codeFeatures}]. The output types written in the status file are listed in Tab. \ref{tab:statusTypes}. To each output the restart script writeesthe date, time and the duration of the monitoring additionally into the table. 
+As stated in Chapter \ref{sub:codeFeatures} the restart script is writing a status file with the current status and progress bars of the simulation. The output is formatted as a table and can be adjusted in its appearance with the \texttt{-\/-format} parser option [Chapter \ref{sub:codeFeatures}]. The output types written in the status file are listed in Table \ref{tab:statusTypes}. To each output the restart script writes the date, time and the duration of the monitoring additionally into the table. 
 \begin{center}
     \captionsetup{type=table}
     \begin{tabular}{l | l}
@@ -208,10 +208,10 @@ To continue, the status file has different style options, e.g., \texttt{fancy}, 
   │               │    |               |    
   ╰───────────────╯    +---------------+    ------------------
 \end{verbatim}
-\captionof{figure}{Styles of output table in status file}
+\captionof{figure}{Styles of output table in status file.}
 \label{fig:statusStyle}
 \end{center}
-In addition to that, it dynamically updates the progress of simulation to the end of the status file in form of a progress bar. The progress bar contains the current time step of the simulation in contrast to the required time steps and the progress of the run itself in seconds in relation to the wall time. It also contains the current output from \texttt{squeue}, if the simulation is running or pending, else the important information of the simulation. An example progress bar ist shown in Fig. \ref{fig:statusBar}.
+In addition to that, it dynamically updates the progress of simulation to the end of the status file in form of a progress bar. The progress bar contains the current time step of the simulation in contrast to the required time steps and the progress of the run itself in seconds in relation to the wall time. It also contains the current output from \texttt{squeue}, if the simulation is running or pending, else the important information of the simulation. An example progress bar is shown in Fig. \ref{fig:statusBar}.
 \begin{center}
 \captionsetup{type=figure}
 \begin{verbatim}
@@ -223,7 +223,7 @@ In addition to that, it dynamically updates the progress of simulation to the en
  | RUN 13    [===>.....................]  ( 13%)  11462/86400 |
  +------------------------------------------------------------+
 \end{verbatim}
-\captionof{figure}{Progress bar example}
+\captionof{figure}{Progress bar example.}
 \label{fig:statusBar}
 \end{center}
 The progress bar displays all important information at one glance. To boost productivity the following command is recommended:
