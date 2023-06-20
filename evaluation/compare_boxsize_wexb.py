@@ -229,16 +229,12 @@ interval_rad = np.array([[26000, 43000, 15000, 2000],
                          [28000, 45000, 18000, 5000]])
                      
 layer_max, box_max_rad, box_min_rad = 1, max(boxes_rad), min(boxes_rad)
-
-time_label_rad = '{R}'
 layer = 1
 
 '''
 fig_rad = plt.figure(1, figsize = (6*box_max_rad,6*layer_max))
 
-box_plot(fig_rad, layer, time_label_rad, 
-         file_rad, shifts_rad, interval_rad, colors_rad, 
-         boxsize_rad, boxes_rad, box_max_rad, box_min_rad)
+box_plot(fig_rad, None, file_rad, shifts_rad, interval_rad, colors_rad, boxsize_rad, boxes_rad, box_max_rad, box_min_rad, box_max_rad, layer)
 
 plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
 
@@ -274,17 +270,12 @@ interval_iso = np.array([[2000, 2000, 2000],
                          [3000, 3000, 5000]])
 
 layer_max, box_max_iso, box_min_iso = 1, max(boxes_iso), min(boxes_iso)
-
-time_label_iso = '{RB}'
 layer = 1
 
 '''
 fig_iso = plt.figure(1, figsize = (6*box_max_iso,6*layer_max))
 
-box_plot(fig_iso, layer, time_label_iso, 
-         file_iso, shifts_iso, interval_iso, colors_iso, 
-         boxsize_iso, boxes_iso, box_max_iso, box_min_iso, 
-         LABEL_TOP=False)
+box_plot(fig_iso, None, file_iso, shifts_iso, interval_iso, colors_iso, boxsize_iso, boxes_iso, box_max_iso, box_min_iso, box_max_iso, layer)
 
 plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
 
@@ -321,17 +312,12 @@ interval_bi = np.array([[1000, 2000, 2000, 2000],
                        [ 3000, 3000, 3000, 3000]])
 
 layer_max, box_max_bi, box_min_bi = 1, max(boxes_bi), min(boxes_bi)
-
-time_label_bi = '{B}'
 layer = 1
 
 '''
 fig_bi = plt.figure(1, figsize = (6*box_max_bi,6*layer_max))
 
-box_plot(fig_bi, layer, time_label_bi, 
-         file_bi, shifts_bi, interval_bi, colors_bi, 
-         boxsize_bi, boxes_bi, box_max_bi, box_min_bi, 
-         LABEL_TOP=False)
+box_plot(fig_bi, None, file_bi, shifts_bi, interval_bi, colors_bi, boxsize_bi, boxes_bi, box_max_bi, box_min_bi, box_max_bi, layer)
 
 plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf', bbox_inches='tight')
 
@@ -345,7 +331,7 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_c
 file = [file_rad, file_iso, file_bi]
 
 #plot.parameters(40, (24,8), 300, linewidth=2)
-plot.parameters(40, (24,8), 300, linewidth=2, whiteplot = True)
+#plot.parameters(40, (24,8), 300, linewidth=2, whiteplot = True)
 
 # Thesis
 #plot.parameters(54, (24,8), 300, tickwidth=2)
@@ -357,7 +343,7 @@ colors  = [colors_rad, colors_iso, colors_bi]
 
 interval = [interval_rad, interval_iso, interval_bi]
 
-time_label = [time_label_rad, time_label_iso, time_label_bi]
+#time_label = [time_label_rad, time_label_iso, time_label_bi]
 
 box_max, box_min = [box_max_rad, box_max_iso, box_max_bi], [box_min_rad, box_min_iso, box_min_bi]
 
@@ -372,7 +358,7 @@ i = 0
 layer, layer_hspace = 1, 0.11
 layer_max, box_maximal, box_minimal = len(boxes), max(box_max), min(box_min)
 
-#'''
+'''
 for f in file:
     
     fig = plt.figure(1, figsize = (6*box_maximal,6*layer))
@@ -440,8 +426,8 @@ interval_finit = np.array([[4000, 2000, 2000],
 layer_max, box_max_finit, box_min_finit = 1, max(boxes_finit), min(boxes_finit)
 layer = 1
 
-'''
-fig_finit = plt.figure(1, figsize = (6*box_max_rad,8*layer_max))
+#'''
+fig_finit = plt.figure(1, figsize = (6*box_max_finit,6*layer_max))
 
 box_plot(fig_finit, None, file_finit, shifts_finit, interval_finit, colors_finit, boxsize_finit, boxes_finit, box_max_finit, box_min_finit, box_max_finit, layer)
 

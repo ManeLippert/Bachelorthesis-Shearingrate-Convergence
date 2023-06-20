@@ -1,0 +1,19 @@
+% \usetikzlibrary{mindmap,backgrounds}
+% \usetikzlibrary{decorations.pathmorphing}
+% \usetikzlibrary{decorations.markings}
+% \usetikzlibrary{arrows.meta,bending}
+
+\begin{tikzpicture}
+    % Charge
+    \draw [fill=blue, blue] (0,1.5) circle (0.4) node[white, font=\boldmath]{$-$};
+    \draw [fill=red, red] (0,-1.5) circle (0.4) node[white, font=\boldmath]{$+$};
+    \draw [fill=blue, blue] (-0.5,0) circle (0.2) node[white, font=\boldmath]{$-$};
+    \draw [fill=red, red] (0.5,0) circle (0.2) node[white, font=\boldmath]{$+$};
+    % Electric field
+    \draw[thick,Notablue, ->] (0,-1) -- (0,1) node[below left, Notablue] {$\vect{E}$};
+    % Force
+    \draw[thick, Notagrey, ->] (-0.5, -0.2) -- (-0.5, -1.2);
+    \draw (-0.5, -1.2) node[left, Notagrey]{$\vect{F}^{-}_{\parallel,E}$};
+    \draw[thick, Notagrey, ->] (0.5, 0.2) -- (0.5, 1.2);
+    \draw (0.5, 1.2) node[right, Notagrey]{$\vect{F}^{+}_{\parallel,E}$};
+\end{tikzpicture}

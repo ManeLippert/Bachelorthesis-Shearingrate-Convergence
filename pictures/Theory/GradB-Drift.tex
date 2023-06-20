@@ -1,0 +1,22 @@
+% \usetikzlibrary{mindmap,backgrounds}
+% \usetikzlibrary{decorations.pathmorphing}
+% \usetikzlibrary{decorations.markings}
+% \usetikzlibrary{arrows.meta,bending}
+
+\begin{tikzpicture}
+    % Electron
+    \draw[thick,decoration={segment length=2mm, amplitude=0.3cm, coil},decorate,<-,blue] (3,0) -- (0,0);
+    \draw [fill=blue, blue] (0,0.2) circle (0.2) node[white, font=\boldmath]{$-$};
+    % Ion
+    \draw[thick,decoration={coil, aspect = -0.5, amplitude = -0.9cm, segment length=6mm},decorate,<-,red] (0,-2) -- (3,-2);
+    \draw [fill=red, red] (3,-1.8) circle (0.2) node[white, font=\boldmath]{$+$};
+    % Grad B field
+    \draw[thick,Notagreen, ->] (4,-2) -- (4,0) node[above right, Notagreen]{$\nabla B$};
+    % Drift velocity
+    \draw[thick,Notaorange, ->] (0.5,-0.6) -- (2.5,-0.6) node[right, Notaorange]{$\vect{v}^{-}_{\nabla B;\kappa}$};
+    \draw[thick,Notaorange, <-] (0.5,-0.8) node[left, Notaorange]{$\vect{v}^{+}_{\nabla B;\kappa}$} -- (2.5,-0.8);
+    % Magnetic field
+    \draw [thick, Notagreen] (4,-2.5) circle (0.2);
+    \filldraw [Notagreen] (4,-2.5) circle (1.5pt);
+    \draw (4.3,-2.2) node[Notagreen]{$\vect{B}$};
+\end{tikzpicture}
