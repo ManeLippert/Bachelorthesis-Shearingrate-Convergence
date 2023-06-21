@@ -51,7 +51,7 @@ def eflux_compare_plot(files, label, xlim = [0, None], ylim = [0, None], invert_
 	else:
 		ax.legend(handles, labels, ncol = len(files))
 
-'''
+#'''
 # R/L_T 6.0 & 6.3 ===================================================================================================================================
 
 # File import and Create picture folder
@@ -65,14 +65,14 @@ picDir = homepath + 'pictures/Comparison/Gradient-Length/'
 if not os.path.exists(picDir):
 	os.makedirs(picDir)
 
-resolution = [r'$R/L_{\mathrm{T}}$ = 6.0', r'$R/L_{\mathrm{T}}$ = 6.3']
+resolution = [r'$R/L_T$ = 6.0', r'$R/L_T$ = 6.3']
 
-eflux_compare_plot(files, resolution, xlim=(0, 6000), ylim=(0,25))
+eflux_compare_plot(files, resolution, xlim=(0, 6000), ylim=(0,25), invert_legend=False)
 
 plt.savefig(picDir + '/S6_rlt6.0-6.3_boxsize1x1_Ns16_Nvpar64_Nmu9_eflux_comparison.pdf', bbox_inches='tight')
 #'''
 
-#'''
+'''
 # R/L_T 6.0 & 6.2 & 6.4  ============================================================================================================================
 
 # File import and Create picture folder
@@ -86,7 +86,7 @@ picDir = homepath + 'pictures/Comparison/Gradient-Length/'
 if not os.path.exists(picDir):
 	os.makedirs(picDir)
 
-resolution = [r'$R/L_{\mathrm{T}}$ = 6.0', r'$R/L_{\mathrm{T}}$ = 6.2',  r'$R/L_{\mathrm{T}}$ = 6.4']
+resolution = [r'$R/L_T$ = 6.0', r'$R/L_T$ = 6.2',  r'$R/L_T$ = 6.4']
 
 error_index = [[None, None],
                [14473,16133],

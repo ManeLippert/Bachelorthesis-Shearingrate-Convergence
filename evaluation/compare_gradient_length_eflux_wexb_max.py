@@ -19,7 +19,7 @@ import zonalflow, h5tools, derivative, plot
 
 plot.parameters(40, (24,16), 300)
 
-'''
+#'''
 # COMPARE: 6.0 & 6.3 ================================================================================================================================
 
 # File import and Create picture folder
@@ -38,7 +38,7 @@ if not os.path.exists(picDir):
 fig, (ax_eflux, ax_wexb_max) = plt.subplots(2, 1) #, sharex=True)
 #fig.suptitle('Comparsion of finite heat flux threshold of $R/L_{\mathrm{T}}$')
 
-resolution = [r'$R/L_{\mathrm{T}}$ = 6.0', r'$R/L_{\mathrm{T}}$ = 6.3']
+resolution = [r'$R/L_T$ = 6.0', r'$R/L_T$ = 6.3']
 
 #ax_eflux.set_title(r'$N_{\mathrm{vpar}}$ = 64; $N_{\mathrm{\mu}}$ = 9', pad=20)
 ax_eflux.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
@@ -116,7 +116,7 @@ if not os.path.exists(picDir):
 fig, (ax_eflux, ax_wexb_max) = plt.subplots(1, 2, figsize = (24,6)) #, sharex=True)
 #fig.suptitle('Comparsion of finite heat flux threshold of $R/L_{\mathrm{T}}$')
 
-resolution = [r'$R/L_{\mathrm{T}}$ = 6.0', r'$R/L_{\mathrm{T}}$ = 6.2']
+resolution = [r'$R/L_T$ = 6.0', r'$R/L_T$ = 6.2']
 
 #ax_eflux.set_title(r'$N_{\mathrm{vpar}}$ = 64; $N_{\mathrm{\mu}}$ = 9', pad=20)
 ax_eflux.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
