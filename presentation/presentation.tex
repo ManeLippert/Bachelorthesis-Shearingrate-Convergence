@@ -216,26 +216,32 @@
 
 	\begin{frame}
 		\frametitle{Gyrokinetics}
-		\pause
+		
+		\only<4>{
+			\begin{center}
+				\includegraphics[width=0.85\paperwidth]{Theory/Gyro-Center-Coordinates.pdf}		
+			\end{center}
+		}
+
 		\begin{tabular}{l l l}
 
-			$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{x}} \cdot \frac{\mathrm{d}\vect{x}}{\mathrm{d}t} + \frac{\partial f}{\partial \vect{v}} \cdot \frac{\mathrm{d}\vect{v}}{\mathrm{d}t} = 0$ & 
-			$f(\vect{x}, \vect{v}, t)$ & 
-			Vlasov Equation \pause \\[0.7cm]
+			\onslide<2->{$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{x}} \cdot \frac{\mathrm{d}\vect{x}}{\mathrm{d}t} + \frac{\partial f}{\partial \vect{v}} \cdot \frac{\mathrm{d}\vect{v}}{\mathrm{d}t} = 0$} & 
+			\onslide<2->{$f(\vect{x}, \vect{v}, t)$} & 
+			\onslide<2->{Vlasov Equation} \\[0.7cm]
 
-			\multicolumn{2}{l}{$\Downarrow$ \qquad $\frac{\omega}{\omega_\mathrm{c}} \sim \frac{k_\parallel}{k_\perp} \sim \frac{\rhoth}{L_\mathrm{n}} \sim \frac{\delta n}{n_0} \sim \frac{\delta B}{B_0} \sim \frac{v_\mathrm{d}}{\vth} \sim \epsilon_\mathrm{g}$} & 
-			Gyrokinetic Ordering \pause \\[0.7cm]
+			\multicolumn{2}{>{\onslide<3->}l<{\onslide}}{$\Downarrow$ \qquad $\frac{\omega}{\omega_\mathrm{c}} \sim \frac{k_\parallel}{k_\perp} \sim \frac{\rhoth}{L_\mathrm{n}} \sim \frac{\delta n}{n_0} \sim \frac{\delta B}{B_0} \sim \frac{v_\mathrm{d}}{\vth} \sim \epsilon_\mathrm{g}$} & 
+			\onslide<3->{Gyrokinetic Ordering} \\[0.7cm]
 			
-			$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{X}} \cdot \frac{\mathrm{d}\vect{X}}{\mathrm{d}t} + \frac{\partial f}{\partial v_\parallel} \cdot \frac{\mathrm{d}v_\parallel}{\mathrm{d}t} = 0$ & 
-			$f(\vect{X}, v_{\parallel}, \mu)~;~\frac{\mathrm{d}\mu}{\mathrm{d}t} = 0$ & 
-			Gyrokinetic Formalism \pause \\[0.7cm]
+			\onslide<5->{$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{X}} \cdot \frac{\mathrm{d}\vect{X}}{\mathrm{d}t} + \frac{\partial f}{\partial v_\parallel} \cdot \frac{\mathrm{d}v_\parallel}{\mathrm{d}t} = 0$} & 
+			\onslide<5->{$f(\vect{X}, v_{\parallel}, \mu)~;~\frac{\mathrm{d}\mu}{\mathrm{d}t} = 0$} & 
+			\onslide<5->{Gyrokinetic Formalism} \\[0.7cm]
 			
-			\multicolumn{2}{l}{$\Downarrow$ \qquad $f = f_0 + \delta f$} & 
-			$\delta f$ Approx \& Local Limit \pause \\[0.7cm]
+			\multicolumn{2}{>{\onslide<6->}l<{\onslide}}{$\Downarrow$ \qquad $f = f_0 + \delta f$} & 
+			\onslide<6->{$\delta f$ Approx \& Local Limit} \\[0.7cm]
 
-			\multicolumn{2}{l}{$\frac{\partial g}{\partial t} + \vect{v}_\chi \cdot \nabla g + (v_\parallel \vect{b} + \vect{v}_\mathrm{D}) \cdot \nabla(\delta f) - \frac{\mu B}{m}\frac{\vect{B}\cdot\nabla B}{B^2}\frac{\partial (\delta f)}{\partial v_\parallel} = S$} &
-			Gyrokinetic Equation \\[0.7cm]
-			\multicolumn{3}{l}{$g \sim (f_0 + \delta f)\qquad S \sim (f + f_0)\qquad \vect{v}_\mathrm{D} \sim \nabla B \qquad \vect{v}_\chi \sim \exb \qquad f(\xcoord, \ycoord, s, v_\parallel, \mu)$} \\
+			\multicolumn{2}{>{\onslide<7->}l<{\onslide}}{$\frac{\partial g}{\partial t} + \vect{v}_\chi \cdot \nabla g + (v_\parallel \vect{b} + \vect{v}_\mathrm{D}) \cdot \nabla(\delta f) - \frac{\mu B}{m}\frac{\vect{B}\cdot\nabla B}{B^2}\frac{\partial (\delta f)}{\partial v_\parallel} = S$} &
+			\onslide<7->{Gyrokinetic Equation} \\[0.7cm]
+			\multicolumn{3}{>{\onslide<7->}l<{\onslide}}{$g \sim (f_0 + \delta f)\qquad S \sim (f + f_0)\qquad \vect{v}_\mathrm{D} \sim \nabla B \qquad \vect{v}_\chi \sim \exb \qquad f(\xcoord, \ycoord, s, v_\parallel, \mu)$} \\
 		\end{tabular}
 	\end{frame}
 
@@ -436,24 +442,25 @@
 			\only<7>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
 
 			\only<8>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_cosine2-cosine5-noise_wexb_comparison.pdf}}
+
+			\only<9>{\includegraphics[height = 0.7\paperheight]{S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/noise/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_noise_wexb_dens_ene_selection.pdf}}
 			
-			\only<9>{\textbf{(3) Binormal} \\[0.5cm] $\NR \times \NB \in [3\times1.5,~3\times2.5,~3\times3,~3\times5]$}
+			\only<10>{\textbf{(3) Binormal} \\[0.5cm] $\NR \times \NB \in [3\times1.5,~3\times2.5,~3\times3,~3\times5]$}
 			
-			\only<10>{\includegraphics[width = 0.8\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf}}
+			\only<11>{\includegraphics[width = 0.8\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf}}
 			
-			\only<11>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
+			\only<12>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
 		\end{center}
 
-		\only<12>{
-			$\Rightarrow$ Mesoscale pattern size of $\sim 57 - 76\,\rhoth$ 
-			\pause
-			That means profile effects set 
-			\pause
-			\begin{itemize}
-				\item[(i)] the radial size of the $\exb$ staircase pattern
-				\pause
-				\item[(ii)] the scale of avalanche-like transport events.
-			\end{itemize}
+		\only<13>{
+			\begin{center}
+				$\Rightarrow$ Mesoscale pattern size of: \\[0.3cm]
+				$\boxed{\sim 57 - 76\,\rhoth}$ \bigskip
+				\begin{itemize}
+					\item Non-locality is inherent to ITG-driven turbulence
+					\item Avalanches are spatially organized by the E × B staircase pattern
+				\end{itemize}
+			\end{center}
 		}
 	\end{frame}
 
