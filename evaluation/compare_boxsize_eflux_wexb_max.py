@@ -122,7 +122,7 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize1-2-3-4x1_Ns16_Nvpar48_Nmu9_comparison_t
 
 #'''
 
-#'''
+'''
 # ISOTROPIC =========================================================================================================================================
 
 plot.parameters(32, (24,4.3), 300, legendpad = 0.4)
@@ -225,7 +225,7 @@ plt.savefig(picDir + '/S6_rlt6.0_boxsize1x1-1.5x1.5-2x2-2.5x2.5-3x3_Ns16_Nvpar48
 
 #'''
 
-'''
+#'''
 # BINORMAL  =========================================================================================================================================
 
 #plot.parameters(32, (24,4.3), 300)
@@ -263,7 +263,7 @@ ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF
 ax_wexb_max.yaxis.set_label_coords(-0.15,0.5)
 
 x_max = 0
-fourier_index = [3, 3, 4, 4]
+fourier_index = [4, 3, 4, 4]
 
 color_bi = colors[2][::-1]
 
