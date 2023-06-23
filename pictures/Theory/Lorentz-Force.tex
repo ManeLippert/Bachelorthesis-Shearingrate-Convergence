@@ -5,7 +5,7 @@
 
 \begin{tikzpicture}
     % Circle
-    \draw (0,0) circle (1.5);
+    \draw[lightgray] (0,0) circle (1.5);
     \filldraw (0,0) circle (1.5pt);
     % Force
     \draw[thick, Notagrey, <-] (90:0.5) node[right, Notagrey]{$\vect{F}_{\perp, B}$} -- ++ (90:1.0) node[coordinate] (x) {};
@@ -13,13 +13,15 @@
     \draw[thick, black, ->] (0,0) -- ++(0:1.5);
     \draw (0.6,-0.4) node {$\rho_\mathrm{L} = \frac{mv_{\perp}}{|q|B}$};
     % Velocity
-    \draw[thick,Notaorange, ->] (x) -- ++(180:1cm) node[above, Notaorange]{$\vect{v}$};
+    \draw[thick,Notaorange, ->] (x) -- ++(180:1cm) node[left, Notaorange]{$\vect{v}^-$};
+    \draw[thick,Notaorange, ->] (0,-1.5) -- ++(180:1cm) node[left, Notaorange]{$\vect{v}^+$};
     % Cyclontron freqency
-    \draw[thick, ->, Notared] (200:1.1*1.5) arc(200:240:1.1*1.5);
-    \draw (240:1.4*1.5) node[Notared] {$\omega_\mathrm{c} = \frac{|q|B}{m}$};
-    % Particle
-    \filldraw [Notablue] (x) circle (2pt);
-    \draw (x) node[above right, Notablue]{Particle};
+    \draw[thick, ->, blue] (90:1.0*1.5) arc(90:150:1.0*1.5);
+    \draw[thick, <-, red] (210:1.0*1.5) arc(210:270:1.0*1.5);
+    \draw (50:1.5*1.5) node[black] {$\omega_\mathrm{c} = \frac{|q|B}{m}$};
+    % Charges
+    \draw [fill=blue, blue] (x) circle (0.2) node[white, font=\boldmath]{$-$};
+    \draw [fill=red, red] (0,-1.5) circle (0.2) node[white, font=\boldmath]{$+$};
     % Magnetic field
     \draw [thick, Notagreen] (1.5,-1.5) circle (0.2);
     \filldraw [Notagreen] (1.5,-1.5) circle (1.5pt);
