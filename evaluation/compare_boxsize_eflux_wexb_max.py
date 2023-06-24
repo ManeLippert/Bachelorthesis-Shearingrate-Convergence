@@ -19,7 +19,7 @@ import zonalflow, h5tools, plot
 
 colors = [['#a11a5b', '#029e73', '#de8f05', '#0173b2'],
  		             ['#66c2a5', 'orange',  '#dbb757', 'red', '#0173b2'],
-		  ['#87429b', '#66c2a5', '#d55e00', '#56b4e9']]
+		  ['#87429b', '#66c2a5', '#d55e00', '#d55e00', '#56b4e9']]
 
 '''
 # RADIAL ============================================================================================================================================
@@ -235,7 +235,9 @@ plot.parameters(44, (24,8), 300, tickwidth = 2, legendpad = 0.4)
 # File import and Create picture folder
 data = 'S6_rlt6.0'
 path = ['boxsize3x1.5/Ns16/Nvpar48/Nmu9',
-        'boxsize3x2.5/Ns16/Nvpar48/Nmu9', 'boxsize3x3/Ns16/Nvpar48/Nmu9',
+        'boxsize3x2.5/Ns16/Nvpar48/Nmu9', 
+        'boxsize3x2.5/Ns16/Nvpar48/Nmu9', 
+        'boxsize3x3/Ns16/Nvpar48/Nmu9',
         'boxsize3x5/Ns16/Nvpar48/Nmu9']
 
 filename = [homepath + 'data/'+data+'/'+i+'/data.h5' for i in path]
@@ -249,7 +251,7 @@ if not os.path.exists(picDir):
 # Compare eflux and amplitude in time domain
 fig, (ax_eflux, ax_wexb_max) = plt.subplots(1, 2) #, sharex=True)
 
-boxsize = [r'3\times1.5', r'3\times2.5', r'3\times3', r'3\times5']
+boxsize = [r'3\times1.5', r'3\times2.5', r'3\times2.5', r'3\times3', r'3\times5']
 
 #ax_eflux.set_title(r'$N_s$ = 16,   $N_{\mathrm{vpar}}$ = 48,   $N_{\mathrm{\mu}}$ = 9', pad=20)
 ax_eflux.set_xlabel(r'$t~[R/ \nu_{\mathrm{th}}]$')
@@ -262,8 +264,9 @@ ax_wexb_max.set_ylabel(r'$|\widehat{\omega}_{\mathrm{E \times B}}|_{n_\mathrm{ZF
 #ax_wexb_max.yaxis.set_label_coords(-0.09,0.5)
 ax_wexb_max.yaxis.set_label_coords(-0.15,0.5)
 
+m = 0
 x_max = 0
-fourier_index = [4, 3, 4, 4]
+fourier_index = [4, 3, 4, 4, 4]
 
 color_bi = colors[2][::-1]
 
@@ -274,10 +277,9 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_bi):
     
     eflux, time = eflux[:max_index], time[:max_index]
 
-    ax_eflux.plot(time, eflux, label= r'$' + n + r'$', linewidth = 3, color = c)
-    
-    plot.ax_ticks_subplot(ax_eflux)
-    
+    if m != 2:
+        ax_eflux.plot(time, eflux, label= r'$' + n + r'$', linewidth = 3, color = c)
+        
     if x_max < time[-2]:
         x_max = time[-2]
     
@@ -290,13 +292,16 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_bi):
     
     #ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'n + $k_' + str(k) + r'$', linewidth = 3, color = c)
     # Thesis
-    ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$' + n + r';~k_{' + str(k) + ',\,' + n + r'}$', linewidth = 3, color = c)
-    
-    plot.ax_ticks_subplot(ax_wexb_max)
-    
+    if m != 2:
+        ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$' + n + r';~k_{' + str(k) + ',\,' + n + r'}$', linewidth = 3, color = c)
+    else:
+        ax_wexb_max.plot(time, wexb_max[k][:max_index], label= r'$k_{' + str(k) + ',\,' + n + r'}$', linewidth = 3, color = c, linestyle = 'dashed')
+        
     ax_wexb_max.set_xlim(xmin=0, xmax=x_max)
     ax_wexb_max.set_ylim(ymin=0, ymax=0.30)
     ax_wexb_max.yaxis.set_ticks(np.arange(0, 0.40, 0.1))
+    
+    m += 1
     
 #leg_eflux = ax_eflux.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
 #leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(0.5, 1.28), ncol=4, frameon=False, columnspacing=1, handlelength=1)
@@ -306,7 +311,7 @@ for i, n, k, c in zip(f, boxsize, fourier_index, color_bi):
 #    line_wexb_max.set_linewidth(4)
 
 # Thesis
-leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(-0.2, 1.26), ncol=4, frameon=False, columnspacing=1, handlelength=1)
+leg_wexb_max = ax_wexb_max.legend(loc='upper center', bbox_to_anchor=(-0.2, 1.26), ncol=5, frameon=False, columnspacing=0.5, handlelength=.8)
 
 for line_wexb_max in leg_wexb_max.get_lines():
     line_wexb_max.set_linewidth(4)
