@@ -1,0 +1,416 @@
+------------------------------------------------------------------------------------------------------------------
+STARTPAGE
+
+------------------------------------------------------------------------------------------------------------------
+MOTIVATION
+
+- Zonal Flows on Mesoscales close to marginal stabiltity in ITG
+- Pattern E × B Staircase sturcture
+- Pattern in
+
+ 	-> local flux-driven including mean electric field shear
+	-> local gradient-driven flux-tube including collisions and background E × B shear 
+	-> global flux-driven 
+	-> global gradient-driven
+
+Global: Multiple radial rep with patternsize of 10 Larmor radii
+Local: Size converge to the radial box size
+
+Reserch Question
+ 	
+	-> Is pattern size inherent or does it always converge with box size
+
+------------------------------------------------------------------------------------------------------------------
+CHARGED PARTICLE MOTION
+
+- Lorentz Force
+
+ 	-> Circular Motion with Larmor Radius and Cyclotron Frequency
+	-> Direction of Circulation depends of particle e- or i+
+
+- Coulumb Force
+
+	-> Should be known
+
+- Inhomogenous magnetic field 
+
+	-> Explain Mirror Effect or just mention it 
+
+------------------------------------------------------------------------------------------------------------------
+DRIFT MOTION
+
+- E × B Drift
+
+	-> Same directions for every carge
+
+- Grad B/Curvature Drift
+
+	-> Direction depends on charge (charge in equation)
+	-> Curvature vector can be transfromed into gradient B vector for plasma pressure small compared to magnetic field strength
+
+------------------------------------------------------------------------------------------------------------------
+ITG
+
+- Electrostatic force causes variety of collective phenomena
+
+	-> Mircroinstabilities
+	-> Scale (Larmor radius, < Cyclotron frequency)a
+	-> Driven by density and temp gradients
+
+- Microinstabilities one of the main reasons for particle and energy loss 
+
+	-> Limit of confinement
+
+- ITG most dominant
+- On the outboard low field side of tokamak
+- Sufficient large ion temperature gradient Grad T
+
+	-> Ion temperature pertubation 
+	-> Modulation of the Grad B drift with thermal velocity
+	-> div(v) > 0 
+	-> Compression of plasma in region with higher dens ions and lower dens ion
+	-> Pertubation of the electrostatic potential
+	-> Electric field with (E = - Grad Phi)
+	-> Electric field + Magnetic field = E x B drift
+	-> Transport of hot plasma in the outer hot region
+	-> Transport of cold plasma in the inner cold region
+	-> Instabilities grows „bad curvature“
+	-> Initial perturbation is growing for R/L_T > R/L_T,c
+	-> R/L_T,c ~ 6 for CBC case parameters, concentric 
+
+- On the inboard high field side of tokamak 
+
+	-> Opposing Grad B and Grad T
+	-> Instabilities decays „good curvature“
+
+- Stucture = eddies with radial size of 10 Larmor radii
+
+ 	-> radial size correleation length
+
+------------------------------------------------------------------------------------------------------------------
+ZONAL FLOWS
+
+- Zonal flow linked to E x B flow linked to electrostatic potential 
+
+	-> potential constant across flux-surfaces ~ Zonal potential
+	-> Zonal flows tangential to flux-surface
+	-> No transport across the flux surface (E x B motion)
+
+(- Zonal flows are driven by Reynolds stresses)
+- Zonal potential radially alternating 
+
+	-> Velocity shear (variation)
+	-> Shear deformation of turbulent structure 
+	-> Significant role in suppression of turbulence (ITG especially)
+
+- Shear flow tilts and strechtes turbulent eddies
+
+	-> Break up in smaller eddies with smaller radial correlation length
+
+- Decorrelation Process
+- Reduction of turbulence
+- Nonlinear generation process of turbulence
+- Dimits shift of the critical temperature gradient R/L_T
+
+	-> ITG-driven turbulence at higher R/L_T
+    -> Discontinous step in the dependency of turbulent fluxes on temperature gradient
+	-> Finite heat flux threshold
+
+------------------------------------------------------------------------------------------------------------------
+SHEARING RATE
+
+- Shearing process strong enough to surpress turbulence 
+
+	-> Pattern formation =  E x B staircase structure (showing later with the result)
+
+- Properties
+
+	-> Radial mesoscale Larmor radius < 10 rho < R
+	-> Quasi staionary in space
+	-> Time scales longer when turbulence time scales
+	-> Amplitude of serveral 10^-1 vth/R (Experimental Waltz criterion)
+
+- Look of staircase structure (constant shear with alternating signs and steep flanks crossing zero)
+- Avalanches transport by zero crossing 
+
+	-> inwards for positive shear 
+	-> outwards for negative shear
+
+- Fully developed staircase structure results in completely quenched turbulence
+
+------------------------------------------------------------------------------------------------------------------
+SIMULATION SETUP
+
+- Set Up like in Peeters2016
+- Nonlinear flux-tube version of GKW 
+
+	-> Gyrokinetic eq in delta f approx and local limit
+	-> Periodic boundary conditions
+	-> Radial averaged gradients fixed in time
+	-> Gradient-driven approach
+
+- Circular concentric flux-surfaces
+- Standard Resolution with 6th order (S6) with following parameters
+
+	(-> Say sth to parameters)
+
+- Turbulence quantified heat conduction coefficient (rho^2v_th/R)
+
+	(-> Mention thermal quantities)
+
+(- Referencd Quantities)
+- Box size (L_x,L_y) = (76.3, 89.8) rho
+
+-------------------------------------------------------------------------------------------------------------------
+DIAGNOSTICS
+
+- Fourier series of shearing rate 
+- Dominate zonal flow mode is the basic mode
+- Basic mode has maximum amplitude of Shearing rate
+- Waltz criterion for maximal amplitude
+
+-------------------------------------------------------------------------------------------------------------------
+RESTART SCRIPT
+
+- Motivation for Script
+- Development of Restart Script
+
+	-> Runs in Background with nohup or screen
+	-> Python3 lib
+
+- Features of Restart Script
+	
+	-> Parser
+	-> Backup options
+	-> kill command
+	-> Status file (Progress bar and Monitor Status)
+	-> General written
+	-> Reset options
+	-> Mail command
+	-> Monitor itertation (in sec)
+
+- Flow diagramm of workflow
+- For more details refer to chapter in thesis
+- Other job manager possible as well with slightly tweaks
+	
+	-> Torque version available
+
+------------------------------------------------------------------------------------------------------------------
+VARIATION OF COMPUTATIONAL RESOLUTION
+
+- Goals
+
+	-> Minimal resolution without numerical dissipation 
+		+ biasing physics outcome
+		+ no zonal flow formation (permanent turbulent state)
+	-> Reduce computational time and costsof simulation
+
+- Criteria 
+	
+	-> Subdued turbulence after short time periods (reduces costs and time)
+	-> Stabilty for long time periods (Minimize the possibility of numerical dissipation)
+
+- Verification
+	
+	-> Reduce on number and check criteria (1) and (2)
+	-> Reduce to the smaller known resoltion and look if solution is still valid
+
+------------------------------------------------------------------------------------------------------------------
+BENCHMARK
+
+- Verify simulation set up with benchmark of solution of Peeters2016
+(- Different R/L_T = 6.0 instead of R/L_T = 7.0 because of circular concentric geometry)
+
+	-> After 3000 R/vth suppression
+
+- Verify chosen R/L_T after Peeters2016
+
+------------------------------------------------------------------------------------------------------------------
+REDUCTION OF GRID POINTS
+
+- Explain pictures
+- Nvpar -> halfed simulation time
+- Nmu -> Nvpar, Nmu
+- Ns
+
+-> Final resolution
+
+------------------------------------------------------------------------------------------------------------------
+SIZE CONVERGENCE
+
+- Explain notation N_R x N_B
+- Radial 
+	
+	-> Fully developed staircase pattern in state of stablized fusion
+	-> Competition of mode 3 and 4 for 3x1 case 
+	-> n_ZF = 1 for 3x1 always zero
+	-> scale between 57-76 rho
+
+- Isotropic
+	
+	-> Excluded 1.5x1.5 and 2.5x2.5
+	-> Surpression after short time period faster than 3x1 etc.
+	-> 3x3 with four repititions (smaller size of staircase structure ?)
+	-> Refer back to competition
+
+	-> Test with two other initial conditions still confirms range
+
+- Binormal
+	
+	-> Suppression after short time periods as well
+	-> Indeed competion between two sizes
+	-> Two dominating modes with a fraction of the maximum amplitude
+	-> 3x2.5 pattern between 3 and 4 represented in the second repetition with no plateau at positive shear	
+	-> Steep flank to third repetition after reaching maximum 
+
+- Results
+
+	-> Research Question
+	-> Mesoscale between 57-76 rho
+	-> Non-locality inherent to ITG-driven turbulence
+	-> Avalanches are spatially organized by E x B staircase structure
+
+------------------------------------------------------------------------------------------------------------------
+HEAT FLUX THRESHOLD
+
+- Additional simulation with 2x2 box size 
+- Approch to heat flux threshold 
+- Confirms result of Peeters2016
+
+------------------------------------------------------------------------------------------------------------------
+CONCLUSION
+
+- Reduction of Nvpar from 64 of 48 halfed the time of simulation
+- Restart script in python3
+- Intrinsic mesoscale pattern size of ~57-76 rho in CBC case parameters
+- Heat flux theshold at R/L_T = 6.3 +- 0.1
+
+------------------------------------------------------------------------------------------------------------------
+APPEMDIX
+------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------------
+CONFINEMENT
+
+- Torus shape to prevent loss of particle due to parallel motion
+- Energy losses caused by gyrocenter drifts
+- Nested flux surfaces with constant magnetic flux and magnetic field lines on it
+- magnetic field = plasma pressure (force balance)
+- flux surface = plasma pressure constant
+- magnetic field with torodial (external) and poloidal (plsama current) components 
+	
+	-> helical trajectory
+ 
+- Plasma Beta 
+
+	-> Compares thermal plasma pressure to ambient magnetic field pressure
+
+- beta < 1 but near 1 for optimal confinement
+
+------------------------------------------------------------------------------------------------------------------
+SHEARING RATE
+
+- Shearing process strong enough to surpress turbulence 
+
+	-> Pattern formation
+	-> E x B staircase structure (showing later with the result)
+
+- Properties
+
+	-> Radial mesoscale Larmor radius < 10 rho < R
+	-> Quasi staionary in space
+	-> Time scales longer when turbulence time scales
+	-> Amplitude of serveral 10^-1 vth/R (Experimental Waltz criterion)
+	-> Turbulent transport in avalanches linked to E x B shearing rate
+
+- Formulas
+
+- Look of staircase structure (constant shear with alternating signs and steep flanks crossing zero)
+- Avalanches transport by zero crossing 
+
+	-> inwards for positive shear 
+	-> outwards for negative shear
+
+- Fully developed staircase structure results in completely quenched turbulence
+- Discontinous step in the dependency of turbulent fluxes on temperature gradient
+
+	-> Dimits Shift 
+	-> Heat flux threshold
+
+------------------------------------------------------------------------------------------------------------------
+GYROKINETICS
+
+- Large number of particles 
+
+	-> Impossible task for simulations with Newton-Maxwell
+	-> Statistical approach
+
+- Vlasov equation
+
+	-> collisionless because collision frequency much smaller than turbulence frequency
+	-> closed system with maxwell equation and basis of gyrokinetic model
+
+- Gyrokinetic ordering
+
+	-> Connection between Tokamak dynamics and spatio-temporal scales
+	-> Gyromotion time scale (faster) w_c >> Turbulence time scales w ( w/w_c ~10 ^-3)
+	-> Length scale of turbulence wave vector
+	-> k_perp^-1 ~ rho
+	-> rho << Length of eq density variation express with gradient length L_n = |Grad ln(n_0)|^-1 
+	-> Ln ~ R and rho/R ~ 10^-3 - 10^-4
+	-> Experiments: Density perturbation and magnetic field fluctuation of order 10^~4
+	-> eps_g << 1 small parameter for fuison plasma 
+
+	-> Reduction parameter of governing equation (gyrokinetc formalism (Elimination of fast gyro motion)
+
+- Transformation into guidingcenter coordinates
+
+	-> Follows the magnetic field with v_par
+	-> Gyromotion with magnetic moment mu (v_perp)
+	-> Gyrocenter X = x - rho_L
+	-> Gyrophase Zeta (angle of rho_L)
+
+- To transform into the gyrocenter apply Lie perturbation theory on Lagrangian of the system
+
+	-> Gyro phase ignorable coordinate
+	-> mu constant of motion (d/dt mu = 0)
+
+- Gyrokentic Equation
+- GKW uses Delta f approx and local limit
+- Delta f Approx
+
+	-> Seperation of f in perturbation delta f and eq f_0 (like in gyro ordering)
+	-> f_0 is Maxwellian
+	-> f_0 ~ R, delta f ~ rho
+- Local limit
+	-> All quantities are constant over the radial extent of the simulation volume
+
+- Transform gyrokinetic equation in Hamada coordinates
+
+	-> x = radial coordinate (normalized flux surfaces by rho)
+	-> y = approx binormal coordinate (labels field lines)
+	-> s = length along field lines
+
+- Complicated gyrokinetic equation
+
+	-> g contains delta f and f_0
+	-> v_D dirft of inhomogenous magnetic field (perturbation of magnetic field in no electrostatic case)
+	-> v_chi E x B drift
+	-> S = Source term contains f_0 and correction term for collisions and energy injection term 
+
+- Periodic boundry condition in radial direction
+
+	-> Radial averaged gradients fixed in time
+	-> Gradient-driven approach
+
+------------------------------------------------------------------------------------------------------------------
+SIZE CONVERGENCE
+
+- Isotropic
+
+	-> Force balance analysis shows that not the perpendicular pressure causes the staircase structure 
+	-> Electric field much stronger von perp pressure ~ perp energy
+	-> Maximum electric field for shearing rate + -> - and minimum for - -> +
+	-> Structure of pressure profile consquence of staircase structure
+
+------------------------------------------------------------------------------------------------------------------

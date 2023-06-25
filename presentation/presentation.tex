@@ -87,10 +87,6 @@ Temperature \\ Gradient-Driven Turbulence}
 
 	\maketitle
 
-	%\begin{frame}{Gliederung}
-	%	\tableofcontents[hideallsubsections]
-	%\end{frame}
-
 	\section*{Motivation}
 	\begin{frame}
 		\frametitle{Motivation}
@@ -150,15 +146,6 @@ Temperature \\ Gradient-Driven Turbulence}
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{Magnetic Confinement in Tokamak}
-		\begin{center}
-			\begin{tabular}{>{\onslide<2->}c<{\onslide} >{\onslide<2->}c<{\onslide}}
-				\includegraphics[width=0.6\paperwidth]{Theory/Tokamak-Torus.pdf} & $\beta = \frac{nT}{\mu_0 B^2/2}$
-			\end{tabular}
-		\end{center}
-	\end{frame}
-
-	\begin{frame}
 		\frametitle{Ion Temperature Gradient (ITG)-driven Instability}
 		\begin{center}
 			\onslide<2->\input{../pictures/Theory/ITG-Turbulence_Presentation.tex}
@@ -167,89 +154,18 @@ Temperature \\ Gradient-Driven Turbulence}
 
 
 	\begin{frame}
-		\frametitle{Zonal Flows}
-		\begin{center}
-			\onslide<2->\includegraphics[width = 0.8\paperwidth]{Theory/Zonal-Flow-Generation.pdf}
-			%\begin{itemize}
-			%	\item <3-> Zonal flows are linked to the $\exb$ flows
-			%	\item <4-> Zonal flow is tangential to the flux-surfaces and does not contribute to the turbulent transport across the flux-surfaces
-			%\end{itemize}
-		\end{center}
-	\end{frame}
-
-	\begin{frame}
-		\frametitle{Shearing Rate}
-
-		\only<10>{
-			\begin{center}
-				\includegraphics[height = 0.75\paperheight]{Theory/Shearing-Rate.pdf}
-			\end{center}
-			\bigskip
-		}
-		\onslide<2-> Pattern formation occurs in the stabilized tokamak plasma the so-called $\exb$ staircase structure. \\\bigskip
+		\frametitle{Zonal Flows \& Shearing Rate}
 		
-		\onslide<3-> Properties:
-		\begin{enumerate}
-			\item[(1)] <4-> \textit{Radial mesoscale} of order of $\rho_\mathrm{L} < 10\,\rhoth < R$
-			\item[(2)] <5-> \textit{Quasi stationary} in space 
-			\item[(3)] <6-> Time scales much longer than the typical turbulence time scales
-			\item[(4)] <7-> \textit{Typical amplitude} of the order of $10^{-1} \vth/R$ (Waltz criterion $|\wexb|\approx\gamma$)
-			\item[(5)] <8-> Turbulent transport strongly linked to the local $\exb$ shearing through \textit{avalanches}
-		\end{enumerate}
-		\onslide<9->{
 		\begin{center}
-			\begin{tabular}{c c}
-				$\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2}$ & $\langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0)$ \\
-			\end{tabular}
+			\only<2>{\includegraphics[width = 0.8\paperwidth]{Theory/Zonal-Flow-Generation.pdf}}
+
+			\only<3>{
+				\begin{tabular}{c c}
+					\includegraphics[height = 0.75\paperheight]{Theory/Shearing-Rate.pdf} &
+					$\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2}$\\
+				\end{tabular}
+			}
 		\end{center}
-		}
-	\end{frame}
-
-	%\begin{frame}
-	%	\frametitle{Vlasov Equation}
-	%	\begin{gather*}
-	%		\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{x}} \cdot \frac{\mathrm{d}\vect{x}}{\mathrm{d}t} + \frac{\partial f}{\partial \vect{v}} \cdot \frac{\mathrm{d}\vect{v}}{\mathrm{d}t} = 0
-	%	\end{gather*}
-	%	\begin{gather*}
-	%		n = \int \mathrm{d}\vect{v}\,f(\vect{x}, \vect{v}, t) \qquad j = q \int \mathrm{d}\vect{v}\, v f(\vect{x}, \vect{v}, t)
-	%	\end{gather*}
-	%	\begin{gather*}
-	%		\begin{aligned}
-	%			\nabla \cdot \vect{B} &= 0 &\qquad \nabla \times \vect{B} &= \mu_0\left( \sum_\mathrm{species} j + \epsilon_0 \frac{\partial \vect{E}}{\partial t} \right) \\
-	%			\nabla \cdot \vect{E} &= \frac{1}{\epsilon_0} \sum_\mathrm{species} qn &\qquad \nabla \times \vect{E} &= - \frac{\partial \vect{B}}{\partial t}
-	%		\end{aligned}
-	%	\end{gather*}
-	%\end{frame}
-
-	\begin{frame}
-		\frametitle{Gyrokinetics}
-		
-		\only<4>{
-			\begin{center}
-				\includegraphics[width=0.85\paperwidth]{Theory/Gyro-Center-Coordinates.pdf}		
-			\end{center}
-		}
-
-		\begin{tabular}{l l l}
-
-			\onslide<2->{$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{x}} \cdot \frac{\mathrm{d}\vect{x}}{\mathrm{d}t} + \frac{\partial f}{\partial \vect{v}} \cdot \frac{\mathrm{d}\vect{v}}{\mathrm{d}t} = 0$} & 
-			\onslide<2->{$f(\vect{x}, \vect{v}, t)$} & 
-			\onslide<2->{Vlasov Equation} \\[0.7cm]
-
-			\multicolumn{2}{>{\onslide<3->}l<{\onslide}}{$\Downarrow$ \qquad $\frac{\omega}{\omega_\mathrm{c}} \sim \frac{k_\parallel}{k_\perp} \sim \frac{\rhoth}{L_\mathrm{n}} \sim \frac{\delta n}{n_0} \sim \frac{\delta B}{B_0} \sim \frac{v_\mathrm{d}}{\vth} \sim \epsilon_\mathrm{g}$} & 
-			\onslide<3->{Gyrokinetic Ordering} \\[0.7cm]
-			
-			\onslide<5->{$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{X}} \cdot \frac{\mathrm{d}\vect{X}}{\mathrm{d}t} + \frac{\partial f}{\partial v_\parallel} \cdot \frac{\mathrm{d}v_\parallel}{\mathrm{d}t} = 0$} & 
-			\onslide<5->{$f(\vect{X}, v_{\parallel}, \mu)~;~\frac{\mathrm{d}\mu}{\mathrm{d}t} = 0$} & 
-			\onslide<5->{Gyrokinetic Formalism} \\[0.7cm]
-			
-			\multicolumn{2}{>{\onslide<6->}l<{\onslide}}{$\Downarrow$ \qquad $f = f_0 + \delta f$} & 
-			\onslide<6->{$\delta f$ Approx \& Local Limit} \\[0.7cm]
-
-			\multicolumn{2}{>{\onslide<7->}l<{\onslide}}{$\frac{\partial g}{\partial t} + \vect{v}_\chi \cdot \nabla g + (v_\parallel \vect{b} + \vect{v}_\mathrm{D}) \cdot \nabla(\delta f) - \frac{\mu B}{m}\frac{\vect{B}\cdot\nabla B}{B^2}\frac{\partial (\delta f)}{\partial v_\parallel} = S$} &
-			\onslide<7->{Gyrokinetic Equation} \\[0.7cm]
-			\multicolumn{3}{>{\onslide<7->}l<{\onslide}}{$g \sim (f_0 + \delta f)\qquad S \sim (f + f_0)\qquad \vect{v}_\mathrm{D} \sim \nabla B \qquad \vect{v}_\chi \sim \exb \qquad f(\xcoord, \ycoord, s, v_\parallel, \mu)$} \\
-		\end{tabular}
 	\end{frame}
 
 	\section*{Material and Methods}
@@ -259,13 +175,14 @@ Temperature \\ Gradient-Driven Turbulence}
 
 		\begin{center}
 			\begin{itemize}
+				\item <2-> Simulation setup orientates on Paper from Arthur Peeters in the year 2016
 				\item <2-> Non-linear flux tube version of Gyrokinetic Workshop (GKW) 
 				\item <3-> Circular concentric flux surfaces 
 				\item <4-> Standard resolution with 6th order (S6) 
 				\item <5-> Cyclone Base Case (CBC) parameters $\rlt = 6.0$ 
-				\item <6-> Turbulence level is quantified by the turbulent heat conduction coefficient $\chi$ (normalized by $\rhoth^2 \vth/R$ ($\vth = \sqrt{2 T/m}$ and $\rhoth = \frac{m \vth}{|q|B}$)) 
-				\item <7-> Quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities
-				\item <8-> Standard box size $(L_\xcoord,~L_\ycoord) = (76.3,~89.8)\,\rhoth$
+				\item <6-> Turbulence level is quantified by the turbulent heat conduction coefficient $\chi$
+				%\item <7-> Quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities
+				\item <7-> Standard box size $(L_\xcoord,~L_\ycoord) = (76.3,~89.8)\,\rhoth$
 			\end{itemize}
 			\onslide<4->{
 			\bigskip
@@ -298,6 +215,8 @@ Temperature \\ Gradient-Driven Turbulence}
 		\newcommand{\distance}{2.5cm}
 
 		\begin{center}
+
+			\only<2>{
 		    \begin{tikzpicture}[node distance=1.5cm]
 			
 		        \node (init)         [init]                                                 {Start / Initialize};
@@ -317,15 +236,9 @@ Temperature \\ Gradient-Driven Turbulence}
 		        \draw [arrow] (checkPending)   |- node[anchor=north west] {No}              (checkData);
 			
 		    \end{tikzpicture}
-		\end{center}
-	\end{frame}
-
-	\begin{frame}
-		\frametitle{Restart Script}
-
-		\newcommand{\distance}{2.5cm}
-
-		\begin{center}
+			}
+			
+			\only<3>{
 		    \begin{tikzpicture}[node distance=2cm]
 			
 		        \node (checkData)    [process]       										{Check Data};
@@ -346,16 +259,9 @@ Temperature \\ Gradient-Driven Turbulence}
 		        \draw [arrow] (restore)        --                                           (checkStep);
 			
 		    \end{tikzpicture}
-		\end{center}
+			}
 
-	\end{frame}
-
-	\begin{frame}
-		\frametitle{Restart Script}
-
-		\newcommand{\distance}{2.5cm}
-
-		\begin{center}
+			\only<4>{
 		    \begin{tikzpicture}[node distance=1.5cm]
 				
 				\node (init)         [init]                                                 {Start / Initialize};
@@ -373,6 +279,8 @@ Temperature \\ Gradient-Driven Turbulence}
 		        \draw [arrow] (end)            -- + ( 3,0) |-                               (init);
 			
 		    \end{tikzpicture}
+			}
+		
 		\end{center}
 
 	\end{frame}
@@ -450,16 +358,14 @@ Temperature \\ Gradient-Driven Turbulence}
 			\only<7>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize1x1-2x2-3x3_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
 
 			\only<8>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_cosine2-cosine5-noise_wexb_comparison.pdf}}
+			
+			\only<9>{\textbf{(3) Binormal} \\[0.5cm] $\NR \times \NB \in [3\times1.5,~3\times2.5,~3\times3,~3\times5]$}
+			
+			\only<10>{\includegraphics[width = 0.8\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf}}
+			
+			\only<11>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
 
-			\only<9>{\includegraphics[height = 0.7\paperheight]{S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/noise/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_noise_wexb_dens_ene_selection.pdf}}
-			
-			\only<10>{\textbf{(3) Binormal} \\[0.5cm] $\NR \times \NB \in [3\times1.5,~3\times2.5,~3\times3,~3\times5]$}
-			
-			\only<11>{\includegraphics[width = 0.8\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_comparison_thesis.pdf}}
-			
-			\only<12>{\includegraphics[height = 0.5\paperheight]{Comparison/Boxsize/S6_rlt6.0_boxsize3x1-1.5-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.pdf}}
-
-			\only<14>{
+			\only<12>{
 				\textbf{Does the basic pattern size always converges to the box size, or is there a typical mesoscale size inherent to staircase structures also in a local flux-tube description?}\bigskip
 			
 				$\Rightarrow$ Mesoscale pattern size of: \\[0.3cm]
@@ -499,6 +405,94 @@ Temperature \\ Gradient-Driven Turbulence}
 		\begin{minipage}{0.4\paperwidth}
 			\onslide<4-> \includegraphics[width = 0.5\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_thesis.pdf}
 		\end{minipage}
+	\end{frame}
+
+%--------------------------------------------------------------------------
+% Appendix
+%--------------------------------------------------------------------------
+
+
+	\appendix
+
+	\section*{Theory}
+
+	\begin{frame}
+		\frametitle{Magnetic Confinement in Tokamak}
+		\begin{center}
+			\begin{tabular}{>{\onslide<2->}c<{\onslide} >{\onslide<2->}c<{\onslide}}
+				\includegraphics[width=0.6\paperwidth]{Theory/Tokamak-Torus.pdf} & $\beta = \frac{nT}{\mu_0 B^2/2}$
+			\end{tabular}
+		\end{center}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Shearing Rate}
+
+		\only<10>{
+			\begin{center}
+				\includegraphics[height = 0.75\paperheight]{Theory/Shearing-Rate.pdf}
+			\end{center}
+			\bigskip
+		}
+		\onslide<2-> Pattern formation occurs in the stabilized tokamak plasma the so-called $\exb$ staircase structure. \\\bigskip
+		
+		\onslide<3-> Properties:
+		\begin{enumerate}
+			\item[(1)] <4-> \textit{Radial mesoscale} of order of $\rho_\mathrm{L} < 10\,\rhoth < R$
+			\item[(2)] <5-> \textit{Quasi stationary} in space 
+			\item[(3)] <6-> Time scales much longer than the typical turbulence time scales
+			\item[(4)] <7-> \textit{Typical amplitude} of the order of $10^{-1} \vth/R$ (Waltz criterion $|\wexb|\approx\gamma$)
+			\item[(5)] <8-> Turbulent transport strongly linked to the local $\exb$ shearing through \textit{avalanches}
+		\end{enumerate}
+		\onslide<9->{
+		\begin{center}
+			\begin{tabular}{c c}
+				$\wexb = \frac{1}{2} \frac{\partial^2 \langle \phi \rangle}{\partial \xcoord^2}$ & $\langle \phi \rangle = \frac{1}{L_\ycoord} \int_0^{L_\ycoord} \mathrm{d}\ycoord ~ \phi(\xcoord,\ycoord,s=0)$ \\
+			\end{tabular}
+		\end{center}
+		}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Gyrokinetics}
+		
+		\only<4>{
+			\begin{center}
+				\includegraphics[width=0.85\paperwidth]{Theory/Gyro-Center-Coordinates.pdf}		
+			\end{center}
+		}
+
+		\begin{tabular}{l l l}
+
+			\onslide<2->{$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{x}} \cdot \frac{\mathrm{d}\vect{x}}{\mathrm{d}t} + \frac{\partial f}{\partial \vect{v}} \cdot \frac{\mathrm{d}\vect{v}}{\mathrm{d}t} = 0$} & 
+			\onslide<2->{$f(\vect{x}, \vect{v}, t)$} & 
+			\onslide<2->{Vlasov Equation} \\[0.7cm]
+
+			\multicolumn{2}{>{\onslide<3->}l<{\onslide}}{$\Downarrow$ \qquad $\frac{\omega}{\omega_\mathrm{c}} \sim \frac{k_\parallel}{k_\perp} \sim \frac{\rhoth}{L_\mathrm{n}} \sim \frac{\delta n}{n_0} \sim \frac{\delta B}{B_0} \sim \frac{v_\mathrm{d}}{\vth} \sim \epsilon_\mathrm{g}$} & 
+			\onslide<3->{Gyrokinetic Ordering} \\[0.7cm]
+			
+			\onslide<5->{$\frac{\partial f}{\partial t} + \frac{\partial f}{\partial \vect{X}} \cdot \frac{\mathrm{d}\vect{X}}{\mathrm{d}t} + \frac{\partial f}{\partial v_\parallel} \cdot \frac{\mathrm{d}v_\parallel}{\mathrm{d}t} = 0$} & 
+			\onslide<5->{$f(\vect{X}, v_{\parallel}, \mu)~;~\frac{\mathrm{d}\mu}{\mathrm{d}t} = 0$} & 
+			\onslide<5->{Gyrokinetic Formalism} \\[0.7cm]
+			
+			\multicolumn{2}{>{\onslide<6->}l<{\onslide}}{$\Downarrow$ \qquad $f = f_0 + \delta f$} & 
+			\onslide<6->{$\delta f$ Approx \& Local Limit} \\[0.7cm]
+
+			\multicolumn{2}{>{\onslide<7->}l<{\onslide}}{$\frac{\partial g}{\partial t} + \vect{v}_\chi \cdot \nabla g + (v_\parallel \vect{b} + \vect{v}_\mathrm{D}) \cdot \nabla(\delta f) - \frac{\mu B}{m}\frac{\vect{B}\cdot\nabla B}{B^2}\frac{\partial (\delta f)}{\partial v_\parallel} = S$} &
+			\onslide<7->{Gyrokinetic Equation} \\[0.7cm]
+			\multicolumn{3}{>{\onslide<7->}l<{\onslide}}{$g \sim (f_0 + \delta f)\qquad S \sim (f + f_0)\qquad \vect{v}_\mathrm{D} \sim \nabla B \qquad \vect{v}_\chi \sim \exb \qquad f(\xcoord, \ycoord, s, v_\parallel, \mu)$} \\
+		\end{tabular}
+	\end{frame}
+
+	\section*{Results}
+
+	\begin{frame}
+		\frametitle{Size Convergence of $\exb$ Staircase Pattern}
+		\begin{center}
+
+			\includegraphics[height = 0.7\paperheight]{S6_rlt6.0/boxsize3x3/Ns16/Nvpar48/Nmu9/noise/S6_rlt6.0_boxsize3x3_Ns16_Nvpar48_Nmu9_noise_wexb_dens_ene_selection.pdf}
+
+		\end{center}
 	\end{frame}
 
 \end{document}
