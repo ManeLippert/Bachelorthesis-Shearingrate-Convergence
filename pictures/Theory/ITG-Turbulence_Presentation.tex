@@ -18,7 +18,7 @@
 
     }
 
-    \onslide<7->{
+    \onslide<6->{
     % Density and Potencial cells
     \draw [thick, gray, opacity=1, fill = gray!70!white] (4.75,4.5) ellipse (2.75 and 0.4) node[white, opacity=1]{$\phi^{-}~;~n^{-}$};
     \draw [thick, gray!70!white, opacity=1, fill = gray] (4.75,3.5) ellipse (2.75 and 0.4) node[white, opacity=1]{$\phi^{+}~;~n^{+}$};
@@ -35,7 +35,7 @@
 
     \onslide<3->{
     % Temperature and magnetic field gradient
-    \draw[thick, white, <-] (2,5.2) -- (5,5.2) node[midway, above, white]{$\nabla T~;\nabla B$};
+    \draw[thick, white, <-] (2,5.2) -- (5,5.2) node[midway, above, white]{$\nabla T~;\nabla B~;\nabla n$};
 
     % Magnetic field
     \draw [thick, white] (9,5.2) circle (0.2);
@@ -43,12 +43,12 @@
     \draw (9.3,4.9) node[white]{$\vect{B}$};
     }
 
-    \onslide<6->{
+    %\onslide<7->{
     % Density gradient
-    \draw[thick, white, <-] (2,0.8) -- (5,0.8) node[midway, below, white]{$\nabla n$};
-    }
+    %\draw[thick, white, <-] (2,0.8) -- (5,0.8) node[midway, below, white]{$\nabla n$};
+    %}
 
-    \onslide<8->{
+    \onslide<7->{
     % Electric field
     \draw[thick, white, <-] (3,4.35) -- (3,3.65) node[midway, below, left]{$\vect{E}$};
     \draw[thick, white, <-] (6.5,4.35) -- (6.5,3.65) node[midway, below, left]{$\vect{E}$};
@@ -65,7 +65,7 @@
     \draw[thick, white, ->] (9.5,2.2) -- (9.5,1.5) node[midway, left, white]{$\vect{v}_\mathrm{d}$};
     }
 
-    \onslide<9->{
+    \onslide<8->{
     % ExB drift velocity
     \draw[thick, white, <-] (10.5,5) -- (11.5,5) node[midway, below, white]{$\vect{v}_{E}$};
     \draw[thick, white, ->] (10.5,4) -- (11.5,4) node[midway, below, white]{$\vect{v}_{E}$};
