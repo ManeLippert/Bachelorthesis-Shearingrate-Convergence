@@ -148,6 +148,8 @@ Temperature \\ Gradient-Driven Turbulence}
 	\begin{frame}
 		\frametitle{Ion Temperature Gradient (ITG)-driven Instability}
 		\begin{center}
+			\only<1>{\includegraphics[width=0.6\paperwidth]{Theory/Tokamak-Torus.pdf}}
+
 			\onslide<2->\input{../pictures/Theory/ITG-Turbulence_Presentation.tex}
 		\end{center}
 	\end{frame}
@@ -175,11 +177,10 @@ Temperature \\ Gradient-Driven Turbulence}
 
 		\begin{center}
 			\begin{itemize}
-				\item <2-> Simulation setup orientates on Paper from Arthur Peeters in the year 2016
-				\item <2-> Non-linear flux tube version of Gyrokinetic Workshop (GKW) 
-				\item <3-> Circular concentric flux surfaces 
+				\item <2-> Simulation setup based on Peeters et al. 2016
+				\item <3-> Non-linear flux tube version of Gyrokinetic Workshop (GKW) with field aligned Hamada coordinates
 				\item <4-> Standard resolution with 6th order (S6) 
-				\item <5-> Cyclone Base Case (CBC) parameters $\rlt = 6.0$ 
+				\item <5-> Cyclone Base Case (CBC) parameters with circular concentric flux surfaces and $\rlt = 6.0$ 
 				\item <6-> Turbulence level is quantified by the turbulent heat conduction coefficient $\chi$
 				%\item <7-> Quantities $\rhoth$, $R$, $T$, $\vth$ and $m$ are referenced quantities
 				\item <7-> Standard box size $(L_\xcoord,~L_\ycoord) = (76.3,~89.8)\,\rhoth$
@@ -304,8 +305,8 @@ Temperature \\ Gradient-Driven Turbulence}
 		\pause
 		\textbf{Verification:}
 		\begin{enumerate}
-			\item Reduce only one number of grid points and look if criterias \textbf{(1), (2)} are satisfied
-			\item Reduce to known the minimum number of grid points to verify result in general.
+			\item Reduce only one number of grid points and look if criteria \textbf{(1), (2)} are satisfied,
+			\item Reduce to the known minimum number of grid points to verify result in general.
 		\end{enumerate}
 	\end{frame}
 
@@ -369,7 +370,7 @@ Temperature \\ Gradient-Driven Turbulence}
 				\textbf{Does the basic pattern size always converges to the box size, or is there a typical mesoscale size inherent to staircase structures also in a local flux-tube description?}\bigskip
 			
 				$\Rightarrow$ Mesoscale pattern size of: \\[0.3cm]
-				$\boxed{\sim 57 - 76\,\rhoth}$ \bigskip
+				$\boxed{\sim (57 - 76)\,\rhoth}$ \bigskip
 
 				\begin{itemize}
 					\item Non-locality is inherent to ITG-driven turbulence
@@ -396,14 +397,14 @@ Temperature \\ Gradient-Driven Turbulence}
 		
 		\begin{minipage}{0.4\paperwidth}\raggedleft
 			\begin{itemize}
-				\item <2-> Parallel velocity $\Nvpar$ could be reduced from 64 to 48, which halfed the time until suppression of turbulence
-				\item <3-> Restart Script with \texttt{python} led to further convenience during the task of performing simulations
-				\item <4-> Mesoscale pattern size of $\sim 57 - 76\,\rhoth$ is found to be intrinsic to ITG-driven turbulence for Cyclone Base Case parameters
-				\item <5-> Finite heat flux threshold is located at $\rlt|_\mathrm{finite} = 6.3 \pm 0.1$
+				\item <2-> Restart Script with \texttt{python} led to further convenience during the task of performing simulations
+				\item <3-> Finite heat flux threshold is located at $\rlt|_\mathrm{finite} = 6.3 \pm 0.1$
+				\item <4-> Parallel velocity $\Nvpar$ could be reduced from 64 to 48, which halfed the time until suppression of turbulence
+				\item <5-> Mesoscale pattern size of $\sim (57 - 76)\,\rhoth$ is found to be intrinsic to ITG-driven turbulence for Cyclone Base Case parameters
 			\end{itemize}
 		\end{minipage}
 		\begin{minipage}{0.4\paperwidth}
-			\onslide<4-> \includegraphics[width = 0.5\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_thesis.pdf}
+			\onslide<5-> \includegraphics[width = 0.5\paperwidth]{Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_thesis.pdf}
 		\end{minipage}
 	\end{frame}
 

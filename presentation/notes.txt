@@ -51,10 +51,17 @@ DRIFT MOTION
 ------------------------------------------------------------------------------------------------------------------
 ITG
 
+- Tokamak reactor in confinement 
+- Torus shaped plasma 
+- Torus with nested flux surfaces with constant plasma pressure and magnetic flux
+- magnetic field with torodial (external) and poloidal (plasma current) components 
+	
+	-> helical trajectory
+
 - Electrostatic force causes variety of collective phenomena
 
 	-> Mircroinstabilities
-	-> Scale (Larmor radius, < Cyclotron frequency)a
+	-> Scale (Larmor radius, < Cyclotron frequency)
 	-> Driven by density and temp gradients
 
 - Microinstabilities one of the main reasons for particle and energy loss 
@@ -148,8 +155,9 @@ SIMULATION SETUP
 	-> Periodic boundary conditions
 	-> Radial averaged gradients fixed in time
 	-> Gradient-driven approach
+	-> Field aligned Hamada coordinates
 
-- Circular concentric flux-surfaces
+- CBC with circular concentric flux-surfaces and R/L_T = 6.0
 - Standard Resolution with 6th order (S6) with following parameters
 
 	(-> Say sth to parameters)
@@ -280,10 +288,10 @@ HEAT FLUX THRESHOLD
 ------------------------------------------------------------------------------------------------------------------
 CONCLUSION
 
-- Reduction of Nvpar from 64 of 48 halfed the time of simulation
 - Restart script in python3
-- Intrinsic mesoscale pattern size of ~57-76 rho in CBC case parameters
 - Heat flux theshold at R/L_T = 6.3 +- 0.1
+- Reduction of Nvpar from 64 of 48 halfed the time of simulation
+- Intrinsic mesoscale pattern size of ~57-76 rho in CBC case parameters
 
 ------------------------------------------------------------------------------------------------------------------
 APPEMDIX
