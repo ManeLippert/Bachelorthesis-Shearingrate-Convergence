@@ -26,7 +26,8 @@ CHARGED PARTICLE MOTION
 - Lorentz Force
 
  	-> Circular Motion with Larmor Radius and Cyclotron Frequency
-	-> Direction of Circulation depends of particle e- or i+
+	-> Direction of Circulation depends on charge	
+	-> Thermal Quantities rho and vth
 
 - Coulumb Force
 
@@ -135,7 +136,8 @@ SHEARING RATE
 	-> Radial mesoscale Larmor radius < 10 rho < R
 	-> Quasi staionary in space
 	-> Time scales longer when turbulence time scales
-	-> Amplitude of serveral 10^-1 vth/R (Experimental Waltz criterion)
+	-> Amplitude experimental Waltz criterion (serveral 10^-1 vth/R)
+	-> gamma = growth rate of most unstable linear ITG-driven eigenmode
 
 - Look of staircase structure (constant shear with alternating signs and steep flanks crossing zero)
 - Avalanches transport by zero crossing 
