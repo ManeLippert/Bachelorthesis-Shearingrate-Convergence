@@ -22,6 +22,8 @@ This repository is focused on my work for my Bachelor Thesis about the topic of 
 * [Bachelor-Thesis, PDF](bachelorthesis/bachelorthesis.pdf)
 * [Brief-Communication, AIP](https://pubs.aip.org/aip/pop/article/30/7/074501/2901058/Size-convergence-of-the-E-B-staircase-pattern-in), [PDF](briefcommunication/POP23-BC-00491.pdf)
 
+
+
 ## Abstract
 
 Ion temperature gradient driven turbulence (ITG) close to marginal stability exhibits zonal flow pattern formation on mesoscales, so-called $E\times B$ staircase structures. Such pattern formation has been observed in local gradient-driven flux-tube simulations as well as global gradient-driven and global flux-driven studies.
