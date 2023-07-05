@@ -19,8 +19,8 @@
 This repository is focused on my work for my Bachelor Thesis about the topic of the size convergence of ExB Staircase Pattern with the box size. This Thesis is based on the works of Rath,F. and Peeters,A. G. and Buchholz,R. and Grosshauser,S. R. and Migliano,P. and Weikl,A. and Strintzi,D.
 
 * [GKW-Code](https://bitbucket.org/gkw/gkw/wiki/Home)
-* [Bachelor-Thesis](bachelorthesis/bachelorthesis.pdf)
-* [Brief-Communication](briefcommunication/briefcommunication.pdf)
+* [Bachelor-Thesis, PDF](bachelorthesis/bachelorthesis.pdf)
+* [Brief-Communication, AIP](https://pubs.aip.org/aip/pop/article/30/7/074501/2901058/Size-convergence-of-the-E-B-staircase-pattern-in), [PDF](briefcommunication/POP23-BC-00491.pdf)
 
 ## Abstract
 
