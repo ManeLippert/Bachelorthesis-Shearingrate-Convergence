@@ -1,7 +1,7 @@
 # Size Convergence of the ExB Staircase Pattern in Flux Tube Simulations of Ion Temperature Gradient Driven Turbulence
 
 
-![alt text](/pictures/Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison.png)
+![alt text](/pictures/Comparison/Boxsize/S6_rlt6.0_boxsize1-2-3-4x1-1.5-2-2.5-3-5_Ns16_Nvpar48_Nmu9_wexb_comparison_2.png)
 
 
 
